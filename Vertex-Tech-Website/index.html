@@ -1,0 +1,1979 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Vertex Tech — تصميم وتطوير مشاريع ويب متكاملة للشركات والمحلات، من الفكرة إلى الإطلاق."
+    />
+    <meta name="theme-color" content="#102e4d" />
+    <title>Vertex Tech | حلول ويب تبني الخطوة القادمة</title>
+    <style>
+      :root {
+        --navy: #102e4d;
+        --blue: #078dbd;
+        --ink: #162e44;
+        --muted: #677786;
+        --line: #dce5eb;
+        --light: #f1f6f9;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 100px;
+      }
+      body {
+        margin: 0;
+        background: #fff;
+        color: var(--ink);
+        font-family: Tahoma, Arial, sans-serif;
+        line-height: 1.8;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button,
+      a,
+      input,
+      select,
+      textarea {
+        touch-action: manipulation;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid #05aadd;
+        outline-offset: 5px;
+      }
+      .wrap {
+        width: min(1200px, 90%);
+        margin: auto;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        background: #ffffffed;
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--line);
+        z-index: 20;
+      }
+      .nav {
+        height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        line-height: 1.1;
+      }
+      .brand img {
+        width: 135px;
+        height: 75px;
+        object-fit: contain;
+      }
+      .navlinks {
+        display: flex;
+        gap: 30px;
+        font-size: 14px;
+      }
+      .navlinks a:hover {
+        color: var(--blue);
+      }
+      .btn {
+        border: 0;
+        background: var(--navy);
+        color: white;
+        padding: 13px 23px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition:
+          transform 0.2s,
+          background 0.2s;
+      }
+      .btn:hover {
+        background: #075c86;
+        transform: translateY(-2px);
+      }
+      .btn.light {
+        background: white;
+        color: var(--navy);
+      }
+      .btn.outline {
+        background: transparent;
+        border: 1px solid #bacbd6;
+        color: var(--navy);
+      }
+      .menu {
+        display: none;
+        background: none;
+        border: 1px solid var(--line);
+        padding: 7px 12px;
+        border-radius: 5px;
+      }
+      .hero {
+        background: linear-gradient(115deg, #e9f4f9 0%, #f7fafc 48%, #fff 100%);
+        padding: 82px 0 65px;
+        overflow: hidden;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.07fr 1fr;
+        gap: 65px;
+        align-items: center;
+      }
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+      .eyebrow:before {
+        content: "";
+        height: 7px;
+        width: 7px;
+        background: var(--blue);
+        border-radius: 50%;
+      }
+      h1 {
+        font-size: clamp(38px, 4.5vw, 63px);
+        line-height: 1.35;
+        letter-spacing: -2px;
+        margin: 23px 0;
+      }
+      h1 span {
+        color: var(--blue);
+      }
+      .lead {
+        font-size: 17px;
+        color: var(--muted);
+        max-width: 540px;
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      .hero-note {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 25px;
+      }
+      .visual {
+        position: relative;
+        padding: 24px 0 50px;
+        direction: ltr;
+      }
+      .orb {
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        border: 1px solid #c0dce8;
+        top: -20px;
+        left: 50px;
+      }
+      .orb:after {
+        content: "";
+        position: absolute;
+        inset: 35px;
+        border: 1px dashed #c0dce8;
+        border-radius: 50%;
+      }
+      .browser {
+        position: relative;
+        background: white;
+        border: 1px solid #cfdee7;
+        border-radius: 12px;
+        box-shadow: 0 25px 70px #153c5720;
+        overflow: hidden;
+        transform: rotate(-3deg);
+      }
+      .bar {
+        height: 39px;
+        background: #f6f9fb;
+        border-bottom: 1px solid #e4edf1;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 0 15px;
+      }
+      .bar i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #b9c9d4;
+      }
+      .bar span {
+        font: 10px Arial;
+        margin: auto;
+        color: #93a5b3;
+      }
+      .mock {
+        padding: 24px;
+        display: grid;
+        grid-template-columns: 65px 1fr;
+        gap: 20px;
+      }
+      .sidebar {
+        border-right: 1px solid #edf2f5;
+      }
+      .sidebar b {
+        display: block;
+        color: var(--blue);
+        font-size: 19px;
+        margin-bottom: 25px;
+      }
+      .sidebar i {
+        display: block;
+        width: 38px;
+        height: 5px;
+        background: #dbe6ed;
+        margin: 18px 0;
+      }
+      .dash-title {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .dash-title small {
+        font-size: 9px;
+        color: #8397a7;
+      }
+      .numbers {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin: 22px 0;
+      }
+      .numbers div {
+        background: #f1f7fa;
+        padding: 12px 8px;
+        border-radius: 5px;
+      }
+      .numbers small {
+        display: block;
+        font-size: 8px;
+        color: #758b9b;
+      }
+      .numbers strong {
+        font: bold 19px Arial;
+      }
+      .chart {
+        height: 120px;
+        display: flex;
+        align-items: flex-end;
+        gap: 9px;
+        padding: 12px 5px;
+        border-bottom: 1px solid #dce8ef;
+        background: repeating-linear-gradient(
+          to top,
+          transparent 0 29px,
+          #eff4f7 30px
+        );
+      }
+      .chart i {
+        flex: 1;
+        background: #089bc8;
+        border-radius: 3px 3px 0 0;
+      }
+      .rows {
+        margin-top: 16px;
+      }
+      .rows div {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px;
+        border-bottom: 1px solid #edf2f5;
+      }
+      .rows i {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #d9edf5;
+      }
+      .rows span {
+        height: 4px;
+        background: #dfe8ed;
+        width: 45%;
+      }
+      .rows b {
+        height: 7px;
+        background: #d7eee5;
+        width: 32px;
+        margin-left: auto;
+      }
+      .floating {
+        position: absolute;
+        background: var(--navy);
+        color: white;
+        padding: 16px 21px;
+        box-shadow: 0 15px 40px #0c345329;
+        border-radius: 8px;
+        right: -16px;
+        bottom: 15px;
+        direction: rtl;
+        font-size: 12px;
+      }
+      .floating strong {
+        display: block;
+        font-size: 15px;
+      }
+      .code-tag {
+        position: absolute;
+        left: -18px;
+        top: 65px;
+        background: #fff;
+        box-shadow: 0 8px 30px #23476115;
+        padding: 8px 14px;
+        border: 1px solid #d7e6ee;
+        border-radius: 6px;
+        font: 12px monospace;
+        color: var(--blue);
+      }
+      .strip {
+        border-bottom: 1px solid var(--line);
+        padding: 23px 0;
+      }
+      .strip .wrap {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        color: #617788;
+        font-size: 13px;
+      }
+      .strip b {
+        color: var(--navy);
+      }
+      section {
+        padding: 85px 0;
+      }
+      .section-top {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 30px;
+        margin-bottom: 37px;
+      }
+      h2 {
+        font-size: clamp(27px, 3vw, 39px);
+        line-height: 1.5;
+        margin: 12px 0;
+      }
+      h3 {
+        font-size: 20px;
+        margin: 16px 0 10px;
+      }
+      .section-top p {
+        max-width: 390px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .services {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+      }
+      .service {
+        padding: 32px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        transition: 0.2s;
+      }
+      .service:hover {
+        border-color: #7fbdd4;
+        transform: translateY(-4px);
+        box-shadow: 0 10px 30px #173b5110;
+      }
+      .icon {
+        display: grid;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        background: #e9f5fa;
+        color: var(--blue);
+        font: 22px monospace;
+        border-radius: 7px;
+      }
+      .service p {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .service ul {
+        padding-right: 18px;
+        font-size: 12px;
+        line-height: 2.2;
+        color: #4b6577;
+      }
+      .solutions {
+        background: var(--light);
+      }
+      .tabs {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 25px;
+      }
+      .tab {
+        border: 1px solid #cfdee7;
+        background: transparent;
+        color: var(--navy);
+        padding: 9px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      .tab[aria-selected="true"] {
+        background: var(--navy);
+        color: white;
+        border-color: var(--navy);
+      }
+      .solution {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+      }
+      .solution-text {
+        padding: 45px;
+      }
+      .badge {
+        font-size: 11px;
+        color: var(--blue);
+        background: #edf7fa;
+        padding: 5px 10px;
+        border-radius: 4px;
+      }
+      .solution-text p {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .checks {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        font-size: 12px;
+        margin: 25px 0;
+      }
+      .checks span:before {
+        content: "✓";
+        color: var(--blue);
+        margin-left: 8px;
+      }
+      .solution-art {
+        padding: 40px;
+        background: #daeaf1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        direction: ltr;
+      }
+      .shop {
+        width: 100%;
+        background: white;
+        border-radius: 8px;
+        padding: 23px;
+        box-shadow: 0 15px 40px #36556920;
+      }
+      .shop-head {
+        display: flex;
+        justify-content: space-between;
+        font: 12px Arial;
+        border-bottom: 1px solid #e7eef2;
+        padding-bottom: 15px;
+      }
+      .shop-banner {
+        margin: 20px 0;
+        padding: 25px;
+        background: var(--navy);
+        color: white;
+        border-radius: 5px;
+        font: bold 22px Arial;
+      }
+      .shop-banner small {
+        font: 10px Arial;
+        color: #a5c8da;
+        display: block;
+        margin-top: 8px;
+      }
+      .products {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+      .product {
+        font: 9px Arial;
+      }
+      .product div {
+        height: 70px;
+        display: grid;
+        place-items: center;
+        background: #edf3f6;
+        border-radius: 5px;
+        font-size: 28px;
+        color: #4c768c;
+      }
+      .product span {
+        display: block;
+        margin-top: 9px;
+      }
+      .process {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+      }
+      .step {
+        border-top: 1px solid #bfd3df;
+        padding-top: 23px;
+      }
+      .step b {
+        font: 22px Arial;
+        color: var(--blue);
+      }
+      .step p {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .promise {
+        background: var(--navy);
+        color: white;
+        padding: 55px;
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        margin-top: 55px;
+      }
+      .promise p {
+        color: #bfd0df;
+        font-size: 14px;
+      }
+      .promise ul {
+        padding-right: 20px;
+        color: #d3e2ec;
+        line-height: 2.5;
+        font-size: 14px;
+      }
+      .faq {
+        background: #f6f9fb;
+      }
+      details {
+        border-bottom: 1px solid #d9e4eb;
+        padding: 21px 0;
+      }
+      summary {
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      summary:after {
+        content: "+";
+        color: var(--blue);
+        font-size: 23px;
+      }
+      details[open] summary:after {
+        content: "−";
+      }
+      details p {
+        font-size: 14px;
+        max-width: 800px;
+        color: var(--muted);
+      }
+      .contact {
+        display: grid;
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 80px;
+      }
+      .contact p {
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .contact-note {
+        border-right: 3px solid var(--blue);
+        padding-right: 17px;
+        margin-top: 30px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      form {
+        padding: 30px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+      .fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      label {
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 7px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid #cfdae3;
+        border-radius: 4px;
+        background: #f9fbfc;
+        color: var(--ink);
+        padding: 11px;
+        font-size: 13px;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 110px;
+      }
+      .full {
+        grid-column: 1/-1;
+      }
+      .form-note {
+        font-size: 11px !important;
+        margin: 15px 0;
+      }
+      #result {
+        background: #ecf7fb;
+        padding: 18px;
+        border-radius: 5px;
+        margin-top: 20px;
+        font-size: 13px;
+      }
+      #result pre {
+        white-space: pre-wrap;
+        font: 13px Tahoma;
+        line-height: 1.9;
+      }
+      footer {
+        background: #0b2339;
+        color: #c1d0db;
+        padding: 40px 0 20px;
+      }
+      .footer-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        align-items: center;
+      }
+      .wordmark {
+        font: bold 25px Arial;
+        color: #fff;
+        letter-spacing: 2px;
+      }
+      .wordmark span {
+        color: #26aad3;
+      }
+      footer p {
+        font-size: 12px;
+      }
+      footer nav {
+        display: flex;
+        gap: 22px;
+        font-size: 12px;
+      }
+      .footer-bottom {
+        border-top: 1px solid #2a4055;
+        margin-top: 30px;
+        padding-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+      }
+      .reveal {
+        animation: rise 0.7s ease both;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (max-width: 900px) {
+        .hero-grid {
+          gap: 30px;
+        }
+        .navlinks {
+          gap: 17px;
+        }
+        .nav > .btn {
+          display: none;
+        }
+        .services {
+          gap: 12px;
+        }
+        .service {
+          padding: 22px;
+        }
+        .contact {
+          gap: 35px;
+        }
+        .promise {
+          gap: 25px;
+          padding: 35px;
+        }
+      }
+      @media (max-width: 680px) {
+        .nav {
+          height: 75px;
+        }
+        .brand img {
+          width: 115px;
+          height: 65px;
+        }
+        .menu {
+          display: block;
+        }
+        .navlinks {
+          display: none;
+          position: absolute;
+          top: 75px;
+          left: 0;
+          right: 0;
+          background: white;
+          padding: 23px 5%;
+          border-bottom: 1px solid var(--line);
+          flex-direction: column;
+        }
+        .navlinks.open {
+          display: flex;
+        }
+        .hero {
+          padding: 40px 0;
+        }
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        h1 {
+          font-size: 39px;
+          letter-spacing: -1px;
+        }
+        .lead {
+          font-size: 15px;
+        }
+        .visual {
+          margin: 15px 18px 0;
+        }
+        .strip .wrap {
+          flex-wrap: wrap;
+          justify-content: center;
+          font-size: 11px;
+          gap: 12px 25px;
+        }
+        section {
+          padding: 55px 0;
+        }
+        .section-top {
+          display: block;
+          margin-bottom: 25px;
+        }
+        .services,
+        .solution,
+        .promise,
+        .contact {
+          grid-template-columns: 1fr;
+        }
+        .services {
+          gap: 15px;
+        }
+        .service {
+          padding: 26px;
+        }
+        .solution-text {
+          padding: 27px;
+        }
+        .solution-art {
+          padding: 25px;
+        }
+        .process {
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+        }
+        .step h3 {
+          font-size: 17px;
+        }
+        .promise {
+          padding: 27px;
+          gap: 5px;
+          margin-top: 30px;
+        }
+        .contact {
+          gap: 20px;
+        }
+        .fields {
+          grid-template-columns: 1fr;
+        }
+        .full {
+          grid-column: auto;
+        }
+        form {
+          padding: 22px;
+        }
+        .footer-top {
+          align-items: start;
+          flex-direction: column;
+        }
+        .footer-bottom {
+          gap: 15px;
+          flex-wrap: wrap;
+        }
+        .floating {
+          right: -8px;
+        }
+        .orb {
+          width: 280px;
+          height: 280px;
+          left: 10px;
+        }
+        .checks {
+          gap: 10px;
+        }
+        h2 {
+          font-size: 29px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+
+      /* Vertex identity: connected paths, ascending geometry and technical precision */
+      :root {
+        --navy: #102e4d;
+        --blue: #079dcc;
+        --ink: #132f49;
+        --muted: #60788c;
+        --line: #dce8ef;
+        --light: #eff6fa;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      }
+      header {
+        background: #fffefb;
+      }
+      .nav {
+        height: 96px;
+      }
+      .brand img {
+        width: 158px;
+        height: 88px;
+      }
+      .navlinks {
+        font-weight: 600;
+      }
+      .btn {
+        border-radius: 2px;
+        padding: 15px 25px;
+        letter-spacing: 0.1px;
+      }
+      .btn span {
+        font-size: 22px;
+        line-height: 1;
+      }
+      .hero {
+        position: relative;
+        background: #081e33;
+        color: #fff;
+        padding: 95px 0 75px;
+      }
+      .hero:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.1;
+        background-image:
+          linear-gradient(#73b8d3 1px, transparent 1px),
+          linear-gradient(90deg, #73b8d3 1px, transparent 1px);
+        background-size: 65px 65px;
+        mask-image: linear-gradient(to left, transparent, #000);
+      }
+      .hero:after {
+        content: "";
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        left: -200px;
+        top: -160px;
+        background: radial-gradient(circle, #087fac40, transparent 65%);
+        pointer-events: none;
+      }
+      .hero-grid {
+        position: relative;
+        z-index: 1;
+        gap: 55px;
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero .eyebrow {
+        color: #6dd6f4;
+        letter-spacing: 2px;
+        font-size: 11px;
+      }
+      h1 {
+        font-size: clamp(42px, 5vw, 70px);
+        font-weight: 750;
+        line-height: 1.28;
+        letter-spacing: -2px;
+        margin: 25px 0;
+      }
+      h1 span {
+        background: linear-gradient(90deg, #7fdef5, #119ed2);
+        background-clip: text;
+        color: transparent;
+      }
+      .hero .lead {
+        color: #afc4d5;
+        font-size: 17px;
+        line-height: 2;
+      }
+      .hero .btn {
+        background: #11a4ce;
+        color: #071f34;
+      }
+      .hero .btn:hover {
+        background: #71d5ef;
+      }
+      .hero .btn.outline {
+        background: transparent;
+        color: #fff;
+        border-color: #557084;
+      }
+      .hero-note {
+        color: #92acc0;
+        font-size: 11px;
+        margin-top: 30px;
+      }
+      .visual {
+        height: 440px;
+        display: grid;
+        place-items: center;
+        padding: 0;
+      }
+      .identity-art {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+      .floating {
+        right: 0;
+        bottom: 0;
+        background: #102e4dbb;
+        border: 1px solid #37617b;
+        backdrop-filter: blur(15px);
+        box-shadow: none;
+        border-radius: 3px;
+        padding: 17px 24px;
+      }
+      .floating strong {
+        font-size: 14px;
+        color: #dff6ff;
+      }
+      .floating {
+        color: #89adc5;
+        font-size: 11px;
+      }
+      .code-tag {
+        top: 25px;
+        left: 0;
+        color: #8ccee3;
+        background: #0d2b43;
+        border-color: #30556a;
+        border-radius: 2px;
+        box-shadow: none;
+        font-size: 10px;
+      }
+      .strip {
+        background: #0c273e;
+        border-color: #244259;
+        padding: 22px 0;
+      }
+      .strip .wrap {
+        color: #89adc5;
+        font-size: 12px;
+      }
+      .strip b {
+        color: #e1eff7;
+      }
+      .section-top {
+        margin-bottom: 45px;
+      }
+      section {
+        padding: 95px 0;
+      }
+      h2 {
+        letter-spacing: -1px;
+        font-weight: 700;
+      }
+      h3 {
+        font-weight: 650;
+      }
+      .service {
+        border: 0;
+        border-top: 2px solid #c8dce7;
+        border-radius: 0;
+        background: #f6f9fb;
+        padding: 35px;
+        position: relative;
+      }
+      .service:after {
+        position: absolute;
+        content: "↗";
+        left: 28px;
+        top: 30px;
+        font-size: 24px;
+        color: #88a9bd;
+      }
+      .service:hover {
+        border-color: #079dcc;
+        background: #ecf6fa;
+        box-shadow: none;
+      }
+      .icon {
+        background: none;
+        display: block;
+        font-size: 30px;
+        border-radius: 0;
+        color: #168db3;
+        width: auto;
+        height: 48px;
+      }
+      .service h3 {
+        font-size: 23px;
+      }
+      .services {
+        gap: 18px;
+      }
+      .solutions {
+        background: #eaf2f7;
+      }
+      .tabs {
+        gap: 0;
+        border-bottom: 1px solid #c7d9e4;
+        margin-bottom: 35px;
+      }
+      .tab {
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        padding: 13px 25px;
+        color: #58778e;
+      }
+      .tab[aria-selected="true"] {
+        background: transparent;
+        color: var(--navy);
+        border-bottom: 3px solid #079dcc;
+        font-weight: bold;
+      }
+      .solution {
+        border: 0;
+        border-radius: 3px;
+        box-shadow: 0 15px 60px #163c5410;
+      }
+      .solution-text {
+        padding: 50px;
+      }
+      .solution-text h3 {
+        font-size: 29px;
+      }
+      .solution-art {
+        background: #cfdfe9;
+        background-image: linear-gradient(135deg, #daeaf2, #c2d5e2);
+      }
+      .shop {
+        border-radius: 3px;
+        transform: perspective(1000px) rotateY(8deg) rotateX(3deg);
+        box-shadow: 20px 25px 35px #173c5426;
+      }
+      .shop-banner {
+        border-radius: 2px;
+        background: linear-gradient(120deg, #102e4d, #086c94);
+        padding: 30px 20px;
+      }
+      .product div {
+        border-radius: 2px;
+      }
+      .step {
+        position: relative;
+        border-top: 2px solid #cedfe9;
+      }
+      .step b {
+        font-size: 16px;
+        letter-spacing: 2px;
+      }
+      .step h3 {
+        font-size: 22px;
+      }
+      .promise {
+        border-radius: 2px;
+        background: linear-gradient(115deg, #102e4d, #073f5c);
+        position: relative;
+        overflow: hidden;
+      }
+      .promise:after {
+        content: "↗";
+        font: 300px Arial;
+        position: absolute;
+        left: -15px;
+        bottom: -120px;
+        opacity: 0.07;
+        pointer-events: none;
+      }
+      .promise h2 {
+        font-size: 37px;
+      }
+      .faq {
+        background: #f3f7fa;
+      }
+      details {
+        padding: 24px 0;
+      }
+      summary {
+        font-size: 17px;
+      }
+      .contact h2 {
+        font-size: 45px;
+        line-height: 1.35;
+      }
+      .contact form {
+        background: #f3f7fa;
+        border: 0;
+        border-top: 3px solid #079dcc;
+        border-radius: 0;
+        padding: 35px;
+      }
+      input,
+      select,
+      textarea {
+        background: white;
+        border-radius: 2px;
+        padding: 13px;
+        border-color: #ccdde7;
+      }
+      .contact-note {
+        line-height: 1.9;
+      }
+      footer {
+        background: #081e33;
+        padding: 50px 0 23px;
+      }
+      .wordmark {
+        letter-spacing: 3px;
+        font-size: 27px;
+      }
+      .footer-top p {
+        color: #8aa7bd;
+      }
+      .footer-bottom {
+        color: #7a97ae;
+      }
+      .section-top p {
+        line-height: 1.9;
+      }
+      .badge {
+        border-radius: 2px;
+      }
+      .checks {
+        line-height: 1.9;
+      }
+      @media (max-width: 900px) {
+        .hero-grid {
+          gap: 25px;
+        }
+        .visual {
+          height: 370px;
+        }
+        .service {
+          padding: 25px;
+        }
+        .contact h2 {
+          font-size: 36px;
+        }
+        .solution-text {
+          padding: 35px;
+        }
+      }
+      @media (max-width: 680px) {
+        .nav {
+          height: 80px;
+        }
+        .brand img {
+          width: 132px;
+          height: 74px;
+        }
+        .navlinks {
+          top: 80px;
+        }
+        .hero {
+          padding: 48px 0 42px;
+        }
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 25px;
+        }
+        h1 {
+          font-size: 46px;
+        }
+        .hero .lead {
+          font-size: 15px;
+        }
+        .visual {
+          height: 325px;
+          margin: 0 5px;
+        }
+        .code-tag {
+          top: 15px;
+        }
+        .floating {
+          bottom: 0;
+        }
+        .strip .wrap {
+          font-size: 10px;
+        }
+        section {
+          padding: 60px 0;
+        }
+        .service {
+          padding: 27px;
+        }
+        .solution-text {
+          padding: 28px;
+        }
+        .solution-text h3 {
+          font-size: 25px;
+        }
+        .solution-art {
+          padding: 30px;
+        }
+        .tab {
+          padding: 12px 14px;
+          font-size: 12px;
+        }
+        .step h3 {
+          font-size: 19px;
+        }
+        .promise {
+          padding: 30px;
+        }
+        .promise h2 {
+          font-size: 30px;
+        }
+        .contact h2 {
+          font-size: 36px;
+        }
+        .contact form {
+          padding: 24px;
+        }
+        .contact {
+          gap: 25px;
+        }
+      }
+
+      .social-links {
+        display: grid;
+        gap: 15px;
+      }
+      .social-card {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        padding: 26px 28px;
+        background: #f2f7fa;
+        border: 1px solid #dbe7ef;
+        border-radius: 3px;
+        transition:
+          transform 0.2s,
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .social-card:hover {
+        transform: translateY(-3px);
+        border-color: #079dcc;
+        background: #eaf4f9;
+      }
+      .social-card strong {
+        display: block;
+        font-size: 22px;
+      }
+      .social-card small {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+      .social-symbol {
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        font: bold 32px Arial;
+        background: #dff2f8;
+        color: #0787ae;
+      }
+      .whatsapp .social-symbol {
+        color: #178b62;
+        background: #e0f3e9;
+      }
+      .instagram .social-symbol {
+        color: #a34983;
+        background: #f4e8f0;
+      }
+      .facebook .social-symbol {
+        color: #2364a2;
+        background: #e1edf8;
+      }
+      .social-arrow {
+        margin-right: auto;
+        font-size: 27px;
+        color: #6091ab;
+      }
+      .contact-signature {
+        font: bold 18px Arial;
+        letter-spacing: 3px;
+        margin-top: 35px;
+        color: var(--navy);
+      }
+      .contact-signature span {
+        color: var(--blue);
+        font-size: 35px;
+      }
+      .contact-signature small {
+        display: block;
+        font: 9px Arial;
+        letter-spacing: 2px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      #social-status {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 0;
+      }
+      @media (max-width: 680px) {
+        .social-card {
+          padding: 22px;
+          gap: 17px;
+        }
+        .social-card strong {
+          font-size: 20px;
+        }
+        .social-card small {
+          font-size: 12px;
+        }
+        .contact-signature {
+          margin: 20px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a class="brand" href="#home" aria-label="Vertex Tech الرئيسية"
+          ><img
+            src="assets/vertex-logo.png"
+            alt="Vertex Tech — Web Solutions | Strategy"
+        /></a>
+        <nav class="navlinks" id="navigation" aria-label="القائمة الرئيسية">
+          <a href="#services">خدماتنا</a><a href="#solutions">حلول لأعمالك</a
+          ><a href="#process">كيف نعمل</a><a href="#faq">أسئلة شائعة</a>
+        </nav>
+        <a class="btn" href="#contact">لنبدأ مشروعك <span>↗</span></a
+        ><button
+          class="menu"
+          aria-label="فتح القائمة"
+          aria-controls="navigation"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+      </div>
+    </header>
+    <main>
+      <div class="hero" id="home">
+        <div class="wrap hero-grid">
+          <div class="reveal">
+            <div class="eyebrow">VERTEX TECH / WEB SOLUTIONS</div>
+            <h1>نرتقي بفكرتك.<br /><span>ونبنيها للويب.</span></h1>
+            <p class="lead">
+              نبني مشاريع ويب متكاملة للشركات والمحلات. من موقع يعرّف الناس
+              بأعمالك، إلى منصة تدير تفاصيلها — بتجربة واضحة وتصميم يناسبك.
+            </p>
+            <div class="actions">
+              <a href="#contact" class="btn"
+                >احكِ لنا عن مشروعك <span>↖</span></a
+              ><a href="#solutions" class="btn outline">اكتشف الحلول</a>
+            </div>
+            <div class="hero-note">
+              تصميم وتجربة مستخدم · تطوير متكامل · إطلاق ومتابعة
+            </div>
+          </div>
+          <div
+            class="visual"
+            aria-label="مسارات تقنية مترابطة تصعد إلى الأعلى، مستوحاة من شعار Vertex Tech"
+          >
+            <svg
+              class="identity-art"
+              viewBox="0 0 500 440"
+              role="img"
+              aria-label="رمز صعود هندسي مستوحى من هوية الشركة"
+            >
+              <defs>
+                <linearGradient id="path-gradient" x1="0" y1="1" x2="1" y2="0">
+                  <stop stop-color="#163e67" />
+                  <stop offset="1" stop-color="#19b9e7" />
+                </linearGradient>
+                <linearGradient id="surface">
+                  <stop stop-color="#173f5d" stop-opacity=".6" />
+                  <stop offset="1" stop-color="#0a253e" stop-opacity=".2" />
+                </linearGradient>
+              </defs>
+              <g fill="none" stroke="#48718b" opacity=".3">
+                <path d="M40 350L250 430L470 335L260 258Z" />
+                <path d="M40 290L250 370L470 275L260 198Z" />
+                <path d="M40 230L250 310L470 215L260 138Z" />
+                <path d="M40 170L250 250L470 155L260 78Z" />
+                <path d="M40 170V350M250 250V430M470 155V335M260 78V258" />
+              </g>
+              <path
+                d="M83 308L260 374L419 305L242 237Z"
+                fill="url(#surface)"
+                stroke="#315c79"
+              />
+              <g
+                stroke="url(#path-gradient)"
+                stroke-width="24"
+                stroke-linecap="square"
+                stroke-linejoin="miter"
+                fill="none"
+              >
+                <path d="M103 310L168 221L211 253L338 80" />
+                <path d="M170 344L234 257L273 285L352 179" />
+                <path d="M76 252L134 173L173 202" />
+              </g>
+              <path d="M308 85L366 54L362 122Z" fill="#13acdc" />
+              <g fill="#0c2b43" stroke="#8bdaee" stroke-width="3">
+                <path d="M153 221L168 206L183 221L168 236Z" />
+                <path d="M219 257L234 242L249 257L234 272Z" />
+                <path d="M119 173L134 158L149 173L134 188Z" />
+              </g>
+              <g fill="#8bdaee">
+                <circle cx="352" cy="179" r="7" />
+                <circle cx="76" cy="252" r="6" />
+              </g>
+              <g stroke="#2c7696" stroke-width="1" fill="none">
+                <path d="M353 179H428V139" />
+                <path d="M103 310H44V370" />
+              </g>
+              <g fill="#9dc7dc" font-family="monospace" font-size="10">
+                <text x="376" y="127">BUILD. CONNECT.</text>
+                <text x="45" y="395">YOUR NEXT VERTEX</text>
+                <text x="235" y="414">01 / ENGINEERED TO GROW</text>
+              </g>
+            </svg>
+            <div class="code-tag">&lt; ideas become experiences /&gt;</div>
+            <div class="floating">
+              <strong>نبني حضورك. نربط أعمالك.</strong>WEB SOLUTIONS | STRATEGY
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="strip">
+        <div class="wrap">
+          <b>ويب مصمم حول أعمالك</b><span>◈ متجاوب مع كل الشاشات</span
+          ><span>◈ تجربة استخدام واضحة</span><span>◈ قابل للتوسع والتطوير</span>
+        </div>
+      </div>
+      <section id="services">
+        <div class="wrap">
+          <div class="section-top">
+            <div>
+              <div class="eyebrow">ماذا نبني؟</div>
+              <h2>من حضورك الرقمي،<br />إلى نظام أعمالك.</h2>
+            </div>
+            <p>
+              كل مشروع له طريقته. نحدد ما يحتاجه عملك، ثم نحوله إلى تجربة رقمية
+              مترابطة.
+            </p>
+          </div>
+          <div class="services">
+            <article class="service">
+              <div class="icon">&lt;/&gt;</div>
+              <h3>مواقع الشركات</h3>
+              <p>
+                واجهة رقمية تعكس هوية شركتك وتعرّف بخدماتك وتسهل وصول العملاء
+                إليك.
+              </p>
+              <ul>
+                <li>تصميم مخصص لهويتك</li>
+                <li>صفحات خدمات ومحتوى منظم</li>
+                <li>تجربة مناسبة للهاتف والكمبيوتر</li>
+              </ul>
+            </article>
+            <article class="service">
+              <div class="icon">▦</div>
+              <h3>متاجر ومواقع المحلات</h3>
+              <p>
+                اعرض منتجاتك بطريقة واضحة، واجعل رحلة العميل من التصفح إلى الطلب
+                أسهل.
+              </p>
+              <ul>
+                <li>كتالوج منتجات وتصنيفات</li>
+                <li>سلة وطلبات بحسب متطلبات المشروع</li>
+                <li>لوحة لإدارة المنتجات والطلبات</li>
+              </ul>
+            </article>
+            <article class="service">
+              <div class="icon">⌘</div>
+              <h3>أنظمة ومنصات ويب</h3>
+              <p>
+                حوّل إجراءات العمل إلى نظام يجمع البيانات والعمليات في مكان
+                واحد.
+              </p>
+              <ul>
+                <li>لوحات إدارة وصلاحيات مستخدمين</li>
+                <li>قواعد بيانات وتطوير باك إند</li>
+                <li>تكاملات وتقارير حسب الحاجة</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="solutions" id="solutions">
+        <div class="wrap">
+          <div class="section-top">
+            <div>
+              <div class="eyebrow">ما الذي يناسب عملك؟</div>
+              <h2>تصوّر الخطوة القادمة.</h2>
+            </div>
+            <p>
+              أمثلة توضيحية للحلول الممكنة، وليست مشاريع سابقة أو أعمال عملاء.
+            </p>
+          </div>
+          <div class="tabs" role="tablist" aria-label="أنواع الحلول">
+            <button
+              class="tab"
+              role="tab"
+              aria-selected="true"
+              id="tab-shop"
+              aria-controls="solution-panel"
+              data-type="shop"
+            >
+              المحلات والمتاجر</button
+            ><button
+              class="tab"
+              role="tab"
+              aria-selected="false"
+              id="tab-company"
+              aria-controls="solution-panel"
+              data-type="company"
+              tabindex="-1"
+            >
+              الشركات</button
+            ><button
+              class="tab"
+              role="tab"
+              aria-selected="false"
+              id="tab-system"
+              aria-controls="solution-panel"
+              data-type="system"
+              tabindex="-1"
+            >
+              الأنظمة المخصصة
+            </button>
+          </div>
+          <div
+            class="solution"
+            id="solution-panel"
+            role="tabpanel"
+            aria-labelledby="tab-shop"
+          >
+            <div class="solution-text">
+              <span class="badge">تصوّر توضيحي</span>
+              <h3 id="solution-title">محلك، أقرب لعملائك.</h3>
+              <p id="solution-copy">
+                موقع يعرض منتجاتك ويساعد العميل على اختيار ما يحتاجه، مع لوحة
+                واضحة لإدارة المنتجات ومتابعة الطلبات.
+              </p>
+              <div class="checks" id="solution-checks">
+                <span>كتالوج المنتجات</span><span>إدارة الطلبات</span
+                ><span>خيارات المنتجات</span><span>تصميم متجاوب</span>
+              </div>
+              <a href="#contact" class="btn outline"
+                >ناقش معنا هذا الحل <span>↖</span></a
+              >
+            </div>
+            <div class="solution-art">
+              <div class="shop">
+                <div class="shop-head">
+                  <b id="demo-brand">YOUR STORE</b><span>MENU &nbsp; ◉</span>
+                </div>
+                <div class="shop-banner">
+                  <span id="demo-title">A new way to shop.</span
+                  ><small>ILLUSTRATIVE WEBSITE CONCEPT</small>
+                </div>
+                <div class="products">
+                  <div class="product">
+                    <div id="demo-icon-1">◇</div>
+                    <span id="demo-label-1">Product catalog</span>
+                  </div>
+                  <div class="product">
+                    <div id="demo-icon-2">▱</div>
+                    <span id="demo-label-2">Your orders</span>
+                  </div>
+                  <div class="product">
+                    <div id="demo-icon-3">○</div>
+                    <span id="demo-label-3">Store management</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="process">
+        <div class="wrap">
+          <div class="section-top">
+            <div>
+              <div class="eyebrow">من أول فكرة</div>
+              <h2>طريق واضح إلى الإطلاق.</h2>
+            </div>
+            <p>
+              نقسم المشروع إلى مراحل مفهومة، حتى تعرف ما الذي يُبنى وما الذي
+              يأتي بعده.
+            </p>
+          </div>
+          <div class="process">
+            <article class="step">
+              <b>01 /</b>
+              <h3>نفهم أعمالك</h3>
+              <p>
+                نناقش الفكرة والجمهور والعمليات المطلوبة، ونحدد نطاق المشروع
+                وأولوياته.
+              </p>
+            </article>
+            <article class="step">
+              <b>02 /</b>
+              <h3>نصمم التجربة</h3>
+              <p>
+                نرتب الصفحات ورحلة المستخدم، ونجهز تصميمًا قابلًا للمراجعة قبل
+                التطوير.
+              </p>
+            </article>
+            <article class="step">
+              <b>03 /</b>
+              <h3>نبني ونختبر</h3>
+              <p>
+                نطور الواجهة والباك إند، ونراجع الوظائف والتجاوب وفق نطاق
+                المشروع.
+              </p>
+            </article>
+            <article class="step">
+              <b>04 /</b>
+              <h3>نطلق ونتابع</h3>
+              <p>
+                نجهز النشر والتسليم، ونوضح طريقة الإدارة وخيارات الصيانة
+                والتطوير.
+              </p>
+            </article>
+          </div>
+          <div class="promise">
+            <div>
+              <div class="eyebrow" style="color: #65c7e6">
+                لماذا VERTEX TECH؟
+              </div>
+              <h2>مشروع واحد.<br />تفاصيل تعمل معًا.</h2>
+              <p>
+                التصميم والتطوير وإدارة البيانات أجزاء من تجربة واحدة. نخطط لها
+                معًا، حول احتياجات عملك.
+              </p>
+            </div>
+            <ul>
+              <li>نطاق واضح ووظائف محددة قبل التنفيذ</li>
+              <li>تصميم يعكس هوية شركتك</li>
+              <li>واجهة وباك إند ضمن مشروع مترابط</li>
+              <li>تسليم منظم وخطة للخطوة التالية</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="faq" id="faq">
+        <div class="wrap">
+          <div class="eyebrow">قبل أن نبدأ</div>
+          <h2>أسئلة في محلها.</h2>
+          <details>
+            <summary>هل تطورون المشروع كاملًا أم التصميم فقط؟</summary>
+            <p>
+              نركز على مشاريع الويب المتكاملة: تحديد المتطلبات، التصميم، تطوير
+              الواجهة والباك إند وقاعدة البيانات، ثم التجهيز للإطلاق. يتحدد ما
+              يشمله مشروعك في عرض العمل.
+            </p>
+          </details>
+          <details>
+            <summary>كم يستغرق تنفيذ الموقع وكم تكلفته؟</summary>
+            <p>
+              تختلف المدة والتكلفة حسب عدد الصفحات، الوظائف والتكاملات المطلوبة.
+              بعد فهم الفكرة وتحديد النطاق، يمكن إعداد تقدير مناسب وخطة تنفيذ
+              واضحة.
+            </p>
+          </details>
+          <details>
+            <summary>هل يمكنني إدارة المحتوى والمنتجات بنفسي؟</summary>
+            <p>
+              يمكن تضمين لوحة إدارة مناسبة للمحتوى أو المنتجات أو الطلبات حسب
+              طبيعة المشروع، وتحديد صلاحيات المستخدمين ضمن المتطلبات.
+            </p>
+          </details>
+          <details>
+            <summary>هل يمكن تطوير المشروع على مراحل؟</summary>
+            <p>
+              نعم، يمكن البدء بالوظائف الأساسية ثم إضافة ميزات جديدة على مراحل،
+              مع التخطيط منذ البداية لما يحتاجه التوسع.
+            </p>
+          </details>
+        </div>
+      </section>
+      <section id="contact">
+        <div class="wrap contact">
+          <div>
+            <div class="eyebrow">لنبدأ بخطوة</div>
+            <h2>فكرتك تبدأ<br />بمحادثة.</h2>
+            <p>
+              احكِ لنا عن أعمالك وما تريد أن تبنيه. تواصل معنا عبر القناة الأقرب
+              إليك، ولنخطط معًا لخطوتك الرقمية القادمة.
+            </p>
+            <div class="contact-signature" dir="ltr">
+              VERTEX TECH <span>↗</span><small>WEB SOLUTIONS | STRATEGY</small>
+            </div>
+          </div>
+          <div class="social-links">
+            <a
+              class="social-card whatsapp"
+              data-social="whatsapp"
+              href="#"
+              aria-disabled="true"
+              ><span class="social-symbol" aria-hidden="true">◉</span
+              ><span
+                ><strong>واتساب</strong
+                ><small>لنتحدث عن مشروعك مباشرة</small></span
+              ><span class="social-arrow" aria-hidden="true">↖</span></a
+            ><a
+              class="social-card instagram"
+              data-social="instagram"
+              href="#"
+              aria-disabled="true"
+              ><span class="social-symbol" aria-hidden="true">◎</span
+              ><span
+                ><strong>إنستغرام</strong
+                ><small>تابع أفكارنا وتواصل معنا</small></span
+              ><span class="social-arrow" aria-hidden="true">↖</span></a
+            ><a
+              class="social-card facebook"
+              data-social="facebook"
+              href="#"
+              aria-disabled="true"
+              ><span class="social-symbol" aria-hidden="true">f</span
+              ><span
+                ><strong>فيسبوك</strong
+                ><small>تعرّف علينا وابدأ المحادثة</small></span
+              ><span class="social-arrow" aria-hidden="true">↖</span></a
+            >
+            <p id="social-status" role="status" hidden></p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap">
+        <div class="footer-top">
+          <div>
+            <div class="wordmark" dir="ltr">VERTEX <span>TECH</span></div>
+            <p>حلول ويب تبني الخطوة القادمة لأعمالك.</p>
+          </div>
+          <nav aria-label="روابط التذييل">
+            <a href="#services">الخدمات</a><a href="#process">كيف نعمل</a
+            ><a href="#contact">ابدأ مشروعك</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© <span id="year"></span> Vertex Tech. جميع الحقوق محفوظة.</span
+          ><span dir="ltr">WEB SOLUTIONS | STRATEGY</span>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const menu = document.querySelector(".menu"),
+        nav = document.querySelector("#navigation");
+      menu.addEventListener("click", () => {
+        const open = nav.classList.toggle("open");
+        menu.setAttribute("aria-expanded", String(open));
+        menu.setAttribute("aria-label", open ? "إغلاق القائمة" : "فتح القائمة");
+        menu.textContent = open ? "×" : "☰";
+      });
+      nav.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          nav.classList.remove("open");
+          menu.setAttribute("aria-expanded", "false");
+          menu.textContent = "☰";
+        }),
+      );
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          nav.classList.remove("open");
+          menu.setAttribute("aria-expanded", "false");
+          menu.textContent = "☰";
+        }
+      });
+      const solutions = {
+        shop: {
+          title: "محلك، أقرب لعملائك.",
+          copy: "موقع يعرض منتجاتك ويساعد العميل على اختيار ما يحتاجه، مع لوحة واضحة لإدارة المنتجات ومتابعة الطلبات.",
+          checks: [
+            "كتالوج المنتجات",
+            "إدارة الطلبات",
+            "خيارات المنتجات",
+            "تصميم متجاوب",
+          ],
+          brand: "YOUR STORE",
+          headline: "A new way to shop.",
+          labels: ["Product catalog", "Your orders", "Store management"],
+          icons: ["◇", "▱", "○"],
+        },
+        company: {
+          title: "حضور رقمي يعكس شركتك.",
+          copy: "موقع يقدم شركتك وخدماتها بشكل منظم، ويجعل الوصول إلى المعلومات والتواصل أسهل على عملائك المحتملين.",
+          checks: [
+            "هوية الشركة",
+            "صفحات الخدمات",
+            "إدارة المحتوى",
+            "نماذج التواصل",
+          ],
+          brand: "YOUR COMPANY",
+          headline: "Built around your vision.",
+          labels: ["Our company", "Our services", "Contact us"],
+          icons: ["◈", "⌘", "↗"],
+        },
+        system: {
+          title: "عملياتك، في مكان واحد.",
+          copy: "نظام ويب مصمم حول إجراءات عملك، يربط المستخدمين والبيانات والمهام مع لوحة إدارة وصلاحيات تناسب فريقك.",
+          checks: [
+            "لوحات الإدارة",
+            "صلاحيات المستخدمين",
+            "قواعد البيانات",
+            "تقارير مخصصة",
+          ],
+          brand: "YOUR WORKSPACE",
+          headline: "Everything. Connected.",
+          labels: ["Dashboard", "Your team", "Reports"],
+          icons: ["▦", "◎", "↗"],
+        },
+      };
+      const tabs = [...document.querySelectorAll(".tab")];
+      function activate(t) {
+        tabs.forEach((b) => {
+          b.setAttribute("aria-selected", String(b === t));
+          b.tabIndex = b === t ? 0 : -1;
+        });
+        const d = solutions[t.dataset.type];
+        document
+          .querySelector("#solution-panel")
+          .setAttribute("aria-labelledby", t.id);
+        document.querySelector("#solution-title").textContent = d.title;
+        document.querySelector("#solution-copy").textContent = d.copy;
+        document.querySelector("#solution-checks").replaceChildren(
+          ...d.checks.map((s) => {
+            const el = document.createElement("span");
+            el.textContent = s;
+            return el;
+          }),
+        );
+        document.querySelector("#demo-brand").textContent = d.brand;
+        document.querySelector("#demo-title").textContent = d.headline;
+        d.labels.forEach((s, i) => {
+          document.querySelector("#demo-label-" + (i + 1)).textContent = s;
+          document.querySelector("#demo-icon-" + (i + 1)).textContent =
+            d.icons[i];
+        });
+      }
+      tabs.forEach((t, i) => {
+        t.addEventListener("click", () => activate(t));
+        t.addEventListener("keydown", (e) => {
+          let target;
+          if (e.key === "ArrowLeft") target = tabs[(i + 1) % tabs.length];
+          if (e.key === "ArrowRight")
+            target = tabs[(i + tabs.length - 1) % tabs.length];
+          if (e.key === "Home") target = tabs[0];
+          if (e.key === "End") target = tabs.at(-1);
+          if (target) {
+            e.preventDefault();
+            activate(target);
+            target.focus();
+          }
+        });
+      });
+      document.querySelector("#year").textContent = new Date().getFullYear();
+      // أضف روابط الشركة هنا فقط. واتساب: https://wa.me/ ثم الرقم الدولي بدون + أو فراغات.
+      const CONTACT_LINKS = {
+        whatsapp: "", // ضع رابط واتساب هنا
+        instagram: "", // ضع رابط إنستغرام هنا
+        facebook: "", // ضع رابط فيسبوك هنا
+      };
+      document.querySelectorAll("[data-social]").forEach((link) => {
+        const url = CONTACT_LINKS[link.dataset.social].trim();
+        if (/^https:\/\//i.test(url)) {
+          link.href = url;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.removeAttribute("aria-disabled");
+        } else {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const status = document.querySelector("#social-status");
+            status.hidden = false;
+            status.textContent = "";
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
