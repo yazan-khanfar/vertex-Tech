@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الحالات المخبرية | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Labs &amp; Lab Cases</span>
+            <h1 class="fw-bold">المختبرات والحالات المخبرية</h1>
+            <p class="text-secondary mb-0">أدر المختبرات المتعاقدة مع العيادة، ثم ادخل إلى كل مختبر لمتابعة حالاته فقط.</p>
+          </div>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLabModal" type="button">ربط مختبر</button>
+        </div>
+
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3"><div class="soft-card p-3 h-100"><small class="text-secondary">مختبرات نشطة</small><div class="fs-3 fw-bold" id="activeLabsCount"><%= counts.active %></div></div></div>
+          <div class="col-6 col-lg-3"><div class="soft-card p-3 h-100"><small class="text-secondary">مختبرات مؤرشفة</small><div class="fs-3 fw-bold" id="archivedLabsCount"><%= counts.archived %></div></div></div>
+          <div class="col-6 col-lg-3"><div class="soft-card p-3 h-100"><small class="text-secondary">حالات مفتوحة</small><div class="fs-3 fw-bold text-primary"><%= counts.opened %></div></div></div>
+          <div class="col-6 col-lg-3"><div class="soft-card p-3 h-100"><small class="text-secondary">حالات متأخرة</small><div class="fs-3 fw-bold text-danger"><%= counts.overdue %></div></div></div>
+        </div>
+
+        <div class="filter-panel mb-4">
+          <div class="row g-3 align-items-center">
+            <div class="col-lg-6">
+              <div class="input-group"><span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="labSearch" placeholder="ابحث باسم المختبر أو الهاتف أو المدينة" value="" name="lab_search" form="backend-form-1"></div>
+            </div>
+            <div class="col-lg-6 d-flex gap-2 justify-content-lg-end flex-wrap">
+              <button class="btn btn-primary lab-filter-btn" data-lab-filter="active" type="button">المختبرات النشطة</button>
+              <button class="btn btn-light lab-filter-btn" data-lab-filter="archived" type="button">المؤرشفة</button>
+              <button class="btn btn-light lab-filter-btn" data-lab-filter="all" type="button">الكل</button>
+            </div>
+          </div>
+        </div>
+
+        <% if(feedback){ %><div class="alert alert-success"><%= feedback %></div><% } %><div class="row g-4" id="labsGrid">
+          <% for(const l of labs){ %>
+          <div class="col-md-6 col-xl-4 lab-card-item" data-lab-card data-lab-id="<%= l.Laboratory_ID %>" data-status="<%= l.Relationship_Status %>">
+            <div class="soft-card p-4 h-100 d-flex flex-column">
+              <div class="d-flex justify-content-between gap-3 mb-3"><div class="d-flex gap-3"><div class="rounded-4 bg-primary-subtle text-primary d-grid place-items-center p-3"><i class="bi bi-building fs-4"></i></div><div><h5 class="fw-bold mb-1"><%= l.Laboratory_Name %></h5><div class="small text-secondary"><%= l.Address %> • <%= l.Phone %></div></div></div><span class="badge <%= l.Relationship_Status==='active'?'text-bg-success':'text-bg-secondary' %> align-self-start"><%= label(l.Relationship_Status) %></span></div>
+              <div class="row g-2 mb-3 text-center"><div class="col-4"><div class="border rounded-3 p-2"><small class="text-secondary d-block">مفتوحة</small><strong><%= l.open_cases %></strong></div></div><div class="col-4"><div class="border rounded-3 p-2"><small class="text-secondary d-block">مستلمة</small><strong><%= l.received_cases %></strong></div></div><div class="col-4"><div class="border rounded-3 p-2"><small class="text-secondary d-block">متأخرة</small><strong class="text-danger"><%= l.overdue_cases %></strong></div></div></div>
+              <div class="mt-auto d-flex gap-2"><a class="btn btn-primary flex-grow-1" href="/clinic/lab-details?lab=<%= l.Laboratory_ID %>">فتح المختبر</a><form method="post" action="/clinic/lab-details/<%= l.Laboratory_ID %>/relationship"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="relationship_status" value="<%= l.Relationship_Status==='active'?'archived':'active' %>"><input type="hidden" name="edit_lab_notes" value="<%= l.Internal_Notes||'' %>"><button class="btn btn-outline-secondary" title="<%= l.Relationship_Status==='active'?'أرشفة':'استعادة' %> المختبر" type="submit"><i class="bi bi-archive"></i></button></form></div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <div class="soft-card p-5 text-center d-none mt-4" id="labsEmpty" <%= labs.length ? "" : "data-empty=1" %>><i class="bi bi-building-x fs-1 text-secondary"></i><h5 class="fw-bold mt-3">لا توجد مختبرات مطابقة</h5><p class="text-secondary mb-0">غيّر البحث أو الفلتر الحالي.</p></div>
+
+        <div class="alert alert-light border rounded-4 mt-4 mb-0"><i class="bi bi-info-circle ms-1"></i><strong>الأرشفة لا تحذف التاريخ:</strong> المختبر المؤرشف لا يظهر في طلبات مخبرية جديدة، لكن تبقى حالاته السابقة قابلة للمتابعة والقراءة ويمكن استعادته لاحقاً.</div>
+      </section>
+    </main>
+    <div class="modal fade" id="addLabModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header"><div><h5 class="modal-title fw-bold">ربط مختبر بالعيادة</h5><small class="text-secondary">اختر مختبرًا موجودًا، دون إنشاء نسخة جديدة من بياناته.</small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div>
+          <div class="modal-body"><div class="row g-3"><div class="col-12"><label for="existingLabId" class="form-label">المختبر من كتالوج المنصة *</label><select class="form-select" id="existingLabId" name="laboratory_id" required form="backend-form-2" data-record-select="lab"><option value="">اختر المختبر</option><% for(const l of catalogue){ %><option value="<%= l.Laboratory_ID %>"><%= l.Laboratory_Name %> — <%= l.Address %> — <%= l.Phone %></option><% } %></select><p class="small text-secondary mt-2">إضافة المختبر وتعديل اسمه وبيانات التواصل من صلاحية مدير المنصة فقط.</p></div><div class="col-12"><label class="form-label" for="newLabNotes">ملاحظات داخلية للعيادة</label><textarea class="form-control" id="newLabNotes" name="internal_notes" rows="3" form="backend-form-2"></textarea></div></div></div>
+          <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveNewLab" form="backend-form-2" type="submit">ربط المختبر</button></div>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script><script src="/clinic/assets/batch4.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-2" method="post" action="/clinic/lab-cases/link" hidden=""><input type="hidden" name="csrf_token" value="<%= csrfToken %>"></form></body></html>

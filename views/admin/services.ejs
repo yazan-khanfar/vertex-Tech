@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>كتالوج الخدمات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content"><section class="container py-4 py-lg-5"><div class="d-flex flex-wrap justify-content-between gap-3 mb-4"><div><span class="badge badge-soft">Services Catalog</span><h1 class="fw-bold mt-2">كتالوج الخدمات الموحّد</h1><p class="text-secondary">الخدمة تُعرّف مرة واحدة؛ كل عيادة تضبط سعرها ومدتها وتخصصها لأطبائها.</p></div><button class="btn btn-primary align-self-start" type="button" data-bs-toggle="modal" data-bs-target="#addCatalogServiceModal">إضافة خدمة عامة</button></div><div class="soft-card p-4"><div class="table-responsive"><table class="table"><thead><tr><th>المعرّف</th><th>اسم الخدمة</th><th>إعدادات العيادات</th></tr></thead><tbody><tr><td>S-001</td><td>علاج جذور</td><td><a href="clinic-details?id=C-008">السعر والمدة لدى العيادة</a></td></tr></tbody></table></div></div></section></main>
+
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="catalog-create-form" method="post" data-ui-unbound="" hidden></form><div class="modal fade" id="addCatalogServiceModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="fw-bold">إضافة خدمة للكتالوج</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button></div><div class="modal-body"><label class="form-label" for="catalogServiceName">اسم الخدمة *</label><input id="catalogServiceName" name="service_name" class="form-control" required form="catalog-create-form"><p class="small text-secondary mt-2">ابحث عن الخدمة أولًا لمنع تكرارها. السعر والمدة تُحددان داخل كل عيادة.</p></div><div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">إلغاء</button><button class="btn btn-primary" type="submit" form="catalog-create-form">إضافة الخدمة</button></div></div></div></div><%- include('../partials/admin/footer') %></body></html>

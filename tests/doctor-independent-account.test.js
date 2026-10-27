@@ -1,0 +1,33 @@
+'use strict';
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const {loadDoctorProfile}=require('../src/account/doctor-profile-service');
+test('doctor personal details come from USER/DOCTOR, keyed to authenticated account without clinic membership',async()=>{
+ const queries=[];
+ const fake={async query(sql,args){queries.push({sql,args});if(queries.length===1)return{rowCount:1,rows:[{First_Name:'Doctor',Last_Name:'Test',Email:'doctor@example.invalid',License_Status:'verified',Two_Factor_Enabled:false}]};return{rows:[{Name_AR:'طب عام',Name_EN:'General Dentistry'}]};}};
+ const profile=await loadDoctorProfile(fake,'3','1');
+ assert.equal(profile.Email,'doctor@example.invalid');
+ assert.equal(profile.specialties.length,1);
+ assert.deepEqual(queries[0].args,['3','1']);
+ assert.deepEqual(queries[1].args,['1']);
+ assert.match(queries[0].sql,/"USER"/);
+ assert.match(queries[0].sql,/"DOCTOR"/);
+ assert(!queries[0].sql.includes('WORKS_AT')&&!queries[0].sql.includes('CLINIC'));
+ assert(!queries[0].sql.includes('Password_Hash'));
+ assert(!queries[0].sql.includes('Two_Factor_Secret_Encrypted'));
+});
+test('the personal page and onboarding show MFA links while clinical routes retain clinic guard',()=>{
+ const root=path.resolve(__dirname,'..');
+ const choose=fs.readFileSync(path.join(root,'views/onboarding/doctor/choose-path.ejs'),'utf8');
+ const personal=fs.readFileSync(path.join(root,'views/doctor/profile.ejs'),'utf8');
+ const guard=fs.readFileSync(path.join(root,'src/auth/guard.js'),'utf8');
+ const server=fs.readFileSync(path.join(root,'server.js'),'utf8');
+ assert(choose.includes('/doctor/profile#sdc-mfa'));
+ assert(choose.includes('/doctor/profile'));
+ assert(personal.includes('mfa-manager'));
+ assert(server.includes("actor.role!=='doctor'"));
+ assert(server.includes('resolveSession(req,res)'));
+ assert(guard.includes('req.sdcSession.clinicId'));
+});

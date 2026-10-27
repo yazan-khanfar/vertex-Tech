@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>الإشعارات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/patient/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Notifications</span>
+            <h1 class="fw-bold">الإشعارات</h1>
+            <p class="text-secondary mb-0">
+              المواعيد، طلبات التغيير، التقارير الطبية، المتابعات والفواتير.
+            </p>
+          </div>
+          <button class="btn btn-light" data-toast="تم تحديد الإشعارات كمقروءة تجريبياً" data-ui-pending="">
+            <i class="bi bi-check2-all ms-1"></i>تحديد الكل كمقروء
+          </button>
+        </div>
+        <div class="d-grid gap-3">
+          <div class="notification-item" data-record-id="N-001">
+            <div class="notification-icon success">
+              <i class="bi bi-calendar2-check"></i>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold mb-1">تقرير زيارتك أصبح متاحًا</h6>
+              <div class="text-secondary">اعتمد د. عمر ناصر تقرير RPT-001 للزيارة V-001 بتاريخ 21 أكتوبر 2026.</div>
+              <small class="text-secondary">منذ 20 دقيقة</small>
+            </div>
+            <span class="badge text-bg-success align-self-start">موعد</span>
+          </div>
+          
+          
+          
+          
+          
+          
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/patient/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast" role="alert">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية بنجاح</div>
+          <button class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

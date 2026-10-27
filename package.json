@@ -1,0 +1,31 @@
+{
+  "name": "smart-dental-clinic-ejs-registration",
+  "version": "1.9.0",
+  "private": true,
+  "description": "SSR: original appointment layouts + PostgreSQL appointment workflows + live patient clinic/doctor directory",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node scripts/test.js",
+    "db:seed:patient": "node scripts/seed-patient-role.js",
+    "db:seed:doctor": "node scripts/seed-doctor-role-specialties.js",
+    "db:seed:admin": "node scripts/seed-super-admin.js",
+    "test:integration": "node --test --test-concurrency=1 tests/connected-workflows.integration.js",
+    "db:init": "node scripts/migrate.js --init",
+    "db:migrate": "node scripts/migrate.js",
+    "smoke": "node scripts/smoke.js"
+  },
+  "engines": {
+    "node": ">=20.12"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "multer": "^2.0.2",
+    "pg": "^8.13.3"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.62.1"
+  }
+}

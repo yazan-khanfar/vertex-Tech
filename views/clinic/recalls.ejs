@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>المتابعات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="mb-4">
+          <span class="badge badge-soft mb-2">Recall &amp; Follow-up</span>
+          <h1 class="fw-bold">المتابعات</h1>
+          <p class="text-secondary mb-0">
+            تُنشأ من الموعد المقترح الذي يضعه الطبيب في تقرير المريض.
+          </p>
+        </div>
+        <div class="alert alert-primary border-0 rounded-4">
+          <i class="bi bi-info-circle ms-2"></i>إذا حجز
+          <strong>المريض</strong> الموعد من حسابه أو حجزته
+          <strong>العيادة</strong>، تتغير حالة المتابعة تلقائياً إلى
+          <strong>تم الحجز</strong>.
+        </div>
+        <div class="d-flex flex-wrap gap-2 mb-4 recall-status-tabs">
+          <button class="btn btn-primary recall-filter-btn active" data-recall-status="all" >
+            الكل <span class="badge bg-white text-primary me-1"><%= recalls.length %></span></button><button class="btn btn-light recall-filter-btn" data-recall-status="waiting" >
+            بانتظار الحجز
+            <span class="badge text-bg-warning me-1"><%= recalls.filter(r=>r.status==='waiting').length %></span></button><button class="btn btn-light recall-filter-btn" data-recall-status="booked" >
+            تم الحجز <span class="badge text-bg-success me-1"><%= recalls.filter(r=>r.status==='booked').length %></span></button><button class="btn btn-light recall-filter-btn" data-recall-status="overdue" >
+            متأخرة <span class="badge text-bg-danger me-1"><%= recalls.filter(r=>r.status==='overdue').length %></span>
+          </button>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="recallSearchV9" placeholder="ابحث باسم المريض، الطبيب أو نوع المتابعة" value=""  name="recall_search_v9" >
+          </div>
+        </div>
+        <div class="row g-4" id="recallGridV9">
+          <% if(!recalls.length){ %><div class="col-12"><div class="patient-card text-center text-secondary py-4">لا توجد متابعات مقترحة لمرضى هذه العيادة.</div></div><% } %>
+          <% for(const r of recalls){ %>
+          <div class="col-md-6 recall-card-v9" data-search="<%= r.patient_name %> <%= r.doctor_name %> <%= r.type %>" data-status="<%= r.status %>">
+            <div class="patient-card h-100"><div class="d-flex justify-content-between gap-3"><div><h5 class="fw-bold mb-1"><%= r.patient_name %></h5>
+            <div class="small text-secondary"><%= r.type %> • د. <%= r.doctor_name %></div></div>
+            <span class="badge <%= r.status==='booked'?'text-bg-success':['overdue','cancelled'].includes(r.status)?'text-bg-danger':'text-bg-warning' %>"><%= r.status==='booked'?'تم الحجز':r.status==='overdue'?'متأخرة':r.status==='cancelled'?'موعد متابعة ملغي':'بانتظار الحجز' %></span></div>
+            <div class="row g-2 mt-3 small"><div class="col-6"><span class="text-secondary">الموعد المقترح:</span><div class="fw-bold"><%= r.suggested_date %></div></div>
+            <div class="col-6"><span class="text-secondary">الموعد المحجوز:</span><div class="fw-bold"><%= r.status==='booked'?r.booked_date+' • '+r.booked_time:r.status==='cancelled'?'ألغي / رُفض الموعد':'لم يُحجز بعد' %></div></div></div>
+            <% if(r.notes){ %><div class="small text-primary mt-3"><i class="bi bi-diagram-3 ms-1"></i><%= r.notes %></div><% } %>
+            <div class="mt-3"><% if(r.follow_booking_id){ %><a class="btn btn-outline-primary btn-sm" href="/clinic/appointment-details?id=<%= r.follow_booking_id %>">عرض الموعد</a><% }else{ %><a class="btn btn-outline-primary btn-sm" href="/clinic/new-appointment?patient=<%= r.patient_id %>&amp;follow_up_visit_id=<%= r.id %>">حجز موعد متابعة</a><% } %>
+            <% if(r.plan_id){ %><a class="btn btn-light btn-sm" href="/clinic/treatment-plan-details?id=<%= r.plan_id %>">عرض الخطة</a><% } %></div>
+            </div></div><% } %>
+        </div>
+        <div class="empty-state d-none mt-4" id="recallEmptyV9">
+          <i class="bi bi-search fs-1"></i>
+          <h5 class="fw-bold mt-3">لا توجد متابعة مطابقة</h5>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

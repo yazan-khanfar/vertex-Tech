@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>تفاصيل الطبيب | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#patientDoctorDetailPage">تخطي إلى المحتوى</a>
+    <%- include('../partials/patient/header') %>
+    
+    <main class="page-shell" id="patientDoctorDetailPage">
+      <section class="container py-4 py-lg-5">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="clinics">العيادات</a></li><li class="breadcrumb-item"><a id="doctorClinicCrumbLink" href="/patient/clinic-details?clinic_id=<%= doctor.clinic_id %>"><span id="doctorClinicCrumb"><%= doctor.clinic_name %></span></a></li><li class="breadcrumb-item active" id="doctorDetailCrumb">د. <%= doctor.name %></li></ol></nav>
+        <div class="doctor-hero doctor-detail-hero p-4 p-lg-5 mb-4"><div class="row g-4 align-items-center"><div class="col-lg-8"><div class="d-flex flex-column flex-md-row gap-4 align-items-md-center"><img class="avatar" id="doctorDetailImage" src="../assets/vendor/2fb6f2c869b1-photo-1612349317150-e413f6a5b16d.jpg" style="width:135px;height:135px" alt="د. <%= doctor.name %>"><div><div class="d-flex gap-2 flex-wrap mb-2"><span class="badge badge-soft" id="doctorDetailSpecialty"><%= doctor.specialties %></span><span class="badge text-bg-success" id="doctorDetailAvailability"><%= doctor.bookable?"لديه خدمات متاحة":"لا توجد خدمات متاحة" %></span></div><h1 class="fw-bold fs-2 mb-1" id="doctorDetailName">د. <%= doctor.name %></h1><a class="text-decoration-none" id="doctorClinicLink" href="/patient/clinic-details?clinic_id=<%= doctor.clinic_id %>"><%= doctor.clinic_name %></a><div class="d-flex gap-4 flex-wrap mt-3 text-secondary"><span><i class="bi bi-patch-check-fill text-primary"></i> <span id="doctorDetailExperience"><%= doctor.experience==null?"غير محددة":doctor.experience+" سنوات خبرة" %></span></span><span><i class="bi bi-star-fill text-warning"></i> <span id="doctorDetailRating">غير متوفر</span> <small id="doctorDetailReviews"></small></span><span><i class="bi bi-geo-alt-fill text-primary"></i> <span id="doctorDetailDistance"><%= doctor.clinic_name %></span></span></div></div></div></div><div class="col-lg-4 text-lg-end"><a class="btn btn-primary px-4" id="doctorDetailBookBtn" href="/patient/book-appointment?clinic_id=<%= doctor.clinic_id %>&amp;doctor_id=<%= doctor.id %>" aria-disabled="false">حجز موعد</a></div></div></div>
+        <div class="row g-4"><div class="col-lg-8"><div class="soft-card p-4 mb-4"><h4 class="fw-bold" id="doctorAboutTitle">عن الطبيب</h4><p class="text-secondary mb-0" id="doctorDetailBio"><%= doctor.bio || "لم يُضف الطبيب نبذة بعد." %></p></div><div class="soft-card p-4 mb-4"><h4 class="fw-bold mb-3">خدمات العيادة المخصصة للطبيب</h4><div class="row g-3" id="doctorDetailServices"><% if(!services.length){ %><div class="col-12 text-secondary">لا توجد خدمات متاحة للحجز مع هذا الطبيب حاليًا.</div><% } %><% for(const item of services){ %><div class="col-md-6"><div class="detail-stat"><strong><%= item.name %></strong><div class="text-secondary small"><%= item.price %> ₪ • <%= item.duration %> دقيقة</div></div></div><% } %></div></div></div><div class="col-lg-4"><div class="soft-card p-4 mb-4"><h5 class="fw-bold">أيام وساعات الدوام</h5><div id="doctorDetailSchedule"><% const WEEK=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت']; %><% for(let day=0;day<7;day++){const ranges=hours.filter(h=>Number(h.day)===day); %><div class="work-day"><span><%= WEEK[day] %></span><% if(!ranges.length){ %><span class="badge text-bg-secondary">لا دوام</span><% }else{ %><strong><%= ranges.map(h=>h.start+' – '+h.finish).join('، ') %></strong><% } %></div><% } %></div></div><div class="soft-card p-4"><h5 class="fw-bold">الحجز</h5><p class="text-secondary small">تظهر فقط الأوقات التي تتقاطع مع دوام الطبيب وساعات عمل العيادة.</p><a class="btn btn-primary w-100" id="doctorDetailBookBtn2" href="/patient/book-appointment?clinic_id=<%= doctor.clinic_id %>&amp;doctor_id=<%= doctor.id %>" aria-disabled="false">اختيار موعد</a></div></div></div>
+        
+      </section>
+    </main>
+    <%- include('../partials/patient/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast" role="alert">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية بنجاح</div>
+          <button class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>الرئيسية | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+    <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+    
+      
+  </head>
+  <body><div class="container mt-3"><div class="alert alert-info small mb-0" role="status"><i class="bi bi-info-circle ms-1"></i> تم ربط الدخول والصلاحيات؛ محتوى لوحة التحكم التفصيلي ما زال نموذج عرض وسيُربط ببيانات حسابك في مرحلة القسم نفسه.</div></div><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <!-- شريط التنقل العلوي -->
+    <%- include('../partials/patient/header') %>
+
+    <!-- القائمة الجانبية للموبايل -->
+    
+
+    <!-- محتوى الصفحة الرئيسي -->
+    <main class="page-shell bg-light min-vh-100 py-4" id="main-content">
+      <section class="container">
+        
+        <!-- القسم الترحيبي (Hero Section) -->
+        <div class="hero bg-primary text-white p-4 p-lg-5 rounded-4 shadow-sm mb-4">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+              <span class="badge bg-white text-primary mb-3 px-3 py-2 rounded-pill fw-bold">مرحباً، أحمد 👋</span>
+              <h1 class="display-6 fw-bold mb-3">كل ما تحتاجه لصحة أسنانك في مكان واحد</h1>
+              <p class="lead opacity-87 mb-4 fs-6">
+                اختر عيادتك وطبيبك، تابع مواعيدك وتقاريرك وفواتيرك، أو ابدأ محادثة فورية مع المساعد الذكي لتوجيهك طبياً.
+              </p>
+              <div class="d-flex flex-wrap gap-3">
+                <a class="btn btn-light text-primary px-4 py-2 fw-bold shadow-sm" href="ai-diagnosis">
+                  <i class="bi bi-stars ms-1"></i>ابدأ التشخيص الذكي
+                </a>
+                <a class="btn btn-outline-light px-4 py-2 fw-bold" href="clinics">استعرض العيادات</a>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="home-next-appointment bg-white text-dark p-4 rounded-4 shadow">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div>
+                    <small class="text-muted fw-bold">موعدك القادم</small>
+                    <h4 class="fw-bold mt-1 mb-0 text-primary">الأربعاء، 21 أكتوبر 2026</h4>
+                  </div>
+                  <span class="badge bg-success-subtle text-success px-2 py-1">مؤكد</span>
+                </div>
+                <div class="mb-2 d-flex align-items-center gap-2 text-secondary"><i class="bi bi-clock text-primary"></i><span>11:30 ص</span></div>
+                <div class="mb-2 d-flex align-items-center gap-2 text-secondary"><i class="bi bi-person-badge text-primary"></i><span>د. عمر ناصر — تقويم الأسنان</span></div>
+                <div class="mb-3 d-flex align-items-center gap-2 text-secondary"><i class="bi bi-hospital text-primary"></i><span>عيادة الابتسامة الحديثة</span></div>
+                <a class="btn btn-sm btn-primary w-100 py-2" href="appointments">عرض تفاصيل الموعد</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- الأزرار السريعة -->
+        <div class="row g-3 mb-5">
+          <div class="col-6 col-lg-3">
+            <a class="text-decoration-none" href="clinics">
+              <div class="card border-0 shadow-sm quick-action p-4 h-100 rounded-4 text-center text-lg-start hover-card transition-all">
+                <div class="icon-box bg-primary-subtle text-primary rounded-3 d-inline-flex align-items-center justify-content-center fs-4 mb-3" style="width: 50px; height: 50px;">
+                  <i class="bi bi-calendar2-plus"></i>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">حجز موعد</h6>
+                <small class="text-muted">ابدأ باختيار العيادة</small>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-lg-3">
+            <a class="text-decoration-none" href="ai-diagnosis">
+              <div class="card border-0 shadow-sm quick-action p-4 h-100 rounded-4 text-center text-lg-start">
+                <div class="icon-box bg-success-subtle text-success rounded-3 d-inline-flex align-items-center justify-content-center fs-4 mb-3" style="width: 50px; height: 50px;">
+                  <i class="bi bi-cpu"></i>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">التشخيص الذكي</h6>
+                <small class="text-muted">محادثة وتوجيه أولي</small>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-lg-3">
+            <a class="text-decoration-none" href="diagnosis-history">
+              <div class="card border-0 shadow-sm quick-action p-4 h-100 rounded-4 text-center text-lg-start">
+                <div class="icon-box bg-info-subtle text-info rounded-3 d-inline-flex align-items-center justify-content-center fs-4 mb-3" style="width: 50px; height: 50px;">
+                  <i class="bi bi-file-medical"></i>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">السجل الطبي</h6>
+                <small class="text-muted">التقارير والوصفات</small>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-lg-3">
+            <a class="text-decoration-none" href="invoices">
+              <div class="card border-0 shadow-sm quick-action p-4 h-100 rounded-4 text-center text-lg-start">
+                <div class="icon-box bg-warning-subtle text-warning rounded-3 d-inline-flex align-items-center justify-content-center fs-4 mb-3" style="width: 50px; height: 50px;">
+                  <i class="bi bi-receipt"></i>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">فواتيري</h6>
+                <small class="text-muted">المدفوع والمتبقي</small>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- آخر زيارة طبية والتشخيص الذكي -->
+        <div class="row g-4 mb-5">
+          <div class="col-lg-7">
+            <div class="card border-0 shadow-sm p-4 h-100 rounded-4">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <span class="badge bg-primary-subtle text-primary mb-2 px-2 py-1">آخر زيارة طبية</span>
+                  <h4 class="fw-bold mb-1 text-dark">علاج جذور — السن 46</h4>
+                  <div class="text-muted small">د. عمر ناصر • 21 أكتوبر 2026</div>
+                </div>
+                <span class="badge bg-success">مكتملة</span>
+              </div>
+              <hr class="text-muted opacity-25">
+              <div class="row g-3 py-2">
+                <div class="col-md-6">
+                  <small class="text-muted d-block mb-1">تشخيص الطبيب</small>
+                  <div class="fw-bold text-dark">التهاب لب غير قابل للعكس</div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-muted d-block mb-1">المتابعة</small>
+                  <div class="fw-bold text-dark">متابعة مقترحة: 21 أكتوبر 2026</div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <a class="btn btn-outline-primary btn-sm px-3" href="appointment-details">عرض التقرير الطبي</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="card border-0 shadow-sm p-4 h-100 rounded-4">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <span class="badge bg-warning-subtle text-warning mb-2 px-2 py-1">آخر تشخيص ذكي</span>
+                  <h5 class="fw-bold text-dark">احتمال التهاب لثة بسيط</h5>
+                </div>
+                <span class="badge bg-warning text-dark">متوسط</span>
+              </div>
+              <p class="text-muted small mt-2">
+                نزيف عند تنظيف الأسنان مع حساسية خفيفة متكررة.
+              </p>
+              <div class="bg-light rounded-3 p-3 my-3">
+                <small class="text-muted d-block mb-1">الاقتراح الطبي</small>
+                <div class="fw-bold text-dark small">
+                  عيادة الابتسامة الحديثة • د. عمر ناصر
+                </div>
+              </div>
+              <a class="btn btn-outline-primary btn-sm px-3" href="ai-diagnosis">متابعة مع المساعد الذكي</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- بنر المتابعة -->
+        <div class="card border-0 shadow-sm bg-white p-4 rounded-4 mb-5 border-start border-4 border-success">
+          <div class="d-flex align-items-start gap-3 flex-column flex-md-row justify-content-between align-items-md-center">
+            <div class="d-flex align-items-start gap-3">
+              <div class="bg-success-subtle text-success p-3 rounded-circle fs-4 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                <i class="bi bi-arrow-repeat"></i>
+              </div>
+              <div>
+                <span class="badge bg-success mb-2">تم الحجز</span>
+                <h5 class="fw-bold mb-1 text-dark">علاج جذور — 21 أكتوبر 2026</h5>
+                <p class="text-muted small mb-0">
+                  التوصية أضيفت من تقرير د. عمر ناصر، وتم ربطها بموعد متابعة الساعة 10:00 ص.
+                </p>
+              </div>
+            </div>
+            <a class="btn btn-outline-success btn-sm px-3 text-nowrap" href="diagnosis-history">عرض المتابعة</a>
+          </div>
+        </div>
+
+        <!-- العيادات المقترحة -->
+        <div class="d-flex justify-content-between align-items-end mb-3">
+          <div>
+            <h3 class="fw-bold text-dark mb-1 fs-4">عيادات مقترحة</h3>
+            <p class="text-muted mb-0 small">خيارات سريعة من العيادات المتاحة لخدمتك.</p>
+          </div>
+          <a class="text-decoration-none fw-bold small text-primary" href="clinics">عرض الكل <i class="bi bi-chevron-left small"></i></a>
+        </div>
+        <div class="row g-3 mb-5">
+          <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-sm p-4 rounded-4 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between gap-2 mb-2">
+                  <h5 class="fw-bold text-dark mb-0 fs-6">عيادة الابتسامة الحديثة</h5>
+                  <span class="badge bg-success">مفتوحة</span>
+                </div>
+                <div class="text-muted small mb-3">
+                  <i class="bi bi-geo-alt ms-1 text-primary"></i>وسط المدينة
+                </div>
+                <div class="d-flex flex-wrap gap-1 mb-3">
+                  <span class="badge bg-light text-secondary border">تقويم</span>
+                  <span class="badge bg-light text-secondary border">علاج جذور</span>
+                  <span class="badge bg-light text-secondary border">تجميل</span>
+                </div>
+              </div>
+              <a class="btn btn-sm btn-outline-primary w-100" href="clinic-details">عرض العيادة</a>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-sm p-4 rounded-4 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between gap-2 mb-2">
+                  <h5 class="fw-bold text-dark mb-0 fs-6">عيادة الابتسامة الحديثة</h5>
+                  <span class="badge bg-success">مفتوحة</span>
+                </div>
+                <div class="text-muted small mb-3">
+                  <i class="bi bi-geo-alt ms-1 text-primary"></i>الحي الغربي
+                </div>
+                <div class="d-flex flex-wrap gap-1 mb-3">
+                  <span class="badge bg-light text-secondary border">زراعة</span>
+                  <span class="badge bg-light text-secondary border">جراحة</span>
+                  <span class="badge bg-light text-secondary border">أطفال</span>
+                </div>
+              </div>
+              <a class="btn btn-sm btn-outline-primary w-100" href="clinic-details">عرض العيادة</a>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-sm p-4 rounded-4 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between gap-2 mb-2">
+                  <h5 class="fw-bold text-dark mb-0 fs-6">عيادة الابتسامة الحديثة</h5>
+                  <span class="badge bg-secondary">تفتح 4:00 م</span>
+                </div>
+                <div class="text-muted small mb-3">
+                  <i class="bi bi-geo-alt ms-1 text-primary"></i>شارع الجامعة
+                </div>
+                <div class="d-flex flex-wrap gap-1 mb-3">
+                  <span class="badge bg-light text-secondary border">طب عام</span>
+                  <span class="badge bg-light text-secondary border">تنظيف</span>
+                  <span class="badge bg-light text-secondary border">لثة</span>
+                </div>
+              </div>
+              <a class="btn btn-sm btn-outline-primary w-100" href="clinics">عرض العيادات</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- الأطباء المقترحون -->
+        <div class="d-flex justify-content-between align-items-end mb-3">
+          <div>
+            <h3 class="fw-bold text-dark mb-1 fs-4">أطباء مقترحون</h3>
+            <p class="text-muted mb-0 small">أطباء متاحون ضمن العيادات المسجلة.</p>
+          </div>
+          <a class="text-decoration-none fw-bold small text-primary" href="doctors">عرض الكل <i class="bi bi-chevron-left small"></i></a>
+        </div>
+        <div class="row g-3 mb-5">
+          <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-sm p-3 rounded-4 d-flex flex-row gap-3 align-items-center h-100">
+              <img class="rounded-circle object-fit-cover" src="../assets/vendor/2fb6f2c869b1-photo-1612349317150-e413f6a5b16d.jpg" style="width: 65px; height: 65px;" alt="د. عمر ناصر">
+              <div class="flex-grow-1">
+                <h6 class="fw-bold mb-1 text-dark">د. عمر ناصر</h6>
+                <div class="small text-muted">تقويم الأسنان</div>
+                <div class="small text-success fw-bold mt-1">أقرب وقت: اليوم 5:30 م</div>
+                <a class="small text-decoration-none fw-bold text-primary mt-1 d-inline-block" href="doctor-details">عرض الملف</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-sm p-3 rounded-4 d-flex flex-row gap-3 align-items-center h-100">
+              <img class="rounded-circle object-fit-cover" src="../assets/vendor/2fb6f2c869b1-photo-1612349317150-e413f6a5b16d.jpg" style="width: 65px; height: 65px;" alt="د. عمر ناصر">
+              <div class="flex-grow-1">
+                <h6 class="fw-bold mb-1 text-dark">د. عمر ناصر</h6>
+                <div class="small text-muted">علاج الجذور</div>
+                <div class="small text-success fw-bold mt-1">أقرب وقت: غداً 10:00 ص</div>
+                <a class="small text-decoration-none fw-bold text-primary mt-1 d-inline-block" href="doctor-details">عرض الملف</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-sm p-3 rounded-4 d-flex flex-row gap-3 align-items-center h-100">
+              <img class="rounded-circle object-fit-cover" src="../assets/vendor/2fb6f2c869b1-photo-1612349317150-e413f6a5b16d.jpg" style="width: 65px; height: 65px;" alt="د. عمر ناصر">
+              <div class="flex-grow-1">
+                <h6 class="fw-bold mb-1 text-dark">د. عمر ناصر</h6>
+                <div class="small text-muted">تجميل الأسنان</div>
+                <div class="small text-muted mt-1">متاحة الأربعاء</div>
+                <a class="small text-decoration-none fw-bold text-primary mt-1 d-inline-block" href="doctors">عرض الأطباء</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- الفواتير، الإشعارات، ونصيحة اليوم -->
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <div class="card border-0 shadow-sm p-4 h-100 rounded-4">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <small class="text-muted fw-bold">ملخص الفواتير</small>
+                  <h3 class="fw-bold text-dark mt-1">500 ₪ متبقي</h3>
+                </div>
+                <div class="bg-primary-subtle text-primary p-3 rounded-3 fs-4 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                  <i class="bi bi-wallet2"></i>
+                </div>
+              </div>
+              <p class="text-muted small my-2">آخر فاتورة مسجلة: علاج جذور طبية — 500 ₪</p>
+              <a class="btn btn-outline-primary btn-sm px-3 mt-2" href="invoices">عرض كافة فواتيري</a>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card border-0 shadow-sm p-4 h-100 rounded-4">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <h5 class="fw-bold text-dark fs-6 mb-0">آخر الإشعارات</h5>
+                <span class="badge bg-danger">3 جديد</span>
+              </div>
+              <div class="small mb-3 pb-2 border-bottom">
+                <strong class="text-dark d-block">تم تأكيد موعدك</strong>
+                <span class="text-muted">مع د. عمر ناصر.</span>
+              </div>
+              <div class="small mb-3">
+                <strong class="text-dark d-block">فاتورة جديدة</strong>
+                <span class="text-muted">تمت إضافة فاتورة لزيارتك الأخيرة.</span>
+              </div>
+              <a class="btn btn-outline-primary btn-sm px-3 mt-auto" href="notifications">كل الإشعارات</a>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card border-0 shadow-sm p-4 h-100 rounded-4 bg-primary text-white d-flex flex-column justify-content-center">
+              <i class="bi bi-lightbulb fs-2 text-warning mb-2"></i>
+              <h5 class="fw-bold mb-2 fs-6">نصيحة اليوم</h5>
+              <p class="mb-0 small opacity-87">
+                استخدم خيط الأسنان مرة يومياً للمساعدة في تنظيف المناطق التي لا تصل إليها الفرشاة التقليدية.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- الفوتر -->
+    <%- include('../partials/patient/footer') %>
+
+    <!-- التوست (Toast) -->
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0 shadow" id="appToast" role="alert">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية بنجاح</div>
+          <button class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- السكريبتات -->
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+  
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><div class="modal fade" id="firstHealthProfileModal" tabindex="-1" aria-labelledby="firstHealthProfileTitle" aria-describedby="firstHealthProfileDescription" data-bs-backdrop="static" data-bs-keyboard="false"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="firstHealthProfileTitle">أكمل معلوماتك الصحية</h5><p class="small text-secondary mb-0 mt-2" id="firstHealthProfileDescription">أهلًا بك! أكمل هذه المعلومات مرة واحدة قبل بدء استخدام حسابك. يمكنك تحديثها لاحقًا من بيانات حسابك.</p></div></div><div class="modal-body"><form id="firstHealthProfileForm" method="post" data-health-onboarding-form><div class="row g-3" id="firstHealthProfileFields"><div class="col-md-6"><label class="form-label" for="firstHealth_signupBloodType">فصيلة الدم *</label><select id="firstHealth_signupBloodType" name="blood_type" class="form-select" required=""><option value="">اختر فصيلة الدم</option><option value="O+">O+</option><option value="O-">O-</option><option value="A+">A+</option><option value="A-">A-</option><option value="B+">B+</option><option value="B-">B-</option><option value="AB+">AB+</option><option value="AB-">AB-</option></select></div><div class="col-12"><label class="form-label" for="firstHealth_signupHealthNotes">الملاحظات الصحية *</label><textarea class="form-control" id="firstHealth_signupHealthNotes" name="health_notes" required="" rows="3" placeholder="اكتب المعلومات المعروفة، أو اذكر لا يوجد / غير معروف حسب حالتك"></textarea></div><div class="col-md-4"><label class="form-label" for="firstHealth_signup_allergies">الحساسية *</label><textarea class="form-control" id="firstHealth_signup_allergies" name="allergies" rows="2" placeholder="اكتب المعلومات المعروفة، أو اذكر لا يوجد / غير معروف حسب حالتك" data-multivalue-lines required=""></textarea></div><div class="col-md-4"><label class="form-label" for="firstHealth_signup_chronic_diseases">الأمراض المزمنة *</label><textarea class="form-control" id="firstHealth_signup_chronic_diseases" name="chronic_diseases" rows="2" placeholder="اكتب المعلومات المعروفة، أو اذكر لا يوجد / غير معروف حسب حالتك" data-multivalue-lines required=""></textarea></div><div class="col-md-4"><label class="form-label" for="firstHealth_signup_current_medications">الأدوية الحالية *</label><textarea class="form-control" id="firstHealth_signup_current_medications" name="current_medications" rows="2" placeholder="اكتب المعلومات المعروفة، أو اذكر لا يوجد / غير معروف حسب حالتك" data-multivalue-lines required=""></textarea></div></div><div id="firstHealthProfileError" class="alert alert-danger mt-3 mb-0" role="alert" hidden></div></form></div><div class="modal-footer"><button type="submit" form="firstHealthProfileForm" class="btn btn-primary" id="firstHealthProfileSubmit">حفظ المعلومات والمتابعة</button></div></div></div></div></body></html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>مرضى العيادة | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="soft-card p-3 mb-3"><h6 class="fw-bold">ملف المريض وتفعيل الدخول</h6><p class="small text-secondary mb-2">إضافة المريض تحفظ ملفه دون تفعيل الدخول. لا يُربط الملف تلقائيًا بحساب موجود؛ يجب التحقق من الهوية قبل أي ربط. قد يحتاج المريض إلى مساعدة العيادة لاستكمال تفعيل حسابه لاحقًا.</p></section><section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Patients</span>
+            <h1 class="fw-bold">مرضى العيادة</h1>
+            <p class="text-secondary mb-0">
+              إضافة المرضى والوصول إلى زياراتهم وتقاريرهم.
+            </p>
+          </div>
+          <button class="btn btn-primary" data-bs-target="#addPatientModal" data-bs-toggle="modal" type="button">
+            <i class="bi bi-person-plus ms-1"></i>إضافة مريض
+          </button>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="patientSearch" placeholder="ابحث باسم المريض، رقم الهاتف أو رقم المريض" value="" aria-label="بحث في قائمة المرضى">
+          </div>
+        </div>
+        <% if(message){ %><div class="alert alert-success" role="status"><%=message%></div><% } %>
+        <% if(error){ %><div class="alert alert-danger" role="alert"><%=error%></div><% } %>
+        <div class="small text-secondary mb-3" id="patientCount"><%=patients.length%> مريض</div>
+        <div class="row g-3">
+          <% for(const p of patients){ %>
+          <div class="col-md-6 patient-item" data-record-id="<%=p.id%>">
+            <div class="patient-card">
+              <div class="d-flex gap-3 align-items-start">
+                <div class="patient-avatar-box"><%=p.initials%></div>
+                <div class="flex-grow-1">
+                  <h5 class="fw-bold mb-1"><%=p.name%></h5>
+                  <div class="small text-secondary">P-<%=p.id%> • <%=p.phone%></div>
+                  <div class="small text-secondary mt-1">آخر زيارة: <%=p.lastVisit||'لا توجد زيارة مسجّلة'%></div>
+                </div>
+                <span class="badge text-bg-success">ملف موجود</span>
+              </div>
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <a class="btn btn-outline-primary btn-sm" href="patient-details?patient=<%=encodeURIComponent(p.id)%>">عرض ملف المريض</a>
+                <a class="btn btn-light btn-sm" href="invoices">قائمة الفواتير</a>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <div class="empty-state <%=patients.length?'d-none':''%>" id="patientEmpty">
+          <i class="bi bi-person-x fs-1"></i><h5 class="fw-bold mt-3"><%=patients.length?'لا يوجد مرضى مطابقون':'لا يوجد مرضى مسجلون لهذه العيادة بعد'%></h5>
+        </div>
+      </section>
+      <div class="modal fade" id="addPatientModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="fw-bold mb-0">إضافة مريض</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="entity-form-summary mb-3">
+                يمكن للعيادة إنشاء ملف مريض بدون حساب. البيانات الصحية الأساسية
+                اختيارية وتظهر للطبيب للتنبيه؛ التشخيص والعلاج يبقيان مسؤولية
+                الطبيب.
+              </div>
+              <div class="entity-form-section mb-3">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-person"></i>البيانات الشخصية
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">الاسم الأول</label><input class="form-control" id="clinicPatientFirstName" required maxlength="150" name="clinic_patient_first_name" form="createClinicPatient">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">الاسم الأخير</label><input class="form-control" id="clinicPatientLastName" required maxlength="150" name="clinic_patient_last_name" form="createClinicPatient">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">تاريخ الميلاد</label><input class="form-control" id="clinicPatientBirthdate" type="date" required name="clinic_patient_birthdate" form="createClinicPatient">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">الجنس</label><select class="form-select" id="clinicPatientGender" name="clinic_patient_gender" form="createClinicPatient"><option value="male">ذكر</option><option value="female">أنثى</option></select>
+                  </div>
+                </div>
+              </div>
+              <div class="entity-form-section mb-3">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-telephone"></i>التواصل
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">الهاتف</label><input class="form-control" id="clinicPatientPhone" placeholder="0599 000 000" required maxlength="30" name="clinic_patient_phone" form="createClinicPatient">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">البريد الإلكتروني</label><input class="form-control" id="clinicPatientEmail" type="email" name="clinic_patient_email" autocomplete="email" form="createClinicPatient">
+                  </div>
+                </div>
+              </div>
+              <div class="entity-form-section mb-3">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-heart-pulse"></i>معلومات صحية أساسية —
+                  اختيارية
+                </div>
+                <div class="alert alert-light border small">
+                  هذه ليست تشخيصًا للزيارة؛ هي معلومات عامة مهمة يجب أن تكون
+                  متاحة للطبيب، فصيلة الدم والملاحظات الصحية مطلوبة، وبقية البيانات تُستكمل حسب المتاح.
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <label class="form-label">فصيلة الدم</label><select class="form-select" id="clinicPatientBloodType" name="blood_type" form="createClinicPatient" ><option value="unknown" selected>غير معروفة</option><option value="O+">O+</option><option value="O-">O-</option><option value="A+">A+</option><option value="A-">A-</option><option value="B+">B+</option><option value="B-">B-</option><option value="AB+">AB+</option><option value="AB-">AB-</option></select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">الحساسية</label><textarea class="form-control" id="clinicPatientAllergies" placeholder="قيمة واحدة في كل سطر، أو اتركها فارغة إن لم تُسجّل معلومات" rows="2" name="clinic_patient_allergies" form="createClinicPatient" data-multivalue-lines=""></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">الأمراض المزمنة</label><textarea class="form-control" id="clinicPatientChronicDiseases" placeholder="قيمة واحدة في كل سطر، أو اتركها فارغة إن لم تُسجّل معلومات" rows="2" name="clinic_patient_chronic_diseases" form="createClinicPatient" data-multivalue-lines=""></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">الأدوية الحالية</label><textarea class="form-control" id="clinicPatientCurrentMedications" placeholder="قيمة واحدة في كل سطر، أو اتركها فارغة إن لم تُسجّل معلومات" rows="2" name="clinic_patient_current_medications" form="createClinicPatient" data-multivalue-lines=""></textarea>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">ملاحظات صحية</label><textarea class="form-control" id="clinicPatientHealthNotes" placeholder="أي تنبيه صحي عام مهم قبل العلاج" rows="2" name="health_notes" form="createClinicPatient"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="saveClinicPatientBtn" type="submit" form="createClinicPatient">
+                إضافة المريض
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><form id="createClinicPatient" method="post" action="/clinic/patients" hidden><input type="hidden" name="csrf_token" value="<%=csrfToken%>"></form></body></html>

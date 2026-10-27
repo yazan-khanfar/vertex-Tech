@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>خطط العلاج | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4"><div><span class="badge badge-soft mb-2">Treatment Plans</span><h1 class="fw-bold mb-1">خطط العلاج</h1><p class="text-secondary mb-0">متابعة تشغيلية لكل خطط العلاج في العيادة. تعديل المحتوى السريري يبقى من اختصاص الطبيب.</p></div><a class="btn btn-outline-primary" href="patients"><i class="bi bi-people ms-1"></i>فتح المرضى</a></div>
+        <div class="row g-3 mb-4"><div class="col-6 col-lg-3"><div class="soft-card p-3"><small class="text-secondary">نشطة</small><div class="fs-3 fw-bold text-primary"><%= plans.filter(p=>p.status==='active').length %></div></div></div><div class="col-6 col-lg-3"><div class="soft-card p-3"><small class="text-secondary">متوقفة</small><div class="fs-3 fw-bold text-warning"><%= plans.filter(p=>p.status==='paused').length %></div></div></div><div class="col-6 col-lg-3"><div class="soft-card p-3"><small class="text-secondary">مكتملة</small><div class="fs-3 fw-bold text-success"><%= plans.filter(p=>p.status==='completed').length %></div></div></div><div class="col-6 col-lg-3"><div class="soft-card p-3"><small class="text-secondary">لها موعد قادم</small><div class="fs-3 fw-bold"><%= plans.filter(p=>p.status!=='completed' && p.next_date).length %></div></div></div></div>
+        <div class="soft-card p-3 p-lg-4 mb-4"><div class="row g-3 align-items-end"><div class="col-lg-4"><label class="form-label small fw-bold">بحث</label><input class="form-control" id="treatmentPlanSearch" placeholder="المريض، الطبيب أو اسم الخطة" value=""  name="treatment_plan_search" ></div><div class="col-md-4 col-lg-3"><label class="form-label small fw-bold">الطبيب</label><select class="form-select" id="treatmentPlanDoctor" data-record-select="doctor" name="treatment_plan_doctor" ><option value="all" selected>كل الأطباء</option><% for(const d of [...new Map(plans.map(p=>[p.doctor_id,{id:p.doctor_id,name:p.doctor_name}])).values()]) { %><option value="<%= d.id %>"><%= d.name %></option><% } %></select></div><div class="col-md-4 col-lg-3"><label class="form-label small fw-bold">الحالة</label><select class="form-select" id="treatmentPlanStatus" name="treatment_plan_status" ><option value="all" selected>كل الحالات</option><option value="active">نشطة</option><option value="paused">متوقفة</option><option value="completed">مكتملة</option></select></div><div class="col-md-4 col-lg-2"><button class="btn btn-light border w-100" id="clearTreatmentPlanFilters" type="button"><i class="bi bi-arrow-counterclockwise ms-1"></i>مسح</button></div></div></div>
+        <div class="soft-card p-0 overflow-hidden"><div class="table-responsive mobile-stack-wrapper table-ui-shell"><table class="table align-middle mb-0 responsive-stack-table system-data-table wide-data-table"><thead class="table-light"><tr><th>المريض</th><th>الخطة</th><th>الطبيب</th><th>التقدم</th><th>الحالة</th><th>التالي</th><th>الإجراء</th></tr></thead><tbody id="treatmentPlansTable">
+          <% if(!plans.length){ %><tr><td colspan="7" class="text-center text-secondary py-4">لا توجد خطط علاج مسجلة في هذه العيادة.</td></tr><% } %>
+          <% for(const p of plans){ %>
+          <tr class="treatment-plan-filter-item" data-status="<%= p.status %>" data-doctor="<%= p.doctor_id %>" data-search="<%= p.patient_name %> <%= p.doctor_name %> <%= p.title %>">
+            <td data-label="المريض" class="table-primary-cell"><%= p.patient_name %></td>
+            <td data-label="الخطة"><%= p.title %></td>
+            <td data-label="الطبيب">د. <%= p.doctor_name %></td>
+            <td data-label="التقدم"><strong><%= p.progress %>%</strong><div class="progress plan-progress mt-1" style="min-width:100px"><div class="progress-bar" style="width:<%= p.progress %>%"></div></div></td>
+            <td data-label="الحالة" class="table-status-cell"><span class="badge <%= p.status==='completed'?'text-bg-success':p.status==='paused'?'text-bg-warning':'text-bg-primary' %>"><%= p.status_label %></span></td>
+            <td data-label="التالي"><%= p.next_date||'—' %></td>
+            <td data-label="الإجراء" class="table-actions-cell"><a class="btn btn-sm btn-outline-primary" href="/clinic/treatment-plan-details?id=<%= p.id %>">عرض</a></td>
+          </tr><% } %>
+        </tbody></table></div></div><div class="alert alert-light border d-none mt-4" id="treatmentPlanEmpty">لا توجد خطط تطابق الفلاتر الحالية.</div>
+      </section>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

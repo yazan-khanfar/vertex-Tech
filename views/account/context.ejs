@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>اختيار مساحة العمل | Smart Dental Clinic</title>
+<link href="/assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+<link href="/assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+<link href="/auth/assets/styles.css" rel="stylesheet">
+</head><body><div class="auth-page"><div class="container"><div class="auth-card mx-auto" style="max-width:740px"><div class="auth-form-wrap">
+<span class="hero-badge"><i class="bi bi-person-workspace"></i> اختيار مساحة العمل</span>
+<h1 class="mt-3 mb-2">اختر العيادة والدور</h1>
+<p class="text-secondary">تُعرض العيادات المرتبطة بحسابك والمفعّلة في قاعدة البيانات فقط.</p>
+<% if(contextError) { %><div class="alert alert-danger" role="alert"><%= contextError %></div><% } %>
+<% if(!clinics.length) { %>
+<div class="alert alert-warning">لا توجد عضوية نشطة في أي عيادة معتمدة الآن. تواصل مع مسؤول العيادة لإضافتك أو تنشيط عضويتك.</div>
+<% if(mode === 'doctor') { %><a class="btn btn-outline-primary" href="/onboarding/doctor/choose-path">عرض خيارات الطبيب</a><% } %>
+<% } else { %>
+<form method="post" action="/account/context" class="mt-4">
+<input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+<label class="form-label fw-bold" for="clinic_id">العيادة</label>
+<select id="clinic_id" name="clinic_id" class="form-select mb-3" required>
+<option value="">اختر العيادة</option>
+<% for(const clinic of clinics){ %>
+<option value="<%= clinic.id %>" data-manager="<%= clinic.manager ? 'yes':'no' %>"><%= clinic.name %></option>
+<% } %>
+</select>
+<label class="form-label fw-bold" for="space">واجهة العمل</label>
+<select id="space" name="space" class="form-select mb-3" required>
+<% if(mode==='staff'){ %><option value="staff">موظف العيادة</option><% }else{ %><option value="doctor">الطبيب</option><option value="clinic">إدارة العيادة (للمدير فقط)</option><% } %>
+</select>
+<button class="btn btn-primary w-100" type="submit">دخول مساحة العمل</button>
+</form>
+<p class="small text-secondary mt-3">يجري التحقق من الدور والعضوية على السيرفر عند كل انتقال. اختيار دور غير مصرح به سيُرفض.</p>
+<% } %>
+<form method="post" action="/auth/logout" class="mt-3"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><button type="submit" class="btn btn-outline-secondary">تسجيل الخروج</button></form>
+</div></div></div></div></body></html>

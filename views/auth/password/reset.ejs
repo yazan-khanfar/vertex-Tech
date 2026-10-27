@@ -1,0 +1,22 @@
+<!doctype html><html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer"><title>تعيين كلمة مرور جديدة | Smart Dental Clinic</title>
+<link href="/assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+<link href="/assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+<link href="/auth/assets/styles.css" rel="stylesheet">
+</head><body><div class="auth-page"><main class="container py-5"><div class="auth-card mx-auto" style="max-width:620px">
+<div class="auth-form-wrap p-4 p-md-5"><a class="small text-secondary" href="/auth/login">العودة لتسجيل الدخول</a>
+<h1 class="mt-4">تعيين كلمة مرور جديدة</h1><p>اختر كلمة مرور قوية مختلفة عن كلمة المرور السابقة.</p>
+<% if(error){ %><div class="alert alert-danger" role="alert"><%= error %></div><% } %>
+<% if(valid){ %><form method="post" id="resetPasswordForm" action="/auth/password/reset" data-server-auth="true">
+<input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+<input type="hidden" name="token" value="<%= resetToken %>">
+<label class="form-label" for="newPassword">كلمة المرور الجديدة</label>
+<input class="form-control mb-3" id="newPassword" name="password" type="password" minlength="14" maxlength="128" autocomplete="new-password" required>
+<label class="form-label" for="confirmPassword">تأكيد كلمة المرور</label>
+<input class="form-control mb-3" id="confirmPassword" name="password_confirmation" type="password" minlength="14" maxlength="128" autocomplete="new-password" required>
+<p class="text-secondary small">14 حرفًا على الأقل، مع حرف ورقم ورمز.</p>
+<button type="submit" class="btn btn-primary w-100">حفظ كلمة المرور</button></form><% } %>
+<a href="/auth/password/forgot" class="d-block mt-3">طلب رابط استعادة جديد</a></div></div></main></div>
+<script src="/assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+<script src="/auth/assets/app.js"></script></body></html>

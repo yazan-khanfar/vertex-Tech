@@ -1,0 +1,30 @@
+'use strict';
+const { normalizeGender } = require('../patients/gender');
+const asText = (v, max) => typeof v === 'string' && v.length <= max * 2 ? v.trim() : '';
+function parsePatientForm(body) {
+  const firstName = asText(body.first_name, 150);
+  const lastName = asText(body.last_name, 150);
+  const email = asText(body.email, 254).toLowerCase();
+  const phone = asText(body.phone, 30);
+  const dob = asText(body.date_of_birth, 10);
+  const gender = normalizeGender(asText(body.gender, 150));
+  const password = body.password;
+  const confirm = body.confirm_password;
+  if (!firstName || firstName.length > 150 || !lastName || lastName.length > 150) return { error: 'يرجى إدخال الاسم الأول واسم العائلة بشكل صحيح.' };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return { error: 'يرجى إدخال بريد إلكتروني صالح.' };
+  const digits = phone.replace(/\D/g, '');
+  if (phone.length > 30 || !/^[+0-9 ()\-]+$/.test(phone) || digits.length < 7 || digits.length > 15) return { error: 'يرجى إدخال رقم هاتف صالح.' };
+  const parts = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dob);
+  if (!parts) return { error: 'يرجى إدخال تاريخ ميلاد صحيح.' };
+  const value = new Date(Date.UTC(+parts[1], +parts[2]-1, +parts[3]));
+  const heb = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Hebron', year:'numeric',month:'2-digit',day:'2-digit' }).formatToParts(new Date()).map(x=>[x.type,x.value]));
+  const thisYear = Number(heb.year);
+  const todayLocal = Date.UTC(thisYear, Number(heb.month)-1, Number(heb.day));
+  if (!Number.isFinite(value.getTime()) || value.toISOString().slice(0,10) !== dob || value.getTime() > todayLocal || +parts[1] < thisYear - 120) return { error: 'تاريخ الميلاد غير صالح.' };
+  if (!gender) return { error: 'يرجى اختيار الجنس.' };
+  if (typeof password !== 'string' || password.length > 128 || password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) return { error: 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل وحرف كبير وصغير ورقم.' };
+  if (password !== confirm) return { error: 'تأكيد كلمة المرور غير مطابق.' };
+  if (body.accept_policies !== 'on') return { error: 'يرجى الموافقة على الشروط وسياسة الخصوصية.' };
+  return { data: { firstName,lastName,email,phone,dob,gender,password } };
+}
+module.exports = { parsePatientForm };

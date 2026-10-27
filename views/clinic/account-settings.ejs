@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html data-style-sections="section-4 section-7" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>إعدادات الحساب | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="mb-4">
+          <span class="badge badge-soft mb-2">Account Settings</span>
+          <h1 class="fw-bold">إعدادات الحساب</h1>
+          <p class="text-secondary mb-0">
+            إعدادات تسجيل الدخول، الأمان واللغة الخاصة بحساب العيادة.
+          </p>
+        </div>
+        <% if (typeof accountSettingsAlert !== 'undefined' && accountSettingsAlert) { %>
+          <div class="alert <%= typeof accountSettingsOk !== 'undefined' && accountSettingsOk ? 'alert-success' : 'alert-danger' %>" role="status"><%= accountSettingsAlert %></div>
+        <% } %>
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="profile-section mb-4" id="sdc-contact">
+              <h4 class="fw-bold mb-3">بيانات تسجيل الدخول</h4>
+              <form method="post" action="/clinic/account-settings" autocomplete="off">
+                <input type="hidden" name="csrf_token" value="<%= typeof passwordChangeCsrf !== 'undefined' ? passwordChangeCsrf : '' %>">
+                <input type="hidden" name="action" value="contact">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="field-1">البريد الإلكتروني للحساب</label>
+                    <input class="form-control" type="email" id="field-1" name="email" maxlength="254" value="<%= typeof accountUser !== 'undefined' && accountUser ? accountUser.Email || '' : '' %>" required autocomplete="email">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="field-2">رقم الهاتف</label>
+                    <input class="form-control" type="tel" id="field-2" name="phone" maxlength="30" value="<%= typeof accountUser !== 'undefined' && accountUser ? accountUser.Phone || '' : '' %>" required autocomplete="tel">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label" for="clinic-contact-password">كلمة المرور الحالية لتأكيد التعديل</label>
+                    <input class="form-control" type="password" id="clinic-contact-password" name="password" autocomplete="current-password" required>
+                    <div class="form-text">تحديث البريد الإلكتروني يحتاج إلى تأكيد ملكية البريد الجديد قبل تفعيله في بيئة الإنتاج.</div>
+                  </div>
+                  <div class="col-12"><button class="btn btn-primary" type="submit">حفظ البيانات</button></div>
+                </div>
+              </form>
+            </div>
+            <div class="profile-section mb-4" id="sdc-password">
+              <h4 class="fw-bold mb-3">تغيير كلمة المرور</h4><% if (typeof passwordChangeError !== "undefined" && passwordChangeError) { %><div class="alert alert-danger mt-2" role="alert" id="sdc-password"><%= passwordChangeError %><% if (typeof passwordChangeReference !== "undefined" && passwordChangeReference) { %> <small>(رمز التشخيص: <%= passwordChangeReference %>)</small><% } %></div><% } %>
+
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label" for="field-3">كلمة المرور الحالية</label><input class="form-control" placeholder="••••••••" type="password" required value="" id="field-3" name="current_password" autocomplete="current-password" form="sdc-change-password-form">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-4">كلمة المرور الجديدة</label><input class="form-control" placeholder="••••••••" type="password" minlength="14" maxlength="128" required value="" id="field-4" name="new_password" autocomplete="new-password" form="sdc-change-password-form">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-5">تأكيد كلمة المرور</label><input class="form-control" placeholder="••••••••" type="password" minlength="14" maxlength="128" required value="" id="field-5" name="confirm_password" autocomplete="new-password" form="sdc-change-password-form">
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-primary" form="sdc-change-password-form" type="submit">
+                    تغيير كلمة المرور
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="col-lg-4">
+            <div class="soft-card p-4 mb-4" id="sdc-language">
+              <h5 class="fw-bold mb-3">اللغة</h5>
+              <form action="/clinic/account-settings" method="post">
+                <input type="hidden" name="action" value="language">
+                <input type="hidden" name="csrf_token" value="<%= typeof passwordChangeCsrf !== 'undefined' ? passwordChangeCsrf : '' %>">
+                <label class="form-label" for="field-6">لغة الحساب المفضلة</label>
+                <select class="form-select" id="field-6" name="language">
+                  <option value="ar" <%= typeof accountUser !== 'undefined' && accountUser && accountUser.Preferred_Language === 'ar' ? 'selected' : '' %>>العربية</option>
+                  <option value="en" <%= typeof accountUser !== 'undefined' && accountUser && accountUser.Preferred_Language === 'en' ? 'selected' : '' %>>English</option>
+                </select>
+                <button class="btn btn-outline-primary w-100 mt-3" type="submit">حفظ اللغة</button>
+                <p class="form-text mt-2">يُحفظ تفضيل اللغة في الحساب. ترجمة جميع واجهات النظام للإنجليزية لم تُنفّذ بعد.</p>
+              </form>
+            </div>
+            <div class="soft-card p-4 mb-4">
+              <h5 class="fw-bold mb-3">الأمان</h5>
+<%- include('../partials/shared/mfa-manager', {mfaScope:'clinic'}) %>
+              <hr>
+              <div class="small text-secondary">الجلسة الحالية</div>
+              <div class="fw-bold mt-1"><%= accountSessions && accountSessions.find(s=>s.isCurrent) ? new Date(accountSessions.find(s=>s.isCurrent).startedAt).toLocaleString('ar-PS') : 'لا توجد جلسة نشطة' %></div>
+            </div>
+            <%- include('../partials/shared/active-sessions', {sessionsScope:'clinic'}) %>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="sdc-change-password-form" action="/auth/change-password" method="post" hidden><input type="hidden" name="profile_scope" value="clinic"><input type="hidden" name="csrf_token" value="<%= typeof passwordChangeCsrf !== 'undefined' ? passwordChangeCsrf : '' %>"></form></body></html>

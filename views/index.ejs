@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الرئيسية | Smart Dental Clinic</title>
+    <!-- Bootstrap RTL & Icons -->
+    <link href="assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+    <!-- جميع تنسيقات الصفحة العامة داخل public/assets/styles.css -->
+      <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="public/assets/styles.css">
+  </head>
+  <body>
+    <!-- الهيدر -->
+    <%- include('partials/home/header') %>
+
+    <!-- قسم الهيرو (Hero Section) -->
+    <header class="hero">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-7 hero-text">
+            <span class="hero-badge"><i class="bi bi-stars"></i>منصة ذكية لإدارة وحجز رعاية الأسنان</span>
+            <h1 class="mt-3">احجز موعد أسنانك، تابع علاجك، وأدر عيادتك في مكان واحد.</h1>
+            <p class="lead-text mt-3">
+              Smart Dental Clinic تربط المرضى بالأطباء والعيادات، وتسهّل الحجز والمتابعة والتقارير والفواتير
+              ضمن تجربة بسيطة وآمنة.
+            </p>
+            <div class="hero-actions d-flex flex-wrap gap-2 mt-4">
+              <a class="btn btn-primary btn-lg" href="auth/register/index">ابدأ الآن <i class="bi bi-arrow-left me-1"></i></a>
+              <a class="btn btn-light btn-lg" href="auth/login">لدي حساب</a>
+            </div>
+            <div class="trust-row">
+              <span><i class="bi bi-check-circle-fill"></i>حجز إلكتروني</span>
+              <span><i class="bi bi-check-circle-fill"></i>تقارير علاجية</span>
+              <span><i class="bi bi-check-circle-fill"></i>متابعة الفواتير</span>
+              <span><i class="bi bi-check-circle-fill"></i>إدارة عيادة متكاملة</span>
+            </div>
+          </div>
+          <div class="col-lg-5" aria-hidden="true">
+            <div class="preview">
+              <div class="preview-head">
+                <span class="avatar"><i class="bi bi-person-badge"></i></span>
+                <div><strong>حجز موعد جديد</strong><small>اختر الوقت المناسب لك</small></div>
+              </div>
+              <div class="slots">
+                <span class="slot">9:00</span><span class="slot">10:30</span><span class="slot active">12:00</span>
+                <span class="slot">1:30</span><span class="slot">3:00</span><span class="slot">4:30</span>
+              </div>
+              <div class="preview-row"><span><i class="bi bi-clipboard2-pulse me-2 text-success"></i>تنظيف وفحص دوري</span><span class="status">مؤكد</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- قسم المميزات -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-title">
+          <h2>كل ما تحتاجه لتجربة أسنان أسهل</h2>
+          <p>أدوات واضحة للمريض والطبيب والعيادة في منصة واحدة.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4"><div class="feature-card">
+            <span class="feature-icon"><i class="bi bi-calendar2-check"></i></span>
+            <h3>حجز ومتابعة المواعيد</h3>
+            <p>اختر العيادة والطبيب والخدمة والوقت، وتابع حالة الحجز أو اطلب تغيير الموعد.</p>
+          </div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature-card">
+            <span class="feature-icon"><i class="bi bi-file-medical"></i></span>
+            <h3>سجل علاجي وتقارير</h3>
+            <p>تابع زياراتك وتقاريرك وخطط العلاج والوصفات والمرفقات من مكان واحد.</p>
+          </div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature-card">
+            <span class="feature-icon"><i class="bi bi-chat-dots"></i></span>
+            <h3>تشخيص أولي ذكي</h3>
+            <p>مساعد محادثي يعطيك توجيهًا أوليًا ويقترح العيادة أو الطبيب المناسب.</p>
+          </div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature-card">
+            <span class="feature-icon"><i class="bi bi-receipt"></i></span>
+            <h3>فواتير ومدفوعات</h3>
+            <p>اعرف المبالغ المدفوعة والمتبقية وحالة التقسيط بشكل واضح.</p>
+          </div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature-card">
+            <span class="feature-icon"><i class="bi bi-hospital"></i></span>
+            <h3>إدارة العيادة</h3>
+            <p>الخدمات والأطباء والموظفون والمواعيد والفواتير والوظائف والتسويات.</p>
+          </div></div>
+          <div class="col-md-6 col-lg-4"><div class="feature-card">
+            <span class="feature-icon"><i class="bi bi-shield-check"></i></span>
+            <h3>إشراف مركزي</h3>
+            <p>مدير عام يراجع الاعتمادات والرقابة والمالية والتدقيق على النظام.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم لمن النظام؟ -->
+    <section class="section alt" id="roles">
+      <div class="container">
+        <div class="section-title">
+          <h2>مصممة لكل طرف في النظام</h2>
+          <p>لكل دور تجربة وصلاحيات تناسب مسؤوليته.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-4"><div class="role-card">
+            <span class="role-icon"><i class="bi bi-person-heart"></i></span>
+            <h3>للمريض</h3>
+            <p>احجز وتابع علاجك بسهولة.</p>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i>البحث عن عيادة وطبيب</li>
+              <li><i class="bi bi-check2-circle"></i>الحجز والتغيير والإلغاء</li>
+              <li><i class="bi bi-check2-circle"></i>التقارير والفواتير</li>
+              <li><i class="bi bi-check2-circle"></i>التشخيص الأولي الذكي</li>
+            </ul>
+          </div></div>
+          <div class="col-lg-4"><div class="role-card">
+            <span class="role-icon"><i class="bi bi-person-badge"></i></span>
+            <h3>للطبيب</h3>
+            <p>أدر الجانب السريري بوضوح.</p>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i>المواعيد والزيارات</li>
+              <li><i class="bi bi-check2-circle"></i>التشخيص وخطة العلاج</li>
+              <li><i class="bi bi-check2-circle"></i>الوصفات والتقارير</li>
+              <li><i class="bi bi-check2-circle"></i>المتابعات العلاجية</li>
+            </ul>
+          </div></div>
+          <div class="col-lg-4"><div class="role-card">
+            <span class="role-icon"><i class="bi bi-hospital"></i></span>
+            <h3>للعيادة</h3>
+            <p>أدر التشغيل اليومي من مكان واحد.</p>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i>الأطباء والجداول</li>
+              <li><i class="bi bi-check2-circle"></i>الخدمات والموظفون</li>
+              <li><i class="bi bi-check2-circle"></i>المواعيد والفواتير</li>
+              <li><i class="bi bi-check2-circle"></i>الوظائف والتسويات</li>
+            </ul>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم كيف يعمل؟ -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-title">
+          <h2>ابدأ بثلاث خطوات</h2>
+          <p>من إنشاء الحساب حتى استخدام المنصة.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4"><div class="step-card">
+            <span class="step-num">1</span>
+            <h3>أنشئ حسابك</h3>
+            <p>اختر إن كنت مريضًا أو طبيبًا وأدخل بياناتك الأساسية.</p>
+          </div></div>
+          <div class="col-md-4"><div class="step-card">
+            <span class="step-num">2</span>
+            <h3>أكمل المسار المناسب</h3>
+            <p>المريض يبدأ الحجز، والطبيب ينشئ عيادة أو يتقدم لوظيفة.</p>
+          </div></div>
+          <div class="col-md-4"><div class="step-card">
+            <span class="step-num">3</span>
+            <h3>استخدم المنصة</h3>
+            <p>تابع المواعيد والعلاج والتشغيل من الواجهة المخصصة لدورك.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- قسم الـ CTA -->
+    <section class="cta-wrap">
+      <div class="container">
+        <div class="cta d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+          <div>
+            <h2 class="fw-bold fs-3 mb-2">جاهز تبدأ؟</h2>
+            <p class="mb-0">أنشئ حسابك وابدأ استخدام Smart Dental Clinic.</p>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-light" href="auth/register/index">إنشاء حساب</a>
+            <a class="btn btn-outline-light" href="auth/login">تسجيل الدخول</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- الفوتر -->
+    <%- include('partials/home/footer') %>
+
+    <!-- ملفات الجافاسكريبت -->
+    <script src="assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="public/assets/app.js"></script>
+  
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div>
+        <!-- زر الدعم الفني العائم -->
+        <a class="floating-chat-btn" href="/account/support" title="فتح طلب دعم فني"><i class="bi bi-chat-dots-fill"></i></a>
+
+        <!-- نافذة الشات المنبثقة -->
+        
+    </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

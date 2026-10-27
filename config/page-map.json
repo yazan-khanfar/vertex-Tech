@@ -1,0 +1,1690 @@
+{
+  "account/context.html": {
+    "view": "account/context",
+    "role": "account",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "admin/appointment-details.html": {
+    "view": "admin/appointment-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {
+      "2": "active"
+    },
+    "drawerAria": {
+      "2": "page"
+    }
+  },
+  "admin/approvals.html": {
+    "view": "admin/approvals",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {
+      "4": "active"
+    },
+    "drawerAria": {
+      "4": "page"
+    }
+  },
+  "admin/clinic-application-details.html": {
+    "view": "admin/clinic-application-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {
+      "4": "active"
+    },
+    "drawerAria": {
+      "4": "page"
+    }
+  },
+  "admin/clinic-details.html": {
+    "view": "admin/clinic-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {
+      "4": "active"
+    },
+    "drawerAria": {
+      "4": "page"
+    }
+  },
+  "admin/doctor-details.html": {
+    "view": "admin/doctor-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "admin/doctor-license-review.html": {
+    "view": "admin/doctor-license-review",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "admin/doctors.html": {
+    "view": "admin/doctors",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "admin/finance.html": {
+    "view": "admin/finance",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "6": "active fw-bold"
+    },
+    "navAria": {
+      "6": "page"
+    },
+    "drawerActiveClasses": {
+      "6": "active"
+    },
+    "drawerAria": {
+      "6": "page"
+    }
+  },
+  "admin/index.html": {
+    "view": "admin/index",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "1": "active fw-bold"
+    },
+    "navAria": {
+      "1": "page"
+    },
+    "drawerActiveClasses": {
+      "0": "active"
+    },
+    "drawerAria": {
+      "0": "page"
+    }
+  },
+  "admin/invoice-details.html": {
+    "view": "admin/invoice-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "6": "active fw-bold"
+    },
+    "navAria": {
+      "6": "page"
+    },
+    "drawerActiveClasses": {
+      "6": "active"
+    },
+    "drawerAria": {
+      "6": "page"
+    }
+  },
+  "admin/job-application-details.html": {
+    "view": "admin/job-application-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "admin/job-details.html": {
+    "view": "admin/job-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "admin/lab-details.html": {
+    "view": "admin/lab-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "7": "active fw-bold",
+      "8": "active fw-bold"
+    },
+    "navAria": {
+      "7": "page",
+      "8": "page"
+    },
+    "drawerActiveClasses": {
+      "7": "active",
+      "8": "active"
+    },
+    "drawerAria": {
+      "7": "page",
+      "8": "page"
+    }
+  },
+  "admin/labs.html": {
+    "view": "admin/labs",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "7": "active fw-bold",
+      "8": "active fw-bold"
+    },
+    "navAria": {
+      "7": "page",
+      "8": "page"
+    },
+    "drawerActiveClasses": {
+      "7": "active",
+      "8": "active"
+    },
+    "drawerAria": {
+      "7": "page",
+      "8": "page"
+    }
+  },
+  "admin/management-center.html": {
+    "view": "admin/management-center",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "navAria": {
+      "2": "page"
+    },
+    "drawerActiveClasses": {
+      "1": "active fw-bold"
+    },
+    "drawerAria": {
+      "1": "page"
+    }
+  },
+  "admin/medical-record-details.html": {
+    "view": "admin/medical-record-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {
+      "2": "active"
+    },
+    "drawerAria": {
+      "2": "page"
+    }
+  },
+  "admin/reports.html": {
+    "view": "admin/reports",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {
+      "9": "active"
+    },
+    "drawerAria": {
+      "9": "page"
+    }
+  },
+  "admin/services.html": {
+    "view": "admin/services",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "7": "active fw-bold",
+      "8": "active fw-bold"
+    },
+    "navAria": {
+      "7": "page",
+      "8": "page"
+    },
+    "drawerActiveClasses": {
+      "7": "active",
+      "8": "active"
+    },
+    "drawerAria": {
+      "7": "page",
+      "8": "page"
+    }
+  },
+  "admin/settings.html": {
+    "view": "admin/settings",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {
+      "11": "active"
+    },
+    "drawerAria": {
+      "11": "page"
+    }
+  },
+  "admin/specialties.html": {
+    "view": "admin/specialties",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {
+      "5": "active"
+    },
+    "drawerAria": {
+      "5": "page"
+    }
+  },
+  "admin/staff-permissions.html": {
+    "view": "admin/staff-permissions",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {
+      "2": "active"
+    },
+    "drawerAria": {
+      "2": "page"
+    }
+  },
+  "admin/system-log.html": {
+    "view": "admin/system-log",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {
+      "10": "active"
+    },
+    "drawerAria": {
+      "10": "page"
+    }
+  },
+  "admin/user-details.html": {
+    "view": "admin/user-details",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {
+      "2": "active"
+    },
+    "drawerAria": {
+      "2": "page"
+    }
+  },
+  "admin/users.html": {
+    "view": "admin/users",
+    "role": "admin",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {
+      "2": "active"
+    },
+    "drawerAria": {
+      "2": "page"
+    }
+  },
+  "auth/login.html": {
+    "view": "auth/login",
+    "role": "auth",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "auth/mfa.html": {
+    "view": "auth/mfa",
+    "role": "auth",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "auth/password/forgot.html": {
+    "view": "auth/password/forgot",
+    "role": "auth",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "auth/password/reset-link-sent.html": {
+    "view": "auth/password/reset-link-sent",
+    "role": "auth",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "auth/password/reset.html": {
+    "view": "auth/password/reset",
+    "role": "auth",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "auth/register/doctor.html": {
+    "view": "auth/register/doctor",
+    "role": "auth",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "auth/register/index.html": {
+    "view": "auth/register/index",
+    "role": "auth",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "auth/register/patient.html": {
+    "view": "auth/register/patient",
+    "role": "auth",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "auth/register/success.html": {
+    "view": "auth/register/success",
+    "role": "auth",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/account-settings.html": {
+    "view": "clinic/account-settings",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/application-details.html": {
+    "view": "clinic/application-details",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "7": "active fw-bold"
+    },
+    "navAria": {
+      "7": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/appointment-details.html": {
+    "view": "clinic/appointment-details",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "navAria": {
+      "2": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/appointments.html": {
+    "view": "clinic/appointments",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 2,
+    "navActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "navAria": {
+      "2": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/doctor-details.html": {
+    "view": "clinic/doctor-details",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/doctor-report.html": {
+    "view": "clinic/doctor-report",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/doctors.html": {
+    "view": "clinic/doctors",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/index.html": {
+    "view": "clinic/index",
+    "role": "clinic",
+    "navVariant": 2,
+    "drawerVariant": 2,
+    "footerVariant": 3,
+    "navActiveClasses": {
+      "1": "active fw-bold"
+    },
+    "navAria": {
+      "1": "page"
+    },
+    "drawerActiveClasses": {
+      "0": "active fw-bold"
+    },
+    "drawerAria": {
+      "0": "page"
+    }
+  },
+  "clinic/inventory.html": {
+    "view": "clinic/inventory",
+    "role": "clinic",
+    "navVariant": 3,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "8": "active"
+    },
+    "navAria": {
+      "8": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {
+      "5": "page"
+    }
+  },
+  "clinic/invoices.html": {
+    "view": "clinic/invoices",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "6": "active fw-bold"
+    },
+    "navAria": {
+      "6": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/job-applicants.html": {
+    "view": "clinic/job-applicants",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "7": "active fw-bold"
+    },
+    "navAria": {
+      "7": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/jobs.html": {
+    "view": "clinic/jobs",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/lab-cases.html": {
+    "view": "clinic/lab-cases",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/lab-details.html": {
+    "view": "clinic/lab-details",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/new-appointment.html": {
+    "view": "clinic/new-appointment",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "navAria": {
+      "2": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/operations.html": {
+    "view": "clinic/operations",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/patient-details.html": {
+    "view": "clinic/patient-details",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 2,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/patients.html": {
+    "view": "clinic/patients",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/profile.html": {
+    "view": "clinic/profile",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/recalls.html": {
+    "view": "clinic/recalls",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/reports.html": {
+    "view": "clinic/reports",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/services.html": {
+    "view": "clinic/services",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/settlements.html": {
+    "view": "clinic/settlements",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "1": "active fw-bold"
+    },
+    "navAria": {
+      "1": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/specialties.html": {
+    "view": "clinic/specialties",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "clinic/staff.html": {
+    "view": "clinic/staff",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {
+      "14": "active"
+    },
+    "drawerAria": {
+      "14": "page"
+    }
+  },
+  "clinic/treatment-plan-details.html": {
+    "view": "clinic/treatment-plan-details",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "9": "active"
+    },
+    "drawerAria": {
+      "9": "page"
+    }
+  },
+  "clinic/treatment-plans.html": {
+    "view": "clinic/treatment-plans",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "9": "active"
+    },
+    "drawerAria": {
+      "9": "page"
+    }
+  },
+  "clinic/visit-checkout.html": {
+    "view": "clinic/visit-checkout",
+    "role": "clinic",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/appointments.html": {
+    "view": "doctor/appointments",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "navAria": {
+      "2": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/followups.html": {
+    "view": "doctor/followups",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/index.html": {
+    "view": "doctor/index",
+    "role": "doctor",
+    "navVariant": 2,
+    "drawerVariant": 2,
+    "footerVariant": 3,
+    "navActiveClasses": {
+      "1": "active fw-bold"
+    },
+    "navAria": {
+      "1": "page"
+    },
+    "drawerActiveClasses": {
+      "0": "active fw-bold"
+    },
+    "drawerAria": {
+      "0": "page"
+    }
+  },
+  "doctor/lab-cases.html": {
+    "view": "doctor/lab-cases",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/patient-details.html": {
+    "view": "doctor/patient-details",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 2,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/patients.html": {
+    "view": "doctor/patients",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/profile.html": {
+    "view": "doctor/profile",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/report-current-visit.html": {
+    "view": "doctor/report-current-visit",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "6": "active fw-bold"
+    },
+    "navAria": {
+      "6": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/report-details.html": {
+    "view": "doctor/report-details",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 2,
+    "navActiveClasses": {
+      "6": "active fw-bold"
+    },
+    "navAria": {
+      "6": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/reports.html": {
+    "view": "doctor/reports",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "6": "active fw-bold"
+    },
+    "navAria": {
+      "6": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/schedule.html": {
+    "view": "doctor/schedule",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "drawerAria": {
+      "2": "page"
+    }
+  },
+  "doctor/settings.html": {
+    "view": "doctor/settings",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "doctor/treatment-plan-details.html": {
+    "view": "doctor/treatment-plan-details",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {
+      "4": "active"
+    },
+    "drawerAria": {
+      "4": "page"
+    }
+  },
+  "doctor/treatment-plans.html": {
+    "view": "doctor/treatment-plans",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {
+      "4": "active"
+    },
+    "drawerAria": {
+      "4": "page"
+    }
+  },
+  "doctor/visit.html": {
+    "view": "doctor/visit",
+    "role": "doctor",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "navAria": {
+      "2": "page"
+    },
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "index.html": {
+    "view": "index",
+    "role": "home",
+    "navVariant": 1,
+    "drawerVariant": 0,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/approval-pending.html": {
+    "view": "onboarding/doctor/approval-pending",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/choose-path.html": {
+    "view": "onboarding/doctor/choose-path",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/clinic/application-status.html": {
+    "view": "onboarding/doctor/clinic/application-status",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/clinic/create.html": {
+    "view": "onboarding/doctor/clinic/create",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/jobs/application-preview.html": {
+    "view": "onboarding/doctor/jobs/application-preview",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/jobs/application-status.html": {
+    "view": "onboarding/doctor/jobs/application-status",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/jobs/details.html": {
+    "view": "onboarding/doctor/jobs/details",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/jobs/index.html": {
+    "view": "onboarding/doctor/jobs/index",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/license-status.html": {
+    "view": "onboarding/doctor/license-status",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "onboarding/doctor/verification-pending.html": {
+    "view": "onboarding/doctor/verification-pending",
+    "role": "onboarding",
+    "navVariant": 0,
+    "drawerVariant": 0,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "patient/ai-diagnosis.html": {
+    "view": "patient/ai-diagnosis",
+    "role": "patient",
+    "navVariant": 3,
+    "drawerVariant": 3,
+    "footerVariant": 2,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "drawerAria": {
+      "4": "page"
+    }
+  },
+  "patient/appointment-details.html": {
+    "view": "patient/appointment-details",
+    "role": "patient",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "patient/appointments.html": {
+    "view": "patient/appointments",
+    "role": "patient",
+    "navVariant": 2,
+    "drawerVariant": 2,
+    "footerVariant": 2,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "patient/book-appointment.html": {
+    "view": "patient/book-appointment",
+    "role": "patient",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "patient/booking-details.html": {
+    "view": "patient/booking-details",
+    "role": "patient",
+    "navVariant": 2,
+    "drawerVariant": 2,
+    "footerVariant": 2,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "patient/clinic-details.html": {
+    "view": "patient/clinic-details",
+    "role": "patient",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "navAria": {
+      "2": "page"
+    },
+    "drawerActiveClasses": {
+      "1": "active"
+    },
+    "drawerAria": {
+      "1": "page"
+    }
+  },
+  "patient/clinics.html": {
+    "view": "patient/clinics",
+    "role": "patient",
+    "navVariant": 4,
+    "drawerVariant": 4,
+    "footerVariant": 2,
+    "navActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "navAria": {
+      "2": "page"
+    },
+    "drawerActiveClasses": {
+      "1": "active fw-bold"
+    },
+    "drawerAria": {
+      "1": "page"
+    }
+  },
+  "patient/diagnosis-history.html": {
+    "view": "patient/diagnosis-history",
+    "role": "patient",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {
+      "5": "active"
+    },
+    "drawerAria": {
+      "5": "page"
+    }
+  },
+  "patient/doctor-details.html": {
+    "view": "patient/doctor-details",
+    "role": "patient",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {
+      "2": "active"
+    },
+    "drawerAria": {
+      "2": "page"
+    }
+  },
+  "patient/doctors.html": {
+    "view": "patient/doctors",
+    "role": "patient",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {
+      "2": "active"
+    },
+    "drawerAria": {
+      "2": "page"
+    }
+  },
+  "patient/index.html": {
+    "view": "patient/index",
+    "role": "patient",
+    "navVariant": 5,
+    "drawerVariant": 5,
+    "footerVariant": 2,
+    "navActiveClasses": {
+      "1": "active fw-bold"
+    },
+    "navAria": {
+      "1": "page"
+    },
+    "drawerActiveClasses": {
+      "0": "active fw-bold"
+    },
+    "drawerAria": {
+      "0": "page"
+    }
+  },
+  "patient/invoices.html": {
+    "view": "patient/invoices",
+    "role": "patient",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {
+      "6": "active"
+    },
+    "drawerAria": {
+      "6": "page"
+    }
+  },
+  "patient/notifications.html": {
+    "view": "patient/notifications",
+    "role": "patient",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  },
+  "patient/profile.html": {
+    "view": "patient/profile",
+    "role": "patient",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 1,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {
+      "7": "active"
+    },
+    "drawerAria": {
+      "7": "page"
+    }
+  },
+  "staff/appointments.html": {
+    "view": "staff/appointments",
+    "role": "staff",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "2": "active fw-bold"
+    },
+    "navAria": {
+      "2": "page"
+    },
+    "drawerActiveClasses": {
+      "1": "active"
+    },
+    "drawerAria": {
+      "1": "page"
+    }
+  },
+  "staff/choose-clinic.html": {
+    "view": "staff/choose-clinic",
+    "role": "staff",
+    "navVariant": 2,
+    "drawerVariant": 2,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "1": "active fw-bold"
+    },
+    "navAria": {
+      "1": "page"
+    },
+    "drawerActiveClasses": {
+      "0": "active"
+    },
+    "drawerAria": {
+      "0": "page"
+    }
+  },
+  "staff/index.html": {
+    "view": "staff/index",
+    "role": "staff",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "1": "active fw-bold"
+    },
+    "navAria": {
+      "1": "page"
+    },
+    "drawerActiveClasses": {
+      "0": "active"
+    },
+    "drawerAria": {
+      "0": "page"
+    }
+  },
+  "staff/invoices.html": {
+    "view": "staff/invoices",
+    "role": "staff",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "4": "active fw-bold"
+    },
+    "navAria": {
+      "4": "page"
+    },
+    "drawerActiveClasses": {
+      "3": "active"
+    },
+    "drawerAria": {
+      "3": "page"
+    }
+  },
+  "staff/lab-cases.html": {
+    "view": "staff/lab-cases",
+    "role": "staff",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {
+      "4": "active"
+    },
+    "drawerAria": {
+      "4": "page"
+    }
+  },
+  "staff/lab-details.html": {
+    "view": "staff/lab-details",
+    "role": "staff",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "5": "active fw-bold"
+    },
+    "navAria": {
+      "5": "page"
+    },
+    "drawerActiveClasses": {
+      "4": "active"
+    },
+    "drawerAria": {
+      "4": "page"
+    }
+  },
+  "staff/patients.html": {
+    "view": "staff/patients",
+    "role": "staff",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {
+      "3": "active fw-bold"
+    },
+    "navAria": {
+      "3": "page"
+    },
+    "drawerActiveClasses": {
+      "2": "active"
+    },
+    "drawerAria": {
+      "2": "page"
+    }
+  },
+  "staff/profile.html": {
+    "view": "staff/profile",
+    "role": "staff",
+    "navVariant": 1,
+    "drawerVariant": 1,
+    "footerVariant": 0,
+    "navActiveClasses": {},
+    "navAria": {},
+    "drawerActiveClasses": {},
+    "drawerAria": {}
+  }
+}

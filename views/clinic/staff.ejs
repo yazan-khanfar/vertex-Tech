@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html data-style-sections="section-7" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الموظفون والصلاحيات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-start mb-4">
+          <div>
+            <h1 class="fw-bold fs-2 mb-2">الموظفون والصلاحيات</h1>
+            <p class="text-secondary mb-0">
+              إضافة موظفي العيادة وإدارة أدوارهم وصلاحياتهم التشغيلية. الطبيب
+              يبقى له ملف طبي مستقل وليس Staff Role.
+            </p>
+          </div>
+          <button class="btn btn-primary" data-bs-target="#staffModal" data-bs-toggle="modal" data-staff-new="" data-ui-open="#staffModal" type="button">
+            <i class="bi bi-person-plus ms-1"></i>إضافة موظف
+          </button>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">إجمالي الموظفين</small>
+              <div class="stat-value" id="staffTotal"><%= staff.length %></div>
+              <small>غير الأطباء</small>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">فعالون</small>
+              <div class="stat-value text-success" id="staffActive"><%= staff.filter(x=>x.status==='active').length %></div>
+              <small>يستطيعون الدخول</small>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">معلقون</small>
+              <div class="stat-value text-warning" id="staffSuspended"><%= staff.filter(x=>x.status==='suspended').length %></div>
+              <small>الحساب محفوظ</small>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">قوالب صلاحيات</small>
+              <div class="stat-value">3</div>
+              <small>استقبال • محاسب • منسق</small>
+            </div>
+          </div>
+        </div>
+        <% if (message) { %><div class="alert alert-success" role="status"><%= message %></div><% } %>
+        <% if (error) { %><div class="alert alert-danger" role="alert"><%= error %></div><% } %>
+        <div class="filter-panel mb-4">
+          <div class="row g-3">
+            <div class="col-lg-5">
+              <input class="form-control" id="staffSearch" placeholder="ابحث بالاسم أو البريد أو الدور..." value="" name="staff_search">
+            </div>
+            <div class="col-lg-3">
+              <select class="form-select" id="staffRoleFilter" name="staff_role_filter">
+                <option value="all" selected>كل الأدوار</option>
+                <option value="reception">منسق استقبال</option>
+                <option value="accountant">محاسب</option>
+                <option value="coordinator">منسق عيادة</option>
+              </select>
+            </div>
+            <div class="col-lg-3">
+              <select class="form-select" id="staffStatusFilter" name="staff_status_filter">
+                <option value="all" selected>كل الحالات</option>
+                <option value="active">فعال</option>
+                <option value="suspended">معلق</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+          <table class="table mb-0 staff-table medium-data-table responsive-stack-table system-data-table">
+            <thead>
+              <tr>
+                <th>الموظف</th>
+                <th>الدور</th>
+                <th>بيانات الدخول</th>
+                <th>أهم الصلاحيات</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="staffTableBody">
+              <% for (const member of staff) { %>
+              <tr data-staff-row data-id="<%= member.id %>" data-role="<%= member.role %>" data-status="<%= member.status %>" data-permissions="<%= member.permissions.join(',') %>" data-name="<%= member.name %>" data-email="<%= member.email %>" data-phone="<%= member.phone %>" data-search="<%= [member.name,member.email,member.roleLabel].join(' ') %>">
+                <td data-label="الموظف" class="table-primary-cell"><%= member.name %> — U-<%= member.id %></td>
+                <td data-label="الدور" data-staff-role-label><%= member.roleLabel %></td>
+                <td data-label="بيانات الدخول"><%= member.email %></td>
+                <td data-label="أهم الصلاحيات" class="table-status-cell">
+                  <% for (const permission of member.permissions.slice(0,3)) { %><span class="badge text-bg-light border"><%= permission %></span> <% } %>
+                  <% if (!member.permissions.length) { %><span class="text-secondary">بلا صلاحيات</span><% } %>
+                </td>
+                <td data-label="الحالة" class="table-status-cell"><span class="badge <%= member.status==='active'?'text-bg-success':member.status==='suspended'?'text-bg-warning':'text-bg-secondary' %>" data-staff-badge><%= member.status==='active'?'فعال':member.status==='suspended'?'معلق':'غير نشط' %></span></td>
+                <td data-label="الإجراءات" class="table-actions-cell"><div class="d-flex gap-1 flex-wrap table-action-grid">
+                  <button class="btn btn-sm btn-light" data-staff-view data-ui-open="#staffViewModal" type="button">عرض</button>
+                  <% if (member.status!=='inactive') { %><button class="btn btn-sm btn-outline-primary" data-staff-edit data-ui-open="#staffModal" type="button">تعديل</button><% } %>
+                  <% if (member.status==='active'||member.status==='suspended') { %>
+                    <form method="post" action="/clinic/staff" class="d-inline"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="staff_id" value="<%= member.id %>"><input type="hidden" name="action" value="<%= member.status==='active'?'suspend':'activate' %>"><button class="btn btn-sm btn-outline-warning" type="submit"><%= member.status==='active'?'تعليق':'تفعيل' %></button></form>
+                  <% } %>
+                  <% if (member.status!=='inactive') { %><form method="post" action="/clinic/staff" class="d-inline" onsubmit="return confirm('هل تريد أرشفة عضوية هذا الموظف في العيادة؟')"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="staff_id" value="<%= member.id %>"><input type="hidden" name="action" value="archive"><button class="btn btn-sm btn-outline-secondary" type="submit">أرشفة</button></form><% } %>
+                </div></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+          <div class="empty-state d-none" id="staffEmpty">
+            لا يوجد موظفون مطابقون للفلاتر.
+          </div>
+        </div>
+        <div class="soft-card p-4 mt-4">
+          <div class="d-flex justify-content-between gap-3 align-items-start flex-wrap">
+            <div>
+              <h4 class="fw-bold mb-1">ملاحظة عن الصلاحيات</h4>
+              <p class="text-secondary mb-0">
+                هذه صلاحيات تشغيلية داخل العيادة فقط. لا يستطيع موظف العيادة
+                تعديل التشخيص أو التقرير الطبي أو الوصفة.
+              </p>
+            </div>
+            <span class="badge text-bg-light border">Least Privilege</span>
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="staffModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <div>
+                <h5 class="modal-title fw-bold" id="staffModalTitle">
+                  إضافة موظف
+                </h5>
+                <small class="text-secondary">أدخل بيانات الموظف وكلمة مروره، ثم حدد دوره وصلاحياته داخل العيادة. سلّمه البريد وكلمة المرور ليسجّل الدخول مباشرة.</small>
+              </div>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body"><div class="row g-4">
+                <div class="col-lg-5">
+                  <div class="soft-card p-4 h-100">
+                    <h6 class="fw-bold mb-3">بيانات الموظف</h6>
+                    <div class="mb-3"><label class="form-label" for="staffAccountMode">طريقة إضافة الموظف</label><select id="staffAccountMode" name="account_mode" form="backend-form-12" class="form-select"><option value="create" selected>إنشاء حساب موظف جديد</option><option value="existing" disabled>ربط حساب موجود (يتطلب تحقق هوية وموافقة الموظف)</option></select></div><div class="mb-3" data-existing-staff-panel="" hidden=""><label class="form-label" for="existingStaffAccount">حساب الموظف المسجّل *</label><select id="existingStaffAccount" name="user_id" class="form-select" form="backend-form-12" data-record-select="staff" disabled><option value="">اختر الحساب</option><option value="" disabled>يتطلب التحقق من هوية صاحب الحساب</option></select></div><label class="form-label" for="staffFormName">الاسم الكامل *</label><input class="form-control mb-3" id="staffFormName" value="" name="staff_form_name" form="backend-form-12" required="" data-staff-identity=""><label class="form-label" for="staffFormEmail">البريد الإلكتروني *</label><input class="form-control mb-3" id="staffFormEmail" type="email" value="" name="staff_form_email" autocomplete="email" form="backend-form-12" required="" data-staff-identity=""><label class="form-label" for="staffFormPhone">رقم الهاتف *</label><input class="form-control mb-3" id="staffFormPhone" value="" name="staff_form_phone" form="backend-form-12" required="" data-staff-identity="" type="tel" autocomplete="tel"><div data-new-staff-password class="mb-3"><label class="form-label" for="staffAccountPassword">كلمة المرور *</label><div class="input-group mb-3"><input class="form-control" id="staffAccountPassword" name="password" type="password" minlength="12" required autocomplete="new-password" form="backend-form-12" aria-describedby="staffCredentialHelp"><button class="btn btn-outline-secondary" type="button" data-toggle-staff-password="#staffAccountPassword" aria-label="إظهار كلمة المرور"><i class="bi bi-eye"></i></button></div><label class="form-label" for="staffAccountPasswordConfirm">تأكيد كلمة المرور *</label><input class="form-control" id="staffAccountPasswordConfirm" name="password_confirmation" type="password" minlength="12" required autocomplete="new-password" form="backend-form-12"><p class="small text-secondary mt-2 mb-0" id="staffCredentialHelp">12 حرفًا على الأقل. بعد إنشاء الحساب سلّم الموظف البريد وكلمة المرور؛ ويمكنه تغييرها من حسابه.</p></div><label class="form-label">الدور *</label><select class="form-select mb-3" id="staffFormRole" name="clinic_role_id" form="backend-form-12" data-role-scope="Clinic">
+                      <option data-template-permissions="appointments.view,appointments.manage,patients.view_admin,patients.create" value="reception" selected>
+                        منسق استقبال
+                      </option>
+                      <option data-template-permissions="invoices.view,payments.record,reports.view_operational,invoices.issue" value="accountant">
+                        محاسب
+                      </option>
+                      <option data-template-permissions="appointments.view,appointments.manage,patients.view_admin,reports.view_operational" value="coordinator">
+                        منسق عيادة
+                      </option></select><label class="form-label">حالة العضوية داخل العيادة</label><select class="form-select" id="staffFormStatus" name="staff_form_status" form="backend-form-12">
+                      <option value="active" selected>فعال</option>
+                      <option value="suspended">معلق</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-7">
+                  <div class="soft-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <div>
+                        <h6 class="fw-bold mb-1">الصلاحيات</h6>
+                        <small class="text-secondary">اختر فقط ما يحتاجه الموظف.</small>
+                      </div>
+                      <button class="btn btn-sm btn-light border" id="applyRoleTemplate">
+                        تطبيق قالب الدور
+                      </button>
+                    </div>
+                    <div class="staff-permissions-grid">
+                      <label><input class="form-check-input" type="checkbox" value="appointments.view" id="field-1" name="permissions[]" form="backend-form-12">
+                        عرض المواعيد</label><label><input class="form-check-input" type="checkbox" value="appointments.manage" id="field-2" name="permissions[]" form="backend-form-12">
+                        إنشاء وتعديل المواعيد</label><label><input class="form-check-input" type="checkbox" value="patients.view_admin" id="field-3" name="permissions[]" form="backend-form-12">
+                        عرض بيانات المرضى الإدارية</label><label><input class="form-check-input" type="checkbox" value="patients.create" id="field-4" name="permissions[]" form="backend-form-12">
+                        إضافة مريض</label><label><input class="form-check-input" type="checkbox" value="invoices.view" id="field-5" name="permissions[]" form="backend-form-12">
+                        عرض الفواتير</label><label><input class="form-check-input" type="checkbox" value="payments.record" id="field-6" name="permissions[]" form="backend-form-12">
+                        تسجيل دفعات</label><label><input class="form-check-input" type="checkbox" value="reports.view_operational" id="field-7" name="permissions[]" form="backend-form-12">
+                        عرض التقارير التشغيلية</label><label><input class="form-check-input" type="checkbox" value="lab_orders.view" id="field-8" name="permissions[]" form="backend-form-12"> عرض المختبرات والحالات المخبرية</label><label><input class="form-check-input" type="checkbox" value="lab_orders.update_delivery" id="field-9" name="permissions[]" form="backend-form-12"> تسجيل إرسال واستلام الحالات المخبرية</label><label><input class="form-check-input" type="checkbox" value="laboratories.manage" id="field-10" name="permissions[]" form="backend-form-12"> ربط مختبر وإدارة حالة التعامل والملاحظات الداخلية</label>
+                    <label><input class="form-check-input" type="checkbox" value="invoices.issue" name="permissions[]" form="backend-form-12"> إصدار الفواتير</label></div>
+                    <div class="alert alert-warning mt-3 mb-0">
+                      <i class="bi bi-shield-lock ms-1"></i>التشخيص والتقرير
+                      الطبي والوصفات غير متاحة لموظفي العيادة.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="saveStaffBtn" form="backend-form-12" type="submit" data-create-staff-account="">إنشاء الحساب وإضافته للعيادة</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="staffViewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <div>
+                <h5 class="modal-title fw-bold" id="staffViewName"></h5>
+                <small class="text-secondary" id="staffViewRole"></small>
+              </div>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="job-info-box">
+                    <small>البريد</small><strong id="staffViewEmail"></strong>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="job-info-box">
+                    <small>الحالة</small><strong id="staffViewStatus"></strong>
+                  </div>
+                </div>
+              </div>
+              <h6 class="fw-bold mt-4 mb-3">الصلاحيات</h6>
+              <div class="d-flex flex-wrap gap-2" id="staffViewPermissions"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-12" action="/clinic/staff" method="post" hidden data-staff-account-form><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="action" value="create"><input type="hidden" name="staff_id" value=""></form></body></html>

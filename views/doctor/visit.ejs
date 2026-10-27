@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html data-style-sections="section-5" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>بدء الزيارة | Smart Dental Doctor</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/doctor/header') %>
+    
+    <% if(typeof liveVisit!=="undefined" && liveVisit){ %>
+    <% if(visitMessage){ %><div class="container mt-3"><div class="alert alert-success" role="status"><%= visitMessage %></div></div><% } %>
+<main class="page-shell" data-clinical-enabled="<%= clinical && !clinical.approved ? "yes" : "no" %>" data-report-approved="<%= clinical && clinical.approved ? "yes" : "no" %>" data-patient-arrived="<%= liveVisit.arrived ? "yes" : "no" %>" data-booking-id="<%= liveVisit.id %>" data-visit-id="<%= liveVisit.visit_id || "" %>" data-visit-status="<%= liveVisit.visit_status || "not_started" %>" id="main-content">
+<section class="container py-4 py-lg-5">
+<div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end mb-4">
+<div>
+<span class="badge badge-soft mb-2">ملف الزيارة الطبية</span>
+<h1 class="fw-bold">زيارة <%= liveVisit.patient_name %> — <%= liveVisit.service_name %></h1>
+<p class="text-secondary mb-0">موعد <%= liveVisit.date %> • <%= liveVisit.time %> • رقم الحجز <%= liveVisit.id %></p>
+</div>
+<div>
+<a class="btn btn-outline-primary" href="/doctor/patient-details?id=<%= liveVisit.patient_id %>">فتح ملف المريض</a>
+</div>
+</div>
+<div class="visit-layout">
+<div>
+<div class="clinical-card clinical-section mb-4" id="patient-info">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true"><i class="bi bi-person-vcard"></i></span>
+<div>
+<h4 class="fw-bold mb-1">معلومات المريض</h4>
+<div class="text-secondary small">
+                    المعلومات الأساسية والتنبيهات المهمة قبل العلاج.
+                  </div>
+</div>
+</div>
+<div class="row g-3">
+<div class="col-md-4">
+<small class="text-secondary">الاسم</small>
+<div class="fw-bold"><%= liveVisit.patient_name %></div>
+</div>
+<div class="col-md-4">
+<small class="text-secondary">رقم الملف</small>
+<div class="fw-bold"><%= liveVisit.patient_id %></div>
+</div>
+<div class="col-md-4">
+<small class="text-secondary">الهاتف</small>
+<div class="fw-bold"><%= liveVisit.phone || "—" %></div>
+</div>
+</div>
+<div class="patient-alert <%= liveVisit.health_notes ? "danger" : "" %> mt-3"><span class="text-secondary">ملاحظات صحية</span>: <%= liveVisit.health_notes || "لا توجد ملاحظات صحية مسجلة." %></div>
+
+</div>
+<!-- Visit workflow: five panels, one server-rendered visit and original clinical forms. -->
+<div class="visit-workflow" id="visit-workflow">
+ <div class="visit-workflow-title d-flex justify-content-between align-items-center flex-wrap gap-2">
+  <div><strong>سير العمل الطبي</strong><p class="text-secondary small mb-0">اختر القسم المطلوب؛ بيانات الزيارة تبقى محفوظة في نفس السجل.</p></div>
+  <span class="visit-workflow-state" aria-live="polite"><%= clinical && clinical.approved ? 'التقرير معتمد • للقراءة فقط' : liveVisit.visit_status === 'completed' ? 'زيارة مكتملة • التقرير بانتظار الاعتماد' : liveVisit.visit_id ? 'الزيارة قيد العلاج' : 'لم تبدأ الزيارة بعد' %></span>
+ </div>
+ <nav class="visit-tabs" role="tablist" aria-label="أقسام الزيارة" id="visit-tab-list">
+  <button type="button" role="tab" id="visit-tab-start" data-visit-tab-target="start" aria-selected="true" aria-controls="complaint exam"><i class="bi bi-clipboard2-pulse" aria-hidden="true"></i><span>بداية الزيارة</span></button>
+  <button type="button" role="tab" id="visit-tab-diagnosis" data-visit-tab-target="diagnosis" aria-selected="false" aria-controls="odontogram diagnosis attachments"><i class="bi bi-grid" aria-hidden="true"></i><span>الأسنان والتشخيص</span></button>
+  <button type="button" role="tab" id="visit-tab-treatment" data-visit-tab-target="treatment" aria-selected="false" aria-controls="procedure plan"><i class="bi bi-heart-pulse" aria-hidden="true"></i><span>العلاج</span></button>
+  <button type="button" role="tab" id="visit-tab-orders" data-visit-tab-target="orders" aria-selected="false" aria-controls="prescription lab followup"><i class="bi bi-prescription2" aria-hidden="true"></i><span>الوصفات والطلبات</span></button>
+  <button type="button" role="tab" id="visit-tab-finish" data-visit-tab-target="finish" aria-selected="false" aria-controls="report doctorInvoiceCard"><i class="bi bi-file-earmark-check" aria-hidden="true"></i><span>التقرير والإنهاء</span></button>
+ </nav>
+ <div class="visit-tab-heading" aria-live="polite"><strong id="visit-tab-heading-text">بداية الزيارة</strong><span id="visit-tab-help">سجّل الشكوى والفحص الأولي، ثم انتقل إلى بقية الأقسام حسب الحاجة.</span></div>
+ <p class="visit-unsaved-note" id="visit-unsaved-note" role="status" hidden><i class="bi bi-exclamation-circle" aria-hidden="true"></i> توجد مدخلات لم تُحفظ بعد. يمكنك التنقل بين التبويبات دون فقدانها؛ احفظ القسم قبل مغادرة الصفحة.</p>
+</div>
+<div class="clinical-card clinical-section mb-4" id="complaint" data-visit-tab="start">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">١</span>
+<div>
+<h4 class="fw-bold mb-1">سبب الزيارة / Chief Complaint</h4>
+<div class="text-secondary small">
+                    سجل شكوى المريض بكلماته قبل التشخيص.
+                  </div>
+</div>
+</div>
+<textarea class="form-control" id="chiefComplaint" maxlength="150" name="chief_complaint" rows="3"><%= liveVisit.chief_complaint || "" %></textarea>
+</div>
+<div class="clinical-card clinical-section mb-4" id="exam" data-visit-tab="start">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">٢</span>
+<div>
+<h4 class="fw-bold mb-1">الفحص السريري</h4>
+<div class="text-secondary small">نتائج الفحص داخل الفم.</div>
+</div>
+</div>
+<div class="exam-grid mb-3">
+<label class="exam-check" for="field-2"><input class="form-check-input ms-2" id="field-2" name="finding" value="وجود تسوس" type="checkbox" <%= clinical && clinical.findings && clinical.findings.some(f => f.finding === "وجود تسوس") ? "checked" : "" %>/>
+                  وجود تسوس</label><label class="exam-check"><input class="form-check-input ms-2" id="field-3" name="finding" value="ألم عند الضغط" type="checkbox" <%= clinical && clinical.findings && clinical.findings.some(f => f.finding === "ألم عند الضغط") ? "checked" : "" %>/>
+                  ألم عند الضغط</label><label class="exam-check"><input class="form-check-input ms-2" id="field-4" name="finding" value="تورم" type="checkbox" <%= clinical && clinical.findings && clinical.findings.some(f => f.finding === "تورم") ? "checked" : "" %>/>
+                  تورم</label><label class="exam-check"><input class="form-check-input ms-2" id="field-5" name="finding" value="حركة في السن" type="checkbox" <%= clinical && clinical.findings && clinical.findings.some(f => f.finding === "حركة في السن") ? "checked" : "" %>/> حركة
+                  في السن</label><label class="exam-check"><input class="form-check-input ms-2" id="field-6" name="finding" value="نزف لثوي" type="checkbox" <%= clinical && clinical.findings && clinical.findings.some(f => f.finding === "نزف لثوي") ? "checked" : "" %>/> نزف
+                  لثوي</label><label class="exam-check"><input class="form-check-input ms-2" id="field-7" name="finding" value="حساسية حرارية" type="checkbox" <%= clinical && clinical.findings && clinical.findings.some(f => f.finding === "حساسية حرارية") ? "checked" : "" %>/>
+                  حساسية حرارية</label>
+</div>
+<button class="btn btn-outline-primary btn-sm mb-3" data-visit-save="findings" type="button">حفظ نتائج الفحص</button>
+<label class="form-label">ملاحظات الفحص</label><textarea class="form-control" id="examinationNotes" maxlength="6000" name="examination_notes" rows="3"><%= liveVisit.examination_notes || "" %></textarea>
+</div>
+<div class="clinical-card clinical-section mb-4" id="odontogram" data-visit-tab="diagnosis">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">١</span>
+<div>
+<h4 class="fw-bold mb-1">مخطط الأسنان — Odontogram</h4>
+<div class="text-secondary small">اضغط على سن واحد ثم اختر حالته. تُحفظ حالة السن في سجل الزيارة.</div>
+</div>
+</div>
+<div class="odontogram">
+<div class="text-center small text-secondary mb-1">
+                  الفك العلوي
+                </div>
+<div class="teeth-row">
+<button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 18) || {}).status || "healthy" %>" data-tooth="18" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 18) || {}).status || "healthy"] || "🦷" %></span><span>18</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 17) || {}).status || "healthy" %>" data-tooth="17" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 17) || {}).status || "healthy"] || "🦷" %></span><span>17</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 16) || {}).status || "healthy" %>" data-tooth="16" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 16) || {}).status || "healthy"] || "🦷" %></span><span>16</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 15) || {}).status || "healthy" %>" data-tooth="15" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 15) || {}).status || "healthy"] || "🦷" %></span><span>15</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 14) || {}).status || "healthy" %>" data-tooth="14" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 14) || {}).status || "healthy"] || "🦷" %></span><span>14</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 13) || {}).status || "healthy" %>" data-tooth="13" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 13) || {}).status || "healthy"] || "🦷" %></span><span>13</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 12) || {}).status || "healthy" %>" data-tooth="12" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 12) || {}).status || "healthy"] || "🦷" %></span><span>12</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 11) || {}).status || "healthy" %>" data-tooth="11" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 11) || {}).status || "healthy"] || "🦷" %></span><span>11</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 21) || {}).status || "healthy" %>" data-tooth="21" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 21) || {}).status || "healthy"] || "🦷" %></span><span>21</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 22) || {}).status || "healthy" %>" data-tooth="22" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 22) || {}).status || "healthy"] || "🦷" %></span><span>22</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 23) || {}).status || "healthy" %>" data-tooth="23" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 23) || {}).status || "healthy"] || "🦷" %></span><span>23</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 24) || {}).status || "healthy" %>" data-tooth="24" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 24) || {}).status || "healthy"] || "🦷" %></span><span>24</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 25) || {}).status || "healthy" %>" data-tooth="25" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 25) || {}).status || "healthy"] || "🦷" %></span><span>25</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 26) || {}).status || "healthy" %>" data-tooth="26" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 26) || {}).status || "healthy"] || "🦷" %></span><span>26</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 27) || {}).status || "healthy" %>" data-tooth="27" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 27) || {}).status || "healthy"] || "🦷" %></span><span>27</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 28) || {}).status || "healthy" %>" data-tooth="28" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 28) || {}).status || "healthy"] || "🦷" %></span><span>28</span>
+</button>
+</div>
+<hr/>
+<div class="text-center small text-secondary mb-1">
+                  الفك السفلي
+                </div>
+<div class="teeth-row">
+<button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 48) || {}).status || "healthy" %>" data-tooth="48" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 48) || {}).status || "healthy"] || "🦷" %></span><span>48</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 47) || {}).status || "healthy" %>" data-tooth="47" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 47) || {}).status || "healthy"] || "🦷" %></span><span>47</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 46) || {}).status || "healthy" %>" data-tooth="46" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 46) || {}).status || "healthy"] || "🦷" %></span><span>46</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 45) || {}).status || "healthy" %>" data-tooth="45" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 45) || {}).status || "healthy"] || "🦷" %></span><span>45</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 44) || {}).status || "healthy" %>" data-tooth="44" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 44) || {}).status || "healthy"] || "🦷" %></span><span>44</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 43) || {}).status || "healthy" %>" data-tooth="43" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 43) || {}).status || "healthy"] || "🦷" %></span><span>43</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 42) || {}).status || "healthy" %>" data-tooth="42" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 42) || {}).status || "healthy"] || "🦷" %></span><span>42</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 41) || {}).status || "healthy" %>" data-tooth="41" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 41) || {}).status || "healthy"] || "🦷" %></span><span>41</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 31) || {}).status || "healthy" %>" data-tooth="31" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 31) || {}).status || "healthy"] || "🦷" %></span><span>31</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 32) || {}).status || "healthy" %>" data-tooth="32" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 32) || {}).status || "healthy"] || "🦷" %></span><span>32</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 33) || {}).status || "healthy" %>" data-tooth="33" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 33) || {}).status || "healthy"] || "🦷" %></span><span>33</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 34) || {}).status || "healthy" %>" data-tooth="34" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 34) || {}).status || "healthy"] || "🦷" %></span><span>34</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 35) || {}).status || "healthy" %>" data-tooth="35" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 35) || {}).status || "healthy"] || "🦷" %></span><span>35</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 36) || {}).status || "healthy" %>" data-tooth="36" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 36) || {}).status || "healthy"] || "🦷" %></span><span>36</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 37) || {}).status || "healthy" %>" data-tooth="37" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 37) || {}).status || "healthy"] || "🦷" %></span><span>37</span></button><button class="tooth" data-state="<%= ((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 38) || {}).status || "healthy" %>" data-tooth="38" type="button">
+<span class="tooth-icon"><%= ({healthy:"🦷",caries:"🟠",filled:"🟢",root_canal:"🔵",crown:"👑",missing:"✖",implant:"🦷",other:"🦷"})[((clinical && clinical.odontogram || []).find(t => Number(t.tooth) === 38) || {}).status || "healthy"] || "🦷" %></span><span>38</span>
+</button>
+</div>
+<div class="tooth-state-panel">
+<div class="d-flex flex-wrap justify-content-between gap-2 align-items-center">
+<div>
+                      السن المحدد: <strong id="selectedTooth">—</strong> •
+                      الحالة: <strong id="selectedToothState">—</strong>
+</div>
+<div class="d-flex gap-2 flex-wrap">
+<button class="state-btn" data-icon="🦷" data-tooth-state="healthy" data-visit-tooth-status="healthy" type="button">
+                        سليم</button><button class="state-btn" data-icon="🟠" data-tooth-state="caries" data-visit-tooth-status="caries" type="button">
+                        تسوس</button><button class="state-btn" data-icon="🟢" data-tooth-state="filling" data-visit-tooth-status="filled" type="button">
+                        حشوة</button><button class="state-btn" data-icon="🔵" data-tooth-state="root" data-visit-tooth-status="root_canal" type="button">
+                        علاج جذور</button><button class="state-btn" data-icon="🟣" data-tooth-state="crown" data-visit-tooth-status="crown" type="button">
+                        تاج</button><button class="state-btn" data-icon="✕" data-tooth-state="missing" data-visit-tooth-status="missing" type="button">
+                        مفقود
+                      </button>
+</div>
+</div>
+</div>
+</div>
+<section aria-label="تحديد سطح السن (اختياري)" class="sdc-panel sdc-panel--integrated" id="sdcToothSurface"><div class="sdc-panel-head"><span aria-hidden="true" class="sdc-panel-icon"><i class="bi bi-bullseye"></i></span><div class="sdc-panel-head-copy"><h5>تحديد سطح السن (اختياري)</h5><p>يحفظ سطح السن منفصلاً عندما يكون الإجراء على جزء من السن، مع بقاء حالة السن الكاملة.</p></div></div><div class="sdc-panel-body"><div class="sdc-grid three"><label class="sdc-field" for="field-9"><span>السن المختار</span><input class="form-control" data-field="tooth" id="field-9" name="tooth" readonly="" type="text" value=""/></label><label class="sdc-field" for="field-10"><span>السطح</span><select class="form-select" data-field="surface" id="field-10" name="surface"><option selected="" value="">كامل السن</option><option value="M">Mesial</option><option value="D">Distal</option><option value="O">Occlusal</option><option value="B">Buccal</option><option value="L">Lingual</option></select></label><label class="sdc-field" for="field-11"><span>ملاحظة السطح</span><input class="form-control" data-field="surfaceNote" id="field-11" name="surfaceNote" type="text" value=""/></label></div></div><button class="btn btn-outline-primary btn-sm mt-2" type="button" data-visit-save="surface_note">حفظ ملاحظة سطح السن</button>
+<% if(clinical && clinical.surfaces){for(const note of clinical.surfaces){ %><div class="small text-secondary mt-2">سن <%= note.tooth %>، سطح <%= note.surface %>: <%= note.note %></div><% }} %></section></div>
+<div class="clinical-card clinical-section mb-4" id="diagnosis" data-visit-tab="diagnosis">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">٢</span>
+<div>
+<h4 class="fw-bold mb-1">التشخيص</h4>
+<div class="text-secondary small">
+                    يمكن تسجيل أكثر من تشخيص لأكثر من سن.
+                  </div>
+</div>
+</div>
+<div id="diagnosisList"><% if(clinical && clinical.diagnoses.length){for(const d of clinical.diagnoses){ %><div class="dynamic-list-item mb-2"><div class="row g-2 align-items-center"><div class="col-md-3"><label class="form-label small">السن</label><input class="form-control" readonly value="<%= d.tooth %>"></div><div class="col-md-9"><label class="form-label small">التشخيص المحفوظ</label><input class="form-control" readonly value="<%= d.diagnosis %>"></div></div><% if(!clinical.approved){ %><form action="/doctor/visit/clinical/action" method="post" class="mt-2"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= liveVisit.id %>"><input type="hidden" name="action" value="delete_diagnosis"><input type="hidden" name="diagnosis_id" value="<%= d.id %>"><button class="btn btn-outline-danger btn-sm">حذف التشخيص</button></form><% } %></div><% }} %><div class="dynamic-list-item"><div class="row g-2"><div class="col-md-3"><label class="form-label small">السن<input class="form-control" id="newDiagnosisTooth" inputmode="numeric" max="48" min="11" placeholder="رقم السن" type="number"/></label></div><div class="col-md-9"><label class="form-label small">التشخيص<input class="form-control" id="newDiagnosisText" maxlength="2000" placeholder="التشخيص"/></label></div></div></div></div>
+<button class="btn btn-outline-primary btn-sm mt-3" data-visit-save="diagnosis" id="addDiagnosis" type="button">
+<i class="bi bi-plus-lg ms-1"></i>إضافة تشخيص
+              </button>
+</div>
+<div class="clinical-card clinical-section mb-4" id="procedure" data-visit-tab="treatment">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">١</span>
+<div>
+<h4 class="fw-bold mb-1">الإجراءات التي تمت خلال الزيارة</h4>
+<div class="text-secondary small">
+                    ما قام به الطبيب فعلياً خلال الجلسة الحالية.
+                  </div>
+</div>
+</div>
+<section aria-label="الإجراءات المسجلة" class="sdc-panel sdc-panel--integrated" id="sdcProcedure"><div class="sdc-panel-head"><span aria-hidden="true" class="sdc-panel-icon"><i class="bi bi-clipboard2-pulse"></i></span><div class="sdc-panel-head-copy"><h5>الإجراءات المسجلة</h5><p>سجّل كل إجراء على حدة، وحدد السن والكمية والسعر والمرحلة العلاجية عند الحاجة.</p></div></div><div class="sdc-panel-body"><div id="sdcProcedureItems"><div class="sdc-items" data-kind="procedures" id="ui-slot-sdcAddProcedure"><% if(clinical){for(const pr of clinical.procedures){ %><div class="sdc-item mb-2"><div class="sdc-item-caption"><span class="sdc-item-number"><%= pr.service %></span><span class="sdc-item-count">محفوظ</span></div><div class="small">السن: <%= pr.tooth || "—" %> · الكمية: <%= pr.quantity %> · السعر: <%= pr.price %> ₪ · <%= pr.stage || "بدون مرحلة" %> · <strong><%= ({completed:"منفذ",planned:"مخطط",cancelled:"ملغى"})[pr.status] || pr.status %></strong></div><% if(pr.notes){ %><div class="small text-secondary"><%= pr.notes %></div><% } %>
+<% if(clinical.status==='in_progress' && !clinical.approved){ %><form method="post" action="/doctor/visit/clinical/action" class="d-flex flex-wrap gap-2 align-items-center mt-2">
+<input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= liveVisit.id %>"><input type="hidden" name="action" value="update_procedure_status"><input type="hidden" name="procedure_id" value="<%= pr.id %>">
+<label class="small">تغيير الحالة <select class="form-select form-select-sm" name="procedure_status"><option value="planned" <%= pr.status==='planned'?'selected':'' %>>مخطط</option><option value="completed" <%= pr.status==='completed'?'selected':'' %>>منفذ</option><option value="cancelled" <%= pr.status==='cancelled'?'selected':'' %>>ملغى</option></select></label>
+<button type="submit" class="btn btn-outline-primary btn-sm">حفظ الحالة</button></form><% } %>
+</div><% }} %><div class="sdc-item"><div class="sdc-item-caption"><span class="sdc-item-number">إجراء 1</span><span class="sdc-item-count">عنصر واحد</span><button aria-label="إزالة إجراء 1" class="btn btn-link text-danger btn-sm" data-remove="" data-ui-pending="" hidden="hidden" type="button"><i aria-hidden="true" class="bi bi-trash3"></i> <span>إزالة</span></button></div><div class="sdc-grid four"><label class="sdc-field" for="field-14"><span>الخدمة</span><select class="form-select" data-field="work" data-record-select="service" id="field-14" name="work"><% if(clinical){for(const svc of clinical.services){ %><option value="<%= svc.id %>" data-price="<%= svc.price %>"><%= svc.name %> — <%= svc.price %> ₪</option><% }} %></select></label><label class="sdc-field" for="field-15"><span>السن</span><input class="form-control" data-field="tooth" id="field-15" name="tooth" type="text" value=""/></label><label class="sdc-field" for="field-16"><span>الكمية</span><input class="form-control" data-field="quantity" data-procedure-quantity="" id="field-16" min="1" name="quantity" step="1" type="number" value="1"/></label><label class="sdc-field" for="field-17"><span>سعر الوحدة ₪</span><input class="form-control" data-field="price" data-procedure-price="" id="field-17" min="0" name="price" placeholder="من سعر الخدمة" readonly="readonly" step="0.01" type="number" value=""/></label></div><div class="sdc-grid three mt-2"><label class="sdc-field" for="field-18"><span>حالة الإجراء</span><select class="form-select" data-field="status" id="field-18" name="status"><option selected="selected" value="completed">منفذ</option><option value="planned">مخطط</option><option value="cancelled">ملغى</option></select></label><label class="sdc-field" for="field-19"><span>بند خطة العلاج</span><select class="form-select" data-field="planItem" id="field-19" name="treatment_stage_id"><option value="">غير مرتبط</option><% if(clinical){for(const st of clinical.stages){ %><option value="<%= st.id %>"><%= st.plan %> — <%= st.description %></option><% }} %></select></label><label class="sdc-field" for="field-20"><span>تفاصيل / ملاحظات</span><input class="form-control" data-field="notes" id="field-20" name="notes" type="text" value=""/></label></div></div></div></div><button class="btn btn-outline-primary btn-sm mt-2" data-visit-save="procedure" id="sdcAddProcedure" type="button"><i class="bi bi-plus-lg"></i> حفظ الإجراء وإضافة آخر</button><div class="small mt-2 fw-bold" id="sdcProcedureTotal">مجموع الإجراءات المنفذة: <%= ((clinical && clinical.procedures) || []).filter(p=>p.status==="completed").reduce((n,p)=>n+Number(p.price||0)*Number(p.quantity||0),0).toFixed(2) %> ₪</div></div></section></div>
+<div class="clinical-card clinical-section mb-4" id="attachments" data-visit-tab="diagnosis">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">٣</span>
+<div>
+<h4 class="fw-bold mb-1">الأشعة والمرفقات</h4>
+<div class="text-secondary small">
+                    X-Ray، Panoramic، صور داخل الفم أو ملفات أخرى.
+                  </div>
+</div>
+</div>
+
+<div id="attachmentList">
+<% if(clinical && clinical.attachments.length){for(const file of clinical.attachments){ %>
+<div class="dynamic-list-item mb-2"><div class="d-flex flex-wrap align-items-center justify-content-between gap-2"><span><%= file.name %> <small class="text-secondary"><%= file.description || "" %></small></span>
+<a class="btn btn-outline-primary btn-sm" href="/doctor/visit/attachment/file?booking_id=<%= liveVisit.id %>&file_id=<%= file.id %>">تنزيل الملف</a></div></div>
+<% }}else{ %><p class="text-secondary small">لم تُرفق ملفات لهذه الزيارة بعد.</p><% } %></div>
+<% if(clinical && !clinical.approved){ %>
+<form action="/doctor/visit/attachment/upload" method="post" enctype="multipart/form-data" class="mt-3">
+<input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= liveVisit.id %>">
+<label class="form-label" for="visitAttachment">إرفاق أشعة أو ملف طبي (PDF أو PNG أو JPG، حتى 5MB)</label>
+<input class="form-control" id="visitAttachment" type="file" name="attachment" accept=".pdf,.png,.jpg,.jpeg" required>
+<input class="form-control mt-2" name="description" maxlength="2000" placeholder="وصف المرفق (اختياري)">
+<button class="btn btn-outline-primary mt-2" type="submit"><i class="bi bi-upload ms-1"></i> رفع الملف وحفظه</button>
+</form><% } %></div>
+<div class="clinical-card clinical-section mb-4" id="plan" data-visit-tab="treatment">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">٢</span>
+<div>
+<h4 class="fw-bold mb-1">خطة العلاج — Treatment Plan</h4>
+<div class="text-secondary small">
+                    خطوات العلاج التي تمت والمتبقية.
+                  </div>
+</div>
+</div>
+<div class="alert alert-light border rounded-3 small mt-3 mb-3" data-plan-update-note="">خطط المريض المسجلة: <%= clinical && clinical.plans ? clinical.plans.length : 0 %> — يمكن إدارة مراحلها من صفحة خطط العلاج. <% if(clinical && !clinical.booking_plan && clinical.plans && clinical.plans.length){ %>لربط خطة بهذا الموعد، اختر إحدى مراحلها عند حفظ إجراء طبي.<% } %></div>
+<div class="plan-step-help alert alert-light border rounded-3 py-2 px-3 small mt-3 mb-3">
+                كل مرحلة موجودة يمكن تعديلها أو حذفها بشكل مستقل. اضغط «تعديل»
+                لفتح الحقول ثم «حفظ» لتثبيت التغيير.
+              </div>
+<div class="d-grid gap-2" id="planSteps"><% if(clinical && clinical.stages.length){for(const st of clinical.stages){ %><div class="dynamic-list-item plan-step-item"><div class="row g-2"><div class="col-md-2"><label class="form-label small">السن<input class="form-control" readonly value="<%= st.tooth || "—" %>"></label></div><div class="col-md-7"><label class="form-label small">المرحلة<input class="form-control" readonly value="<%= st.description %>"></label></div><div class="col-md-3 d-flex align-items-end"><a class="btn btn-outline-primary btn-sm w-100" href="/doctor/treatment-plan-details?id=<%= st.plan_id %>">فتح الخطة</a></div></div></div><% }}else{ %><div class="text-secondary small">لا توجد مراحل علاج مسجلة لهذه الزيارة.</div><% } %></div>
+<button class="btn btn-outline-primary btn-sm mt-3" data-visit-open-plans="true" id="addPlanStep" type="button">
+<i class="bi bi-plus-lg ms-1"></i>إضافة مرحلة
+              </button>
+</div>
+<div class="clinical-card clinical-section mb-4" id="prescription" data-visit-tab="orders">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">١</span>
+<div>
+<h4 class="fw-bold mb-1">الوصفات الطبية</h4>
+<div class="text-secondary small">
+                    الأدوية يحددها الطبيب فقط.
+                  </div>
+</div>
+</div>
+<div class="patient-alert danger mb-3">بيانات الحساسية: <%= liveVisit.allergies || "لا توجد حساسية مسجلة؛ تحقّق من المريض قبل العلاج." %></div>
+<div class="border rounded-3 p-3 mb-3" data-prescription-card="" data-prescription-id=""><h6 class="fw-bold" data-rx-title="">الوصفات المسجلة في الزيارة</h6><div id="medicationList"><% if(clinical){const rxGroups=new Map();for(const pr of clinical.prescriptions){if(!rxGroups.has(pr.id))rxGroups.set(pr.id,{id:pr.id,status:pr.status,medications:[]});if(pr.medication)rxGroups.get(pr.id).medications.push(pr);}
+for(const rx of rxGroups.values()){ %><div class="dynamic-list-item mb-2">
+<div class="fw-bold">وصفة #<%= rx.id %> — <%= rx.status==='issued'?'مُصدرة':rx.status==='void'?'مُبطلة':'مسودة' %></div>
+<% for(const med of rx.medications){ %><div class="small text-secondary"><%= med.medication %> — <%= med.dosage %> · <%= med.frequency %> · <%= med.duration %> · <%= med.route %></div><% } %>
+<% if(!clinical.approved && rx.status==='draft'){ %>
+<form action="/doctor/visit/clinical/action" method="post" class="mt-2 d-flex flex-wrap gap-2">
+<input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= liveVisit.id %>"><input type="hidden" name="action" value="issue_prescription"><input type="hidden" name="prescription_id" value="<%= rx.id %>"><button class="btn btn-outline-primary btn-sm">إصدار الوصفة</button></form><% } %>
+<% if(!clinical.approved && rx.status!=='void'){ %>
+<form action="/doctor/visit/clinical/action" method="post" class="mt-2 d-flex flex-wrap gap-2 align-items-center">
+<input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= liveVisit.id %>"><input type="hidden" name="action" value="void_prescription"><input type="hidden" name="prescription_id" value="<%= rx.id %>">
+<input class="form-control form-control-sm" name="void_reason" required maxlength="2000" placeholder="سبب إبطال الوصفة" style="max-width:240px"><button class="btn btn-outline-danger btn-sm" type="submit">إبطال الوصفة</button></form><% } %>
+</div><% }} %>
+<div class="dynamic-list-item" data-sdc-enriched="1">
+<div class="row g-2">
+<div class="col-md-3">
+<label class="form-label small" for="field-27">الدواء</label><input class="form-control" data-medication-field="medication_name" data-rx-required="" id="field-27" name="field_27" value=""/>
+</div>
+<div class="col-md-2">
+<label class="form-label small" for="field-28">الجرعة</label><input class="form-control" data-medication-field="dosage" data-rx-required="" id="field-28" name="field_28" value=""/>
+</div>
+<div class="col-md-3">
+<label class="form-label small" for="field-29">التكرار</label><input class="form-control" data-medication-field="frequency" data-rx-required="" id="field-29" name="field_29" value=""/>
+</div>
+<div class="col-md-2">
+<label class="form-label small" for="field-30">المدة</label><input class="form-control" data-medication-field="duration" data-rx-required="" id="field-30" name="field_30" value=""/>
+</div>
+<div class="col-md-2 d-flex align-items-end">
+<button class="btn btn-outline-danger w-100" data-remove="" data-remove-medication="" type="button">
+                        حذف
+                      </button>
+</div>
+<div class="col-12"><div class="sdc-grid two"><label class="sdc-field" for="field-31"><span>طريق الاستعمال (route)</span><input class="form-control" data-field="route" data-medication-field="route" data-rx-required="" id="field-31" name="route" type="text" value=""/></label><label class="sdc-field" for="field-32"><span>تعليمات منفصلة لكل دواء</span><input class="form-control" data-field="instructions" data-medication-field="instructions" id="field-32" name="instructions" type="text" value=""/></label></div></div></div>
+</div>
+</div>
+<button class="btn btn-outline-primary btn-sm mt-3" id="addMedication" type="button">
+<i class="bi bi-plus-lg ms-1"></i>إضافة دواء
+              </button>
+<section aria-label="حالة الوصفة الطبية" class="sdc-panel sdc-panel--integrated" id="sdcPrescriptionLifecycle"><div class="sdc-panel-head"><span aria-hidden="true" class="sdc-panel-icon"><i class="bi bi-capsule"></i></span><div class="sdc-panel-head-copy"><h5>حالة الوصفة الطبية</h5><p>يمكن إعداد الوصفة كمسودة قبل إصدارها. بعد الإصدار، تُحمى من التعديل غير الموثق.</p></div></div><div class="sdc-panel-body"><label class="sdc-field" for="field-33"><span>حالة الوصفة المقصودة</span><select class="form-select" data-field="prescriptionStatus" data-rx-status="" id="field-33" name="prescriptionStatus"><option selected="" value="draft">مسودة</option><option value="issued">إصدار الوصفة بعد الحفظ</option><option value="void" disabled="disabled">إبطال وصفة محفوظة من الأزرار أعلاه</option></select></label><div class="mt-2"><label class="sdc-field" for="field-34"><span>سبب الإبطال (عند الحاجة)</span><input class="form-control" data-field="voidReason" disabled="disabled" id="field-34" name="voidReason" type="text" value=""/></label></div><p class="small text-muted mt-2">يمكن الحفظ كمسودة أو إصدار الوصفة الجديدة مباشرة. إبطال وصفة محفوظة يتطلب سببًا مكتوبًا من زر الوصفة أعلاه.</p></div></section><button class="btn btn-primary btn-sm mt-2" data-visit-save="prescription" type="button">حفظ الوصفة</button></div><div id="additionalPrescriptions"></div><button class="btn btn-outline-primary" data-add-prescription="" type="button">تحضير وصفة جديدة</button></div>
+<div class="clinical-card clinical-section mb-4" id="lab" data-visit-tab="orders">
+<div class="clinical-head"><span class="clinical-number" aria-hidden="true">٢</span><div><h4 class="fw-bold mb-1">الحالة المخبرية</h4>
+<div class="text-secondary small">الطبيب يحدد الأعمال المطلوبة؛ إدارة العيادة تتولى الإرسال والاستلام.</div></div></div>
+<% if(clinical){for(const order of clinical.labOrders){ %>
+<div class="dynamic-list-item mb-2"><strong>طلب #<%= order.id %> — <%= order.laboratory %></strong><div class="small text-secondary">الحالة: <%= order.status %> · الأعمال: <%= order.works %></div></div>
+<% }} %>
+<% if(clinical && !clinical.approved){ %>
+<div class="form-check form-switch mb-3"><input class="form-check-input" data-ui-check-target="#labFields" id="needsLab" type="checkbox"><label class="form-check-label fw-bold" for="needsLab">الحالة تحتاج عملًا مخبريًا</label></div>
+<div class="d-none" id="labFields"><div class="sdc-grid three">
+<label class="sdc-field"><span>المختبر المرتبط بالعيادة</span><select class="form-select" data-field="lab" name="lab"><option value="">اختر مختبرًا</option><% for(const lab of clinical.labs){ %><option value="<%= lab.id %>"><%= lab.name %></option><% } %></select></label>
+<label class="sdc-field"><span>التسليم المتوقع</span><input class="form-control" data-field="due" type="date"></label>
+<label class="sdc-field"><span>ملاحظات الطلب</span><input class="form-control" data-field="labNotes" maxlength="2000"></label></div>
+<label class="sdc-field d-block mt-2"><span>مرفق الطلب (اختياري)</span><select class="form-select" data-field="labFile"><option value="">بدون مرفق</option><% for(const file of clinical.attachments){ %><option value="<%= file.id %>"><%= file.name %></option><% } %></select></label>
+<div class="sdc-subsection-title mt-3"><span>الأعمال المطلوبة داخل الطلب</span><small>يمكن إضافة أكثر من عمل</small></div>
+<div id="sdcLabItems"><div class="sdc-items" id="ui-slot-sdcAddLab"><div class="sdc-item" data-lab-item><div class="sdc-grid four">
+<label class="sdc-field"><span>نوع العمل</span><select class="form-select" data-field="work_type"><option value="تاج Zirconia">تاج Zirconia</option><option value="جسر">جسر</option><option value="Veneer">Veneer</option><option value="Retainer">Retainer</option><option value="طقم">طقم</option><option value="عمل آخر">عمل آخر</option></select></label>
+<label class="sdc-field"><span>السن</span><input class="form-control" data-field="tooth_code" placeholder="اختياري"></label>
+<label class="sdc-field"><span>المنطقة / مجموعة الأسنان</span><input class="form-control" data-field="area_text" maxlength="2000"></label>
+<label class="sdc-field"><span>الكمية</span><input class="form-control" data-field="quantity" type="number" min="1" step="1" value="1"></label></div>
+<div class="sdc-grid three mt-2"><label class="sdc-field"><span>المادة</span><input class="form-control" data-field="material"></label>
+<label class="sdc-field"><span>درجة اللون</span><input class="form-control" data-field="shade"></label>
+<label class="sdc-field"><span>تعليمات العمل</span><input class="form-control" data-field="instructions"></label></div>
+<button class="btn btn-outline-danger btn-sm mt-2" data-remove-lab-item type="button">إزالة العمل</button></div></div></div>
+<button class="btn btn-outline-primary btn-sm mt-2" type="button" id="sdcAddLab"><i class="bi bi-plus-lg"></i> إضافة عمل مخبري</button>
+<button class="btn btn-primary btn-sm mt-2" type="button" data-visit-save="lab_order">حفظ الطلب كمسودة</button>
+<p class="small text-secondary mt-2">يُحفظ الطلب كمسودة؛ إرساله واستلامه يتمان من إدارة العيادة. إذا لم يُربط مختبر بالعيادة، يبقى الاختيار فارغًا.</p></div>
+<% }else{ %><p class="small text-secondary">يمكن عرض الطلبات السابقة بعد اعتماد التقرير، ولا يمكن إضافة طلبات جديدة.</p><% } %>
+</div>
+<div class="clinical-card clinical-section mb-4" id="followup" data-visit-tab="orders">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">٣</span>
+<div>
+<h4 class="fw-bold mb-1">المتابعة</h4>
+<div class="text-secondary small">
+                    الطبيب يوصي بالمتابعة ويحدد التاريخ المقترح؛ الحجز تديره
+                    العيادة أو المريض.
+                  </div>
+</div>
+</div>
+<div class="form-check form-switch mb-3">
+<input class="form-check-input" data-saved-followup="<%= clinical && clinical.followup_date ? "1" : "0" %>" data-ui-check-target="#followupFields" id="needsFollowup" name="needs_followup" type="checkbox"/><label class="form-check-label fw-bold" for="needsFollowup">يحتاج المريض متابعة</label>
+</div>
+<div id="followupFields">
+<div class="row g-3">
+<div class="col-md-5">
+<label class="form-label" for="field-46">نوع المتابعة</label><input class="form-control" id="field-46" name="follow_up_type" value="<%= clinical ? clinical.followup_type || "" : "" %>"/>
+</div>
+<div class="col-md-5">
+<label class="form-label" for="field-47">الموعد المقترح</label><input class="form-control" id="field-47" name="suggested_date" type="date" value="<%= clinical ? clinical.followup_date || "" : "" %>"/>
+</div>
+<div class="col-12">
+<label class="form-label" for="field-48">ملاحظة</label><input class="form-control" id="field-48" name="follow_up_notes" value="<%= clinical ? clinical.followup_notes || "" : "" %>"/>
+</div>
+</div>
+<div class="readonly-note mt-3">
+                  عند حفظ اقتراح المتابعة، تظهر المتابعة للعيادة بحالة <strong>بانتظار الحجز</strong>. وعند حجز موعد مرتبط تتحول إلى <strong>تم الحجز</strong>.
+                </div>
+</div>
+<button class="btn btn-outline-primary btn-sm mt-3" data-visit-save="followup" type="button">حفظ اقتراح المتابعة</button></div>
+<div class="clinical-card clinical-section mb-4" id="report" data-visit-tab="finish">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">١</span>
+<div>
+<h4 class="fw-bold mb-1">التقرير الطبي</h4>
+<div class="text-secondary small">
+                    لا حاجة لإعادة كتابة التقرير من الصفر؛ النظام يجمع بيانات
+                    الزيارة ويكوّن التقرير.
+                  </div>
+</div>
+</div>
+<div class="readonly-note">
+<div class="row g-3">
+<div class="col-md-6">
+<strong>سيتضمن التقرير:</strong>
+<ul class="mb-0 mt-2">
+<li>سبب الزيارة والفحص</li>
+<li>التشخيص والأسنان المعالجة</li>
+<li>الإجراءات والخطة العلاجية</li>
+</ul>
+</div>
+<div class="col-md-6">
+<strong>وكذلك:</strong>
+<ul class="mb-0 mt-2">
+<li>الوصفة والمرفقات</li>
+<li>التوصيات</li>
+<li>المتابعة المقترحة</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mt-3 small text-secondary">
+<i class="bi bi-shield-lock ms-1"></i>بعد اعتماد التقرير تستطيع
+                العيادة والمريض مشاهدته، لكن العيادة لا تستطيع تعديل المحتوى
+                الطبي.
+              </div>
+<section aria-label="ملفات التقرير الرسمي" class="sdc-panel sdc-panel--integrated" id="sdcReportAttachments"><div class="sdc-panel-head"><span aria-hidden="true" class="sdc-panel-icon"><i class="bi bi-paperclip"></i></span><div class="sdc-panel-head-copy"><h5>ملفات التقرير الرسمي</h5><p>حدّد الملفات الداخلة في نسخة التقرير المعتمدة؛ تبقى بقية الملفات ضمن مرفقات الزيارة.</p></div></div><div class="sdc-panel-body"><% if(clinical && clinical.attachments.length){for(const file of clinical.attachments){ %>
+<form class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2" action="/doctor/visit/clinical/action" method="post">
+<input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= liveVisit.id %>">
+<input type="hidden" name="action" value="toggle_report_file"><input type="hidden" name="file_id" value="<%= file.id %>">
+<label class="sdc-check"><%= file.name %> — <%= file.included ? "مدرج في التقرير" : "مرفق زيارة فقط" %></label>
+<% if(!clinical.approved){ %><button type="submit" name="include" value="<%= file.included ? "no" : "yes" %>" class="btn btn-outline-primary btn-sm"><%= file.included ? "استبعاد" : "إدراج في التقرير" %></button><% } %>
+</form><% }}else{ %><p class="small text-secondary">لا توجد ملفات مرفقة بعد.</p><% } %><p class="small text-muted mt-2">بعد الاعتماد لا يجوز تغيير هذه القائمة عبر عمليات التعديل المعتادة.</p></div></section><div class="mt-3"><label class="form-label" for="visitRecommendations">تعليمات عامة بعد الزيارة</label><textarea class="form-control" id="visitRecommendations" name="recommendations" placeholder="مثل تجنب المضغ على السن المعالج" <%= clinical && !clinical.approved ? "" : "readonly" %> rows="3"><%= clinical ? clinical.recommendations || "" : "" %></textarea><% if(clinical && !clinical.approved){ %><button type="button" class="btn btn-outline-primary btn-sm mt-2" data-visit-save="recommendations">حفظ تعليمات التقرير</button><% } %><p class="small text-secondary mt-2">التقرير المعتمد يضم الصور المختارة (JPG/PNG) بصريًا ويذكر ملفات PDF المختارة بأسمائها، مع بقائها قابلة للتنزيل بأمان من الزيارة. الحد الأعلى 12 صورة و24MB إجمالًا.</p></div><div class="mt-3 d-flex flex-wrap gap-2"><% if(clinical && clinical.approved){ %><span class="badge text-bg-success">التقرير معتمد</span><a class="btn btn-outline-primary btn-sm" href="/doctor/visit/report/file?booking_id=<%= liveVisit.id %>">تنزيل التقرير المعتمد PDF</a><% }else if(clinical && clinical.status==='completed'){ %><form action="/doctor/visit/report/approve" method="post"><input name="csrf_token" type="hidden" value="<%= csrfToken %>"/><input name="booking_id" type="hidden" value="<%= liveVisit.id %>"/><button class="btn btn-primary btn-sm">اعتماد التقرير وإصدار PDF</button></form><% }else{ %><span class="small text-secondary">يصبح اعتماد التقرير متاحًا بعد إكمال الزيارة.</span><% } %></div></div>
+<div class="clinical-card clinical-section mb-4" id="doctorInvoiceCard" data-visit-tab="finish">
+<div class="clinical-head">
+<span class="clinical-number" aria-hidden="true">٢</span>
+<div>
+<h4 class="fw-bold mb-1">فاتورة الزيارة</h4>
+<div class="text-secondary small">تُصدر فاتورة واحدة كحد أقصى للزيارة من إدارة العيادة بعد مراجعة الإجراءات.</div>
+</div>
+</div>
+<section class="soft-card p-3 mb-3"><h6 class="fw-bold">ملخص فاتورة الزيارة (للعرض فقط)</h6><p class="small text-secondary mb-2">تُصدر العيادة الفاتورة وتسجّل الدفعات من قسم المالية. عرض الفاتورة هنا لا ينشئ فاتورة أو يغيّر أي مبلغ.</p>
+<% if(clinical && clinical.invoice){ const inv=clinical.invoice;const total=Number(inv.total||0),paid=Number(inv.paid||0); %>
+<div class="d-flex flex-wrap gap-3"><span>رقم الفاتورة: <strong><%= inv.id %></strong></span><span>الحالة: <strong><%= ({draft:'مسودة',issued:'صادرة',void:'ملغاة'})[inv.status]||inv.status %></strong></span><span>الإصدار: <%= inv.issued_at||'لم تصدر بعد' %></span></div>
+<div class="d-flex flex-wrap gap-3 mt-2"><span>الإجمالي: <strong><%= total.toFixed(2) %> ₪</strong></span><span>المدفوع: <strong><%= paid.toFixed(2) %> ₪</strong></span><span>المتبقي: <strong><%= Math.max(0,total-paid).toFixed(2) %> ₪</strong></span><span class="badge text-bg-secondary"><%= inv.status==='void'?'ملغاة':inv.status==='draft'?'غير صادرة':total>0&&paid>=total?'مدفوعة بالكامل':paid>0?'مدفوعة جزئيًا':'غير مدفوعة' %></span></div>
+<% }else{ %><p class="small mb-2">لا توجد فاتورة مرتبطة بهذه الزيارة بعد. تصدرها العيادة، ويظهر ملخصها هنا عند توفرها.</p><% } %>
+<div class="small text-secondary mt-2">قيمة الإجراءات المنفذة المسجلة طبيًا (للمقارنة فقط): <strong data-clinical-total=""><%= ((clinical && clinical.procedures)||[]).filter(p=>p.status==='completed').reduce((n,p)=>n+Number(p.price||0)*Number(p.quantity||0),0).toFixed(2) %> ₪</strong> — قد تختلف عن الفاتورة الفعلية.</div>
+</section></div>
+<div class="visit-actions d-flex flex-column flex-sm-row justify-content-between gap-2" data-visit-actions>
+<button class="btn btn-light" data-visit-save-main="1" id="saveVisitDraft" type="button">
+<i class="bi bi-save ms-1"></i><%= liveVisit.visit_id ? "حفظ كمسودة" : "بدء الزيارة وحفظ الشكوى" %></button><button class="btn btn-primary" data-visit-finish="1" id="finishVisit" type="button">
+<i class="bi bi-check2-circle ms-1"></i>إنهاء الزيارة وإنشاء
+                التقرير
+              </button>
+</div>
+</div>
+<aside class="visit-sidebar">
+<div class="soft-card p-3 mb-3">
+<h6 class="fw-bold">ملخص المريض</h6>
+<div class="medical-summary mt-3">
+<div class="summary-row">
+<span class="text-secondary">المريض</span><strong><%= liveVisit.patient_name %></strong>
+</div>
+<div class="summary-row">
+<span class="text-secondary">رقم الملف</span><strong><%= liveVisit.patient_id %></strong>
+</div>
+<div class="summary-row">
+<span class="text-secondary">الهاتف</span><strong><%= liveVisit.phone || "—" %></strong>
+</div>
+<div class="summary-row">
+<span class="text-secondary">حالة الزيارة</span><strong class="<%= liveVisit.visit_status === "completed" ? "text-success" : liveVisit.visit_id ? "text-primary" : "text-secondary" %>"><%= liveVisit.visit_status === "completed" ? "مكتملة" : liveVisit.visit_id ? "قيد العلاج" : "لم تبدأ" %></strong>
+</div>
+<div class="summary-row">
+<span class="text-secondary">أدوية حالية</span><strong><%= liveVisit.current_medications || "لا توجد أدوية حالية مسجلة" %></strong>
+</div>
+<div class="summary-row">
+<span class="text-secondary">الحساسية</span><strong><%= liveVisit.allergies || "لا توجد حساسية مسجلة" %></strong>
+</div>
+</div>
+</div>
+<div class="soft-card p-3">
+<h6 class="fw-bold">التنقل السريع</h6>
+<div class="visit-quick-nav d-grid gap-2 mt-3" aria-label="التنقل بين التبويبات">
+<button type="button" data-visit-tab-target="start" class="visit-quick-link">بداية الزيارة</button>
+<button type="button" data-visit-tab-target="diagnosis" class="visit-quick-link">الأسنان والتشخيص</button>
+<button type="button" data-visit-tab-target="treatment" class="visit-quick-link">العلاج</button>
+<button type="button" data-visit-tab-target="orders" class="visit-quick-link">الوصفات والطلبات</button>
+<button type="button" data-visit-tab-target="finish" class="visit-quick-link">التقرير والإنهاء</button>
+</div>
+</div>
+</aside>
+</div>
+</section>
+<div class="modal fade" id="finishVisitModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="fw-bold mb-0">إنهاء الزيارة وإنشاء التقرير</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<div class="alert alert-success border-0">
+<i class="bi bi-check-circle ms-1"></i>سيتم اعتبار الزيارة
+                مكتملة، ثم يمكن مراجعة التقرير واعتماده وإصدار PDF من قسم التقرير.
+              </div>
+<div class="row g-3">
+<div class="col-md-6">
+<small class="text-secondary">التشخيص الرئيسي</small>
+<div class="fw-bold"><%= clinical && clinical.diagnoses.length ? clinical.diagnoses[0].diagnosis : "لا تشخيص" %></div>
+</div>
+<div class="col-md-6">
+<small class="text-secondary">الإجراء</small>
+<div class="fw-bold"><%= clinical && clinical.procedures.length ? clinical.procedures[0].service : "لا إجراءات" %></div>
+</div>
+<div class="col-md-6">
+<small class="text-secondary">المتابعة المقترحة</small>
+<div class="fw-bold"><%= clinical && clinical.followup_date ? clinical.followup_date : "—" %></div>
+</div>
+<div class="col-md-6">
+<small class="text-secondary">خطة العلاج</small>
+<div class="fw-bold"><%= clinical ? String(clinical.stages.length) + " مراحل متاحة" : "—" %></div>
+</div>
+</div>
+<div class="readonly-note mt-3">
+                بعد الاعتماد: يظهر التقرير في ملف المريض، صفحة التقارير، وحساب
+                المريض. العيادة تشاهده Read-only.
+              </div>
+</div>
+<div class="modal-footer">
+<button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                عودة للمراجعة</button><a class="btn btn-outline-primary" href="/doctor/report-current-visit?booking_id=<%= liveVisit.id %>">معاينة قبل الاعتماد</a><button class="btn btn-primary" data-action="approve-visit-report" data-visit-complete="true" type="button">تأكيد إنهاء الزيارة</button>
+</div>
+</div>
+</div>
+</div>
+<form action="/doctor/visit/action" hidden="" id="doctor-visit-action-form" method="post"><input name="csrf_token" type="hidden" value="<%= csrfToken %>"/><input name="booking_id" type="hidden" value="<%= liveVisit.id %>"/><input name="action" type="hidden" value=""/><input name="chief_complaint" type="hidden" value=""/><input name="examination_notes" type="hidden" value=""/></form><form action="/doctor/visit/clinical/action" hidden="" id="doctor-visit-clinical-form" method="post"><input name="csrf_token" type="hidden" value="<%= csrfToken %>"/><input name="booking_id" type="hidden" value="<%= liveVisit.id %>"/><input name="action" type="hidden" value=""/></form></main>
+    <% }else{ %><main id="main-content" class="page-shell"><section class="container py-5"><div class="alert alert-info">افتح زيارة من قائمة مواعيد الطبيب أو من التشغيل اليومي.</div></section></main><% } %>
+    <%- include('../partials/doctor/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+<script src="assets/visit-bridge.js"></script>
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="clean-dropdown notification-menu doctor-popover doctor-notification-popover" id="doctorNotifications">
+              <div class="px-3 py-2 fw-bold">الإشعارات</div>
+              <div class="dropdown-divider"></div>
+              <span class="d-block px-3 py-2 text-secondary small">تُعرض إشعاراتك الفعلية عند توفرها.</span>
+              
+              
+            </div><div class="clean-dropdown profile-menu doctor-popover doctor-profile-popover" id="doctorProfile">
+              <a class="dropdown-item" href="profile"><i class="bi bi-person ms-2"></i>ملفي الشخصي</a>
+              <a class="dropdown-item" href="settings"><i class="bi bi-gear ms-2"></i>الإعدادات</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-primary fw-bold" href="../clinic/index"><i class="bi bi-arrow-left-right ms-2"></i>تبديل لإدارة
+                العيادة</a>
+              <div class="px-3 py-2 bg-light rounded-3 mx-2 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small"><%= currentUser && (currentUser.fullName || currentUser.displayName || currentUser.name || currentUser.email) || "حساب الطبيب" %></strong>
+              </div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right ms-2"></i>تسجيل الخروج
+              </button>
+            </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

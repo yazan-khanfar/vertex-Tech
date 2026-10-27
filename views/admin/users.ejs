@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>المستخدمون | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-start mb-4">
+          <div>
+            <h1 class="fw-bold fs-2 mb-2">إدارة المستخدمين</h1>
+            <p class="text-secondary mb-0">
+              المرضى ومدراء العيادات وموظفو العيادات، مع إدارة الحسابات
+              والبيانات المرتبطة بها.
+            </p>
+          </div>
+          <button class="btn btn-primary" data-bs-target="#userFormModal" data-bs-toggle="modal" data-user-new="" data-ui-open="#userFormModal" type="button">
+            <i class="bi bi-person-plus ms-1"></i>إضافة مستخدم
+          </button>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="row g-3">
+            <div class="col-lg-4">
+              <input class="form-control" id="userSearch" placeholder="الاسم، البريد، رقم الحساب..." value="" data-ui-unbound-control="" name="user_search" form="backend-form-5">
+            </div>
+            <div class="col-md-4 col-lg-3">
+              <select class="form-select" id="userRoleFilter" name="user_role_filter" form="backend-form-5" data-role-scope="System"><option value="" selected>كل الأدوار</option><option value="patient">مريض</option><option value="doctor">طبيب</option><option value="staff">موظف عيادة</option><option value="admin">مدير المنصة</option></select>
+            </div>
+            <div class="col-md-4 col-lg-3">
+              <select class="form-select" id="userStatusFilter" data-ui-unbound-control="" name="user_status_filter" form="backend-form-5">
+                <option value="" selected>كل الحالات</option>
+                <option value="active">فعال</option>
+                <option value="suspended">معلق</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+          <table class="table mb-0 admin-master-table wide-data-table responsive-stack-table system-data-table">
+            <thead>
+              <tr>
+                <th>المستخدم</th>
+                <th>الدور</th>
+                <th>التواصل</th>
+                <th>الارتباط</th>
+                <th>الحالة</th>
+                <th>آخر دخول</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody"><tr data-profiles="admin" data-role="admin" data-search="مشرف المنصة admin@example.test" data-status="active" data-user-row="">
+                <td data-label="المستخدم" class="table-primary-cell">مشرف المنصة — U-ADMIN-001</td>
+                <td data-label="الدور" data-user-role-label="" class="table-status-cell">مشرف المنصة</td>
+                <td data-label="التواصل" data-user-contact="">admin@example.test</td>
+                <td data-label="الارتباط">المنصة</td>
+                <td data-label="الحالة" class="table-status-cell">فعال</td>
+                <td data-label="آخر دخول">21 أكتوبر 2026</td>
+                <td data-label="الإجراءات" class="table-actions-cell">
+                  <div class="d-flex gap-1 flex-wrap table-action-grid">
+                    <a class="btn btn-sm btn-light" href="settings">عرض</a><button class="btn btn-sm btn-outline-primary" data-user-edit="" type="button" data-ui-open="#userFormModal">
+                      تعديل</button><button class="btn btn-sm btn-outline-warning" data-active-status-text="فعال" data-inactive-status-text="معلق" data-reactivate-label="إلغاء التعليق" data-reactivate-title="إلغاء تعليق الحساب" data-sensitive-action="suspend" data-sensitive-entity="D-108" data-sensitive-title="تعليق الحساب" data-suspend-label="تعليق" data-suspend-title="تعليق الحساب" type="button" data-ui-open="#sensitiveActionModal">
+                      تعليق</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="D-108" data-sensitive-title="حذف الحساب نهائيًا" type="button" data-ui-open="#sensitiveActionModal">
+                      حذف نهائي
+                    </button>
+                  </div>
+                </td>
+              </tr><tr data-profiles="doctor" data-role="doctor" data-search="د. عمر ناصر doctor@example.test" data-status="active" data-user-row="">
+                <td data-label="المستخدم" class="table-primary-cell">د. عمر ناصر — U-DOCTOR-001</td>
+                <td data-label="الدور" data-user-role-label="" class="table-status-cell">طبيب</td>
+                <td data-label="التواصل" data-user-contact="">doctor@example.test</td>
+                <td data-label="الارتباط">D-108 • C-008</td>
+                <td data-label="الحالة" class="table-status-cell">فعال</td>
+                <td data-label="آخر دخول">21 أكتوبر 2026</td>
+                <td data-label="الإجراءات" class="table-actions-cell">
+                  <div class="d-flex gap-1 flex-wrap table-action-grid">
+                    <a class="btn btn-sm btn-light" href="doctor-details?id=D-108">عرض</a><button class="btn btn-sm btn-outline-primary" data-user-edit="" type="button" data-ui-open="#userFormModal">
+                      تعديل</button><button class="btn btn-sm btn-outline-warning" data-active-status-text="فعال" data-inactive-status-text="معلق" data-reactivate-label="إلغاء التعليق" data-reactivate-title="إلغاء تعليق الحساب" data-sensitive-action="suspend" data-sensitive-entity="D-108" data-sensitive-title="تعليق الحساب" data-suspend-label="تعليق" data-suspend-title="تعليق الحساب" type="button" data-ui-open="#sensitiveActionModal">
+                      تعليق</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="D-108" data-sensitive-title="حذف الحساب نهائيًا" type="button" data-ui-open="#sensitiveActionModal">
+                      حذف نهائي
+                    </button>
+                  </div>
+                </td>
+              </tr><tr data-profiles="patient" data-role="patient" data-search="أحمد خالد patient@example.test" data-status="active" data-user-row="">
+                <td data-label="المستخدم" class="table-primary-cell">أحمد خالد — U-PATIENT-001</td>
+                <td data-label="الدور" data-user-role-label="" class="table-status-cell">مريض</td>
+                <td data-label="التواصل" data-user-contact="">patient@example.test</td>
+                <td data-label="الارتباط">P-2048</td>
+                <td data-label="الحالة" class="table-status-cell">فعال</td>
+                <td data-label="آخر دخول">21 أكتوبر 2026</td>
+                <td data-label="الإجراءات" class="table-actions-cell">
+                  <div class="d-flex gap-1 flex-wrap table-action-grid">
+                    <a class="btn btn-sm btn-light" href="user-details?id=P-2048">عرض</a><button class="btn btn-sm btn-outline-primary" data-user-edit="" type="button" data-ui-open="#userFormModal">
+                      تعديل</button><button class="btn btn-sm btn-outline-warning" data-active-status-text="فعال" data-inactive-status-text="معلق" data-reactivate-label="إلغاء التعليق" data-reactivate-title="إلغاء تعليق الحساب" data-sensitive-action="suspend" data-sensitive-entity="D-108" data-sensitive-title="تعليق الحساب" data-suspend-label="تعليق" data-suspend-title="تعليق الحساب" type="button" data-ui-open="#sensitiveActionModal">
+                      تعليق</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="D-108" data-sensitive-title="حذف الحساب نهائيًا" type="button" data-ui-open="#sensitiveActionModal">
+                      حذف نهائي
+                    </button>
+                  </div>
+                </td>
+              </tr><tr data-profiles="staff" data-role="staff" data-search="سارة أحمد staff@example.test" data-status="active" data-user-row="">
+                <td data-label="المستخدم" class="table-primary-cell">سارة أحمد — U-U-STAFF-001</td>
+                <td data-label="الدور" data-user-role-label="" class="table-status-cell">موظف عيادة</td>
+                <td data-label="التواصل" data-user-contact="">staff@example.test</td>
+                <td data-label="الارتباط">C-008</td>
+                <td data-label="الحالة" class="table-status-cell">فعال</td>
+                <td data-label="آخر دخول">21 أكتوبر 2026</td>
+                <td data-label="الإجراءات" class="table-actions-cell">
+                  <div class="d-flex gap-1 flex-wrap table-action-grid">
+                    <a class="btn btn-sm btn-light" href="staff-permissions">عرض</a><button class="btn btn-sm btn-outline-primary" data-user-edit="" type="button" data-ui-open="#userFormModal">
+                      تعديل</button><button class="btn btn-sm btn-outline-warning" data-active-status-text="فعال" data-inactive-status-text="معلق" data-reactivate-label="إلغاء التعليق" data-reactivate-title="إلغاء تعليق الحساب" data-sensitive-action="suspend" data-sensitive-entity="D-108" data-sensitive-title="تعليق الحساب" data-suspend-label="تعليق" data-suspend-title="تعليق الحساب" type="button" data-ui-open="#sensitiveActionModal">
+                      تعليق</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="D-108" data-sensitive-title="حذف الحساب نهائيًا" type="button" data-ui-open="#sensitiveActionModal">
+                      حذف نهائي
+                    </button>
+                  </div>
+                </td>
+              </tr></tbody>
+          </table>
+          <div class="empty-state d-none" id="userEmpty">
+            لا توجد حسابات مطابقة للفلاتر.
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="userFormModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="userFormTitle">
+                إضافة مستخدم
+              </h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">الاسم</label><input class="form-control" id="userFormName" value="" name="user_form_name" form="backend-form-6">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">الدور</label><select class="form-select" id="userFormRole" name="user_form_role" form="backend-form-6" data-role-scope="System"><option value="patient" selected>مريض</option><option value="doctor">طبيب</option><option value="staff">موظف عيادة</option><option value="admin">مدير المنصة</option></select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">البريد</label><input class="form-control" id="userFormEmail" value="" name="user_form_email" form="backend-form-6">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">الهاتف</label><input class="form-control" id="userFormPhone" value="" name="user_form_phone" form="backend-form-6">
+                </div>
+                <div class="col-12">
+                  <div id="userRoleSpecificFields">
+                    <div class="entity-form-summary mb-2">
+                      الحقول أدناه موجودة في HTML وتُظهر حسب الدور.
+                    </div>
+                    <div class="entity-form-section" data-user-role-fields="patient">
+                      <div class="entity-form-section-title">
+                        <i class="bi bi-person"></i>بيانات المريض
+                      </div>
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <label class="form-label">تاريخ الميلاد *</label><input class="form-control" id="userSpecificBirthdate" type="date" value="1992-05-18" name="user_specific_birthdate" form="backend-form-6">
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">الجنس *</label><select class="form-select" id="userSpecificGender" name="user_specific_gender" form="backend-form-6">
+                            <option selected>أنثى</option>
+                            <option>ذكر</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">المدينة</label><input class="form-control" id="userSpecificCity" value="نابلس" name="user_specific_city" form="backend-form-6">
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">جهة اتصال للطوارئ</label><input class="form-control" id="userSpecificEmergency" value="" name="user_specific_emergency" form="backend-form-6">
+                        </div>
+                      </div>
+                    <div class="row g-3 mt-1"><div class="col-md-6"><label class="form-label" for="adminPatientBloodType">فصيلة الدم *</label><select class="form-select" id="adminPatientBloodType" name="blood_type" form="backend-form-6" required><option value="">اختر فصيلة الدم</option><option value="O+">O+</option><option value="O-">O-</option><option value="A+">A+</option><option value="A-">A-</option><option value="B+">B+</option><option value="B-">B-</option><option value="AB+">AB+</option><option value="AB-">AB-</option></select></div><div class="col-12"><label class="form-label" for="adminPatientHealthNotes">الملاحظات الصحية *</label><textarea id="adminPatientHealthNotes" class="form-control" name="health_notes" form="backend-form-6" required></textarea></div></div></div>
+                    <div class="entity-form-section d-none" data-user-role-fields="doctor">
+                      <div class="entity-form-section-title">
+                        <i class="bi bi-person-badge"></i>الملف المهني للطبيب
+                      </div>
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <label class="form-label">التخصص *</label><select class="form-select" id="userSpecificSpecialty" name="user_specific_specialty" form="backend-form-6">
+                            <option selected>تقويم الأسنان</option>
+                            <option>علاج جذور</option>
+                            <option>طب أسنان عام</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">رقم الترخيص *</label><input class="form-control" id="userSpecificLicense" value="ORT-77103" name="user_specific_license" form="backend-form-6">
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">العيادة</label><select class="form-select" id="userSpecificClinicDoctor" name="user_specific_clinic_doctor" form="backend-form-6" data-record-select="clinic"><option value="" selected>بدون عيادة</option><option value="C-008">عيادة الابتسامة الحديثة</option></select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="entity-form-section d-none" data-user-role-fields="staff">
+                      <div class="entity-form-section-title">
+                        <i class="bi bi-person-gear"></i>بيانات موظف العيادة
+                      </div>
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <label class="form-label">العيادة *</label><select class="form-select" id="userSpecificClinicStaff" data-record-select="clinic" name="user_specific_clinic_staff" form="backend-form-6"><option selected value="C-008" data-record-option="clinic">عيادة الابتسامة الحديثة</option></select>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">الدور *</label><select class="form-select" id="userSpecificStaffRole" name="user_specific_staff_role" form="backend-form-6" data-role-scope="Clinic">
+                            <option selected>منسق عيادة</option>
+                            <option>منسق استقبال</option>
+                            <option>محاسب</option>
+                          </select>
+                        </div>
+                        <div class="col-12">
+                          <label class="form-label">الصلاحيات</label>
+                          <div class="row g-2">
+                            <div class="col-md-6">
+                              <label class="border rounded-3 p-2 w-100"><input checked class="form-check-input ms-2" type="checkbox" id="field-1" name="field_1" form="backend-form-6">
+                                عرض المواعيد</label>
+                            </div>
+                            <div class="col-md-6">
+                              <label class="border rounded-3 p-2 w-100"><input checked class="form-check-input ms-2" type="checkbox" id="field-2" name="field_2" form="backend-form-6">
+                                إدارة المواعيد</label>
+                            </div>
+                            <div class="col-md-6">
+                              <label class="border rounded-3 p-2 w-100"><input checked class="form-check-input ms-2" type="checkbox" id="field-3" name="field_3" form="backend-form-6">
+                                عرض المرضى</label>
+                            </div>
+                            <div class="col-md-6">
+                              <label class="border rounded-3 p-2 w-100"><input checked class="form-check-input ms-2" type="checkbox" id="field-4" name="field_4" form="backend-form-6">
+                                عرض الفواتير</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">ارتباط إضافي / ملاحظة</label><input class="form-control" id="userFormRelation" placeholder="اختياري" value="" name="user_form_relation" form="backend-form-6">
+                </div>
+                <div class="col-12">
+                  <label class="form-label">سبب الإنشاء/التعديل الإداري *</label><textarea class="form-control" id="userAdminReason" placeholder="لتوثيق سبب الإجراء بالباك إند" rows="2" name="user_admin_reason" form="backend-form-6"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="saveUserBtn" data-ui-pending="" form="backend-form-6" type="submit">حفظ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-7"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-7" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-8"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-8"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-8" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-5" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-6" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-7" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-8" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

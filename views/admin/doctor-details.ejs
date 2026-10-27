@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>تفاصيل الطبيب | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="doctors">الأطباء</a></li>
+            <li class="breadcrumb-item active">D-108</li>
+          </ol>
+        </nav>
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+          <div>
+            <div class="d-flex gap-2 flex-wrap mb-2">
+              <span class="badge text-bg-success" id="adminPrimaryEntityStatus">فعال</span><span class="badge text-bg-light border" id="detailDoctorCode">الكود العام: D-108</span><span class="badge text-bg-success">رقم الترخيص موثّق</span>
+            </div>
+            <h1 class="fw-bold fs-2 mb-2" id="detailDoctorName">د. عمر ناصر</h1>
+            <p class="text-secondary mb-0">
+              User Account → Doctor Profile → Clinic Membership / License /
+              Appointments.
+            </p>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-outline-warning" data-active-status-text="فعال" data-current-detail-action="" data-inactive-status-text="موقوف" data-reactivate-label="إعادة تفعيل" data-sensitive-action="suspend" data-sensitive-entity="D-108" data-sensitive-target="#adminPrimaryEntityStatus" data-sensitive-title="إيقاف الطبيب" data-suspend-label="إيقاف" data-ui-open="#sensitiveActionModal" type="button">
+              إيقاف</button><button class="btn btn-outline-danger" data-current-detail-action="" data-sensitive-action="delete" data-sensitive-entity="D-108" data-sensitive-redirect="doctors" data-sensitive-target="#adminPrimaryEntityStatus" data-sensitive-title="حذف الطبيب نهائيًا" data-ui-open="#sensitiveActionModal" type="button">
+              حذف نهائي</button><button class="btn btn-primary" data-bs-target="#doctorAdminEditModal" data-bs-toggle="modal" type="button">
+              تعديل إداري
+            </button>
+          </div>
+        </div>
+        <div class="soft-card p-4 mb-4 admin-full-control-panel">
+          <div class="d-flex flex-column flex-lg-row justify-content-between gap-3">
+            <div>
+              <h4 class="fw-bold mb-1">
+                <i class="bi bi-sliders ms-2 text-primary"></i>تحكم Super Admin
+                الكامل
+              </h4>
+              <p class="text-secondary small mb-0">
+                إضافة وإدارة العناصر المرتبطة مباشرة، مع تسجيل سبب العمليات
+                الإدارية الحساسة.
+              </p>
+            </div>
+            <div class="d-flex gap-2 flex-wrap" data-admin-control-buttons="">
+              <a class="btn btn-outline-primary btn-sm" href="management-center?action=appointment"><i class="bi bi-calendar2-plus ms-1"></i>إضافة موعد للطبيب</a><a class="btn btn-outline-primary btn-sm" href="management-center?action=schedule"><i class="bi bi-clock ms-1"></i>إضافة فترة دوام</a><a class="btn btn-outline-primary btn-sm" href="management-center?action=absence"><i class="bi bi-calendar-x ms-1"></i>إضافة غياب</a><a class="btn btn-outline-primary btn-sm" href="management-center?action=license"><i class="bi bi-patch-check ms-1"></i>تحديث رقم الترخيص</a>
+            </div>
+          </div>
+          <div class="mt-3 d-grid gap-2" id="adminTemporaryChanges"></div>
+        </div>
+        <div class="row g-4 mb-4">
+          <div class="col-lg-8">
+            <div class="soft-card p-4">
+              <h4 class="fw-bold mb-3">البيانات المهنية</h4>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">التخصص</label><input class="form-control" id="detailDoctorSpecialty" readonly value="علاج جذور" name="detail_doctor_specialty" form="backend-form-4">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">رقم الترخيص</label><input class="form-control" id="detailDoctorLicense" readonly value="MED-88421" name="detail_doctor_license" form="backend-form-4">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">حالة التحقق</label><input class="form-control" id="detailDoctorVerification" readonly value="موثق" name="detail_doctor_verification" form="backend-form-4">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">العيادة الحالية</label><input class="form-control" id="detailDoctorClinic" readonly value="عيادة الابتسامة الحديثة • C-008" name="detail_doctor_clinic" form="backend-form-4">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="soft-card p-4 h-100">
+              <h4 class="fw-bold mb-3">حالة إعداد الطبيب</h4>
+              <div class="summary-row">
+                <span>الحساب</span><strong class="text-success">نشط</strong>
+              </div>
+              <div class="summary-row">
+                <span>Setup</span><strong class="text-success">مكتمل</strong>
+              </div>
+              <div class="summary-row">
+                <span>طريقة الارتباط</span><strong>تم قبول وظيفة</strong>
+              </div>
+              <a class="btn btn-sm btn-outline-primary mt-3" href="clinic-details?id=C-008">فتح العيادة</a>
+            </div>
+          </div>
+        </div>
+        <ul class="nav admin-tabs mb-4" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-target="#docAppointments" data-bs-toggle="pill" aria-current="page" aria-selected="true" role="tab" type="button">
+              المواعيد
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#docSetup" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              المسار والطلبات
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#docLicense" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              الترخيص
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#docSchedule" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              الجدول والغيابات
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" data-dynamic-docappointments="" id="docAppointments" role="tabpanel" data-status="completed" data-appointment-id="A-9021">
+            <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+              <table class="table mb-0 admin-master-table medium-data-table responsive-stack-table system-data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>المريض</th>
+                    <th>الخدمة</th>
+                    <th>التاريخ</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-label="#" class="table-primary-cell"><strong>A-9021</strong></td>
+                    <td data-label="المريض">أحمد خالد</td>
+                    <td data-label="الخدمة">علاج جذور</td>
+                    <td data-label="التاريخ">21/10/2026</td>
+                    <td data-label="الحالة" class="table-status-cell"><span class="badge text-bg-success">مكتمل</span></td>
+                    <td data-label="الإجراءات" class="table-actions-cell">
+                      <div class="d-flex gap-1 flex-wrap table-action-grid">
+                        <a class="btn btn-sm btn-outline-primary" href="appointment-details?id=A-9012">فتح</a><button class="btn btn-sm btn-outline-primary" data-admin-edit-name="A-9021" data-admin-edit-related="موعد" type="button" data-ui-open="#relatedEntityEditModal">
+                          تعديل</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="A-9021" data-sensitive-title="حذف الموعد نهائيًا" type="button" data-ui-open="#sensitiveActionModal">
+                          حذف نهائي
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" data-dynamic-docsetup="" id="docSetup" role="tabpanel">
+            <div class="row g-4">
+              <div class="col-lg-6">
+                <div class="soft-card p-4 h-100">
+                  <h4 class="fw-bold mb-3">مسار الحساب</h4>
+                  <div class="summary-row">
+                    <span>حالة الإعداد</span><strong>مكتمل</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>العيادة</span><strong>عيادة الابتسامة الحديثة</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>مالك/مدير عيادة</span><strong>نعم</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="soft-card p-4 h-100">
+                  <h4 class="fw-bold mb-3">طلب الوظيفة</h4>
+                  <div class="summary-row">
+                    <span>رقم الطلب</span><strong>JA-001</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>الوظيفة</span><strong>طبيب علاج جذور</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>الحالة</span><strong>accepted</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" data-dynamic-doclicense="" id="docLicense" role="tabpanel">
+            <div class="soft-card p-4">
+              <div class="summary-row">
+                <span>رقم الترخيص</span><strong>MED-88421</strong>
+              </div>
+              <div class="summary-row">
+                <span>حالة التحقق</span><strong class="text-success">موثّق</strong>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="docSchedule" role="tabpanel">
+            <div class="row g-4">
+              <div class="col-lg-7">
+                <div class="soft-card p-4">
+                  <h4 class="fw-bold mb-3">جدول الدوام</h4>
+                  <div class="summary-row">
+                    <span>الأحد</span><strong>09:00 — 17:00</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>الاثنين</span><strong>09:00 — 17:00</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>الأربعاء</span><strong>09:00 — 17:00</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <div class="soft-card p-4 h-100">
+                  <h4 class="fw-bold mb-3">الغيابات</h4>
+                  <div class="summary-row">
+                    <span>21 أكتوبر 2026</span><strong class="text-warning">إجازة</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="doctorAdminEditModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold">تعديل إداري للطبيب</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="field-1">التخصص</label><select class="form-select" id="field-1" name="specialty_id" form="backend-form-5">
+                    <option selected>علاج جذور</option>
+                    <option>طب أسنان عام</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-2">العيادة</label><select class="form-select" id="field-2" name="clinic_id" form="backend-form-5">
+                    <option selected>عيادة الابتسامة الحديثة</option>
+                    <option>عيادة الابتسامة الحديثة</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-3">رقم الترخيص</label><input class="form-control" value="MED-88421" id="field-3" name="license_number" form="backend-form-5">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">سبب التعديل الإداري *</label><input class="form-control" id="doctorDetailAdminReason" placeholder="السبب اكتب سببًا واضحًا للإجراء" value="" name="doctor_detail_admin_reason" form="backend-form-5">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="saveDoctorAdminEdit" data-ui-pending="" form="backend-form-5" type="submit">
+                حفظ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-6"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-6" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    Resource. --&gt;
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-7"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-7"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-7" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-4" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-5" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-6" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-7" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

@@ -1,0 +1,16 @@
+<!doctype html><html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer"><title>التحقق بخطوتين | Smart Dental Clinic</title>
+<link href="/assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+<link href="/assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet"><link href="/auth/assets/styles.css" rel="stylesheet">
+</head><body><div class="auth-page"><main class="container py-5"><div class="auth-card mx-auto" style="max-width:590px"><div class="auth-form-wrap p-4 p-md-5">
+<a href="/auth/login" class="text-secondary small">العودة لتسجيل الدخول</a>
+<h1 class="h3 mt-4">التحقق بخطوتين</h1><p class="text-secondary">أدخل الرمز الحالي من تطبيق المصادقة أو أحد رموز الاسترداد الخاصة بحسابك.</p>
+<% if(mfaError){ %><div class="alert alert-danger" role="alert"><%= mfaError %></div><% } %>
+<form id="mfaForm" method="post" action="/auth/mfa" autocomplete="off">
+<input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+<label class="form-label" for="mfaCode">رمز التحقق أو الاسترداد</label>
+<input id="mfaCode" name="code" class="form-control mb-3" type="text" maxlength="50" inputmode="text" autocomplete="one-time-code" required autofocus>
+<button type="submit" class="btn btn-primary w-100">تحقق وتابع</button></form>
+<p class="small text-secondary mt-3 mb-0">تنتهي محاولة التحقق بعد 5 دقائق، ويُسمح بخمس محاولات. إذا فقدت الهاتف ورموز الاسترداد، لا يمكن تجاوز الحماية من صفحة الدخول.</p>
+</div></div></main></div></body></html>

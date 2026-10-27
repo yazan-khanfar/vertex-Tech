@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>التقارير | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Analytics</span>
+            <h1 class="fw-bold fs-2 mb-2">تقارير المنصة</h1>
+            <p class="text-secondary mb-0">
+              مؤشرات تشغيل ومالية واضحة تساعد Super Admin على المتابعة، بدون
+              خلطها مع التقارير الطبية.
+            </p>
+          </div>
+          <button class="btn btn-outline-primary" id="exportReportsBtn" data-ui-pending="">
+            <i class="bi bi-download"></i>تصدير CSV
+          </button>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="row g-3 align-items-end">
+            <div class="col-md-4 col-lg-3">
+              <label class="form-label small text-secondary">الفترة</label><select class="form-select" id="reportPeriod" data-ui-unbound-control="" name="report_period" form="backend-form-1">
+                <option value="today">اليوم</option>
+                <option value="week">هذا الأسبوع</option>
+                <option selected value="month">هذا الشهر</option>
+                <option value="year">هذا العام</option>
+                <option value="custom">فترة مخصصة</option>
+              </select>
+            </div>
+            <div class="col-md-4 col-lg-3">
+              <label class="form-label small text-secondary">العيادة</label><select class="form-select" id="reportClinic" name="report_clinic" form="backend-form-1">
+                <option value="" selected>كل العيادات</option>
+                <option>عيادة الابتسامة الحديثة</option>
+                <option>عيادة الابتسامة الحديثة</option>
+                <option>عيادة الابتسامة الحديثة</option>
+              </select>
+            </div>
+            <div class="col-md-4 col-lg-4 d-none" id="customReportDates" aria-hidden="true">
+              <label class="form-label small text-secondary">الفترة المخصصة</label>
+              <div class="d-flex gap-2">
+                <input class="form-control" id="reportFrom" type="date" value="2026-10-21" name="report_from" form="backend-form-1"><input class="form-control" id="reportTo" type="date" value="2026-10-21" name="report_to" form="backend-form-1">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">الحجوزات</small>
+              <div class="stat-value" id="reportBookings">1</div>
+              <small class="text-success">+12% عن الشهر السابق</small>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">مرضى جدد</small>
+              <div class="stat-value" id="reportPatients">1</div>
+              <small class="text-success">+8%</small>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">No-show</small>
+              <div class="stat-value text-danger" id="reportNoshow">1</div>
+              <small>404 مواعيد</small>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">تحصيل المنصة</small>
+              <div class="stat-value text-primary" id="reportCollection">500 ₪</div>
+              <small>8,250 من 500 ₪</small>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4 mb-4">
+          <div class="col-xl-7">
+            <div class="soft-card p-4 h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <h3 class="section-title mb-1">مسار الحجوزات</h3>
+                  <small class="text-secondary">من الطلب حتى الإكمال.</small>
+                </div>
+                <span class="badge badge-soft" id="reportScopeBadge">هذا الشهر</span>
+              </div>
+              <div class="report-funnel">
+                <div class="report-funnel-row">
+                  <div>
+                    <strong>إجمالي الطلبات</strong><small data-report-funnel-count="0">8,420</small>
+                  </div>
+                  <div class="progress flex-grow-1">
+                    <div class="progress-bar" data-report-funnel-bar="0" style="width: 100%"></div>
+                  </div>
+                  <span data-report-funnel-pct="0">100%</span>
+                </div>
+                <div class="report-funnel-row">
+                  <div>
+                    <strong>مؤكدة</strong><small data-report-funnel-count="1">7,160</small>
+                  </div>
+                  <div class="progress flex-grow-1">
+                    <div class="progress-bar" data-report-funnel-bar="1" style="width: 85%"></div>
+                  </div>
+                  <span data-report-funnel-pct="1">85%</span>
+                </div>
+                <div class="report-funnel-row">
+                  <div>
+                    <strong>مكتملة</strong><small data-report-funnel-count="2">5,726</small>
+                  </div>
+                  <div class="progress flex-grow-1">
+                    <div class="progress-bar bg-success" data-report-funnel-bar="2" style="width: 68%"></div>
+                  </div>
+                  <span data-report-funnel-pct="2">68%</span>
+                </div>
+                <div class="report-funnel-row">
+                  <div>
+                    <strong>ملغاة</strong><small data-report-funnel-count="3">886</small>
+                  </div>
+                  <div class="progress flex-grow-1">
+                    <div class="progress-bar bg-danger" data-report-funnel-bar="3" style="width: 10.5%"></div>
+                  </div>
+                  <span data-report-funnel-pct="3">10.5%</span>
+                </div>
+                <div class="report-funnel-row">
+                  <div>
+                    <strong>No-show</strong><small data-report-funnel-count="4">404</small>
+                  </div>
+                  <div class="progress flex-grow-1">
+                    <div class="progress-bar bg-warning" data-report-funnel-bar="4" style="width: 4.8%"></div>
+                  </div>
+                  <span data-report-funnel-pct="4">4.8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-5">
+            <div class="soft-card p-4 h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <h3 class="section-title mb-1">المالية</h3>
+                  <small class="text-secondary">مستحقات المنصة.</small>
+                </div>
+                <a class="btn btn-sm btn-light" href="finance">التفاصيل</a>
+              </div>
+              <div class="summary-row">
+                <span>المطلوب للمنصة</span><strong id="reportFinanceDue">25 ₪</strong>
+              </div>
+              <div class="summary-row">
+                <span>تم استلامه</span><strong class="text-success" id="reportFinanceReceived">0 ₪</strong>
+              </div>
+              <div class="summary-row">
+                <span>المتبقي</span><strong class="text-danger" id="reportFinanceRemaining">0 ₪</strong>
+              </div>
+              <div class="summary-row">
+                <span>عيادات مسددة بالكامل</span><strong id="reportFinancePaidClinics">1 من 4</strong>
+              </div>
+              <div class="mt-3">
+                <small class="text-secondary">نسبة التحصيل</small>
+                <div class="progress mt-2" style="height: 10px">
+                  <div class="progress-bar bg-success" id="reportFinanceBar" style="width: 62.9%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-xl-7">
+            <div class="soft-card p-0 overflow-hidden h-100">
+              <div class="p-4 pb-2">
+                <h3 class="section-title mb-1">أداء العيادات</h3>
+                <small class="text-secondary">مقارنة تشغيلية للمتابعة بين العيادات ضمن الفترة
+                  المحددة.</small>
+              </div>
+              <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+                <table class="table align-middle mb-0 responsive-stack-table system-data-table">
+                  <thead>
+                    <tr>
+                      <th>العيادة</th>
+                      <th>الحجوزات</th>
+                      <th>الإكمال</th>
+                      <th>No-show</th>
+                      <th>المستحق للمنصة</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reportClinicRows">
+                    <tr>
+                      <td data-label="العيادة" class="table-primary-cell">عيادة الابتسامة الحديثة</td>
+                      <td data-label="الحجوزات">1</td>
+                      <td data-label="الإكمال">72%</td>
+                      <td data-label="No-show">3.9%</td>
+                      <td data-label="المستحق للمنصة">500 ₪</td>
+                    </tr>
+                    
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-5">
+            <div class="soft-card p-4 h-100">
+              <h3 class="section-title mb-3">الطلب حسب التخصص</h3>
+              <div class="report-specialty">
+                <div class="d-flex justify-content-between">
+                  <span>طب أسنان عام</span><strong data-report-specialty-pct="0">35%</strong>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" data-report-specialty-bar="0" style="width: 35%"></div>
+                </div>
+              </div>
+              <div class="report-specialty">
+                <div class="d-flex justify-content-between">
+                  <span>علاج جذور</span><strong data-report-specialty-pct="1">22%</strong>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" data-report-specialty-bar="1" style="width: 22%"></div>
+                </div>
+              </div>
+              <div class="report-specialty">
+                <div class="d-flex justify-content-between">
+                  <span>تقويم الأسنان</span><strong data-report-specialty-pct="2">17%</strong>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" data-report-specialty-bar="2" style="width: 17%"></div>
+                </div>
+              </div>
+              <div class="report-specialty">
+                <div class="d-flex justify-content-between">
+                  <span>تركيبات</span><strong data-report-specialty-pct="3">12%</strong>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" data-report-specialty-bar="3" style="width: 12%"></div>
+                </div>
+              </div>
+              <div class="report-specialty">
+                <div class="d-flex justify-content-between">
+                  <span>أخرى</span><strong data-report-specialty-pct="4">14%</strong>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" data-report-specialty-bar="4" style="width: 14%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-2"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-2" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-3"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-3"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-3" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-2" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-3" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

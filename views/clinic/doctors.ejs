@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html data-style-sections="section-7" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>أطباء العيادة | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5"><div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Doctors</span>
+            <h1 class="fw-bold">أطباء العيادة</h1>
+            <p class="text-secondary mb-0">
+              إدارة أطباء العيادة وحالة التوفر والدوام، وتخصيص الخدمات من ملف الطبيب.
+            </p>
+          </div>
+          <button class="btn btn-primary" data-bs-target="#addDoctorModal" data-bs-toggle="modal" type="button">
+            <i class="bi bi-person-plus ms-1"></i>إضافة طبيب
+          </button>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="row g-3">
+            <div class="col-md-5">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="doctorSearch" placeholder="ابحث باسم الطبيب أو التخصص" value=""  name="doctor_search" form="backend-form-1">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <select class="form-select" id="doctorSpecialty"><option value="all">كل التخصصات</option><% for(const v of [...new Set(doctors.flatMap(d=>String(d.specialties).split("، ")))].sort()){ %><option value="<%= v %>"><%= v %></option><% } %></select>
+            </div>
+            <div class="col-md-2">
+              <select class="form-select" id="doctorAvailability"><option value="all">كل الحالات</option><option value="available">مرتبط بالعيادة</option></select>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-light w-100" id="clearDoctorFilters" >
+                إعادة ضبط
+              </button>
+            </div>
+          </div>
+        </div>
+        <% if(doctorMembershipMessage==='invited'||doctorMembershipMessage==='updated'){ %><div class="alert alert-success" role="status"><%= doctorMembershipMessage==='invited'?'أُرسلت دعوة الانضمام إلى الطبيب. تنتظر موافقته.':'تم تحديث عضوية الطبيب.' %></div><% } %>
+        <div class="small text-secondary mb-3" id="doctorCount"><%= doctors.length %> طبيب</div>
+        <div class="doctors-responsive-grid">
+<% if(!doctors.length){ %><div class="alert alert-info">لا يوجد أطباء مرتبطون بالعيادة بعد.</div><% } %>
+<% for(const d of doctors){ %>
+<div class="doctor-item" data-availability="available" data-name="د. <%= d.name %>" data-specialty-name="<%= d.specialties %>" data-record-id="<%= d.id %>">
+  <div class="doctor-card"><img class="doctor-card-img" src="../assets/vendor/2fb6f2c869b1-photo-1612349317150-e413f6a5b16d.jpg" alt="صورة توضيحية لطبيب أسنان">
+    <div class="p-3"><div class="d-flex justify-content-between"><span class="badge badge-soft"><%= d.specialties %></span><span class="badge <%= d.start_date>now.date?'text-bg-warning':'text-bg-success' %>"><%= d.start_date>now.date?'يبدأ لاحقًا':'عضوية فعالة' %></span></div>
+    <h5 class="fw-bold mt-3">د. <%= d.name %></h5><div class="doctor-meta"><span>طبيب معتمد</span><span>الدوام في ملف الطبيب</span></div>
+    <div class="small text-secondary mt-2"><i class="bi bi-calendar-week ms-1"></i>عرض الدوام والغيابات الفعلية من قاعدة البيانات.</div>
+    <a class="btn btn-outline-primary w-100 mt-3" href="/clinic/doctor-details?id=<%= d.id %>">الملف والدوام</a>
+    <% if(!d.manager){ %><form method="post" action="/clinic/doctors/membership" class="mt-2">
+       <input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="doctor_id" value="<%= d.id %>"><input type="hidden" name="action" value="suspend">
+       <button class="btn btn-outline-secondary w-100" type="submit" onclick="return confirm('تعليق عضوية الطبيب؟ لن يسمح بالتعليق إذا كانت لديه مواعيد قائمة.');">تعليق العضوية</button>
+    </form><% } %></div>
+  </div>
+</div>
+<% } %></div>
+<% if(otherMemberships.length){ %>
+        <section class="soft-card p-3 mt-4" aria-labelledby="otherMembershipsTitle">
+          <h5 id="otherMembershipsTitle" class="fw-bold mb-3">طلبات الانضمام والعضويات المعلقة</h5>
+          <div class="row g-3">
+          <% for(const m of otherMemberships){ %>
+            <div class="col-md-6 col-lg-4"><div class="border rounded-3 p-3 h-100">
+              <div class="d-flex justify-content-between gap-2"><strong>د. <%= m.name %></strong><span class="badge <%= m.status==='pending'?'text-bg-warning':'text-bg-secondary' %>"><%= m.status==='pending'?'بانتظار الطبيب':'عضوية معلقة' %></span></div>
+              <p class="small text-secondary mt-2 mb-1">تاريخ البداية: <%= String(m.start_date).slice(0,10) %></p>
+              <% if(m.notes){ %><p class="small text-secondary mb-3"><%= m.notes %></p><% } %>
+              <form action="/clinic/doctors/membership" method="post" class="mt-2">
+                <input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+                <input type="hidden" name="doctor_id" value="<%= m.id %>">
+                <input type="hidden" name="action" value="<%= m.status==='pending'?'cancel':'resume' %>">
+                <button class="btn btn-sm <%= m.status==='pending'?'btn-outline-danger':'btn-outline-primary' %>" type="submit"><%= m.status==='pending'?'إلغاء الدعوة':'إعادة تفعيل العضوية' %></button>
+              </form>
+            </div></div>
+          <% } %>
+          </div>
+        </section><% } %>
+        <div class="empty-state d-none" id="doctorEmpty">
+          <i class="bi bi-person-x fs-1"></i>
+          <h5 class="fw-bold mt-3">لا يوجد أطباء مطابقون</h5>
+        </div>
+      </section>
+      <div class="modal fade" id="addDoctorModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="fw-bold mb-0">إضافة طبيب للعيادة</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="entity-form-summary mb-3">اربط حساب طبيب مسجّل ومعتمد بالعيادة. بياناته المهنية تُعرض من ملفه ولا تُعدل هنا.</div>
+              <div class="entity-form-section mb-3">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-link-45deg"></i>طريقة إضافة الطبيب
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6" id="existingDoctorWrap">
+                    <label class="form-label entity-form-required">الطبيب المسجل</label>
+                    <select class="form-select" id="clinicExistingDoctor" name="doctor_id" form="doctorInviteForm" required>
+ <option value="">اختر طبيبًا معتمدًا...</option>
+ <% for(const d of eligibleDoctors){ %>
+ <option value="<%= d.id %>" data-name="<%= d.name %>" data-specialty="<%= d.specialties %>" data-license="<%= d.license %>" data-email="<%= d.email||'' %>" data-phone="<%= d.phone %>"><%= d.name %> — <%= d.specialties %></option>
+ <% } %>
+ </select>
+                    <% if(!eligibleDoctors.length){ %><p class="small text-secondary mt-2">لا توجد حسابات أطباء معتمدة قابلة للدعوة حاليًا.</p><% } %>
+                  </div>
+                </div>
+              </div>
+              <div class="entity-form-section mb-3">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-person-badge"></i>البيانات المهنية
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">اسم الطبيب</label>
+                    <input class="form-control" id="clinicDoctorName" placeholder="سيتم تعبئته من حساب الطبيب" value="" name="clinic_doctor_name" form="doctorInviteForm" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">التخصص</label>
+                    <input class="form-control" id="clinicDoctorSpecialty" name="doctor_specialty_display" value="" readonly form="doctorInviteForm" aria-describedby="doctorSpecialtySource"><div class="small text-secondary mt-2" id="doctorSpecialtySource">من الملف المهني للطبيب؛ يتم تخصيص خدمات العيادة بعد ربط الطبيب بالعيادة.</div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">رقم الترخيص</label>
+                    <input class="form-control" id="clinicDoctorLicense" placeholder="سيتم التحقق من الترخيص الموجود" value="" name="clinic_doctor_license" form="doctorInviteForm" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">البريد الإلكتروني</label>
+                    <input class="form-control" id="clinicDoctorEmail" placeholder="من حساب الطبيب" type="email" value="" name="clinic_doctor_email" autocomplete="email" form="doctorInviteForm" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">رقم الهاتف</label>
+                    <input class="form-control" id="clinicDoctorPhone" placeholder="من حساب الطبيب" value="" name="clinic_doctor_phone" form="doctorInviteForm" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="entity-form-section">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-calendar-week"></i>الربط التشغيلي
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">تاريخ بدء العمل</label>
+                    <input class="form-control" id="clinicDoctorStartDate" type="date" value="<%= now.date %>" name="clinic_doctor_start_date" form="doctorInviteForm" required="">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">حالة الطبيب داخل العيادة</label>
+                    <input class="form-control" id="clinicDoctorStatus" value="بانتظار موافقة الطبيب" readonly aria-label="حالة طلب الانضمام">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">رسالة للطبيب (اختياري)</label>
+                    <textarea class="form-control" id="clinicDoctorNotes" placeholder="ملاحظات عن الربط أو الدوام..." rows="3" name="clinic_doctor_notes" form="doctorInviteForm"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="saveClinicDoctorBtn" form="doctorInviteForm" type="submit">
+                إرسال دعوة الانضمام
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="doctorInviteForm" method="post" action="/clinic/doctors/invite" hidden><input type="hidden" name="csrf_token" value="<%= csrfToken %>"></form></body></html>

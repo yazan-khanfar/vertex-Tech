@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html data-style-sections="section-3" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>مواعيدي | Smart Dental Doctor</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/doctor/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex justify-content-between flex-wrap gap-3 align-items-end mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">My Appointments</span>
+            <h1 class="fw-bold">مواعيدي</h1>
+            <p class="text-secondary mb-0">
+              يعرض النظام مواعيدك أنت فقط داخل العيادة.
+            </p>
+          </div>
+          <div class="small text-secondary">مواعيد الطبيب المسجلة داخل العيادة الحالية</div>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="appointmentSearch" placeholder="ابحث باسم المريض أو الخدمة" value="" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <select class="form-select" id="appointmentFilter" >
+                <option value="all" selected>كل الحالات</option>
+                <option value="arrived">حضر</option>
+                <option value="upcoming">قادم</option>
+                <option value="completed">مكتمل</option>
+                <option value="noshow">لم يحضر</option>
+                <option value="cancelled">ملغي</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="soft-card p-3">
+          <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+            <table class="table align-middle mb-0 responsive-stack-table system-data-table">
+              <thead class="table-light">
+                <tr>
+                  <th>الوقت</th>
+                  <th>المريض</th>
+                  <th>الخدمة</th>
+                  <th>الحالة</th>
+                  <th>إجراء</th>
+                </tr>
+              </thead>
+              <tbody><% if(!bookings.length){ %><tr><td colspan="5" class="text-center text-secondary py-4">لا توجد مواعيد مرتبطة بك في هذه العيادة.</td></tr><% } %><% for(const b of bookings){ %><tr class="appointment-filter-item" data-search="<%= b.patient_name %> <%= b.service_name %>" data-status="<%= b.status %>" data-appointment-id="<%= b.id %>"><td data-label="الوقت" class="table-primary-cell"><%= b.time %> • <%= b.date %></td><td data-label="المريض"><%= b.patient_name %></td><td data-label="الخدمة"><%= b.service_name %></td><td data-label="الحالة"><%= labels[b.status]||b.status %></td><td data-label="إجراء" class="table-actions-cell"><% if(b.status==='confirmed'&&b.arrived){ %>
+  <a class="btn btn-primary btn-sm" href="/doctor/visit?booking_id=<%= b.id %>">فتح الزيارة</a>
+  <% }else if(b.status==='in_progress'||b.status==='completed'){ %>
+  <a class="btn btn-outline-primary btn-sm" href="/doctor/visit?booking_id=<%= b.id %>">عرض الزيارة</a>
+  <% }else if(b.status==='confirmed'){ %><span class="small text-secondary">بانتظار وصول المريض</span>
+  <% }else if(b.request_status==='pending'){ %><span class="badge text-bg-warning">طلب تغيير قيد المراجعة</span><% }else{ %><span class="text-secondary small">للعرض؛ القرارات لدى إدارة العيادة</span><% } %></td></tr><% } %></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/doctor/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="clean-dropdown notification-menu doctor-popover doctor-notification-popover" id="doctorNotifications">
+              <div class="px-3 py-2 fw-bold">الإشعارات</div>
+              <div class="dropdown-divider"></div>
+              <a class="notification-entry" href="appointments"><strong>المريض أحمد وصل</strong>
+                <div class="small text-secondary">
+                  موعد 11:30 جاهز لبدء الزيارة.
+                </div></a>
+              
+              
+            </div><div class="clean-dropdown profile-menu doctor-popover doctor-profile-popover" id="doctorProfile">
+              <a class="dropdown-item" href="profile"><i class="bi bi-person ms-2"></i>ملفي الشخصي</a>
+              <a class="dropdown-item" href="settings"><i class="bi bi-gear ms-2"></i>الإعدادات</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-primary fw-bold" href="../clinic/index"><i class="bi bi-arrow-left-right ms-2"></i>تبديل لإدارة
+                العيادة</a>
+              <div class="px-3 py-2 bg-light rounded-3 mx-2 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small">د. عمر ناصر • مالك ومدير العيادة</strong>
+              </div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right ms-2"></i>تسجيل الخروج
+              </button>
+            </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form></body></html>

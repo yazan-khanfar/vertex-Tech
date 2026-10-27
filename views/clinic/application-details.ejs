@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>تفاصيل طلب التوظيف | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <% if(feedback){ %><div class="alert alert-success container mt-3"><%= feedback %></div><% } %><main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="job-applicants">المتقدمون</a>
+            </li>
+            <li class="breadcrumb-item active">JA-<%= application.Application_ID %></li>
+          </ol>
+        </nav>
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-start gap-3 mb-4">
+          <div>
+            <div class="d-flex gap-2 mb-2">
+              <span class="badge text-bg-warning" id="applicationStatusBadge"><%= label(application.Application_Status) %></span><span class="badge text-bg-light border">JA-<%= application.Application_ID %></span>
+            </div>
+            <h1 class="fw-bold"><%= application.Full_Name %></h1>
+            <p class="text-secondary mb-0">
+              متقدم لوظيفة <%= application.Job_Title %> • J-<%= application.Job_ID %>.
+            </p>
+          </div>
+          <div class="application-status-control">
+            <label class="form-label small fw-bold">حالة الطلب</label>
+            <div class="d-flex gap-2">
+              <select class="form-select" id="applicationStatusSelect" name="status" form="backend-form-2">
+                <option value="pending" <%= application.Application_Status==='pending'?'selected':'' %>>قيد المراجعة</option>
+                <option value="accepted" <%= application.Application_Status==='accepted'?'selected':'' %>>مقبول</option>
+                <option value="rejected" <%= application.Application_Status==='rejected'?'selected':'' %>>مرفوض</option></select><button class="btn btn-primary" id="applicationStatusSave" form="backend-form-2" type="submit">
+                حفظ
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="soft-card p-4 mb-4">
+              <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                <div>
+                  <h4 class="fw-bold mb-1">بيانات المتقدم وقت التقديم</h4>
+                  <small class="text-secondary">نسخة من بيانات الطبيب وقت التقديم تبقى ظاهرة مع الطلب حتى لو تغير ملفه لاحقًا
+                    لاحقًا.</small>
+                </div>
+                <span class="badge text-bg-success"><i class="bi bi-patch-check-fill ms-1"></i>الترخيص موثق</span>
+              </div>
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <small class="text-secondary">الاسم</small>
+                  <div class="fw-bold"><%= application.Full_Name %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">البريد الإلكتروني</small>
+                  <div class="fw-bold"><%= application.Email %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">الهاتف</small>
+                  <div class="fw-bold"><%= application.Phone %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">مدينة السكن</small>
+                  <div class="fw-bold"><%= application.Residence_City %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">التخصص</small>
+                  <div class="fw-bold"><%= application.Specialty_Name %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">رقم الترخيص</small>
+                  <div class="fw-bold"><%= application.License_Number %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">سنوات الخبرة</small>
+                  <div class="fw-bold"><%= application.Years_Of_Experience %> سنوات</div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">الراتب المتوقع</small>
+                  <div class="fw-bold"><%= application.Expected_Salary===null?'غير محدد':Number(application.Expected_Salary).toFixed(2)+' ₪' %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">تاريخ التقديم</small>
+                  <div class="fw-bold"><%= new Date(application.Applied_At).toLocaleDateString('ar-PS') %></div>
+                </div>
+              </div>
+            </div>
+            <div class="soft-card p-4 mb-4">
+              <h4 class="fw-bold mb-3">رسالة التقديم</h4>
+              <p class="text-secondary mb-0"><%= application.Cover_Letter||'لا توجد رسالة مرفقة.' %></p>
+            </div>
+            <div class="soft-card p-4">
+              <h4 class="fw-bold mb-3">المرفقات</h4>
+              <div class="d-flex flex-wrap gap-2"><% for(const file of attachments){ %><a class="btn btn-outline-primary" href="/clinic/application-details/<%= application.Application_ID %>/attachment/<%= file.Attachment_ID %>"><i class="bi bi-file-earmark-pdf ms-1"></i><%= file.File_Name %></a><% } %><% if(!attachments.length){ %><span class="text-secondary">لا توجد مرفقات.</span><% } %><span class="badge text-bg-success p-2"><i class="bi bi-patch-check-fill ms-1"></i>رقم الترخيص <%= application.License_Number %> • <%= application.License_Status %></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="soft-card p-4 mb-4">
+              <h5 class="fw-bold">الوظيفة</h5>
+              <div class="d-flex justify-content-between py-2">
+                <span>المسمى</span><strong><%= application.Job_Title %></strong>
+              </div>
+              <div class="d-flex justify-content-between py-2">
+                <span>الكود</span><strong>J-<%= application.Job_ID %></strong>
+              </div>
+              <div class="d-flex justify-content-between py-2">
+                <span>الدوام</span><strong><%= application.Employment_Type==='full_time'?'كامل':application.Employment_Type==='part_time'?'جزئي':'عقد' %></strong>
+              </div>
+              <div class="d-flex justify-content-between py-2">
+                <span>الخبرة المطلوبة</span><strong><%= application.Minimum_Experience_Years %>+ سنوات</strong>
+              </div>
+              <div class="d-flex justify-content-between py-2">
+                <span>المدينة</span><strong><%= application.City %></strong>
+              </div>
+            </div>
+            <div class="soft-card p-4 mb-4">
+              <h5 class="fw-bold">ملف الطبيب</h5>
+              <div class="small text-secondary mb-3">
+                الطلب مربوط بملف الطبيب D-<%= application.Doctor_ID %>، لكن قرار التوظيف يعتمد على
+                بيانات الطلب وقت التقديم.
+              </div>
+              <a class="btn btn-outline-primary w-100" href="/clinic/doctor-details?id=<%= application.Doctor_ID %>">فتح ملف الطبيب</a>
+            </div>
+            <section class="soft-card p-3 mb-3"><h6 class="fw-bold">ملاحظة تظهر للمتقدم</h6><p class="small text-secondary mb-2">هذه الرسالة تظهر للطبيب المتقدم، والملاحظات الداخلية أدناه تبقى خاصة بالعيادة.</p><label class="form-label" for="clinicFeedback">ملاحظة العيادة للمتقدم</label><textarea class="form-control" id="clinicFeedback" name="feedback" rows="3" form="application-feedback-form"><%= application.Clinic_Feedback||'' %></textarea><button type="submit" class="btn btn-primary btn-sm mt-2" form="application-feedback-form">حفظ ملاحظة المتقدم</button></section><div class="soft-card p-4">
+              <h5 class="fw-bold">ملاحظات داخلية</h5>
+              <textarea class="form-control" placeholder="ملاحظات فريق العيادة..." rows="5" id="field-1" name="internal_notes" form="backend-form-3"><%= application.Internal_Notes||'' %></textarea><button class="btn btn-outline-primary w-100 mt-3" form="backend-form-3" type="submit">
+                حفظ الملاحظات
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-2" method="post" action="/clinic/application-details/<%= application.Application_ID %>" hidden=""><input type="hidden" name="csrf_token" value="<%= csrfToken %>"></form><form id="backend-form-3" method="post" action="/clinic/application-details/<%= application.Application_ID %>" hidden=""><input type="hidden" name="csrf_token" value="<%= csrfToken %>"></form><form id="application-feedback-form" method="post" action="/clinic/application-details/<%= application.Application_ID %>" hidden><input type="hidden" name="csrf_token" value="<%= csrfToken %>"></form></body></html>

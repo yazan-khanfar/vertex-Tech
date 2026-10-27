@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الرئيسية | Clinic Staff</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body data-staff-account-status="active" data-staff-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>" data-staff-user-id="<%= typeof currentUser !== 'undefined' && currentUser ? currentUser.userId : '' %>" data-rendered-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-active-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-staff-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : '' %>"><div class="container mt-3"><div class="alert alert-info small mb-0" role="status"><i class="bi bi-info-circle ms-1"></i> تم ربط الدخول والصلاحيات؛ محتوى لوحة التحكم التفصيلي ما زال نموذج عرض وسيُربط ببيانات حسابك في مرحلة القسم نفسه.</div></div><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/staff/header') %>
+    
+    <main class="page-shell" id="main-content" data-staff-workspace="">
+      <div class="container pt-3"><label class="form-label small fw-bold" for="activeClinicContext">العيادة الحالية</label><select class="form-select mb-3" id="activeClinicContext" name="active_clinic_id" data-context-switcher="" aria-describedby="staffClinicContextHelp"><% if(typeof activeClinic !== 'undefined' && activeClinic){ %><option value="<%= activeClinic.id %>" data-membership-status="active" data-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : 'موظف' %>" data-clinic-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>"><%= activeClinic.name %></option><% } %></select><div class="d-flex flex-wrap align-items-center gap-2 mb-2"><a class="btn btn-outline-primary btn-sm" href="choose-clinic" data-choose-clinic-link>اختيار أو تبديل العيادة</a><small class="text-secondary" id="staffClinicContextHelp">تظهر بيانات وصلاحيات العيادة المختارة فقط.</small></div></div><section class="container py-4 py-lg-5" data-clinic-content="">
+        <div class="dashboard-hero mb-4">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <span class="badge bg-white text-primary px-3 py-2 mb-3">Clinic Staff</span>
+              <h1 class="fw-bold mb-3">أهلاً <%= currentUser?.fullName || "بك" %>، مساحة العمل الخاصة بك</h1>
+              <p class="mb-0 opacity-75">
+                تظهر هنا فقط الوحدات التي سمح لك مدير العيادة باستخدامها.
+              </p>
+            </div>
+            <div class="col-lg-4">
+              <div class="dashboard-hero-card">
+                <small class="opacity-75">دورك الحالي</small><strong class="d-block mt-1"><%= staffClinicRole || "موظف العيادة" %></strong><small class="opacity-75"><%= String(staffPermissions || "").split(/\s+/).filter(Boolean).length %> صلاحيات تشغيلية</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mb-4">
+          <% if(hasStaffPermission('appointments.view')){ %><div class="col-6 col-lg-3">
+            <a class="stat-card d-block text-dark" href="appointments" data-requires-permission="appointments.view"><small class="text-secondary">مواعيد اليوم</small>
+              <div class="stat-value">—</div>
+              <small class="text-secondary">التفاصيل ضمن قسم المواعيد</small></a>
+          </div><% } %>
+          <% if(hasStaffPermission('patients.view_admin')){ %><div class="col-6 col-lg-3">
+            <a class="stat-card d-block text-dark" href="patients" data-requires-permission="patients.view_admin"><small class="text-secondary">مرضى اليوم</small>
+              <div class="stat-value">—</div>
+              <small class="text-secondary">التفاصيل ضمن قسم المرضى</small></a>
+          </div><% } %>
+          <% if(hasStaffPermission('invoices.view')){ %><div class="col-6 col-lg-3">
+            <a class="stat-card d-block text-dark" href="invoices" data-requires-permission="invoices.view"><small class="text-secondary">دفعات اليوم</small>
+              <div class="stat-value">—</div>
+              <small class="text-secondary">التفاصيل ضمن قسم الفواتير</small></a>
+          </div><% } %>
+          
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="soft-card p-4 h-100">
+              <h3 class="section-title mb-3">مهام سريعة</h3>
+              <% if(hasStaffPermission('appointments.view')){ %><div class="action-row">
+                <span class="icon-box"><i class="bi bi-calendar-check"></i></span>
+                <div class="flex-grow-1">
+                  <strong>مراجعة طلبات مواعيد جديدة</strong>
+                  <div class="small text-secondary">افتح صفحة المواعيد للاطلاع على الحالات.</div>
+                </div>
+                <a class="btn btn-sm btn-primary" href="appointments" data-requires-permission="appointments.view">فتح</a>
+              </div><% } %>
+              <% if(hasStaffPermission('invoices.view')){ %><div class="action-row">
+                <span class="icon-box"><i class="bi bi-receipt"></i></span>
+                <div class="flex-grow-1">
+                  <strong>تسجيل دفعة فاتورة</strong>
+                  <div class="small text-secondary">ضمن صلاحية الفواتير.</div>
+                </div>
+                <a class="btn btn-sm btn-outline-primary" href="invoices" data-requires-permission="invoices.view">الفواتير</a>
+              </div><% } %>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="soft-card p-4 h-100">
+              <h3 class="section-title mb-3">الصلاحيات الحالية</h3>
+              <% if(hasStaffPermission('appointments.view')){ %><div class="summary-row"><span>المواعيد</span><strong><%= hasStaffPermission('appointments.manage') ? 'عرض + إدارة' : 'عرض فقط' %></strong></div><% } %>
+              <% if(hasStaffPermission('patients.view_admin')){ %><div class="summary-row"><span>المرضى</span><strong>بيانات إدارية</strong></div><% } %>
+              <% if(hasStaffPermission('invoices.view')){ %><div class="summary-row"><span>الفواتير</span><strong><%= hasStaffPermission('payments.record') ? 'عرض + دفعات' : 'عرض فقط' %></strong></div><% } %>
+              <div class="summary-row">
+                <span>التشخيص/الوصفات</span><strong class="text-danger">غير مسموح</strong>
+              </div>
+              <a class="btn btn-sm btn-light mt-3" href="profile">كل الصلاحيات</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    <section class="container py-4" id="staffScopeNotice" hidden><div class="soft-card p-4 text-center"><i class="bi bi-building-lock fs-1 text-primary"></i><h3 class="fw-bold mt-3" id="staffScopeTitle">اختر العيادة للمتابعة</h3><p class="text-secondary" id="staffScopeMessage">حدد عيادة لديك عضوية فعّالة فيها لعرض بياناتها وصلاحياتك.</p><a href="choose-clinic" class="btn btn-primary">اختيار العيادة</a></div></section></main>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><%- include('../partials/staff/footer') %></body></html>

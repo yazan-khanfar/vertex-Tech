@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html data-style-sections="section-5" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الحالات المخبرية | Smart Dental Doctor</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/doctor/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="mb-4"><span class="badge badge-soft mb-2">My Lab Cases</span><h1 class="fw-bold">الحالات المخبرية المرتبطة بمرضاي</h1><p class="text-secondary mb-0">تابع الحالات حسب المختبر، واثبت التركيب للمريض فقط بعد أن تسجل العيادة استلام الحالة.</p></div>
+        <div class="alert alert-info border-0 rounded-4"><strong>الصلاحيات:</strong> الطبيب ينشئ الحالة ويحدد المختبر، العيادة/الموظف المخول يسجل الإرسال والاستلام، والطبيب يسجل <b>تم التركيب للمريض</b>.</div>
+        <div class="filter-panel mb-4"><div class="row g-3"><div class="col-lg-5"><input class="form-control" id="doctorLabSearch" placeholder="ابحث برقم الحالة أو المريض أو العمل" value="" data-ui-unbound-control="" name="doctor_lab_search" form="backend-form-1"></div><div class="col-lg-3"><select class="form-select" id="doctorLabFilter" data-ui-unbound-control="" data-record-select="doctor" name="doctor_lab_filter" form="backend-form-1"><option value="all" selected>كل المختبرات</option><option value="D-108" data-record-option="doctor">د. عمر ناصر</option></select></div><div class="col-lg-4"><select class="form-select" id="doctorLabStatus" name="doctor_lab_status" form="backend-form-1"><option value="all" selected>كل الحالات</option><option value="waiting">بانتظار الإرسال</option><option value="sent">تم الإرسال</option><option value="received">تم الاستلام</option><option value="installed">تم التركيب</option></select></div></div></div>
+        <div class="soft-card p-3"><div class="table-responsive mobile-stack-wrapper table-ui-shell"><table class="table align-middle mb-0 wide-data-table responsive-stack-table system-data-table"><thead class="table-light"><tr><th>الرقم</th><th>المريض</th><th>المختبر</th><th>العمل / الأسنان</th><th>الحالة</th><th>التسليم المتوقع</th><th>إجراء الطبيب</th></tr></thead><tbody>
+          <tr data-lab-row="" data-lab="elite" data-status="received" data-search="LAB-001 أحمد خالد تاج zirconia 46 elite" data-record-id="LC-001"><td data-label="الرقم" class="table-primary-cell"><strong>LC-001</strong></td><td data-label="المريض">أحمد خالد</td><td data-label="المختبر">Elite Dental Lab</td><td data-label="العمل / الأسنان">تاج Zirconia<br><small>سن 46 • A2</small></td><td data-label="الحالة" class="table-status-cell"><span class="badge text-bg-success" data-lab-status="">تم الاستلام</span></td><td data-label="التسليم المتوقع">21 أكتوبر 2026</td><td data-label="إجراء الطبيب" class="table-actions-cell"><details class="sdc-lab-expander"><summary><i class="bi bi-list-check" aria-hidden="true"></i><span>الأعمال المخبرية (1)</span><i class="bi bi-chevron-down sdc-expander-chevron" aria-hidden="true"></i></summary><section class="sdc-panel sdc-panel--integrated" id="sdcLabCase0" aria-label="أعمال الطلب المخبري"><div class="sdc-panel-head"><span class="sdc-panel-icon" aria-hidden="true"><i class="bi bi-box-seam"></i></span><div class="sdc-panel-head-copy"><h5>أعمال الطلب المخبري</h5><p>سجّل التركيب لكل عمل بعد الاستلام.</p></div></div><div class="sdc-panel-body"><div class="sdc-lab-actions"><div class="d-flex justify-content-between align-items-center gap-2 border-bottom py-1"><span class="small">تاج Zirconia • سن 46</span><button type="button" class="btn btn-sm btn-outline-success" data-installed="false" data-ui-pending="">تسجيل تركيب</button></div></div><p class="sdc-lab-summary" data-order-summary="">تم تركيب 0 من 1 عناصر. الطلب غير مكتمل التركيب</p></div></section></details></td></tr>
+          
+          
+          
+        </tbody></table></div><div class="text-center p-4 d-none" id="doctorLabEmpty"><span class="text-secondary">لا توجد حالات مطابقة للفلاتر.</span></div></div>
+      </section>
+    </main>
+    <%- include('../partials/doctor/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="clean-dropdown notification-menu doctor-popover doctor-notification-popover" id="doctorNotifications">
+              <div class="px-3 py-2 fw-bold">الإشعارات</div>
+              <div class="dropdown-divider"></div>
+              <a class="notification-entry" href="appointments"><strong>المريض أحمد وصل</strong>
+                <div class="small text-secondary">
+                  موعد 11:30 جاهز لبدء الزيارة.
+                </div></a>
+              
+              
+            </div><div class="clean-dropdown profile-menu doctor-popover doctor-profile-popover" id="doctorProfile">
+              <a class="dropdown-item" href="profile"><i class="bi bi-person ms-2"></i>ملفي الشخصي</a>
+              <a class="dropdown-item" href="settings"><i class="bi bi-gear ms-2"></i>الإعدادات</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-primary fw-bold" href="../clinic/index"><i class="bi bi-arrow-left-right ms-2"></i>تبديل لإدارة
+                العيادة</a>
+              <div class="px-3 py-2 bg-light rounded-3 mx-2 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small">د. عمر ناصر • مالك ومدير العيادة</strong>
+              </div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right ms-2"></i>تسجيل الخروج
+              </button>
+            </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form></body></html>

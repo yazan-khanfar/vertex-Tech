@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>المالية | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-start mb-4">
+          <div>
+            <h1 class="fw-bold fs-2 mb-2">المالية</h1>
+            <p class="text-secondary mb-0">
+              متابعة مستحقات المنصة على العيادات وفواتير المرضى من مكان واحد.
+            </p>
+          </div>
+          <button class="btn btn-outline-primary" id="exportFinanceBtn" data-ui-pending="">
+            <i class="bi bi-download ms-1"></i>تصدير CSV
+          </button>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">المطلوب للمنصة</small>
+              <div class="stat-value" id="financeTotalDue">25 ₪</div>
+              <small>عن الفترات المعروضة</small>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">تم استلامه</small>
+              <div class="stat-value text-success" id="financeTotalReceived">0 ₪</div>
+              <small>دفعات العيادات</small>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">المتبقي</small>
+              <div class="stat-value text-danger" id="financeTotalRemaining">25 ₪</div>
+              <small>ما زال على العيادات</small>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card">
+              <small class="text-secondary">عيادات مسددة</small>
+              <div class="stat-value" id="financePaidClinics">0</div>
+              <small>من 4 سجلات</small>
+            </div>
+          </div>
+        </div>
+        <ul class="nav admin-tabs mb-4" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-target="#settlements" data-bs-toggle="pill" aria-current="page" aria-selected="true" role="tab" type="button">
+              تسويات العيادات
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#invoices" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              فواتير المرضى
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="settlements" role="tabpanel">
+            <div class="filter-panel mb-4">
+              <div class="row g-3">
+                <div class="col-lg-4">
+                  <input class="form-control" id="financeSearch" placeholder="ابحث باسم العيادة..." value="" data-ui-unbound-control="" name="finance_search" form="backend-form-1">
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <select class="form-select" id="financeStatus" name="finance_status" form="backend-form-1">
+                    <option value="" selected>كل الحالات</option>
+                    <option value="remaining">عليها مبلغ متبقي</option>
+                    <option value="paid">مسددة</option>
+                    <option value="unpaid">لم تدفع بعد</option>
+                  </select>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <select class="form-select" id="financePeriod" name="finance_period" form="backend-form-1">
+                    <option value="" selected>كل الفترات</option>
+                    <option value="2026-10">أكتوبر 2026</option>
+                    <option value="2026-09">سبتمبر 2026</option>
+                    <option value="custom">فترة مخصصة</option>
+                  </select>
+                </div>
+                <div class="col-12 d-none" id="financeCustomDates">
+                  <div class="row g-2 align-items-end">
+                    <div class="col-md-4">
+                      <label class="form-label small text-secondary mb-1">من تاريخ</label><input class="form-control" id="financeFromDate" type="date" value="2026-10-21" name="finance_from_date" form="backend-form-1">
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label small text-secondary mb-1">إلى تاريخ</label><input class="form-control" id="financeToDate" type="date" value="2026-10-21" name="finance_to_date" form="backend-form-1">
+                    </div>
+                    <div class="col-md-4">
+                      <button class="btn btn-primary w-100" id="applyFinanceCustomDates" type="button" data-ui-pending="">
+                        تطبيق الفترة
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+              <table class="table mb-0 admin-finance-table wide-data-table responsive-stack-table system-data-table">
+                <thead>
+                  <tr>
+                    <th>العيادة</th>
+                    <th>الفترة</th>
+                    <th>الحجوزات المدفوعة</th>
+                    <th>المطلوب للمنصة</th>
+                    <th>تم استلامه</th>
+                    <th>المتبقي</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="financeTableBody">
+                  <tr data-commission-reference="5" data-due="25" data-finance-row="" data-period="2026-10" data-received="0" data-search="عيادة الابتسامة الحديثة" data-settlement-code="SET-001">
+                    <td data-label="العيادة" class="table-primary-cell">عيادة الابتسامة الحديثة</td>
+                    <td data-label="الفترة">أكتوبر 2026</td>
+                    <td data-label="الحجوزات المدفوعة">500 ₪</td>
+                    <td data-due-cell="" data-label="المطلوب للمنصة">25 ₪</td>
+                    <td class="text-success fw-bold" data-label="تم استلامه" data-received-cell="">0 ₪</td>
+                    <td class="text-danger fw-bold" data-label="المتبقي" data-remaining-cell="">25 ₪</td>
+                    <td data-label="الحالة" class="table-status-cell">بانتظار التسوية</td>
+                    <td data-label="الإجراءات" class="table-actions-cell">
+                      <div class="d-flex gap-1 table-action-grid">
+                        <button class="btn btn-sm btn-light" data-finance-details="" data-payments="" data-ui-open="#financeDetailsModal" type="button">
+                          تفاصيل</button><button class="btn btn-sm btn-primary" data-record-payment="" data-ui-open="#recordPaymentModal" type="button">
+                          تسجيل دفعة
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                  
+                  
+                </tbody>
+              </table>
+              <div class="empty-state d-none" id="financeEmpty">
+                لا توجد تسويات مطابقة للفلاتر.
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="invoices" role="tabpanel">
+            <div class="d-flex justify-content-end mb-3">
+              <button class="btn btn-primary btn-sm" data-bs-target="#invoiceFormModal" data-bs-toggle="modal" data-invoice-new="" data-ui-open="#invoiceFormModal" type="button">
+                <i class="bi bi-plus-lg ms-1"></i>إضافة فاتورة
+              </button>
+            </div>
+            <div class="filter-panel mb-4">
+              <div class="row g-3">
+                <div class="col-lg-5">
+                  <input class="form-control" id="invoiceSearch" placeholder="رقم الفاتورة أو المريض..." value="" data-ui-unbound-control="" name="invoice_search" form="backend-form-2">
+                </div>
+                <div class="col-lg-3">
+                  <select class="form-select" id="invoiceStatusFilter" data-ui-unbound-control="" name="invoice_status_filter" form="backend-form-2">
+                    <option value="" selected>كل الحالات</option>
+                    <option value="paid">مدفوعة</option>
+                    <option value="installment">تقسيط</option>
+                    <option value="unpaid">غير مدفوعة</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+              <table class="table mb-0 admin-master-table wide-data-table responsive-stack-table system-data-table">
+                <thead>
+                  <tr>
+                    <th>الفاتورة</th>
+                    <th>المريض</th>
+                    <th>العيادة</th>
+                    <th>الإجمالي</th>
+                    <th>المدفوع</th>
+                    <th>المتبقي</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="invoiceTableBody">
+                  
+                  <tr data-invoice-row="" data-search="IN-118 أحمد خالد" data-status="paid" data-record-id="IN-118">
+                    <td data-label="الفاتورة" class="table-primary-cell">IN-118</td>
+                    <td data-invoice-patient="" data-label="المريض">أحمد خالد</td>
+                    <td data-invoice-clinic="" data-label="العيادة">عيادة الابتسامة الحديثة</td>
+                    <td data-invoice-total="" data-label="الإجمالي">500</td>
+                    <td data-invoice-paid="" data-label="المدفوع">500</td>
+                    <td data-invoice-remaining="" data-label="المتبقي">0 ₪</td>
+                    <td data-label="الحالة" class="table-status-cell">مدفوعة</td>
+                    <td data-label="الإجراءات" class="table-actions-cell">
+                      <div class="d-flex gap-1 table-action-grid">
+                        <button class="btn btn-sm btn-light" data-invoice-view="" data-ui-pending="">
+                          عرض</button><button class="btn btn-sm btn-outline-primary" data-invoice-edit="" data-ui-open="#invoiceFormModal" type="button">
+                          تعديل</button><button class="btn btn-sm btn-outline-secondary" data-sensitive-action="void" data-sensitive-entity="IN-118" data-sensitive-title="إلغاء / Void الفاتورة" data-ui-open="#sensitiveActionModal" type="button">
+                          Void
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="empty-state d-none" id="invoiceEmpty">
+                لا توجد فواتير مطابقة.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="financeDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <div>
+                <h5 class="modal-title fw-bold" id="financeDetailClinic"></h5>
+                <small class="text-secondary" id="financeDetailPeriod"></small>
+              </div>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                  <div class="admin-money-box">
+                    <small>المطلوب</small><strong id="financeDetailDue"></strong>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="admin-money-box success">
+                    <small>تم استلامه</small><strong id="financeDetailReceived"></strong>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="admin-money-box danger">
+                    <small>المتبقي</small><strong id="financeDetailRemaining"></strong>
+                  </div>
+                </div>
+              </div>
+              <h6 class="fw-bold">سجل الدفعات</h6>
+              <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+                <table class="table admin-master-table responsive-stack-table system-data-table">
+                  <thead>
+                    <tr>
+                      <th>التاريخ</th>
+                      <th>المبلغ</th>
+                      <th>الطريقة</th>
+                      <th>المرجع</th>
+                    </tr>
+                  </thead>
+                  <tbody id="financePaymentsBody"></tbody>
+                </table>
+              </div>
+              <div class="soft-card p-3 mt-3">
+                <div class="summary-row">
+                  <span>settlement_code</span><strong id="financeDetailSettlementCode">—</strong>
+                </div>
+                <div class="summary-row">
+                  <span>نسبة العمولة</span><strong id="financeDetailCommission">تحفظ لكل حجز داخل عناصر التسوية</strong>
+                </div>
+                <div class="summary-row">
+                  <span>قاعدة الحساب</span><strong>الحجوزات المدفوعة في الفترة</strong>
+                </div>
+              </div>
+              <div class="mt-4" id="settlementItemsBreakdown">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h6 class="fw-bold mb-1">بنود التسوية</h6>
+                    <small class="text-secondary">الحجوزات التي كوّنت عمولة هذه الفترة؛ كل حجز يحتسب مرة
+                      واحدة فقط.</small>
+                  </div>
+                  <span class="badge badge-soft">settlement_items</span>
+                </div>
+                <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+                  <table class="table align-middle mb-0 responsive-stack-table system-data-table">
+                    <thead>
+                      <tr>
+                        <th>المرجع</th>
+                        <th>سعر الحجز وقت إنشائه</th>
+                        <th>نسبة العمولة وقت الحجز</th>
+                        <th>عمولة المنصة</th>
+                        <th>التاريخ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td data-label="المرجع" class="table-primary-cell">
+                          <strong>A-9021</strong><small class="d-block">علاج جذور</small>
+                        </td>
+                        <td data-label="سعر الحجز وقت إنشائه">500 ₪</td>
+                        <td data-label="نسبة العمولة وقت الحجز">5%</td>
+                        <td data-label="عمولة المنصة">25 ₪</td>
+                        <td data-label="التاريخ">21/10/2026</td>
+                      </tr>
+                      
+                      
+                    </tbody>
+                  </table>
+                </div>
+                <div class="small text-secondary mt-2">
+                  تُعرض هذه البنود ضمن تفاصيل التسوية حسب
+                  settlement_id بدل البيانات التجريبية الحالية.
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إغلاق
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="recordPaymentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <div>
+                <h5 class="modal-title fw-bold">تسجيل دفعة من العيادة</h5>
+                <small class="text-secondary" id="paymentClinicName"></small>
+              </div>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-light border rounded-4">
+                المتبقي الحالي: <strong id="paymentCurrentRemaining"></strong>
+              </div>
+              <label class="form-label">المبلغ المستلم *</label><input class="form-control mb-3" id="paymentAmount" min="0.01" type="number" value="" name="payment_amount" form="backend-form-3" step="0.01" max="25" required=""><label class="form-label">طريقة الدفع</label><select class="form-select mb-3" id="paymentMethod" name="payment_method" form="backend-form-3">
+                <option selected>تحويل بنكي</option>
+                <option>نقدي</option>
+                <option>بطاقة / بوابة دفع</option></select><label class="form-label">مرجع العملية</label><input class="form-control" id="paymentRef" placeholder="TRX-..." value="" name="payment_ref" form="backend-form-3">
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-success" id="savePaymentBtn" data-ui-pending="" form="backend-form-3" type="submit">
+                تسجيل الدفعة
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="invoiceFormModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="invoiceFormTitle">
+                إضافة فاتورة
+              </h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">رقم الفاتورة</label><input class="form-control" id="invoiceFormId" value="IN-118" name="invoice_form_id" form="backend-form-4">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">المريض</label><input class="form-control" id="invoiceFormPatient" value="أحمد خالد" name="invoice_form_patient" form="backend-form-4">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">العيادة</label><input class="form-control" id="invoiceFormClinic" value="عيادة الابتسامة الحديثة" name="invoice_form_clinic" form="backend-form-4">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">الإجمالي</label><input class="form-control" id="invoiceFormTotal" type="number" value="500" name="invoice_form_total" form="backend-form-4" readonly data-admin-invoice-total="">
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">المدفوع</label><input class="form-control" id="invoiceFormPaid" type="number" value="0" name="invoice_form_paid" form="backend-form-4" min="0" max="500" step="0.01">
+                </div>
+              <div class="col-12"><h6 class="fw-bold">البند الإداري *</h6><div class="row g-2"><div class="col-md-6"><input class="form-control" name="items[0][description]" value="رسوم خدمة إدارية" required form="backend-form-4" aria-label="وصف البند"></div><div class="col-md-3"><input class="form-control" name="items[0][quantity]" type="number" min="1" step="1" value="1" required form="backend-form-4" data-admin-quantity aria-label="الكمية"></div><div class="col-md-3"><input class="form-control" name="items[0][unit_price]" type="number" min="0" step="0.01" value="500" required form="backend-form-4" data-admin-price aria-label="سعر الوحدة"></div></div><p class="small text-secondary mt-2">الإجمالي محسوب من البنود. أي مبلغ مدفوع يسجل كدفعة مستقلة.</p></div></div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="saveInvoiceBtn" data-ui-pending="" form="backend-form-4" type="submit">حفظ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-5"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-5" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-6"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-6"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-6" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-2" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-3" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-4" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-5" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-6" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

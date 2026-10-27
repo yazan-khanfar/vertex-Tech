@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>سجل النظام | Smart Dental Clinic</title>
+<link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+<link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+</head>
+<body>
+<a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+<%- include('../partials/admin/header') %>
+<main class="page-shell" id="main-content">
+<section class="container py-4 py-lg-5">
+  <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+    <div><span class="badge badge-soft mb-2">Audit &amp; Activity</span>
+      <h1 class="fw-bold fs-2 mb-2">سجل النظام</h1>
+      <p class="text-secondary mb-0">العمليات المحفوظة فعليًا: من قام بالفعل، على أي كيان، متى، وسبب القرار.</p>
+    </div>
+    <a class="btn btn-outline-primary align-self-start" href="/admin/system-log/export?<%= new URLSearchParams({q:filters.q,type:filters.type,date:filters.date}).toString() %>">
+      <i class="bi bi-download"></i> تصدير CSV
+    </a>
+  </div>
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3"><div class="stat-card"><small class="text-secondary">أحداث اليوم</small><div class="stat-value"><%= stats.today %></div><small>جميع الأدوار</small></div></div>
+    <div class="col-6 col-lg-3"><div class="stat-card"><small class="text-secondary">إجراءات حساسة</small><div class="stat-value text-warning"><%= stats.sensitive %></div><small>اعتماد، رفض، تعليق، أمان</small></div></div>
+    <div class="col-6 col-lg-3"><div class="stat-card"><small class="text-secondary">أحداث سريرية</small><div class="stat-value"><%= stats.clinical %></div><small>زيارات، مرضى، تقارير</small></div></div>
+    <div class="col-6 col-lg-3"><div class="stat-card"><small class="text-secondary">أحداث أمنية</small><div class="stat-value"><%= stats.security %></div><small>كلمات مرور ومصادقة</small></div></div>
+  </div>
+  <form id="auditFilters" class="filter-panel mb-4" method="get" action="/admin/system-log">
+    <div class="row g-3 align-items-end">
+      <div class="col-lg-4"><label class="form-label small text-secondary" for="logSearch">بحث</label>
+        <div class="input-group"><span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+          <input class="form-control" id="logSearch" name="q" maxlength="100" value="<%= filters.q %>" placeholder="العملية، المستخدم، الرقم..."></div>
+      </div>
+      <div class="col-md-4 col-lg-3"><label class="form-label small text-secondary" for="logType">نوع الحدث</label>
+        <select class="form-select" id="logType" name="type">
+          <% for (const item of [['','كل الأنواع'],['create','إضافة'],['edit','تعديل'],['delete','حذف'],['suspend','تعليق / إعادة تفعيل'],['approval','اعتماد / رفض'],['finance','مالية'],['login','أمان وتسجيل دخول'],['domain','أحداث النظام']]) { %>
+            <option value="<%= item[0] %>" <%= filters.type === item[0] ? 'selected' : '' %>><%= item[1] %></option>
+          <% } %>
+        </select>
+      </div>
+      <div class="col-md-4 col-lg-3"><label class="form-label small text-secondary" for="logDate">التاريخ</label>
+        <input class="form-control" id="logDate" type="date" name="date" value="<%= filters.date %>">
+      </div>
+      <div class="col-md-4 col-lg-2 d-flex gap-2">
+        <button class="btn btn-primary flex-fill" type="submit">بحث</button>
+        <a class="btn btn-light flex-fill" id="resetLogFilters" href="/admin/system-log">مسح</a>
+      </div>
+    </div>
+  </form>
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h3 class="section-title mb-0">أحدث العمليات</h3>
+    <span class="small text-secondary">عدد السجلات المطابقة: <%= total %> — الصفحة <%= page %> من <%= pages %></span>
+  </div>
+  <div class="audit-log-list">
+    <% for(const item of records) { %>
+      <article class="audit-log-card">
+        <span class="audit-time" dir="ltr" style="font-size:.8rem"><%= item.Occurred_Label %></span>
+        <span class="audit-actor" title="<%= item.Email || '' %>">
+          <%= [item.First_Name,item.Last_Name].filter(Boolean).join(' ') || (item.User_ID ? ('User #'+item.User_ID) : 'عملية محلية / النظام') %>
+        </span>
+        <span class="audit-icon <%= item.category==='approval'?'success':'' %>"><i class="bi <%= auditTypeIcon(item.category) %>"></i></span>
+        <div class="audit-main">
+          <strong><%= item.Description || item.Action_Type %></strong>
+          <small><span dir="ltr"><%= item.Action_Type %></span> • <%= item.Target_Type %> • <%= item.Target_Reference || '—' %></small>
+          <p><%= item.Reason || 'لا يوجد سبب مسجل' %></p>
+        </div>
+        <span class="badge <%= item.category==='approval'?'text-bg-success':'text-bg-light' %>"><%= auditTypeLabel(item.category) %></span>
+        <button class="btn btn-sm btn-light" type="button" data-audit-detail="audit-<%= item.Log_ID %>">تفاصيل</button>
+      </article>
+      <template id="audit-<%= item.Log_ID %>">
+        <dl class="row gy-2 mb-0">
+          <dt class="col-sm-4">رقم السجل</dt><dd class="col-sm-8"><%= item.Log_ID %></dd>
+          <dt class="col-sm-4">الوقت</dt><dd class="col-sm-8" dir="ltr"><%= item.Occurred_Label %></dd>
+          <dt class="col-sm-4">نوع العملية</dt><dd class="col-sm-8"><%= item.Action_Type %></dd>
+          <dt class="col-sm-4">المنفذ</dt><dd class="col-sm-8"><%= [item.First_Name,item.Last_Name].filter(Boolean).join(' ') || (item.User_ID ? ('User #'+item.User_ID) : 'عملية محلية / النظام') %><% if(item.User_ID){ %> (ID: <%= item.User_ID %>)<% } %></dd>
+          <dt class="col-sm-4">الكيان المستهدف</dt><dd class="col-sm-8"><%= item.Target_Type %> — <%= item.Target_Reference || '—' %></dd>
+          <dt class="col-sm-4">الوصف</dt><dd class="col-sm-8"><%= item.Description %></dd>
+          <dt class="col-sm-4">السبب</dt><dd class="col-sm-8" style="white-space:pre-wrap"><%= item.Reason || 'غير مسجل' %></dd>
+        </dl>
+      </template>
+    <% } %>
+  </div>
+  <% if(records.length===0) { %>
+    <div class="empty-state" id="logEmpty">لا توجد سجلات مطابقة للفلاتر. <a href="/admin/system-log">عرض جميع العمليات</a></div>
+  <% } %>
+  <% if(pages>1) { %>
+    <nav class="d-flex justify-content-center align-items-center gap-3 mt-4" aria-label="صفحات سجل النظام">
+      <% if(page>1){ %><a class="btn btn-sm btn-outline-primary" href="/admin/system-log?<%= new URLSearchParams({q:filters.q,type:filters.type,date:filters.date,page:String(page-1)}).toString() %>">السابق</a><% } %>
+      <span class="text-secondary">صفحة <%= page %> / <%= pages %></span>
+      <% if(page<pages){ %><a class="btn btn-sm btn-outline-primary" href="/admin/system-log?<%= new URLSearchParams({q:filters.q,type:filters.type,date:filters.date,page:String(page+1)}).toString() %>">التالي</a><% } %>
+    </nav>
+  <% } %>
+</section>
+</main>
+<div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
+ <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content border-0 rounded-4">
+  <div class="modal-header"><h5 class="modal-title fw-bold">تفاصيل سجل التدقيق</h5><button class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button></div>
+  <div class="modal-body" id="viewBody"></div>
+  <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal">إغلاق</button></div>
+ </div></div>
+</div>
+<script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+<script src="assets/app.js"></script>
+<%- include('../partials/admin/footer') %>
+</body></html>

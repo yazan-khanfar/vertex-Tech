@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>مرضاي | Smart Dental Doctor</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/doctor/header') %>
+    
+    <main class="page-shell" id="main-content"><section class="container py-4 py-lg-5">
+<div class="mb-4"><span class="badge badge-soft mb-2">My Patients</span><h1 class="fw-bold">مرضاي</h1><p class="text-secondary mb-0">ملفات المرضى المرتبطين بمواعيدك أو خطط علاجك داخل العيادة المحددة فقط.</p></div>
+<div class="filter-panel mb-4"><div class="row g-3"><div class="col-md-8"><div class="input-group"><span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="patientSearch" placeholder="ابحث بالاسم أو رقم الملف" autocomplete="off"></div></div><div class="col-md-4"><div class="form-control text-secondary">عدد المرضى: <strong><%= patients.length %></strong></div></div></div></div>
+<div class="row g-4"><% if(!patients.length){ %><div class="col-12"><div class="soft-card p-4 text-secondary">لا يوجد مرضى مرتبطون بمواعيدك أو خطط علاجك في هذه العيادة.</div></div><% } %>
+<% for(const p of patients){ %><div class="col-md-6 col-xl-4 patient-filter-item" data-search="<%= p.name+' '+p.id %>" data-record-id="<%= p.id %>"><div class="patient-card patient-card-unified"><div class="patient-card-head"><div class="d-flex gap-3 align-items-center"><div class="patient-avatar"><%= p.initials %></div><div><h5 class="fw-bold mb-1"><%= p.name %></h5><div class="small text-secondary">P-<%= p.id %><% if(p.age!==null){ %> • <%= p.age %> سنة<% } %></div></div></div><span class="badge text-bg-primary"><%= p.active_plan?'علاج نشط':'ملف مريض' %></span></div><div class="patient-card-body"><div class="patient-info-block"><small>آخر زيارة</small><strong><%= p.last_visit||'لا توجد زيارة مكتملة' %></strong></div><div class="patient-info-block"><small>الخدمة / الخطة</small><strong><%= p.active_plan||p.service||'—' %></strong></div></div><div class="patient-card-actions"><a class="btn btn-outline-primary btn-sm" href="patient-details?id=<%= p.id %>">فتح الملف</a><a class="btn btn-primary btn-sm" href="appointments">مواعيد المريض</a></div></div></div><% } %>
+</div></section></main>
+    <%- include('../partials/doctor/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="clean-dropdown notification-menu doctor-popover doctor-notification-popover" id="doctorNotifications">
+              <div class="px-3 py-2 fw-bold">الإشعارات</div>
+              <div class="dropdown-divider"></div>
+              <a class="notification-entry" href="appointments"><strong>المريض أحمد وصل</strong>
+                <div class="small text-secondary">
+                  موعد 11:30 جاهز لبدء الزيارة.
+                </div></a>
+              
+              
+            </div><div class="clean-dropdown profile-menu doctor-popover doctor-profile-popover" id="doctorProfile">
+              <a class="dropdown-item" href="profile"><i class="bi bi-person ms-2"></i>ملفي الشخصي</a>
+              <a class="dropdown-item" href="settings"><i class="bi bi-gear ms-2"></i>الإعدادات</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-primary fw-bold" href="../clinic/index"><i class="bi bi-arrow-left-right ms-2"></i>تبديل لإدارة
+                العيادة</a>
+              <div class="px-3 py-2 bg-light rounded-3 mx-2 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small">د. عمر ناصر • مالك ومدير العيادة</strong>
+              </div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right ms-2"></i>تسجيل الخروج
+              </button>
+            </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form></body></html>

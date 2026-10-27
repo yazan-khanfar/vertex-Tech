@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الأطباء والتراخيص | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-start mb-4">
+          <div>
+            <h1 class="fw-bold fs-2 mb-2">الأطباء والتراخيص</h1>
+            <p class="text-secondary mb-0">
+              إدارة الأطباء، متابعة صلاحية التراخيص، والوظائف المرتبطة بالأطباء.
+            </p>
+          </div>
+
+        </div>
+        <ul class="nav admin-tabs mb-4" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-target="#doctorsTab" data-bs-toggle="pill" aria-current="page" aria-selected="true" role="tab" type="button">
+              الأطباء والتراخيص
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#jobsTab" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              وظائف الأطباء
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="doctorsTab" role="tabpanel">
+            <div class="filter-panel mb-4">
+              <div class="row g-3">
+                <div class="col-lg-4">
+                  <input class="form-control" id="doctorSearch" placeholder="الاسم، التخصص، رقم الترخيص..." value="" name="doctor_search" form="backend-form-1">
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <select class="form-select" id="doctorLicenseFilter" data-record-select="doctor" name="doctor_license_filter" form="backend-form-1"><option value="" selected>كل حالات التحقق</option><option value="pending">بانتظار المراجعة</option><option value="verified">معتمد</option><option value="rejected">مرفوض</option></select>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                  <select class="form-select" id="doctorStatusFilter" name="doctor_status_filter" form="backend-form-1">
+                    <option value="" selected>كل الحالات</option>
+                    <option value="active">فعال</option>
+                    <option value="suspended">موقوف</option>
+                    <option value="pending_setup">بانتظار إكمال المسار</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+              <table class="table mb-0 admin-master-table wide-data-table responsive-stack-table system-data-table">
+                <thead>
+                  <tr>
+                    <th>الطبيب</th>
+                    <th>التخصص</th>
+                    <th>العيادة</th>
+                    <th>رقم الترخيص</th>
+                    <th>حالة التحقق</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="doctorTableBody">
+                  <% if(!doctors.length) { %>
+                    <tr><td colspan="7" class="text-center text-secondary py-4">لا يوجد أطباء مسجلون بعد.</td></tr>
+                  <% } %>
+                  <% doctors.forEach(function(d) { %>
+                    <tr data-doctor-row data-license="<%= d.License_Status %>" data-status="<%= d.Account_Status %>"
+                      data-search="<%= d.First_Name %> <%= d.Last_Name %> <%= d.License_Number %> <%= d.specialties %>">
+                      <td data-label="الطبيب" class="table-primary-cell">د. <%= d.First_Name %> <%= d.Last_Name %></td>
+                      <td data-label="التخصص" data-doctor-specialty><%= d.specialties || 'غير محدد' %></td>
+                      <td data-label="العيادة">—</td>
+                      <td data-label="رقم الترخيص" data-doctor-license><%= d.License_Number %></td>
+                      <td data-label="حالة التحقق" class="table-status-cell">
+                        <span class="badge <%= d.License_Status === 'verified' ? 'text-bg-success' : d.License_Status === 'rejected' ? 'text-bg-danger' : 'text-bg-warning' %>">
+                        <%= d.License_Status === 'verified' ? 'معتمد' : d.License_Status === 'rejected' ? 'مرفوض' : 'بانتظار المراجعة' %></span>
+                      </td>
+                      <td data-label="الحالة" class="table-status-cell">
+                        <span class="badge <%= d.Login_Enabled ? 'text-bg-success' : 'text-bg-secondary' %>">
+                          <%= d.Login_Enabled ? 'فعّال' : 'الدخول معطل' %>
+                        </span>
+                      </td>
+                      <td data-label="الإجراءات" class="table-actions-cell">
+                        <a class="btn btn-sm btn-outline-primary" href="/admin/doctor-license-review?id=<%= d.Doctor_ID %>">
+                          <%= d.License_Status === 'pending' ? 'مراجعة الترخيص' : 'عرض قرار الترخيص' %>
+                        </a>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <div class="empty-state d-none" id="doctorEmpty">
+                لا يوجد أطباء مطابقون للفلاتر.
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="jobsTab" role="tabpanel">
+            <div class="d-flex justify-content-end mb-3">
+              <button class="btn btn-primary btn-sm" data-bs-target="#jobFormModal" data-bs-toggle="modal" data-job-new="" type="button">
+                <i class="bi bi-plus-lg ms-1"></i>إضافة وظيفة
+              </button>
+            </div>
+            <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+              <table class="table mb-0 admin-master-table medium-data-table responsive-stack-table system-data-table">
+                <thead>
+                  <tr>
+                    <th>الوظيفة</th>
+                    <th>العيادة</th>
+                    <th>الموقع</th>
+                    <th>المتقدمون</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="jobTableBody">
+                  <tr data-job-row="" data-search="طبيب أسنان عام عيادة الابتسامة الحديثة نابلس J-101" data-status="active">
+                    <td data-label="الوظيفة" class="table-primary-cell">
+                      <strong data-job-title="">طبيب أسنان عام</strong><small class="d-block text-secondary">J-101</small>
+                    </td>
+                    <td data-job-clinic="" data-label="العيادة">عيادة الابتسامة الحديثة</td>
+                    <td data-job-city="" data-label="الموقع">جنين</td>
+                    <td data-label="المتقدمون">8</td>
+                    <td data-label="الحالة" class="table-status-cell">
+                      <span class="badge text-bg-success" data-job-badge="">منشور</span>
+                    </td>
+                    <td data-label="الإجراءات" class="table-actions-cell">
+                      <div class="d-flex gap-1 flex-wrap table-action-grid">
+                        <a class="btn btn-sm btn-light" href="job-details?id=J-101">عرض</a><button class="btn btn-sm btn-outline-primary" data-job-edit="" type="button" data-ui-open="#jobFormModal">
+                          تعديل</button><button class="btn btn-sm btn-outline-warning" data-job-toggle="" type="button" data-ui-pending="">
+                          تعليق</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="J-101" data-sensitive-title="حذف الوظيفة نهائيًا" type="button" data-ui-open="#sensitiveActionModal">
+                          حذف نهائي
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                  
+                  
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="doctorFormModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="doctorFormTitle">
+                إضافة طبيب
+              </h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="entity-form-summary mb-3">
+                إضافة الطبيب تنشئ حسابًا + ملفًا مهنيًا + رقم ترخيص طبي. لذلك
+                الحقول تختلف عن المريض والموعد.
+              </div>
+              <div class="entity-form-section mb-3">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-person"></i>الحساب والتواصل
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">اسم الطبيب</label><input class="form-control" id="doctorFormName" value="" name="doctor_form_name" form="backend-form-2">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">البريد</label><input class="form-control" id="doctorFormEmail" type="email" value="" name="doctor_form_email" autocomplete="email" form="backend-form-2">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">الهاتف</label><input class="form-control" id="doctorFormPhone" value="" name="doctor_form_phone" form="backend-form-2">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">حالة الحساب</label><select class="form-select" id="doctorFormAccountStatus" name="doctor_form_account_status" form="backend-form-2">
+                      <option selected>فعال</option>
+                      <option>بانتظار التحقق</option>
+                      <option>موقوف</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="entity-form-section mb-3">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-person-badge"></i>الملف المهني
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">التخصص</label><select class="form-select" id="doctorFormSpecialty" name="doctor_form_specialty" form="backend-form-2">
+                      <option selected>طب أسنان عام</option>
+                      <option>علاج جذور</option>
+                      <option>تقويم الأسنان</option>
+                      <option>تجميل الأسنان</option>
+                      <option>تركيبات</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">العيادة</label><select class="form-select" id="doctorFormClinic" data-record-select="doctor" name="doctor_form_clinic" form="backend-form-2"><option value="" selected>بدون عيادة — بانتظار استكمال الإعداد</option><option value="pending">بانتظار المراجعة</option><option value="verified">معتمد</option><option value="rejected">مرفوض</option></select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">حالة إعداد الطبيب</label><select class="form-select" id="doctorFormSetup" data-record-select="doctor" name="doctor_form_setup" form="backend-form-2"><option value="D-108" selected data-record-option="doctor">د. عمر ناصر</option></select>
+                  </div>
+                </div>
+              </div>
+              <div class="entity-form-section mb-3">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-patch-check"></i>الترخيص الطبي
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">رقم الترخيص</label><input class="form-control" id="doctorFormLicense" placeholder="MED-00000" value="" name="doctor_form_license" form="backend-form-2">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">حالة التحقق</label><select class="form-select" id="doctorFormVerification" data-record-select="doctor" name="doctor_form_verification" form="backend-form-2"><option selected value="D-108" data-record-option="doctor">د. عمر ناصر</option></select>
+                  </div>
+                </div>
+              </div>
+              <div class="entity-form-section">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-shield-check"></i>Audit
+                </div>
+                <label class="form-label entity-form-required">سبب الإنشاء/التعديل الإداري</label>
+                <textarea class="form-control" id="doctorAdminReason" placeholder="سيظهر في سجل النظام لاحقًا." rows="2" name="doctor_admin_reason" form="backend-form-2"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="saveDoctorBtn" data-ui-pending="" form="backend-form-2" type="submit">حفظ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="jobFormModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="jobFormTitle">إضافة وظيفة</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="entity-form-summary mb-3">
+                الوظيفة تحتاج متطلبات توظيف واضحة: تخصص، مدينة، نوع دوام، خبرة،
+                راتب وموعد إغلاق.
+              </div>
+              <div class="entity-form-section">
+                <div class="entity-form-section-title">
+                  <i class="bi bi-briefcase"></i>بيانات الوظيفة
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">المسمى الوظيفي</label><input class="form-control" id="jobFormTitleInput" value="" name="job_form_title_input" form="backend-form-3">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">العيادة</label><input class="form-control" id="jobFormClinic" value="عيادة الابتسامة الحديثة" name="job_form_clinic" form="backend-form-3">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">التخصص</label><select class="form-select" id="jobFormSpecialty" name="job_form_specialty" form="backend-form-3">
+                      <option selected>طب أسنان عام</option>
+                      <option>علاج جذور</option>
+                      <option>تقويم الأسنان</option>
+                      <option>تجميل الأسنان</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label entity-form-required">المدينة</label><input class="form-control" id="jobFormCity" value="" name="job_form_city" form="backend-form-3">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">نوع الدوام</label><select class="form-select" id="jobFormType" name="job_form_type" form="backend-form-3">
+                      <option selected>دوام كامل</option>
+                      <option>دوام جزئي</option>
+                      <option>بالجلسات</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">سنوات الخبرة</label><input class="form-control" id="jobFormExperience" type="number" value="2" name="job_form_experience" form="backend-form-3">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label entity-form-required">آخر موعد للتقديم</label><input class="form-control" id="jobFormDeadline" type="date" value="2026-10-21" name="job_form_deadline" form="backend-form-3">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">الراتب من</label><input class="form-control" id="jobFormSalaryMin" type="number" value="" name="job_form_salary_min" form="backend-form-3">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">الراتب إلى</label><input class="form-control" id="jobFormSalaryMax" type="number" value="" name="job_form_salary_max" form="backend-form-3">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label entity-form-required">الوصف والمتطلبات</label><textarea class="form-control" id="jobFormDescription" rows="4" name="job_form_description" form="backend-form-3"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="saveJobBtn" data-ui-pending="" form="backend-form-3" type="submit">حفظ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-4"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-4" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-5"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-5"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-5" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-2" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-3" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-4" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-5" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

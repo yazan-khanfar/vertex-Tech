@@ -1,0 +1,45 @@
+<section id="sdc-sessions" class="soft-card border rounded-3 p-3 p-md-4 my-4" aria-labelledby="sdc-sessions-title">
+  <div class="d-flex justify-content-between flex-wrap gap-2 align-items-start mb-3">
+    <div><h4 id="sdc-sessions-title" class="h5 fw-bold mb-1"><i class="bi bi-laptop ms-2"></i>الأجهزة والجلسات</h4>
+      <p class="small text-secondary mb-0">هذه جلسات حسابك النشطة والمسجلة في قاعدة البيانات. تنتهي تلقائيًا بعد 8 ساعات من تسجيل الدخول.</p>
+    </div>
+  </div>
+  <% if (typeof sessionActionMessage!=='undefined' && sessionActionMessage) { %>
+    <div class="alert alert-success" role="status"><%= sessionActionMessage %></div>
+  <% } %>
+  <% if (typeof accountSessions==='undefined' || accountSessions.length===0) { %>
+    <div class="alert alert-secondary mb-0">لا توجد جلسات نشطة مسجلة. سجل الدخول من جديد لبدء تتبع الجهاز.</div>
+  <% } else { %>
+    <div class="vstack gap-2 mb-3">
+    <% for (const s of accountSessions) { %>
+      <div class="border rounded-3 p-3 d-flex flex-column flex-md-row justify-content-between gap-2 align-items-md-center">
+        <div>
+          <div class="fw-semibold"><i class="bi bi-display ms-2"></i><%= s.device %> — <%= s.browser %>
+            <% if(s.isCurrent){ %><span class="badge bg-success ms-1">الجلسة الحالية</span><% } %>
+          </div>
+          <div class="small text-secondary mt-1">
+            <span>تسجيل الدخول: <%= new Date(s.startedAt).toLocaleString('ar-PS') %></span>
+            <span class="mx-1">•</span>
+            <span>آخر نشاط: <%= new Date(s.lastSeenAt||s.startedAt).toLocaleString('ar-PS') %></span>
+          </div>
+        </div>
+        <form action="/account/sessions/revoke" method="post" class="m-0">
+          <input type="hidden" name="csrf_token" value="<%= sessionActionCsrf %>">
+          <input type="hidden" name="profile_scope" value="<%= sessionsScope %>">
+          <input type="hidden" name="action" value="single">
+          <input type="hidden" name="session_id" value="<%= s.id %>">
+          <button class="btn btn-sm btn-outline-danger" type="submit"><%= s.isCurrent ? 'تسجيل خروج من هذا الجهاز' : 'إنهاء الجلسة' %></button>
+        </form>
+      </div>
+    <% } %>
+    </div>
+    <% if(accountSessions.some(s=>!s.isCurrent)){ %>
+    <form action="/account/sessions/revoke" method="post" class="text-start">
+      <input type="hidden" name="csrf_token" value="<%= sessionActionCsrf %>">
+      <input type="hidden" name="profile_scope" value="<%= sessionsScope %>">
+      <input type="hidden" name="action" value="others">
+      <button class="btn btn-outline-danger" type="submit">تسجيل الخروج من كل الأجهزة الأخرى</button>
+    </form>
+    <% } %>
+  <% } %>
+</section>

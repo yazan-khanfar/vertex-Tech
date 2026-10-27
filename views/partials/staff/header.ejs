@@ -1,0 +1,132 @@
+<% const allowStaff = code => String(typeof staffPermissions !== 'undefined' ? staffPermissions : '').split(/\s+/).includes(code); %>
+<% if (navVariant === 1) { %><nav class="navbar clinic-navbar bg-white border-bottom sticky-top">
+      <div class="container-fluid clinic-nav-layout px-3 px-lg-4">
+        <a class="clinic-brand clinic-brand-left<%= navActiveClass("0") %>" href="index"<%- navAriaCurrent("0") %>><span class="clinic-brand-mark"><i class="bi bi-person-workspace"></i></span><span class="clinic-brand-copy"><strong>مساحة موظف العيادة</strong><small><%= typeof activeClinic !== "undefined" && activeClinic?.name ? activeClinic.name : "العيادة" %></small></span></a>
+        <div class="clinic-desktop-nav d-none d-xl-flex justify-content-center">
+          <ul class="navbar-nav flex-row align-items-center">
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("1") %>" href="index"<%- navAriaCurrent("1") %>>الرئيسية</a>
+            </li>
+            <% if(allowStaff("appointments.view")){ %><li class="nav-item">
+              <a class="nav-link<%= navActiveClass("2") %>" data-requires-permission="appointments.view" href="appointments"<%- navAriaCurrent("2") %>>المواعيد</a>
+            </li><% } %>
+            <% if(allowStaff("patients.view_admin")){ %><li class="nav-item">
+              <a class="nav-link<%= navActiveClass("3") %>" data-requires-permission="patients.view_admin" href="patients"<%- navAriaCurrent("3") %>>المرضى</a>
+            </li><% } %>
+            <% if(allowStaff("invoices.view")){ %><li class="nav-item">
+              <a class="nav-link<%= navActiveClass("4") %>" data-requires-permission="invoices.view" href="invoices"<%- navAriaCurrent("4") %>>الفواتير</a>
+            </li><% } %>
+            <% if(allowStaff("lab_orders.view")){ %><li class="nav-item"><a class="nav-link<%= navActiveClass("5") %>" data-requires-permission="lab_orders.view" href="lab-cases"<%- navAriaCurrent("5") %>>المختبرات</a></li><% } %>
+          </ul>
+        </div>
+        <div class="clinic-nav-actions">
+          <div class="dropdown profile-action-dropdown">
+            <button class="clinic-profile-trigger compact-profile-trigger" data-bs-display="static" data-bs-toggle="dropdown" type="button">
+              <span class="clinic-avatar"><%= currentUser?.fullName?.trim()?.slice(0,1) || "م" %></span><i class="bi bi-chevron-down small text-secondary d-none d-sm-inline"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end clean-dropdown profile-dropdown-menu">
+              <div class="px-3 py-2">
+                <strong class="d-block"><%= typeof currentUser !== "undefined" && currentUser?.fullName ? currentUser.fullName : "الموظف" %></strong><small class="text-secondary">موظف العيادة</small>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item<%= navActiveClass("6") %>" href="profile"<%- navAriaCurrent("6") %>><i class="bi bi-person"></i>الملف والصلاحيات</a>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right"></i>تسجيل الخروج
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-outline-primary sections-trigger" data-bs-target="#sectionsDrawer" data-bs-toggle="offcanvas" type="button">
+            <i class="bi bi-grid-3x3-gap"></i>
+          </button>
+        </div>
+      </div>
+    </nav><% } %>
+<% if (navVariant === 2) { %><nav class="navbar clinic-navbar bg-white border-bottom sticky-top">
+      <div class="container-fluid clinic-nav-layout px-3 px-lg-4">
+        <a class="clinic-brand clinic-brand-left<%= navActiveClass("0") %>" href="choose-clinic"<%- navAriaCurrent("0") %>><span class="clinic-brand-mark"><i class="bi bi-person-workspace"></i></span><span class="clinic-brand-copy"><strong>مساحة موظف العيادة</strong><small>اختيار العيادة</small></span></a>
+        <div class="clinic-desktop-nav d-none d-xl-flex justify-content-center">
+          <ul class="navbar-nav flex-row align-items-center">
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("1") %>" href="choose-clinic"<%- navAriaCurrent("1") %>>الرئيسية</a>
+            </li>
+            
+            
+            
+            
+          </ul>
+        </div>
+        <div class="clinic-nav-actions">
+          <div class="dropdown profile-action-dropdown">
+            <button class="clinic-profile-trigger compact-profile-trigger" data-bs-display="static" data-bs-toggle="dropdown" type="button">
+              <span class="clinic-avatar"><%= currentUser?.fullName?.trim()?.slice(0,1) || "م" %></span><i class="bi bi-chevron-down small text-secondary d-none d-sm-inline"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end clean-dropdown profile-dropdown-menu">
+              <div class="px-3 py-2">
+                <strong class="d-block"><%= typeof currentUser !== "undefined" && currentUser?.fullName ? currentUser.fullName : "الموظف" %></strong><small class="text-secondary">موظف العيادة</small>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item<%= navActiveClass("6") %>" href="choose-clinic"<%- navAriaCurrent("6") %>><i class="bi bi-person"></i>الملف والصلاحيات</a>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right"></i>تسجيل الخروج
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-outline-primary sections-trigger" data-bs-target="#sectionsDrawer" data-bs-toggle="offcanvas" type="button">
+            <i class="bi bi-grid-3x3-gap"></i>
+          </button>
+        </div>
+      </div>
+    </nav><% } %>
+
+<% if (drawerVariant === 1) { %><div class="offcanvas offcanvas-start mobile-drawer sections-drawer" id="sectionsDrawer" tabindex="-1">
+      <div class="drawer-header">
+        <div class="drawer-clinic">
+          <div class="drawer-avatar"><%= currentUser?.fullName?.trim()?.slice(0,1) || "م" %></div>
+          <div>
+            <h6 class="mb-1 fw-bold"><%= typeof currentUser !== "undefined" && currentUser?.fullName ? currentUser.fullName : "الموظف" %></h6>
+            <small class="opacity-75"><%= typeof staffClinicRole !== "undefined" ? staffClinicRole : "موظف العيادة" %></small>
+          </div>
+        </div>
+        <button class="drawer-close" data-bs-dismiss="offcanvas" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="offcanvas-body p-0">
+        <div class="drawer-content">
+          <div class="drawer-title">المتاح لك</div>
+          <a class="drawer-link<%= drawerActiveClass("0") %>" href="index"<%- drawerAriaCurrent("0") %>><span class="drawer-icon"><i class="bi bi-house"></i></span><span class="flex-grow-1">الرئيسية</span></a><% if(allowStaff("appointments.view")){ %><a class="drawer-link<%= drawerActiveClass("1") %>" data-requires-permission="appointments.view" href="appointments"<%- drawerAriaCurrent("1") %>><span class="drawer-icon"><i class="bi bi-calendar2-check"></i></span><span class="flex-grow-1">المواعيد</span></a><% } %><% if(allowStaff("patients.view_admin")){ %><a class="drawer-link<%= drawerActiveClass("2") %>" data-requires-permission="patients.view_admin" href="patients"<%- drawerAriaCurrent("2") %>><span class="drawer-icon"><i class="bi bi-people"></i></span><span class="flex-grow-1">المرضى</span></a><% } %><% if(allowStaff("invoices.view")){ %><a class="drawer-link<%= drawerActiveClass("3") %>" data-requires-permission="invoices.view" href="invoices"<%- drawerAriaCurrent("3") %>><span class="drawer-icon"><i class="bi bi-receipt"></i></span><span class="flex-grow-1">الفواتير</span></a><% } %><% if(allowStaff("lab_orders.view")){ %><a class="drawer-link<%= drawerActiveClass("4") %>" data-requires-permission="lab_orders.view" href="lab-cases"<%- drawerAriaCurrent("4") %>><span class="drawer-icon"><i class="bi bi-box-seam"></i></span><span class="flex-grow-1">المختبرات</span></a><% } %>
+          <div class="drawer-title mt-4">الحساب</div>
+          <a class="drawer-link<%= drawerActiveClass("5") %>" href="profile"<%- drawerAriaCurrent("5") %>><span class="drawer-icon"><i class="bi bi-person-gear"></i></span><span class="flex-grow-1">الملف والصلاحيات</span></a>
+        </div>
+      </div>
+    </div><% } %>
+<% if (drawerVariant === 2) { %><div class="offcanvas offcanvas-start mobile-drawer sections-drawer" id="sectionsDrawer" tabindex="-1">
+      <div class="drawer-header">
+        <div class="drawer-clinic">
+          <div class="drawer-avatar"><%= currentUser?.fullName?.trim()?.slice(0,1) || "م" %></div>
+          <div>
+            <h6 class="mb-1 fw-bold"><%= typeof currentUser !== "undefined" && currentUser?.fullName ? currentUser.fullName : "الموظف" %></h6>
+            <small class="opacity-75"><%= typeof staffClinicRole !== "undefined" ? staffClinicRole : "موظف العيادة" %></small>
+          </div>
+        </div>
+        <button class="drawer-close" data-bs-dismiss="offcanvas" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="offcanvas-body p-0">
+        <div class="drawer-content">
+          <div class="drawer-title">المتاح لك</div>
+          <a class="drawer-link<%= drawerActiveClass("0") %>" href="choose-clinic"<%- drawerAriaCurrent("0") %>><span class="drawer-icon"><i class="bi bi-house"></i></span><span class="flex-grow-1">الرئيسية</span></a>
+          <div class="drawer-title mt-4">الحساب</div>
+          <a class="drawer-link<%= drawerActiveClass("5") %>" href="choose-clinic"<%- drawerAriaCurrent("5") %>><span class="drawer-icon"><i class="bi bi-person-gear"></i></span><span class="flex-grow-1">الملف والصلاحيات</span></a>
+        </div>
+      </div>
+    </div><% } %>
+
+
+<% if (typeof logoutCsrf !== "undefined" && logoutCsrf) { %>
+<form id="sdcUnifiedLogoutForm" action="/auth/logout" method="post" hidden><input type="hidden" name="csrf_token" value="<%= logoutCsrf %>"></form>
+<script defer src="/assets/logout.js"></script>
+<% } %>

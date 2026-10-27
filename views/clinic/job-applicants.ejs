@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>المتقدمون للوظائف | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <% if(feedback){ %><div class="alert alert-success container mt-3"><%= feedback %></div><% } %><main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Applicants</span>
+            <h1 class="fw-bold">المتقدمون للوظائف</h1>
+            <p class="text-secondary mb-0">
+              مراجعة طلبات التوظيف وتغيير حالة كل طلب.
+            </p>
+          </div>
+          <a class="btn btn-outline-primary" href="jobs"><i class="bi bi-briefcase ms-1"></i>إدارة الوظائف</a>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="row g-3">
+            <div class="col-md-7">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="applicantSearch" placeholder="ابحث باسم المتقدم أو الوظيفة أو التخصص" value="" name="applicant_search" form="backend-form-2">
+              </div>
+            </div>
+            <div class="col-md-5">
+              <select class="form-select" id="applicantStatusFilter" name="applicant_status_filter" form="backend-form-2">
+                <option value="all" selected>كل الحالات</option>
+                <option value="pending">قيد المراجعة</option>
+                <option value="accepted">مقبول</option>
+                <option value="rejected">مرفوض</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="soft-card p-3">
+          <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+            <table class="table align-middle mb-0 wide-data-table responsive-stack-table system-data-table">
+              <thead class="table-light">
+                <tr>
+                  <th>المتقدم</th>
+                  <th>الوظيفة</th>
+                  <th>التخصص</th>
+                  <th>الخبرة</th>
+                  <th>تاريخ التقديم</th>
+                  <th style="min-width: 190px">الحالة</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for(const a of applicants){ %><tr class="applicant-row" data-status="<%= a.Application_Status %>"><td data-label="المتقدم" class="table-primary-cell"><strong><%= a.Full_Name %></strong><div class="small text-secondary"><%= a.Email %></div></td><td data-label="الوظيفة">J-<%= a.Job_ID %> • <%= a.Job_Title %></td><td data-label="التخصص"><%= a.Specialty_Name %></td><td data-label="الخبرة"><%= a.Years_Of_Experience %> سنوات</td><td data-label="تاريخ التقديم"><%= new Date(a.Applied_At).toLocaleDateString('ar-PS') %></td><td data-label="الحالة"><form id="applicant-<%= a.Application_ID %>" method="post" action="/clinic/job-applicants/<%= a.Application_ID %>"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><select class="form-select form-select-sm applicant-status-select" name="status"><option value="pending" <%= a.Application_Status==='pending'?'selected':'' %>>قيد المراجعة</option><option value="accepted" <%= a.Application_Status==='accepted'?'selected':'' %>>مقبول</option><option value="rejected" <%= a.Application_Status==='rejected'?'selected':'' %>>مرفوض</option></select></form></td><td data-label="الإجراءات" class="table-actions-cell"><div class="d-flex gap-2 table-action-grid"><button class="btn btn-sm btn-primary" type="submit" form="applicant-<%= a.Application_ID %>">حفظ</button><a class="btn btn-sm btn-outline-primary" href="/clinic/application-details?id=<%= a.Application_ID %>">عرض الطلب</a></div></td></tr><% } %>
+                <% if(!applicants.length){ %><tr><td colspan="7" class="text-secondary text-center p-4">لا توجد طلبات توظيف.</td></tr><% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script><script src="/clinic/assets/batch4.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-2" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-3" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form></body></html>

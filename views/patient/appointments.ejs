@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html data-style-sections="section-3" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>مواعيدي | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+    <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+    
+  
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <!-- شريط التنقل العلوي -->
+    <%- include('../partials/patient/header') %>
+
+    <!-- القائمة الجانبية للموبايل -->
+    
+
+    <!-- المحتوى الرئيسي -->
+    <main class="page-shell bg-light min-vh-100 py-4" id="main-content">
+      <section class="container">
+        
+        <!-- الترويسة -->
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4 bg-white p-4 rounded-4 shadow-sm border">
+          <div>
+            <span class="badge text-bg-primary mb-2 px-3 py-2 rounded-pill">إدارة الحجوزات</span>
+            <h1 class="fw-bold mb-1 text-dark fs-3">مواعيدي</h1>
+            <p class="text-secondary mb-0 small">
+              شاهد المواعيد بانتظار الموافقة، القادمة، المكتملة، الملغاة وجميع الحالات.
+            </p>
+          </div>
+          <a class="btn btn-primary px-4 py-2" href="clinics">
+            <i class="bi bi-plus-lg ms-1"></i>حجز موعد جديد
+          </a>
+        </div>
+
+        <% if(message){ %><div class="alert alert-success"><%= message %></div><% } %>
+        <!-- لوحة الفلاتر والبحث -->
+        <div class="filter-panel card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+          <div class="row g-3 align-items-end">
+            <div class="col-lg-4">
+              <label class="form-label small fw-bold text-dark">بحث سريع</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input class="form-control border-start-0 ps-0 shadow-none" id="appointmentSearch" placeholder="ابحث باسم الطبيب، العيادة أو الخدمة" value="" >
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <label class="form-label small fw-bold text-dark">تصفية حسب الحالة</label>
+              <div class="appointment-filter-buttons d-flex flex-wrap gap-2">
+                <button class="btn btn-sm btn-primary active px-3" data-appointment-filter="all" >جميع الحالات</button>
+                <button class="btn btn-sm btn-light border px-3" data-appointment-filter="pending" >بانتظار الموافقة</button>
+                <button class="btn btn-sm btn-light border px-3" data-appointment-filter="confirmed" >القادمة</button>
+                <button class="btn btn-sm btn-light border px-3" data-appointment-filter="reschedule" >طلب تغيير</button>
+                <button class="btn btn-sm btn-light border px-3" data-appointment-filter="completed" >المكتملة</button>
+                <button class="btn btn-sm btn-light border px-3" data-appointment-filter="no_show" >لم أحضر</button>
+                <button class="btn btn-sm btn-light border px-3" data-appointment-filter="closed" >الملغاة / المرفوضة</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3 px-1">
+          <div class="text-muted small fw-bold" id="appointmentResultCount">عرض <%= bookings.length %> موعد</div>
+        </div>
+
+        <!-- قائمة المواعيد -->
+        <div class="d-grid gap-3" id="appointmentsList"><% if(!bookings.length){ %><div class="soft-card p-4 text-center">لا توجد مواعيد مسجلة بعد.</div><% } %><% for(const b of bookings){ %>
+<div class="appointment-status-card appointment-filter-item card border-0 shadow-sm rounded-4 overflow-hidden bg-white" data-search="<%= b.doctor_name %> <%= b.clinic_name %> <%= b.service_name %>" data-status="<%= b.status %>" data-appointment-id="<%= b.id %>">
+<div class="appointment-status-line <%= b.status==='completed'?'bg-secondary':b.status==='confirmed'?'bg-success':b.status==='pending'?'bg-warning':b.status==='cancelled'||b.status==='rejected'?'bg-danger':'bg-primary' %>" style="height:4px"></div><div class="p-4"><div class="row g-3 align-items-center"><div class="col-lg-5"><span class="badge text-bg-primary"><%= labels[b.status] || b.status %></span><h5 class="fw-bold mb-1 text-dark fs-6"><%= b.service_name %> — د. <%= b.doctor_name %></h5><div class="text-muted small"><%= b.clinic_name %></div></div>
+<div class="col-lg-3"><small class="text-muted d-block">التاريخ والوقت</small><strong class="text-dark"><%= b.date %> • <%= b.time %></strong><div class="small text-muted">السعر المحفوظ: <%= b.price %> ₪</div><% if(b.request_status==='pending'){ %><span class="badge text-bg-warning">طلب تغيير قيد المراجعة</span><% } %></div>
+<div class="col-lg-4 text-lg-end d-flex gap-2 justify-content-lg-end"><a class="btn btn-outline-primary btn-sm px-3" href="/patient/booking-details?id=<%= b.id %>">تفاصيل الموعد</a></div></div></div></div><% } %></div>
+
+        <!-- حالة عدم وجود نتائج -->
+        <div class="empty-state d-none text-center py-5 bg-white rounded-4 shadow-sm mt-3" id="appointmentEmptyState">
+          <i class="bi bi-calendar-x fs-1 text-muted mb-2"></i>
+          <h5 class="fw-bold text-dark">لا توجد مواعيد ضمن هذا الفلتر</h5>
+          <p class="text-muted small">حاول تغيير معايير البحث أو اختيار حالة أخرى.</p>
+        </div>
+
+      </section>
+
+      <!-- نموذج طلب تغيير موعد -->
+      <div class="modal fade" id="rescheduleModal" data-legacy-demo="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-header border-bottom">
+              <h5 class="modal-title fw-bold text-dark">طلب تغيير الموعد</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body p-4">
+              <div class="alert alert-info border-0 bg-info-subtle text-info-emphasis rounded-3 small mb-3">
+                لن يتغير الموعد المؤكد حتى توافق العيادة على الطلب الجديد.
+              </div>
+              <label class="form-label small fw-bold text-dark" for="field-1">التاريخ المطلوب</label>
+              <input class="form-control mb-3" type="date" value="2026-10-21" id="field-1" name="field_1" form="backend-form-6">
+              <label class="form-label small fw-bold text-dark" for="field-2">الوقت المطلوب</label>
+              <select class="form-select mb-3" id="field-2" name="field_2" form="backend-form-6">
+                <option selected>10:00 ص</option>
+                <option>1:30 م</option>
+                <option>5:00 م</option>
+              </select>
+              <label class="form-label small fw-bold text-dark" for="field-3">سبب التعديل (اختياري)</label>
+              <textarea class="form-control" rows="3" placeholder="سبب رغبتك بتغيير الموعد..." id="field-3" name="field_3" form="backend-form-6"></textarea>
+            </div>
+            <div class="modal-footer border-top bg-light">
+              <button class="btn btn-light px-3" data-bs-dismiss="modal" type="button">إلغاء</button>
+              <button class="btn btn-primary px-4" data-bs-dismiss="modal" type="button" >
+                إرسال الطلب
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- نموذج تأكيد الإلغاء -->
+      <div class="modal fade" id="cancelModal" data-legacy-demo="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-body p-4 text-center text-md-start">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="bg-danger-subtle text-danger rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                  <i class="bi bi-exclamation-triangle fs-4"></i>
+                </span>
+                <div>
+                  <h5 class="fw-bold mb-1 text-dark">إلغاء الموعد؟</h5>
+                  <p class="text-muted small mb-0">هذا الموعد مؤهل للإلغاء المباشر حسب سياسة العيادة.</p>
+                </div>
+              </div>
+              <p class="text-secondary small bg-light p-3 rounded-3 border mb-4">
+                بعد التأكيد ستتغير حالته إلى «ملغى» ويظهر الإلغاء للعيادة والطبيب فوراً.
+              </p>
+              <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-light px-4" data-bs-dismiss="modal" type="button">تراجع</button>
+                <button class="btn btn-danger px-4" data-bs-dismiss="modal" data-toast="تم إلغاء الموعد تجريبياً وتحديث حالته إلى ملغى" type="button">
+                  تأكيد الإلغاء
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- نموذج التقييم -->
+    <div class="modal fade" id="reviewModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+          <div class="modal-header border-bottom">
+            <div>
+              <h5 class="modal-title fw-bold text-dark">تقييم الزيارة المكتملة</h5>
+              <small class="text-muted">يمكن إرسال تقييم واحد فقط لكل موعد مكتمل.</small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body p-4">
+            <label class="form-label fw-bold small text-dark" for="field-4">تقييم الطبيب</label>
+            <select class="form-select mb-3" id="doctorReviewRating" name="doctor_rating" form="backend-form-7" required=""><option value="" selected>اختر التقييم</option><option value="1">1 من 5</option><option value="2">2 من 5</option><option value="3">3 من 5</option><option value="4">4 من 5</option><option value="5">5 من 5</option></select>
+            <label class="form-label fw-bold small text-dark">تقييم العيادة</label>
+            <select class="form-select mb-3" id="clinicReviewRating" name="clinic_rating" form="backend-form-7" required=""><option value="" selected>اختر التقييم</option><option value="1">1 من 5</option><option value="2">2 من 5</option><option value="3">3 من 5</option><option value="4">4 من 5</option><option value="5">5 من 5</option></select>
+            <label class="form-label fw-bold small text-dark">تعليق اختياري</label>
+            <textarea class="form-control" placeholder="اكتب ملاحظتك عن تجربتك في العيادة..." rows="3" id="field-4" name="field_4" form="backend-form-7"></textarea>
+          </div>
+          <div class="modal-footer border-top bg-light">
+            <button class="btn btn-light px-3" data-bs-dismiss="modal" type="button">إلغاء</button>
+            <button class="btn btn-warning px-4 text-dark fw-bold" type="submit" form="backend-form-7">
+              إرسال التقييم
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الفوتر -->
+    <%- include('../partials/patient/footer') %>
+
+    <!-- التوست (Toast) -->
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0 shadow" id="appToast" role="alert">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية بنجاح</div>
+          <button class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- السكريبتات -->
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+  
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-5" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-6" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-7" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form></body></html>

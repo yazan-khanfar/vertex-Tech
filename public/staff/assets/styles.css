@@ -1,0 +1,1923 @@
+/* الموظف — ملف التنسيق الوحيد لهذا الدور.
+ * جميع الأقسام والتجاوب وتنسيقات الصفحات في هذا الملف.
+ * ترتيب الأقسام يحافظ على أولوية النسخة السابقة.
+ */
+
+/* =========================================================
+ * القسم 1: styles.css
+ * يطبق على كل صفحات هذا الدور.
+ * ابحث باسم القسم أو class للوصول إلى التنسيق المطلوب.
+ * ========================================================= */
+
+
+/* متغيرات هذا الدور: الألوان والخطوط والمسافات والظلال. */
+:root {
+  --primary: #0e7490;
+  --primary-dark: #0f5f76;
+  --soft: #ecf8fb;
+  --navy: #102429;
+  --text: #182d32;
+  --muted: #6b7980;
+  --border: #e5e9eb;
+  --bg: #f7fbfc;
+  --success: #1a859f;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --info: #1489a6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* المظهر الأساسي لمحتوى الصفحة والخلفية والخط. */
+body {
+  font-family: "Tahoma", "Arial", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  text-decoration: none;
+}
+
+.page-shell {
+  min-height: calc(100vh - 145px);
+}
+
+.section-title {
+  font-weight: 800;
+}
+
+/* البطاقات ولوحات المحتوى؛ ابحث باسم class للوصول إلى البطاقة المطلوبة. */
+.soft-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(16, 36, 41, 0.04);
+}
+
+.icon-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--soft);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.badge-soft {
+  background: var(--soft);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* الأزرار وحقول النماذج وحالات التركيز. */
+.btn {
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.form-control,
+.form-select {
+  border-radius: 12px;
+  padding: 0.72rem 0.9rem;
+  border-color: #d8e4ea;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #a2e3f3;
+  box-shadow: 0 0 0 0.2rem rgba(35, 189, 227, 0.1);
+}
+
+/* الجداول وصفوفها وأحجام الأعمدة. */
+.table > :not(caption) > * > * {
+  padding: 0.95rem 0.75rem;
+  vertical-align: middle;
+}
+
+.filter-panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1rem;
+}
+
+/* Navbar */
+/* شريط التنقل والهوية وأزرار القوائم. */
+.clinic-navbar {
+  min-height: 72px;
+  box-shadow: 0 2px 14px rgba(16, 36, 41, 0.04);
+  z-index: 1040;
+}
+
+.clinic-navbar .container {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;
+}
+
+.clinic-brand {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #182d32 !important;
+}
+
+.clinic-brand i {
+  color: var(--primary);
+}
+
+.clinic-desktop-nav {
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+}
+
+.clinic-desktop-nav .navbar-nav {
+  gap: 0.2rem;
+  flex-wrap: nowrap;
+}
+
+.clinic-desktop-nav .nav-link {
+  color: #475e69 !important;
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem !important;
+  white-space: nowrap;
+  font-size: 0.94rem;
+}
+
+.clinic-desktop-nav .nav-link:hover {
+  color: var(--primary) !important;
+  background: #f4f9fb;
+}
+
+.clinic-desktop-nav .nav-link.active {
+  color: var(--primary) !important;
+  background: #ecf8fb;
+}
+
+.clinic-profile-trigger {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid #e2edf0;
+  border-radius: 15px;
+  background: #fff;
+  padding: 0.25rem 0.5rem 0.25rem 0.7rem;
+  color: #182d32;
+}
+
+.clinic-profile-trigger:hover {
+  border-color: #c2edf8;
+  background: #f9fdfe;
+}
+
+.clinic-avatar {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(135deg, #0e7490, #6dd3ed);
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(35, 189, 227, 0.22);
+}
+
+.clean-dropdown {
+  margin-top: 0.6rem !important;
+  border: 1px solid #e2edf0;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(16, 36, 41, 0.14);
+  padding: 0.45rem;
+}
+
+.clean-dropdown .dropdown-item {
+  border-radius: 10px;
+  padding: 0.68rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.clean-dropdown .dropdown-item:hover {
+  background: #f8fbfc;
+  color: var(--primary);
+}
+
+/* النوافذ والقوائم المنبثقة وحالات فتحها. */
+.mobile-drawer {
+  width: min(88vw, 390px) !important;
+  border: 0 !important;
+  box-shadow: 18px 0 55px rgba(16, 36, 41, 0.18);
+}
+
+.drawer-header {
+  min-height: 112px;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #19a9cd, #57cdea);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.drawer-clinic {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.drawer-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.drawer-close {
+  width: 39px;
+  height: 39px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.drawer-content {
+  padding: 1rem;
+}
+
+.drawer-title {
+  color: #94acb8;
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 0.25rem 0.55rem 0.55rem;
+}
+
+.drawer-link {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 14px;
+  padding: 0.55rem 0.65rem;
+  color: #334a55;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.drawer-link:hover,
+.drawer-link.active {
+  background: #ecf8fb;
+  color: var(--primary);
+}
+
+.drawer-icon {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f7f9;
+  color: #647e8b;
+}
+
+.drawer-link:hover .drawer-icon,
+.drawer-link.active .drawer-icon {
+  background: #def5fb;
+  color: var(--primary);
+}
+
+/* Dashboard */
+/* القسم العلوي وعناوين الصفحة. */
+.dashboard-hero {
+  background: linear-gradient(135deg, #19a9cd, #57cdea);
+  color: #fff;
+  border-radius: 24px;
+  padding: 2rem;
+}
+
+.dashboard-hero-card {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  padding: 1.1rem;
+}
+
+.stat-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #fff;
+  padding: 1.15rem;
+  height: 100%;
+  box-shadow: 0 7px 22px rgba(16, 36, 41, 0.035);
+}
+
+.stat-value {
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+.action-row {
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: #fff;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.action-row + .action-row {
+  margin-top: 0.75rem;
+}
+
+/* التجاوب: القواعد التالية تتبع شرط عرض الشاشة المكتوب في @media. توجد شروط أخرى لاحقًا في الملف. */
+@media (max-width: 991.98px) {.clinic-navbar .container {
+    min-height: 64px;
+  }
+}
+
+@media (max-width: 575.98px) {.clinic-brand {
+    font-size: 1.05rem;
+  }
+
+.dashboard-hero {
+    padding: 1.25rem;
+    border-radius: 18px;
+  }
+}
+
+@media print {.clinic-navbar,
+.toast-container {
+    display: none !important;
+  }
+
+body {
+    background: #fff;
+  }
+
+.page-shell {
+    min-height: auto;
+  }
+}
+
+/* ===== v3 navbar cleanup ===== */
+.clinic-desktop-nav .navbar-nav {
+  align-items: center;
+}
+
+.clinic-desktop-nav .nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.clinic-desktop-nav .nav-link {
+  line-height: 1.2;
+}
+
+@media (max-width: 1399.98px) {.clinic-desktop-nav {
+    display: none !important;
+  }
+}
+
+/* ===== Clinic v7 navigation restructure ===== */
+.clinic-navbar .container-fluid {
+  min-height: 74px;
+}
+
+.clinic-desktop-nav {
+  min-width: 0;
+}
+
+.clinic-desktop-nav .navbar-nav {
+  gap: 0.15rem;
+}
+
+.clinic-desktop-nav .nav-link {
+  padding: 0.55rem 0.7rem;
+  white-space: nowrap;
+  border-radius: 10px;
+}
+
+.sections-trigger {
+  white-space: nowrap;
+  border-radius: 12px;
+}
+
+.compact-profile-trigger {
+  padding: 0.2rem 0.35rem;
+  min-width: auto;
+}
+
+.sections-drawer {
+  width: min(390px, 92vw) !important;
+}
+
+.sections-drawer .drawer-content {
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 767.98px) {.clinic-navbar .container-fluid {
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+  }
+
+.clinic-brand {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+}
+
+@media (max-width: 420px) {.clinic-navbar .container-fluid {
+    padding-inline: 0.65rem !important;
+  }
+}
+
+/* ===== Clinic v9: final refinements ===== */
+.clinic-nav-layout {
+  direction: ltr;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 74px;
+  flex-wrap: nowrap !important;
+}
+
+.clinic-brand-left {
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.clinic-brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ecf9fd;
+  color: #0e7490;
+  flex: 0 0 40px;
+}
+
+.clinic-brand-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.clinic-brand-copy strong {
+  color: #16333a;
+  white-space: nowrap;
+}
+
+.clinic-brand-copy small {
+  color: #7b8c94;
+  font-size: 0.72rem;
+}
+
+.clinic-desktop-nav .navbar-nav {
+  gap: 0.05rem;
+}
+
+.clinic-desktop-nav .nav-link {
+  padding: 0.5rem 0.58rem;
+  white-space: nowrap;
+  font-size: 0.94rem;
+}
+
+.sections-drawer {
+  width: 285px !important;
+  max-width: 78vw !important;
+}
+
+.sections-drawer .drawer-content {
+  padding: 1rem 0.7rem 1.5rem;
+}
+
+.sections-drawer .drawer-link {
+  padding: 0.65rem 0.7rem;
+}
+
+.sections-drawer .drawer-title {
+  font-size: 0.74rem;
+}
+
+@media (max-width: 767.98px) {.clinic-nav-layout {
+    gap: 0.45rem;
+    padding-inline: 0.65rem !important;
+  }
+
+.clinic-brand-mark {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+    border-radius: 10px;
+  }
+
+.clinic-brand-copy strong {
+    font-size: 0.82rem;
+    max-width: 132px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+.clinic-brand-copy small {
+    display: none;
+  }
+
+.sections-drawer {
+    width: 270px !important;
+    max-width: 76vw !important;
+  }
+}
+
+@media (max-width: 390px) {.clinic-brand-copy strong {
+    max-width: 105px;
+    font-size: 0.76rem;
+  }
+
+.sections-drawer {
+    width: 255px !important;
+    max-width: 74vw !important;
+  }
+}
+
+/* ===== v10 final navbar layout ===== */
+.clinic-nav-layout {
+  direction: ltr !important;
+  display: grid !important;
+  grid-template-columns: minmax(205px, auto) minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  column-gap: 1rem !important;
+  width: 100%;
+  min-height: 74px;
+  flex-wrap: nowrap !important;
+}
+
+.clinic-brand-left {
+  grid-column: 1 !important;
+  justify-self: start !important;
+  direction: rtl !important;
+  margin: 0 !important;
+}
+
+.clinic-desktop-nav {
+  grid-column: 2 !important;
+  justify-self: center !important;
+  direction: rtl !important;
+  min-width: 0;
+}
+
+.clinic-nav-actions {
+  grid-column: 3 !important;
+  justify-self: end !important;
+  direction: ltr !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  white-space: nowrap !important;
+}
+
+.clinic-nav-actions .dropdown-menu {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+.profile-action-dropdown {
+  display: block !important;
+}
+
+.profile-dropdown-menu {
+  width: 270px !important;
+}
+
+.clinic-nav-actions .sections-trigger {
+  margin: 0 !important;
+}
+
+@media (min-width: 1200px) {.clinic-desktop-nav {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 1199.98px) {.clinic-nav-layout {
+    grid-template-columns: minmax(145px, 1fr) auto !important;
+  }
+
+.clinic-brand-left {
+    grid-column: 1 !important;
+  }
+
+.clinic-nav-actions {
+    grid-column: 2 !important;
+  }
+
+.clinic-desktop-nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767.98px) {.clinic-nav-layout {
+    grid-template-columns: minmax(92px, 1fr) auto !important;
+    column-gap: 0.3rem !important;
+    padding-inline: 0.55rem !important;
+  }
+
+.clinic-brand-copy strong {
+    max-width: 118px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+.clinic-brand-copy small {
+    display: none !important;
+  }
+
+.clinic-brand-mark {
+    width: 32px !important;
+    height: 32px !important;
+    flex-basis: 32px !important;
+  }
+
+.clinic-nav-actions {
+    gap: 0.15rem !important;
+  }
+
+.clinic-nav-actions .compact-profile-trigger {
+    width: 35px !important;
+    min-width: 35px !important;
+    height: 35px !important;
+    min-height: 35px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 9px !important;
+  }
+
+.clinic-nav-actions .clinic-avatar {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    font-size: 0.78rem !important;
+  }
+
+.profile-action-dropdown .profile-dropdown-menu {
+    position: fixed !important;
+    top: 62px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 420px) {.clinic-brand-copy strong {
+    max-width: 88px !important;
+    font-size: 0.72rem !important;
+  }
+
+.clinic-brand-left {
+    gap: 0.3rem !important;
+  }
+
+.clinic-nav-actions {
+    gap: 0.08rem !important;
+  }
+
+.clinic-nav-actions .compact-profile-trigger {
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+  }
+}
+
+@media print {.clinic-navbar {
+    display: none !important;
+  }
+
+body {
+    background: #fff !important;
+  }
+
+.page-shell {
+    min-height: auto !important;
+  }
+}
+
+/* ===== Profile dropdown containment fix ===== */
+.profile-action-dropdown {
+  position: relative !important;
+}
+
+@media (min-width: 768px) {.clinic-nav-actions .profile-action-dropdown > .profile-dropdown-menu {
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    right: 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+    inset: auto 0 auto auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    width: 270px !important;
+    max-width: calc(100vw - 32px) !important;
+  }
+}
+
+/* =========================================================
+   Mobile table cards — system-wide
+   Turns desktop tables into readable stacked cards on phones.
+   ========================================================= */
+@media (max-width: 767.98px) {.table-responsive.mobile-stack-wrapper {
+    overflow: visible !important;
+    border: 0 !important;
+  }
+
+table.responsive-stack-table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background: transparent !important;
+  }
+
+table.responsive-stack-table thead {
+    display: none !important;
+  }
+
+table.responsive-stack-table tbody {
+    display: grid !important;
+    gap: 12px;
+    width: 100%;
+  }
+
+table.responsive-stack-table tbody > tr {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    background: #fff;
+    border: 1px solid var(--border, #e5e9eb);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+table.responsive-stack-table tbody > tr > td {
+    display: grid !important;
+    grid-template-columns: minmax(92px, 34%) minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    padding: 0.78rem 0.9rem !important;
+    border: 0 !important;
+    border-bottom: 1px solid #eef5f7 !important;
+    white-space: normal !important;
+    word-break: break-word;
+    text-align: start !important;
+  }
+
+table.responsive-stack-table tbody > tr > td:last-child {
+    border-bottom: 0 !important;
+  }
+
+table.responsive-stack-table tbody > tr > td::before {
+    content: attr(data-label);
+    display: block;
+    color: #647e8b;
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1.5;
+  }
+
+table.responsive-stack-table tbody > tr > td[data-label=""],
+table.responsive-stack-table tbody > tr > td[colspan] {
+    display: block !important;
+  }
+
+table.responsive-stack-table tbody > tr > td[data-label=""]::before,
+table.responsive-stack-table tbody > tr > td[colspan]::before {
+    display: none !important;
+  }
+
+table.responsive-stack-table .btn,
+table.responsive-stack-table .d-flex {
+    max-width: 100%;
+  }
+
+table.responsive-stack-table td .d-flex {
+    flex-wrap: wrap !important;
+  }
+
+table.responsive-stack-table td .btn {
+    margin-block: 2px;
+  }
+}
+
+/* =========================================================
+   V5 Data Tables — cleaner desktop layout + mobile cards
+   ========================================================= */
+.table-responsive.table-ui-shell {
+  border: 1px solid #e8f1f4 !important;
+  border-radius: 18px !important;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(16, 36, 41, 0.045);
+  overflow: auto;
+}
+
+table.system-data-table {
+  margin: 0 !important;
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: #fbfeff;
+  --bs-table-hover-bg: #f8fdfe;
+}
+
+table.system-data-table thead th {
+  background: #f7fbfc !important;
+  color: #596e79 !important;
+  font-size: 0.77rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.01em;
+  padding: 0.9rem 1rem !important;
+  border-bottom: 1px solid #e8f1f4 !important;
+  white-space: nowrap;
+}
+
+table.system-data-table tbody td {
+  padding: 1rem !important;
+  vertical-align: middle !important;
+  border-color: #edf4f6 !important;
+  color: #334a55;
+  font-size: 0.88rem;
+}
+
+table.system-data-table tbody tr {
+  transition:
+    background-color 0.16s ease,
+    transform 0.16s ease;
+}
+
+table.system-data-table tbody tr:hover {
+  background: #fafdfe !important;
+}
+
+table.system-data-table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+table.system-data-table td.table-primary-cell {
+  min-width: 180px;
+}
+
+table.system-data-table td.table-primary-cell > strong,
+table.system-data-table td.table-primary-cell .fw-bold {
+  color: #182d32;
+  font-weight: 800;
+}
+
+table.system-data-table td.table-primary-cell small,
+table.system-data-table td small {
+  color: #7b8f99 !important;
+  line-height: 1.55;
+}
+
+table.system-data-table td.table-status-cell {
+  min-width: 105px;
+}
+
+table.system-data-table td.table-actions-cell {
+  min-width: 150px;
+}
+
+table.system-data-table td.table-actions-cell > .d-flex {
+  justify-content: flex-start;
+  gap: 0.35rem !important;
+}
+
+table.system-data-table td.table-actions-cell .btn {
+  border-radius: 9px;
+  white-space: nowrap;
+}
+
+table.system-data-table .badge {
+  font-weight: 700;
+  padding: 0.42rem 0.65rem;
+  border-radius: 999px;
+}
+
+@media (max-width: 767.98px) {.table-responsive.table-ui-shell {
+    overflow: visible !important;
+    border: 0 !important;
+    box-shadow: none;
+    background: transparent;
+  }
+
+table.system-data-table.responsive-stack-table {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+  }
+
+table.system-data-table.responsive-stack-table thead {
+    display: none !important;
+  }
+
+table.system-data-table.responsive-stack-table tbody {
+    display: grid !important;
+    gap: 14px;
+  }
+
+table.system-data-table.responsive-stack-table tbody > tr {
+    display: block !important;
+    width: 100% !important;
+    overflow: hidden;
+    border: 1px solid #e7f2f5;
+    border-radius: 18px;
+    background: #fff !important;
+    box-shadow: 0 6px 20px rgba(16, 36, 41, 0.045);
+  }
+
+table.system-data-table.responsive-stack-table tbody > tr > td {
+    display: grid !important;
+    grid-template-columns: minmax(92px, 32%) minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 0.75rem 0.9rem !important;
+    border: 0 !important;
+    border-bottom: 1px solid #eef5f7 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    white-space: normal !important;
+  }
+
+table.system-data-table.responsive-stack-table tbody > tr > td:last-child {
+    border-bottom: 0 !important;
+  }
+
+table.system-data-table.responsive-stack-table tbody > tr > td::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #8499a3;
+    line-height: 1.5;
+  }
+
+table.system-data-table.responsive-stack-table
+    tbody
+    > tr
+    > td.table-primary-cell {
+    display: block !important;
+    background: #f9fdfe;
+    padding: 1rem !important;
+    min-width: 0;
+  }
+
+table.system-data-table.responsive-stack-table
+    tbody
+    > tr
+    > td.table-primary-cell::before {
+    display: none !important;
+  }
+
+table.system-data-table.responsive-stack-table
+    tbody
+    > tr
+    > td.table-actions-cell {
+    display: block !important;
+    background: #fbfdfe;
+  }
+
+table.system-data-table.responsive-stack-table
+    tbody
+    > tr
+    > td.table-actions-cell::before {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+table.system-data-table.responsive-stack-table td .d-flex {
+    flex-wrap: wrap !important;
+  }
+
+table.system-data-table.responsive-stack-table td.table-actions-cell .btn {
+    flex: 0 0 auto;
+  }
+
+table.system-data-table.responsive-stack-table td[colspan] {
+    display: block !important;
+  }
+
+table.system-data-table.responsive-stack-table td[colspan]::before {
+    display: none !important;
+  }
+}
+
+/* =========================================================
+   V6 Global content/action alignment
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.table-actions-cell {
+  min-width: 210px !important;
+}
+
+.table-actions-cell > .d-flex,
+.table-actions-cell .table-action-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem !important;
+  width: 100%;
+}
+
+.table-actions-cell .btn,
+.table-actions-cell a.btn {
+  width: 100%;
+  min-height: 34px;
+  margin: 0 !important;
+  white-space: normal !important;
+}
+
+.action-row {
+  align-items: center;
+}
+
+.action-row > .btn,
+.action-row > a.btn {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 575.98px) {.table-actions-cell > .d-flex,
+.table-actions-cell .table-action-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+.table-actions-cell .btn {
+    font-size: 0.78rem;
+    padding: 0.48rem 0.5rem;
+  }
+}
+
+/* ---------- no-scroll responsive tables ---------- */
+table.system-data-table,
+table.responsive-stack-table {
+  max-width: 100%;
+}
+
+/* Avoid fixed minimums that force horizontal scrolling. */
+table.system-data-table td.table-primary-cell,
+table.system-data-table td.table-status-cell,
+table.system-data-table td.table-actions-cell {
+  min-width: 0 !important;
+}
+
+table.system-data-table th,
+table.system-data-table td {
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+table.system-data-table input,
+table.system-data-table select,
+table.system-data-table textarea {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+table.system-data-table .btn {
+  max-width: 100%;
+}
+
+.table-responsive.table-ui-shell {
+  max-width: 100%;
+}
+
+/*
+  Wide tables (7+ columns) become a two-column card grid below 1400px.
+  Medium-wide tables (6 columns) do the same below 1200px.
+  This removes horizontal scroll on laptop / tablet layouts.
+*/
+@media (min-width: 992px) and (max-width: 1399.98px) {.table-responsive:has(table.wide-data-table) {
+    overflow: visible !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+table.wide-data-table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: auto !important;
+    background: transparent !important;
+  }
+
+table.wide-data-table thead {
+    display: none !important;
+  }
+
+table.wide-data-table tbody {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    width: 100%;
+  }
+
+table.wide-data-table tbody > tr {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden;
+    border: 1px solid #e6f0f3;
+    border-radius: 16px;
+    background: #fff !important;
+    box-shadow: 0 6px 18px rgba(16, 36, 41, 0.035);
+  }
+
+table.wide-data-table tbody > tr > td {
+    display: grid !important;
+    grid-template-columns: minmax(110px, 38%) minmax(0, 1fr);
+    gap: 0.7rem;
+    align-items: center;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 0.68rem 0.85rem !important;
+    border: 0 !important;
+    border-bottom: 1px solid #eef4f6 !important;
+    text-align: start !important;
+    white-space: normal !important;
+  }
+
+table.wide-data-table tbody > tr > td:last-child {
+    border-bottom: 0 !important;
+  }
+
+table.wide-data-table tbody > tr > td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #7b8f99;
+  }
+
+table.wide-data-table tbody > tr > td.table-primary-cell {
+    display: block !important;
+    background: #f9fdfe;
+  }
+
+table.wide-data-table tbody > tr > td.table-primary-cell::before {
+    display: none !important;
+  }
+
+table.wide-data-table tbody > tr > td.table-actions-cell {
+    display: block !important;
+    background: #fbfdfe;
+  }
+
+table.wide-data-table tbody > tr > td.table-actions-cell::before {
+    display: block !important;
+    margin-bottom: 0.45rem;
+  }
+
+table.wide-data-table td .d-flex {
+    flex-wrap: wrap !important;
+  }
+
+table.wide-data-table .table-action-grid,
+table.wide-data-table td.table-actions-cell > .d-flex {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem !important;
+  }
+
+table.wide-data-table .table-actions-cell .btn {
+    width: 100%;
+  }
+}
+
+/* 6-column tables get the same no-scroll treatment on smaller laptops/tablets. */
+@media (min-width: 768px) and (max-width: 1199.98px) {.table-responsive:has(table.medium-data-table) {
+    overflow: visible !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}
+
+/* Single card per row when the viewport becomes narrow. */
+@media (max-width: 991.98px) {table.wide-data-table tbody {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* =========================================================
+ * القسم 2: theme.css
+ * يطبق على كل صفحات هذا الدور.
+ * ابحث باسم القسم أو class للوصول إلى التنسيق المطلوب.
+ * ========================================================= */
+
+
+/* ---------- 1. Tokens ---------- */
+/* متغيرات هذا الدور: الألوان والخطوط والمسافات والظلال. */
+:root {
+  /* Brand — تيل طبي هادئ */
+  --brand-50: #ecf8fb;
+  --brand-100: #d6f0f6;
+  --brand-200: #b0e1ec;
+  --brand-300: #7fd0e1;
+  --brand-400: #3fb4cf;
+  --brand-500: #1a95b3;
+  --brand-600: #0e7490;
+  --brand-700: #0f5f76;
+  --brand-800: #134d61;
+  --brand-900: #123f50;
+
+  /* Legacy tokens used by old stylesheets */
+  --primary: var(--brand-600);
+  --primary-dark: var(--brand-700);
+  --primary-deep: var(--brand-700);
+  --primary-light: var(--brand-500);
+  --primary-lighter: var(--brand-300);
+  --primary-soft: var(--brand-50);
+  --primary-border: var(--brand-200);
+  --primary-border-hover: var(--brand-300);
+  --soft: var(--brand-50);
+  --navy: #0f2a35;
+  --gradient-main: linear-gradient(135deg, var(--brand-700), var(--brand-500));
+  --info: #2563eb;
+
+  /* Neutrals */
+  --text: #12212b;
+  --text-strong: #1c3340;
+  --text-body: #3f5563;
+  --muted: #5b6e7a;
+  --text-faint: #72848f;
+  --text-subtle: #9aaab3;
+  --on-primary: #fff;
+  --on-primary-muted: #d6f0f6;
+  --bg: #f4f8fa;
+  --surface: #fff;
+  --surface-soft: #f9fcfd;
+  --surface-tint: #f1f8fa;
+  --border: #dde7ec;
+  --border-soft: #e5edf1;
+  --border-faint: #eef3f6;
+
+  /* Status */
+  --success: #15803d;
+  --success-bg: #e8f7ee;
+  --success-border: #b7e4c6;
+  --success-text: #166534;
+  --warning: #b45309;
+  --warning-bg: #fff4e0;
+  --warning-border: #fcd9a0;
+  --warning-text: #92400e;
+  --danger: #c62828;
+  --danger-bg: #fdecec;
+  --danger-border: #f6c3c3;
+  --danger-text: #991b1b;
+  --info-bg: #e8f0fe;
+  --info-border: #bcd0fb;
+  --info-text: #1d4ed8;
+
+  /* Footer */
+  --footer-bg: #0f2a35;
+  --footer-text: #9db6c0;
+
+  /* Shape & depth */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(15, 42, 53, 0.05), 0 4px 14px rgba(15, 42, 53, 0.04);
+  --shadow-md: 0 2px 4px rgba(15, 42, 53, 0.05), 0 12px 32px rgba(15, 42, 53, 0.08);
+  --shadow-lg: 0 24px 60px rgba(15, 42, 53, 0.14);
+  --shadow-brand: 0 10px 28px rgba(14, 116, 144, 0.22);
+  --focus-ring: 0 0 0 3px rgba(14, 116, 144, 0.25);
+
+  --font-ar: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+  --nav-h: 68px;
+
+  /* Bootstrap bridge */
+  --bs-primary: #0e7490;
+  --bs-primary-rgb: 14, 116, 144;
+  --bs-success: #15803d;
+  --bs-success-rgb: 21, 128, 61;
+  --bs-warning: #b45309;
+  --bs-warning-rgb: 180, 83, 9;
+  --bs-danger: #c62828;
+  --bs-danger-rgb: 198, 40, 40;
+  --bs-info: #2563eb;
+  --bs-info-rgb: 37, 99, 235;
+  --bs-link-color: #0e7490;
+  --bs-link-color-rgb: 14, 116, 144;
+  --bs-link-hover-color: #0f5f76;
+  --bs-link-hover-color-rgb: 15, 95, 118;
+  --bs-body-font-family: var(--font-ar);
+  --bs-body-color: var(--text);
+  --bs-body-bg: var(--bg);
+  --bs-border-color: var(--border);
+  --bs-secondary-color: var(--muted);
+  --bs-border-radius: 12px;
+  --bs-border-radius-lg: 16px;
+}
+
+/* ---------- 2. Base ---------- */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+/* المظهر الأساسي لمحتوى الصفحة والخلفية والخط. */
+body {
+  font-family: var(--font-ar);
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.section-title { color: var(--text-strong); font-weight: 700; line-height: 1.4; letter-spacing: 0; }
+
+h1 { font-size: clamp(1.55rem, 1.2rem + 1.4vw, 2.05rem); }
+
+h2 { font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.6rem); }
+
+h3 { font-size: 1.2rem; }
+
+h4 { font-size: 1.08rem; }
+
+h5 { font-size: 1rem; }
+
+a { color: var(--brand-600); text-decoration: none; }
+
+a:hover { color: var(--brand-700); }
+
+.text-secondary { color: var(--muted) !important; }
+
+.text-primary { color: var(--brand-600) !important; }
+
+.text-success { color: var(--success) !important; }
+
+.text-danger { color: var(--danger) !important; }
+
+.text-warning { color: var(--warning) !important; }
+
+::selection { background: var(--brand-200); color: var(--brand-900); }
+
+:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 6px; }
+
+/* الأزرار وحقول النماذج وحالات التركيز. */
+.form-control:focus-visible,
+.form-select:focus-visible,
+.btn:focus-visible { outline: none; }
+
+.page-shell { min-height: calc(100vh - var(--nav-h) - 80px); }
+
+.page-shell > section.container,
+.page-shell > .container { padding-top: 1.75rem; padding-bottom: 3rem; }
+
+/* التجاوب: القواعد التالية تتبع شرط عرض الشاشة المكتوب في @media. توجد شروط أخرى لاحقًا في الملف. */
+@media (min-width: 992px) {.page-shell > section.container,
+.page-shell > .container { padding-top: 2.25rem; }
+}
+
+/* ---------- 3. Navbar ---------- */
+/* شريط التنقل والهوية وأزرار القوائم. */
+.navbar.sticky-top {
+  min-height: var(--nav-h);
+  background: rgba(255, 255, 255, 0.92) !important;
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: 0 1px 0 rgba(15, 42, 53, 0.02), 0 6px 18px rgba(15, 42, 53, 0.04);
+  z-index: 1030;
+}
+
+.clinic-brand { font-weight: 700; color: var(--text-strong); display: inline-flex; align-items: center; gap: 0.55rem; }
+
+.clinic-brand-mark {
+  width: 38px; height: 38px; border-radius: 11px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gradient-main); color: #fff !important; font-size: 1.1rem;
+  box-shadow: var(--shadow-brand);
+}
+
+.clinic-brand-copy small { color: var(--muted); }
+
+.navbar .nav-link {
+  position: relative;
+  min-height: 42px;
+  display: inline-flex; align-items: center;
+  padding: 0.45rem 0.85rem !important;
+  border-radius: 10px;
+  color: var(--text-body) !important;
+  font-weight: 500;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.navbar .nav-link:hover { background: var(--brand-50); color: var(--brand-700) !important; }
+
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"] {
+  background: var(--brand-50);
+  color: var(--brand-700) !important;
+  font-weight: 700 !important;
+}
+
+.navbar .nav-link.active::after {
+  content: ""; position: absolute; inset-inline: 0.85rem; bottom: 2px;
+  height: 3px; border-radius: 3px; background: var(--brand-600);
+}
+
+/* النوافذ والقوائم المنبثقة وحالات فتحها. */
+.drawer-avatar {
+  background: var(--brand-100); color: var(--brand-800); font-weight: 700;
+  border-radius: 12px;
+}
+
+/* ---------- 3b. Fixes: عناوين داخل خلفيات ملوّنة + اتجاه الشعار ---------- */
+/* القسم العلوي وعناوين الصفحة. */
+.dashboard-hero :is(h1,h2,h3,h4,h5,h6),
+.drawer-header :is(h1,h2,h3,h4,h5,h6),
+footer :is(h1,h2,h3,h4,h5,h6) { color: inherit; }
+
+.dashboard-hero {
+  background: linear-gradient(135deg, var(--brand-800), var(--brand-600) 55%, var(--brand-500));
+  color: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+}
+
+.dashboard-hero p { color: rgba(255, 255, 255, 0.88); }
+
+/* البطاقات ولوحات المحتوى؛ ابحث باسم class للوصول إلى البطاقة المطلوبة. */
+.dashboard-hero-card { background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); color: #fff; border-radius: var(--radius-md); }
+
+.clinic-brand-mark i {
+  color: #fff !important;
+  background: none !important;
+  line-height: 1;
+}
+
+.clinic-brand-mark::before,
+.clinic-brand-mark::after { content: none !important; }
+
+/* ---------- 4. Dropdowns / Offcanvas drawer ---------- */
+.dropdown-menu,
+.clean-dropdown {
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--shadow-md) !important;
+  padding: 0.4rem !important;
+}
+
+.dropdown-item {
+  min-height: 42px; display: flex; align-items: center; gap: 0.6rem;
+  border-radius: 10px; color: var(--text-body); font-weight: 500;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus { background: var(--brand-50); color: var(--brand-700); }
+
+.dropdown-item.active,
+.dropdown-item:active { background: var(--brand-600); color: #fff; }
+
+.dropdown-item i { color: var(--brand-600); }
+
+.dropdown-item.active i,
+.dropdown-item:active i { color: #fff; }
+
+.dropdown-item.text-danger { color: var(--danger) !important; }
+
+.offcanvas { border: 0; box-shadow: var(--shadow-lg); }
+
+.drawer-header { background: var(--gradient-main); color: #fff; border-radius: 0 0 var(--radius-md) var(--radius-md); }
+
+.drawer-header .drawer-avatar { background: rgba(255, 255, 255, 0.18); color: #fff; }
+
+.drawer-title { color: var(--text-faint); font-size: 0.78rem; font-weight: 700; padding: 0.4rem 0.9rem; }
+
+.drawer-link {
+  min-height: 48px; display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.5rem 0.9rem; border-radius: 12px; color: var(--text-body); font-weight: 500;
+  border-inline-start: 3px solid transparent;
+  transition: background-color 0.15s;
+}
+
+.drawer-link:hover { background: var(--brand-50); color: var(--brand-700); }
+
+.drawer-link.active { background: var(--brand-50); color: var(--brand-700); font-weight: 700; border-inline-start-color: var(--brand-600); }
+
+.drawer-icon {
+  width: 36px; height: 36px; flex: 0 0 36px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--brand-50); color: var(--brand-600);
+}
+
+.drawer-link.active .drawer-icon { background: var(--brand-600); color: #fff; }
+
+.drawer-close { border-radius: 10px; }
+
+/* ---------- 5. Buttons ---------- */
+.btn {
+  --bs-btn-border-radius: 12px;
+  border-radius: 12px; font-weight: 600; min-height: 42px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s, transform 0.05s;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-sm { min-height: 34px; border-radius: 10px; font-size: 0.86rem; }
+
+.btn-primary {
+  --bs-btn-bg: var(--brand-600); --bs-btn-border-color: var(--brand-600);
+  --bs-btn-hover-bg: var(--brand-700); --bs-btn-hover-border-color: var(--brand-700);
+  --bs-btn-active-bg: var(--brand-800); --bs-btn-active-border-color: var(--brand-800);
+  --bs-btn-disabled-bg: var(--brand-300); --bs-btn-disabled-border-color: var(--brand-300);
+  background: var(--brand-600); border-color: var(--brand-600); color: #fff;
+  box-shadow: 0 1px 2px rgba(15, 42, 53, 0.12);
+}
+
+.btn-primary:hover { background: var(--brand-700); border-color: var(--brand-700); color: #fff; box-shadow: var(--shadow-brand); }
+
+.btn-primary:focus-visible,
+.btn-outline-primary:focus-visible { box-shadow: var(--focus-ring); }
+
+.btn-outline-primary {
+  --bs-btn-color: var(--brand-700); --bs-btn-border-color: var(--brand-300);
+  --bs-btn-hover-bg: var(--brand-600); --bs-btn-hover-border-color: var(--brand-600); --bs-btn-hover-color: #fff;
+  --bs-btn-active-bg: var(--brand-700); --bs-btn-active-border-color: var(--brand-700);
+  color: var(--brand-700); border-color: var(--brand-300); background: #fff;
+}
+
+.btn-outline-primary:hover { background: var(--brand-600); border-color: var(--brand-600); color: #fff; }
+
+.btn-light,
+.btn-outline-secondary { background: #fff; border: 1px solid var(--border); color: var(--text-body); }
+
+.btn-light:hover,
+.btn-outline-secondary:hover { background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-700); }
+
+.btn-success { --bs-btn-bg: var(--success); --bs-btn-border-color: var(--success); --bs-btn-hover-bg: #116a33; --bs-btn-hover-border-color: #116a33; }
+
+.btn-outline-danger { --bs-btn-color: var(--danger); --bs-btn-border-color: var(--danger-border); --bs-btn-hover-bg: var(--danger); --bs-btn-hover-border-color: var(--danger); background: #fff; }
+
+.btn:disabled,
+.btn.disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ---------- 6. Cards ---------- */
+.soft-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+a.soft-card { transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s; color: inherit; }
+
+a.soft-card:hover { border-color: var(--brand-300); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.icon-box {
+  width: 46px; height: 46px; flex: 0 0 46px; border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--brand-50); color: var(--brand-600); font-size: 1.2rem;
+}
+
+.summary-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.65rem 0; border-bottom: 1px dashed var(--border); }
+
+.summary-row > span:first-child { color: var(--muted); }
+
+.summary-row > strong { color: var(--text-strong); font-weight: 700; }
+
+.summary-row:last-child { border-bottom: 0; }
+
+/* ---------- 7. Badges / status ---------- */
+.badge { font-weight: 600; border-radius: 999px; padding: 0.4em 0.75em; letter-spacing: 0; }
+
+.badge-soft,
+.badge.text-bg-primary { background: var(--brand-50) !important; color: var(--brand-700) !important; border: 1px solid var(--brand-200); }
+
+.badge.text-bg-success { background: var(--success-bg) !important; color: var(--success-text) !important; border: 1px solid var(--success-border); }
+
+.badge.text-bg-info { background: var(--info-bg) !important; color: var(--info-text) !important; border: 1px solid var(--info-border); }
+
+.badge.text-bg-secondary { background: #eef3f6 !important; color: var(--text-body) !important; border: 1px solid var(--border); }
+
+.alert { border-radius: var(--radius-sm); border-width: 1px; }
+
+.alert-info { background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-800); }
+
+/* ---------- 8. Forms ---------- */
+.form-label { font-weight: 600; font-size: 0.9rem; color: var(--text-strong); margin-bottom: 0.4rem; }
+
+.form-control,
+.form-select {
+  min-height: 44px; border-radius: 12px; border: 1px solid var(--border);
+  background-color: #fff; color: var(--text); padding: 0.55rem 0.9rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+textarea.form-control { min-height: 96px; }
+
+.form-control::placeholder { color: var(--text-subtle); }
+
+.form-control:hover,
+.form-select:hover { border-color: var(--brand-300); }
+
+.form-control:focus,
+.form-select:focus { border-color: var(--brand-600); box-shadow: var(--focus-ring); }
+
+.form-control:disabled,
+.form-select:disabled,
+.form-control[readonly] { background: var(--surface-tint); color: var(--muted); }
+
+/* ---------- 9. Tables ---------- */
+/* الجداول وصفوفها وأحجام الأعمدة. */
+.table-responsive { border: 1px solid var(--border); border-radius: var(--radius-md); background: #fff; }
+
+.table-responsive > .table { margin-bottom: 0; }
+
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-hover-bg: var(--brand-50);
+  --bs-table-border-color: var(--border-soft);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.table > thead > tr > th,
+.table th {
+  background: var(--surface-tint); color: var(--muted);
+  font-size: 0.82rem; font-weight: 700; white-space: nowrap;
+  border-bottom: 1px solid var(--border); padding: 0.85rem 1rem;
+}
+
+.table > tbody > tr > td { padding: 0.85rem 1rem; border-color: var(--border-faint); }
+
+.table-responsive thead th { position: sticky; top: 0; z-index: 1; }
+
+hr { border-color: var(--border); opacity: 1; }
+
+.modal-backdrop.show { opacity: 0.45; }
+
+.toast { border: 0; border-radius: 14px; box-shadow: var(--shadow-md); }
+
+.toast.text-bg-success,
+.toast.text-bg-primary { background: var(--brand-700) !important; }
+
+/* ---------- 12. Footer ---------- */
+footer { background: var(--footer-bg); color: var(--footer-text); }
+
+footer a { color: #cfe6ee; }
+
+footer a:hover { color: #fff; }
+
+/* ---------- 13. UX helpers (from ux.js) ---------- */
+.ux-skip {
+  position: fixed; top: -80px; inset-inline-start: 1rem; z-index: 2000;
+  background: var(--brand-700); color: #fff; padding: 0.6rem 1rem; border-radius: 10px; transition: top 0.2s;
+}
+
+.ux-skip:focus { top: 0.75rem; color: #fff; }
+
+.ux-top {
+  position: fixed; inset-inline-start: 1.25rem; bottom: 1.25rem; z-index: 1020;
+  width: 46px; height: 46px; border-radius: 14px; border: 0;
+  background: var(--brand-600); color: #fff; box-shadow: var(--shadow-brand);
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+  opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+}
+
+.ux-top.show { opacity: 1; visibility: visible; transform: none; }
+
+.ux-top:hover { background: var(--brand-700); }
+
+/* ---------- 14. Responsive ---------- */
+@media (max-width: 991.98px) {:root { --nav-h: 60px; }
+
+.container,
+.container-fluid { padding-inline: 1rem; }
+}
+
+@media (max-width: 575.98px) {body { font-size: 0.95rem; }
+
+.btn { min-height: 44px; }
+
+.table > thead > tr > th,
+.table > tbody > tr > td { padding: 0.7rem 0.75rem; font-size: 0.88rem; }
+
+.soft-card.p-4 { padding: 1.1rem !important; }
+
+.ux-top { bottom: 0.9rem; inset-inline-start: 0.9rem; }
+}
+
+@media print {.navbar,
+.offcanvas,
+.ux-top,
+.ux-skip,
+.toast-container,
+footer { display: none !important; }
+
+body { background: #fff; }
+
+.soft-card { box-shadow: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {*,
+*::before,
+*::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- 15. Mobile navbar polish ---------- */
+.clinic-nav-actions { display: flex; align-items: center; gap: 0.5rem; }
+
+.clinic-brand-copy { min-width: 0; line-height: 1.25; }
+
+.clinic-brand-copy strong { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 46vw; }
+
+@media (max-width: 575.98px) {.clinic-brand-copy small { display: none; }
+
+.clinic-brand-mark { width: 36px; height: 36px; }
+
+.navbar > .container,
+.navbar > .container-fluid { gap: 0.5rem; flex-wrap: nowrap; }
+}
+
+/* مسافة بين عنوان الصفحة وأزرار الإجراءات */
+.page-shell p + .d-flex.flex-wrap,
+.page-shell p + .d-flex.gap-2 { margin-top: 0.85rem; }
+
+/* روابط الفوتر: مسافات ثابتة */
+footer .row > div > a { display: inline-block; margin-block: 0.15rem; }
+
+footer .row > div > a + a { margin-inline-start: 1.1rem !important; }
+
+/* =========================================================
+ * القسم 3: enhancements.css
+ * تنسيق صفحات محددة؛ يرتبط بعلامة section-3 في data-style-sections على html.
+ * ابحث باسم القسم أو class للوصول إلى التنسيق المطلوب.
+ * ========================================================= */
+
+
+/* Smart Dental Clinic v1.9 additions: same teal, white cards and RTL spacing as existing UI */
+/* البطاقات ولوحات المحتوى؛ ابحث باسم class للوصول إلى البطاقة المطلوبة. */
+:where(html[data-style-sections~="section-3"]) .sdc-v19-card {background:#fff;border:1px solid #dfebf1;border-radius:17px;padding:20px;box-shadow:0 7px 20px rgba(18,65,82,.035);font-family:inherit}
+
+:where(html[data-style-sections~="section-3"]) .sdc-v19-heading {display:flex;align-items:center;gap:12px;margin-bottom:16px}
+
+:where(html[data-style-sections~="section-3"]) .sdc-v19-icon {color:#0d7895;background:#e8f7fb;border-radius:12px;width:42px;height:42px;display:grid;place-items:center;font-size:20px;flex-shrink:0}
+
+:where(html[data-style-sections~="section-3"]) .sdc-v19-state {display:flex;justify-content:space-between;align-items:center;gap:12px;background:#f5fafc;padding:14px;border:1px solid #e1ecf0;border-radius:12px}
+
+:where(html[data-style-sections~="section-3"]) .sdc-v19-setup {background:#f7fbfc;border:1px solid #dfeef2;border-radius:12px;padding:16px;margin-top:14px}
+
+:where(html[data-style-sections~="section-3"]) .sdc-v19-setup[hidden] {display:none!important}
+
+/* التجاوب: القواعد التالية تتبع شرط عرض الشاشة المكتوب في @media. توجد شروط أخرى لاحقًا في الملف. */
+@media(max-width:575px) {:where(html[data-style-sections~="section-3"]) .sdc-v19-state {align-items:flex-start;flex-direction:column}
+
+:where(html[data-style-sections~="section-3"]) .sdc-v19-card {padding:15px}
+}
+
+/* =========================================================
+ * القسم 4: responsive.css
+ * يطبق على كل صفحات هذا الدور.
+ * ابحث باسم القسم أو class للوصول إلى التنسيق المطلوب.
+ * ========================================================= */
+
+
+/* Smart Dental Clinic | v1.9.2 responsive-only refinements.
+   No workflow, state, permissions, or business logic changes. */
+/* Shared intrinsic sizing: do not let long labels expand a page viewport. */
+html { max-width: 100%; }
+
+/* المظهر الأساسي لمحتوى الصفحة والخلفية والخط. */
+body { min-width: 0; max-width: 100%; }
+
+img,
+video,
+canvas,
+svg { max-width: 100%; }
+
+.container,
+.container-fluid,
+.row > *,
+/* الأزرار وحقول النماذج وحالات التركيز. */
+.form-control,
+.form-select,
+.dropdown,
+[class*="col-"] {
+  min-width: 0;
+}
+
+/* الجداول وصفوفها وأحجام الأعمدة. */
+.table-responsive { max-width: 100%; -webkit-overflow-scrolling: touch; }
+
+.table-responsive:not(.mobile-stack-wrapper) { overflow-x: auto; }
+
+.table { margin-bottom: 0; }
+
+.table td,
+.table th { overflow-wrap: break-word; }
+
+.alert,
+/* النوافذ والقوائم المنبثقة وحالات فتحها. */
+.offcanvas-body { overflow-wrap: anywhere; }
+
+/* التجاوب: القواعد التالية تتبع شرط عرض الشاشة المكتوب في @media. توجد شروط أخرى لاحقًا في الملف. */
+@media (max-width: 991.98px) {.row > *,
+.d-flex > .flex-grow-1 { min-width: 0; }
+
+/* Topbar controls stay inside the screen even on narrow tablets. */
+/* شريط التنقل والهوية وأزرار القوائم. */
+.navbar .container,
+.navbar .container-fluid {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 767.98px) {.table-responsive:not(.mobile-stack-wrapper) table:not(.responsive-stack-table) { width: max-content; min-width: 100%; }
+
+.table-responsive:not(.mobile-stack-wrapper) table:not(.responsive-stack-table) th,
+.table-responsive:not(.mobile-stack-wrapper) table:not(.responsive-stack-table) td {
+    white-space: normal;
+    min-width: 85px;
+  }
+
+input[type="file"] { max-width: 100%; }
+
+.offcanvas { max-width: min(100vw, 340px); }
+}
+
+@media (max-width: 359.98px) {.container,
+.container-fluid { padding-inline: 12px; }
+
+.page-shell > .container,
+main > .container { padding-inline: 12px; }
+}
+
+/* Tiny phones: avoid flex rows that push a third action outside a medical report. */
+@media (max-width: 575.98px) {.d-flex:has(> .badge.badge-soft) { flex-wrap: wrap; }
+
+.badge.badge-soft { max-width: 100%; }
+}

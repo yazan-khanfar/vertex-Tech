@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>ملف الطبيب | Smart Dental Doctor</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/doctor/header') %>
+    <div class="container mt-3"><a class="btn btn-outline-primary" href="/account/profile">تعديل بيانات الحساب والملف المهني</a></div>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Doctor Profile</span>
+            <h1 class="fw-bold">ملفي الشخصي</h1>
+            <p class="text-secondary mb-0">
+              بياناتك المهنية داخل النظام وجدول دوامك في العيادة.
+            </p>
+          </div>
+          <a class="btn btn-outline-primary" href="<%= activeClinic?"/doctor/settings":"/doctor/profile#sdc-mfa" %>"><i class="bi bi-gear ms-1"></i>إعدادات الحساب</a>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="soft-card p-4 mb-4">
+              <div class="text-center">
+                <div class="profile-big-avatar mx-auto mb-3"><%= (doctorAccount?.First_Name||currentUser?.fullName||"ط").charAt(0) %></div>
+                <h4 class="fw-bold mb-1"><%= doctorAccount?"د. "+doctorAccount.First_Name+" "+doctorAccount.Last_Name:currentUser?.fullName||"الطبيب" %></h4>
+                <div class="text-secondary"><%= doctorAccount?.specialties?.map(s=>s.Name_AR).join("، ")||"لا توجد تخصصات مسجلة" %></div>
+              </div>
+              <hr>
+              <div class="summary-row">
+                <span>العيادة</span><strong><%= activeClinic?.name||"غير مرتبط بعيادة حاليًا" %></strong>
+              </div>
+              <div class="summary-row">
+                <span>الحساب</span><strong class="text-success">نشط</strong>
+              </div>
+              <div class="summary-row">
+                <span>رقم ترخيص الطبيب</span><strong><%= doctorAccount?.License_Number||"—" %></strong>
+              </div>
+            </div>
+            <a class="soft-card p-4 d-block text-decoration-none text-dark" href="<%= activeClinic?"/doctor/settings":"/doctor/profile#sdc-mfa" %>"><div class="d-flex align-items-center gap-3">
+                <span class="metric-icon mb-0"><i class="bi bi-gear"></i></span>
+                <div class="flex-grow-1">
+                  <strong>إعدادات الحساب</strong>
+                  <div class="small text-secondary">
+                    الأمان، اللغة والإشعارات
+                  </div>
+                </div>
+                <i class="bi bi-chevron-left text-secondary"></i></div></a>
+          </div>
+        <div class="col-lg-8"><div class="soft-card p-4">
+<h4 class="fw-bold mb-3">بيانات الحساب والتخصصات</h4>
+<div class="summary-row"><span>البريد الإلكتروني</span><strong><%= doctorAccount?.Email||"—" %></strong></div>
+<div class="summary-row"><span>رقم الهاتف</span><strong><%= doctorAccount?.Phone||"—" %></strong></div>
+<div class="summary-row"><span>حالة الترخيص</span><strong><%= doctorAccount?.License_Status==="verified"?"معتمد":"قيد المراجعة" %></strong></div>
+<% for(const s of doctorAccount?.specialties||[]){ %><div class="summary-row"><span>التخصص</span><strong><%= s.Name_AR %></strong></div><% } %>
+<% if(!activeClinic){ %><p class="text-secondary small mt-3">الطبيب المعتمد يستطيع إدارة معلومات حسابه وأمانه قبل الانضمام إلى عيادة. لن تظهر بيانات عيادة غير مرتبطة به.</p>
+<a href="/onboarding/doctor/choose-path" class="btn btn-outline-primary btn-sm">خيارات الانضمام أو إنشاء عيادة</a><% } %>
+</div></div></div>
+      </section>
+
+      <section class="container pb-4" id="clinic-invitations" aria-labelledby="clinicInvitationsTitle">
+        <div class="soft-card p-4">
+          <h4 id="clinicInvitationsTitle" class="fw-bold mb-3">دعوات الانضمام للعيادات</h4>
+          <% if(clinicInvitationMessage){ %><div class="alert alert-success" role="status"><%= clinicInvitationMessage %></div><% } %>
+          <% if(!clinicInvitations.length){ %><p class="text-secondary mb-0">لا توجد دعوات انضمام معلّقة حاليًا.</p><% } %>
+          <% for(const invitation of clinicInvitations){ %>
+          <div class="border rounded-3 p-3 mb-3">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><strong><%= invitation.name %></strong><span class="badge text-bg-warning">بانتظار موافقتك</span></div>
+            <p class="small text-secondary my-2">تاريخ بدء العمل: <%= invitation.start_date %></p>
+            <% if(invitation.notes){ %><p class="small text-secondary"><%= invitation.notes %></p><% } %>
+            <div class="d-flex flex-wrap gap-2">
+              <form method="post" action="/doctor/profile/membership">
+                <input type="hidden" name="csrf_token" value="<%= passwordChangeCsrf %>">
+                <input type="hidden" name="clinic_id" value="<%= invitation.id %>"><input type="hidden" name="action" value="accept">
+                <button type="submit" class="btn btn-primary btn-sm">قبول الانضمام</button>
+              </form>
+              <form method="post" action="/doctor/profile/membership">
+                <input type="hidden" name="csrf_token" value="<%= passwordChangeCsrf %>">
+                <input type="hidden" name="clinic_id" value="<%= invitation.id %>"><input type="hidden" name="action" value="decline">
+                <button type="submit" class="btn btn-outline-danger btn-sm">رفض الدعوة</button>
+              </form>
+            </div>
+          </div><% } %>
+        </div>
+      </section>
+      <section class="container pb-4">
+        <%- include('../partials/shared/mfa-manager', {mfaScope:'doctor'}) %>
+        <%- include('../partials/shared/password-editor', { passwordScope: 'doctor' }) %>
+        <%- include('../partials/shared/active-sessions', {sessionsScope:'doctor'}) %>
+      </section>
+    </main>
+    <%- include('../partials/doctor/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="clean-dropdown notification-menu doctor-popover doctor-notification-popover" id="doctorNotifications">
+              <div class="px-3 py-2 fw-bold">الإشعارات</div>
+              <div class="dropdown-divider"></div>
+              <div class="px-3 py-2 text-secondary small">يتم عرض إشعارات المواعيد الحقيقية عند ربط قائمة الطبيب.</div>
+              
+              
+            </div><div class="clean-dropdown profile-menu doctor-popover doctor-profile-popover" id="doctorProfile">
+              <a class="dropdown-item" href="profile"><i class="bi bi-person ms-2"></i>ملفي الشخصي</a>
+              <a class="dropdown-item" href="<%= activeClinic?"/doctor/settings":"/doctor/profile#sdc-mfa" %>"><i class="bi bi-gear ms-2"></i>الإعدادات</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-primary fw-bold" href="../clinic/index"><i class="bi bi-arrow-left-right ms-2"></i>تبديل لإدارة
+                العيادة</a>
+              <div class="px-3 py-2 bg-light rounded-3 mx-2 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small"><%= doctorAccount?"د. "+doctorAccount.First_Name+" "+doctorAccount.Last_Name:"حساب الطبيب" %></strong>
+              </div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right ms-2"></i>تسجيل الخروج
+              </button>
+            </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html data-style-sections="section-4" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>تفاصيل الموعد | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+
+    
+  </head>
+  <body data-default-appointment-date="<%= booking.date %>" data-default-appointment-time="16:00" data-reschedule-patient="<%= booking.patient_name %>"><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="appointments">المواعيد</a>
+            </li>
+            <li class="breadcrumb-item active" id="appointmentDetailsCrumb"><%= booking.id %></li>
+          </ol>
+        </nav>
+        <% if(message){ %><div class="alert alert-success"><%= message %></div><% } %><div id="newBookingDetails"><div id="sdcClinicAIContext" class="d-none alert alert-info rounded-4 mb-3"></div>
+          <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-start mb-4">
+            <div>
+              <span class="badge text-bg-warning mb-2"><%= labels[booking.status]||booking.status %></span>
+              <h1 class="fw-bold fs-2">موعد <%= booking.patient_name %></h1>
+              <p class="text-secondary mb-0">
+                راجع معلومات الموعد ثم اقبل الطلب أو ارفضه.
+              </p>
+            </div>
+            <div class="d-flex gap-2">
+              <% if(['pending','confirmed'].includes(booking.status)){ %><button class="btn btn-outline-primary" data-bs-target="#clinicEditAppointmentModal" data-bs-toggle="modal" type="button">تعديل وقت الموعد</button><% } %>
+              <% if(booking.status==='pending'){ %><form method="post" action="/clinic/appointments/action"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= booking.id %>"><button class="btn btn-success" name="action" value="confirm">قبول الموعد</button></form>
+              <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal" data-bs-target="#clinicRejectAppointmentModal">رفض الموعد</button><% } %>
+            </div>
+          </div>
+          <% if(booking.status==='rejected' && booking.administrative_notes){ %>
+          <div class="alert alert-danger rounded-4 mb-4" role="status"><strong>سبب رفض الموعد:</strong> <span><%= booking.administrative_notes %></span></div>
+          <% } %>
+          <div class="d-none alert alert-info rounded-4 mb-4" id="clinicPendingChangePreview">
+            <div class="d-flex justify-content-between gap-3 flex-wrap">
+              <div>
+                <strong>طلب تغيير موعد أنشأته العيادة — بانتظار التأكيد</strong>
+                <div class="small mt-1">
+                  الموعد الحالي بقي كما هو ولم يتم استبداله.
+                </div>
+              </div>
+              <span class="badge text-bg-info">pending</span>
+            </div>
+            <div class="row g-3 mt-1">
+              <div class="col-md-6">
+                <small class="text-secondary">الموعد الحالي</small>
+                <div class="fw-bold" id="clinicPendingOldDateTime"></div>
+              </div>
+              <div class="col-md-6">
+                <small class="text-secondary">الموعد المطلوب</small>
+                <div class="fw-bold" id="clinicPendingNewDateTime"></div>
+              </div>
+            </div>
+          </div>
+          <div class="soft-card p-4 mb-4">
+            <h4 class="fw-bold mb-4">معلومات الموعد</h4>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <small class="text-secondary">المريض</small>
+                <div class="fw-bold" id="clinicApptPatientText"><%= booking.patient_name %></div>
+                <div class="small text-secondary">
+                  رقم المريض: <%= booking.patient_id %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <small class="text-secondary">الطبيب</small>
+                <div class="fw-bold" id="clinicApptDoctorText">د. <%= booking.doctor_name %></div>
+                <div class="small text-secondary"><%= booking.doctor_name %></div>
+              </div>
+              <div class="col-md-6">
+                <small class="text-secondary">الخدمة</small>
+                <div class="fw-bold" id="clinicApptServiceText"><%= booking.service_name %></div>
+                <div class="small text-secondary"><%= booking.price %> ₪ • <%= booking.duration %> دقيقة</div>
+              </div>
+              <div class="col-md-6">
+                <small class="text-secondary">التاريخ والوقت المطلوب</small>
+                <div class="fw-bold" id="clinicApptDateTimeText"><%= booking.date %> • <%= booking.time %></div>
+              </div>
+              <div class="col-md-6">
+                <small class="text-secondary">نوع الطلب</small>
+                <div class="fw-bold"><%= booking.source==='manual'?'حجز يدوي':booking.source %></div>
+              </div>
+              <div class="col-md-6">
+                <small class="text-secondary">حالة الموعد</small>
+                <div>
+                  <span class="badge text-bg-success" id="clinicApptStatusBadge"><%= labels[booking.status]||booking.status %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="soft-card p-4 mb-4">
+            <h4 class="fw-bold mb-3">ملاحظات المريض</h4>
+            <p class="text-secondary mb-0">
+              <%= booking.notes || "لا توجد ملاحظات." %>
+            </p>
+          </div>
+        </div>
+        <div class="<%= booking.request_status==='pending'?'':'d-none' %>" id="rescheduleRequestDetails">
+          <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-start mb-4">
+            <div>
+              <span class="badge text-bg-info mb-2">طلب تغيير قيد المراجعة</span>
+              <h1 class="fw-bold fs-2">طلب تغيير موعد <%= booking.patient_name %></h1>
+              <p class="text-secondary mb-0">
+                الموعد الأصلي يبقى مؤكداً حتى توافق العيادة على الموعد الجديد.
+              </p>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+              <form method="post" action="/clinic/appointments/action"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= booking.id %>"><button class="btn btn-success" name="action" value="approve_change">قبول التغيير</button></form><form method="post" action="/clinic/appointments/action"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= booking.id %>"><button class="btn btn-outline-danger" name="action" value="reject_change">رفض التغيير</button></form>
+            </div>
+          </div>
+          <div class="row g-4 mb-4">
+            <div class="col-lg-6">
+              <div class="soft-card p-4 h-100 border-success-subtle">
+                <div class="d-flex justify-content-between gap-2 mb-3">
+                  <h4 class="fw-bold mb-0">الموعد الحالي</h4>
+                  <span class="badge text-bg-success">يبقى فعالاً</span>
+                </div>
+                <div class="summary-row">
+                  <span>الطبيب</span><strong id="clinicRescheduleDoctorText">د. <%= booking.doctor_name %></strong>
+                </div>
+                <div class="summary-row">
+                  <span>الخدمة</span><strong id="clinicRescheduleServiceText"><%= booking.service_name %></strong>
+                </div>
+                <div class="summary-row">
+                  <span>التاريخ</span><strong id="clinicRescheduleDateText"><%= booking.date %></strong>
+                </div>
+                <div class="summary-row">
+                  <span>الوقت</span><strong id="clinicRescheduleTimeText"><%= booking.time %></strong>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="soft-card p-4 h-100 border-info-subtle">
+                <div class="d-flex justify-content-between gap-2 mb-3">
+                  <h4 class="fw-bold mb-0">الموعد المطلوب</h4>
+                  <span class="badge text-bg-info">طلب جديد</span>
+                </div>
+                <div class="summary-row">
+                  <span>الطبيب</span><strong>د. <%= booking.doctor_name %></strong>
+                </div>
+                <div class="summary-row">
+                  <span>الخدمة</span><strong>علاج جذور</strong>
+                </div>
+                <div class="summary-row">
+                  <span>التاريخ</span><strong><%= booking.requested_date %></strong>
+                </div>
+                <div class="summary-row">
+                  <span>الوقت</span><strong><%= booking.requested_time %></strong>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="soft-card p-4 mb-4">
+            <h4 class="fw-bold mb-3">سبب طلب التغيير</h4>
+            <p class="mb-0"><%= booking.request_reason||"لم يُذكر السبب" %></p>
+          </div>
+          <div class="alert alert-light border rounded-4 mb-4">
+            <i class="bi bi-info-circle text-primary ms-2"></i>عند
+            <strong>القبول</strong> يتم اعتماد الموعد الجديد وإظهاره للطبيب
+            والمريض. عند <strong>الرفض</strong> لا يتغير الموعد الأصلي.
+          </div>
+        </div>
+        <div class="privacy-box">
+          <div class="d-flex gap-3">
+            <i class="bi bi-shield-lock fs-3 text-primary"></i>
+            <div>
+              <strong>خصوصية المحتوى الطبي</strong>
+              <p class="text-secondary mb-0 mt-1">
+                التشخيص، الوصفة والتقرير الطبي يديرها الطبيب من حسابه، بينما
+                العيادة تدير الموعد والإجراءات الإدارية.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <% if(booking.status==='pending'){ %>
+    <!-- Reuse the existing appointment details page. Do not submit rejection without a reason. -->
+    <div class="modal fade" id="clinicRejectAppointmentModal" tabindex="-1" aria-labelledby="clinicRejectAppointmentTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="clinicRejectAppointmentTitle">رفض الموعد</h5>
+            <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="إغلاق"></button>
+          </div>
+          <form method="post" action="/clinic/appointments/action">
+            <input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+            <input type="hidden" name="booking_id" value="<%= booking.id %>">
+            <input type="hidden" name="action" value="reject">
+            <div class="modal-body">
+              <label class="form-label fw-semibold" for="clinicBookingRejectionReason">سبب الرفض <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="clinicBookingRejectionReason" name="reason" rows="3" maxlength="2000" required placeholder="اكتب سبب رفض الموعد لإبلاغ المريض"></textarea>
+              <div class="form-text">سيظهر السبب للمريض في تفاصيل الموعد. لا تذكر معلومات صحية خاصة غير ضرورية.</div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">رجوع</button>
+              <button class="btn btn-danger" type="submit">تأكيد الرفض</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <div class="modal fade" id="clinicEditAppointmentModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold">تعديل الموعد من العيادة</h5>
+              <small class="text-secondary">تغيير التاريخ أو الوقت يُتحقق منه في قاعدة البيانات قبل الحفظ، ثم يُرسل إشعار للمريض.</small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body"><form method="post" id="clinicMoveBooking" action="/clinic/appointments/action" class="mb-3"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="booking_id" value="<%= booking.id %>"><input type="hidden" name="action" value="move"><div class="row g-3"><div class="col-md-6"><label class="form-label">التاريخ الجديد</label><input class="form-control" type="date" min="<%= now.date %>" name="requested_date" required></div><div class="col-md-6"><label class="form-label">الوقت الجديد</label><input class="form-control" type="time" step="1800" name="requested_time" required></div><div class="col-12"><label class="form-label">سبب التعديل</label><input class="form-control" name="reason" maxlength="2000"></div><div class="col-12"><button class="btn btn-primary">حفظ الموعد الجديد بعد التحقق من التوافر</button></div></div></form></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button>
+            <button class="btn btn-primary" id="saveClinicAppointmentEdit" disabled aria-label="عنصر تجريبي غير مستخدم" form="backend-form-1" type="submit">
+              حفظ التعديل
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form></body></html>

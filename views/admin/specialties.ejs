@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>التخصصات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+          <div>
+            <h1 class="fw-bold fs-2 mb-2">إدارة التخصصات</h1>
+            <p class="text-secondary mb-0">
+              يدير Super Admin قائمة التخصصات المعتمدة للملفات المهنية للأطباء. خدمات العيادات وتخصيصها للأطباء مستقلة عن هذه القائمة.
+            </p>
+          </div>
+          <button class="btn btn-primary" data-bs-target="#specialtyModal" data-bs-toggle="modal" data-specialty-new="" data-ui-open="#specialtyModal" type="button">
+            <i class="bi bi-plus-lg ms-1"></i>إضافة تخصص
+          </button>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="row g-3">
+            <div class="col-lg-5">
+              <input class="form-control" id="specialtySearch" placeholder="ابحث بالتخصص..." value="" data-ui-unbound-control="" name="specialty_search" form="backend-form-1">
+            </div>
+            <div class="col-lg-3">
+              <select class="form-select" id="specialtyStatus" name="specialty_status" form="backend-form-1">
+                <option value="" selected>كل الحالات</option>
+                <option value="active">مفعّل</option>
+                <option value="disabled">معطّل</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+          <table class="table mb-0 admin-master-table medium-data-table responsive-stack-table system-data-table">
+            <thead>
+              <tr>
+                <th>التخصص</th>
+                <th>English</th>
+                
+                <th>الأطباء</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="specialtyTableBody">
+              <tr data-search="طب أسنان عام General Dentistry" data-specialty-row="" data-status="active">
+                <td data-label="التخصص" class="table-primary-cell">
+                  <strong data-ar="">طب أسنان عام</strong>
+                </td>
+                <td data-en="" data-label="English">General Dentistry</td>
+                
+                <td data-label="الأطباء">1</td>
+                <td data-label="الحالة" class="table-status-cell">
+                  <span class="badge text-bg-success" data-specialty-badge="">مفعّل</span>
+                </td>
+                <td data-label="الإجراءات" class="table-actions-cell">
+                  <div class="d-flex gap-1 table-action-grid">
+                    <button class="btn btn-sm btn-outline-primary" data-specialty-edit="" data-ui-open="#specialtyModal" type="button">
+                      تعديل</button><button class="btn btn-sm btn-outline-warning" data-specialty-toggle="" data-ui-pending="">
+                      تعطيل</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="طب أسنان عام" data-sensitive-title="حذف التخصص نهائيًا" data-ui-open="#sensitiveActionModal" type="button">
+                      حذف نهائي
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr data-search="علاج جذور Endodontics" data-specialty-row="" data-status="active">
+                <td data-label="التخصص" class="table-primary-cell">
+                  <strong data-ar="">علاج جذور</strong>
+                </td>
+                <td data-en="" data-label="English">Endodontics</td>
+                
+                <td data-label="الأطباء">1</td>
+                <td data-label="الحالة" class="table-status-cell">
+                  <span class="badge text-bg-success" data-specialty-badge="">مفعّل</span>
+                </td>
+                <td data-label="الإجراءات" class="table-actions-cell">
+                  <div class="d-flex gap-1 table-action-grid">
+                    <button class="btn btn-sm btn-outline-primary" data-specialty-edit="" data-ui-open="#specialtyModal" type="button">
+                      تعديل</button><button class="btn btn-sm btn-outline-warning" data-specialty-toggle="" data-ui-pending="">
+                      تعطيل</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="علاج جذور" data-sensitive-title="حذف التخصص نهائيًا" data-ui-open="#sensitiveActionModal" type="button">
+                      حذف نهائي
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr data-search="جراحة فم Oral Surgery" data-specialty-row="" data-status="disabled">
+                <td data-label="التخصص" class="table-primary-cell">
+                  <strong data-ar="">جراحة فم</strong>
+                </td>
+                <td data-en="" data-label="English">Oral Surgery</td>
+                
+                <td data-label="الأطباء">1</td>
+                <td data-label="الحالة" class="table-status-cell">
+                  <span class="badge text-bg-secondary" data-specialty-badge="">معطّل</span>
+                </td>
+                <td data-label="الإجراءات" class="table-actions-cell">
+                  <div class="d-flex gap-1 table-action-grid">
+                    <button class="btn btn-sm btn-outline-primary" data-specialty-edit="" data-ui-open="#specialtyModal" type="button">
+                      تعديل</button><button class="btn btn-sm btn-outline-success" data-specialty-toggle="" data-ui-pending="">
+                      تفعيل</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="جراحة فم" data-sensitive-title="حذف التخصص نهائيًا" data-ui-open="#sensitiveActionModal" type="button">
+                      حذف نهائي
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state d-none" id="specialtyEmpty">
+            لا توجد تخصصات مطابقة.
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="specialtyModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="specialtyModalTitle">
+                إضافة تخصص
+              </h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <label class="form-label">الاسم بالعربية</label><input class="form-control mb-3" id="specialtyAr" value="" name="specialty_ar" form="backend-form-2"><label class="form-label">الاسم بالإنجليزية</label><input class="form-control mb-3" id="specialtyEn" value="" name="specialty_en" form="backend-form-2"><label class="form-label">الحالة</label><select class="form-select" id="specialtyFormStatus" name="specialty_form_status" form="backend-form-2">
+                <option value="active" selected>مفعّل</option>
+                <option value="disabled">معطّل</option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="saveSpecialtyBtn" data-ui-pending="" form="backend-form-2" type="submit">
+                حفظ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-3"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-3" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-4"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-4"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-4" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-2" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-3" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-4" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الفواتير | Clinic Staff</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body data-page-permission="invoices.view" data-staff-account-status="active" data-staff-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>" data-staff-user-id="<%= typeof currentUser !== 'undefined' && currentUser ? currentUser.userId : '' %>" data-rendered-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-active-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-staff-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : '' %>"><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/staff/header') %>
+    
+    <main class="page-shell" id="main-content" data-staff-workspace="">
+      <div class="container pt-3"><label class="form-label small fw-bold" for="activeClinicContext">العيادة الحالية</label><select class="form-select mb-3" id="activeClinicContext" name="active_clinic_id" data-context-switcher="" aria-describedby="staffClinicContextHelp"><% if(typeof activeClinic !== 'undefined' && activeClinic){ %><option value="<%= activeClinic.id %>" data-membership-status="active" data-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : 'موظف' %>" data-clinic-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>"><%= activeClinic.name %></option><% } %></select><div class="d-flex flex-wrap align-items-center gap-2 mb-2"><a class="btn btn-outline-primary btn-sm" href="choose-clinic" data-choose-clinic-link>اختيار أو تبديل العيادة</a><small class="text-secondary" id="staffClinicContextHelp">تظهر بيانات وصلاحيات العيادة المختارة فقط.</small></div></div><section class="container py-4 py-lg-5" data-clinic-content="">
+        <div class="d-flex justify-content-between gap-3 mb-4">
+          <div>
+            <h1 class="fw-bold fs-2 mb-2">الفواتير والدفعات</h1>
+            <p class="text-secondary mb-0">عرض الفواتير وإصدار المسودات وتسجيل الدفعات حسب صلاحياتك داخل العيادة.</p>
+          </div>
+        </div>
+        <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+          <table class="table align-middle mb-0 wide-data-table responsive-stack-table system-data-table">
+            <thead>
+              <tr>
+                <th>الفاتورة</th>
+                <th>المريض</th>
+                <th>الإجمالي</th>
+                <th>المدفوع</th>
+                <th>المتبقي</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td data-label="الفاتورة" class="table-primary-cell">IN-118</td>
+                <td data-label="المريض">أحمد خالد</td>
+                <td data-label="الإجمالي">500 ₪</td>
+                <td data-label="المدفوع">500 ₪</td>
+                <td data-label="المتبقي">0 ₪</td>
+                <td data-label="الحالة" class="table-status-cell">مدفوعة</td>
+                <td data-label="الإجراءات" class="table-actions-cell">
+                  <button class="btn btn-sm btn-light" data-toast="تم فتح الفاتورة" data-ui-pending="">
+                    عرض
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    <section class="soft-card p-4 mb-4" id="invoiceDraftEditor" data-invoice-editor data-document-status="draft" data-visit-id="V-002" data-invoice-id="IN-DRAFT-V002" data-clinic-id="C-008" data-patient-id="P-2048" data-clinic-content="" data-requires-permission="invoices.issue">
+ <h4 class="fw-bold mb-2">مراجعة وإصدار مسودة الفاتورة</h4><p class="small text-secondary">من إجراءات زيارة أحمد خالد V-002. راجع البنود والخصم ثم أصدر الفاتورة بصلاحية إصدار الفواتير.</p>
+ <div class="table-responsive"><table class="table align-middle"><thead><tr><th>الوصف</th><th>الكمية</th><th>سعر الوحدة ₪</th><th>خصم البند ₪</th><th></th></tr></thead><tbody data-invoice-lines><tr data-invoice-line><td><input class="form-control" aria-label="وصف البند" name="items[0][description]" value="علاج جذور — الجلسة الأولى" required form="staff-invoice-draft-form"></td><td><input class="form-control" aria-label="الكمية" data-line-quantity name="items[0][quantity]" type="number" min="1" step="1" value="1" required form="staff-invoice-draft-form"></td><td><input class="form-control" aria-label="سعر الوحدة" data-line-price name="items[0][unit_price]" type="number" min="0" step="0.01" value="500" required form="staff-invoice-draft-form"></td><td><input class="form-control" aria-label="خصم البند" data-line-discount name="items[0][discount]" type="number" min="0" step="0.01" value="0" required form="staff-invoice-draft-form"></td><td><button class="btn btn-outline-danger btn-sm" type="button" data-remove-invoice-line>حذف</button></td></tr></tbody></table></div>
+ <button class="btn btn-outline-primary btn-sm mb-3" data-add-invoice-line type="button">إضافة بند إداري</button><div class="row g-3"><div class="col-md-6"><label class="form-label" for="initial_payment">المدفوع عند الإصدار ₪</label><input class="form-control" id="initial_payment" name="initial_payment" type="number" value="0" form="staff-invoice-draft-form" min="0" step="0.01" data-initial-payment></div><div class="col-md-6"><label class="form-label" for="initial_payment_method">طريقة الدفع</label><select class="form-select" id="initial_payment_method" name="initial_payment_method" form="staff-invoice-draft-form"><option value="cash">نقدًا</option><option value="card">بطاقة</option><option value="bank_transfer">تحويل</option></select></div></div>
+ <div class="alert alert-light border mt-3" aria-live="polite">الإجمالي: <strong data-invoice-total>500.00</strong> ₪ — المتبقي: <strong data-invoice-remaining>500.00</strong> ₪</div><p class="small text-secondary">بعد الإصدار تثبت البنود؛ الدفعة تسجّل مستقلة. الإلغاء مسموح فقط إن لم تُسجّل أي دفعة.</p><div class="d-flex flex-wrap gap-2"><button type="submit" class="btn btn-outline-primary" form="staff-invoice-draft-form" name="action" value="save_draft">حفظ المسودة</button><button type="submit" class="btn btn-primary" form="staff-invoice-draft-form" name="action" value="issue" data-requires-permission="invoices.issue">إصدار الفاتورة</button></div></section><section class="container py-4" id="staffScopeNotice" hidden><div class="soft-card p-4 text-center"><i class="bi bi-building-lock fs-1 text-primary"></i><h3 class="fw-bold mt-3" id="staffScopeTitle">اختر العيادة للمتابعة</h3><p class="text-secondary" id="staffScopeMessage">حدد عيادة لديك عضوية فعّالة فيها لعرض بياناتها وصلاحياتك.</p><a href="choose-clinic" class="btn btn-primary">اختيار العيادة</a></div></section></main>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="staff-invoice-draft-form" method="post" data-ui-unbound="" hidden data-requires-permission="invoices.issue"></form><%- include('../partials/staff/footer') %></body></html>

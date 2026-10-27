@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>تخصصات أطباء العيادة | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Specialties</span>
+            <h1 class="fw-bold">تخصصات أطباء العيادة</h1>
+            <p class="text-secondary mb-0">
+              التخصصات جزء من الملفات المهنية للأطباء. تعرض هذه الصفحة تخصصات أطباء العيادة، وتتم إدارة خدمات العيادة وتخصيصها لهم بشكل مستقل.
+            </p>
+          </div>
+          <a class="btn btn-primary" href="doctors"><i class="bi bi-person-badge ms-1"></i>عرض أطباء العيادة</a>
+        </div>
+        <div class="row g-4">
+          <% for (const spec of specialties) { %>
+          <div class="col-md-6 col-xl-4"><div class="catalog-item"><div class="d-flex justify-content-between align-items-start"><div class="icon-box"><i class="bi bi-activity"></i></div><span class="badge text-bg-success">تخصص طبيب</span></div><h5 class="fw-bold mt-3"><%= spec.name %></h5><div class="small text-secondary mb-3">من الملف المهني للطبيب</div><div class="mb-3"><small class="text-secondary d-block mb-2">أطباء العيادة بهذا التخصص</small><% for(const name of spec.doctors){ %><span class="doctor-chip"><%= name %></span> <% } %></div><div class="d-flex gap-2"><a class="btn btn-outline-primary btn-sm flex-fill" href="/clinic/doctor-details?id=<%= encodeURIComponent(spec.doctor_id) %>">ملف الطبيب</a><a class="btn btn-light btn-sm flex-fill" href="/clinic/services">خدمات العيادة</a></div></div></div>
+          <% } %>
+          <% if (!specialties.length) { %><div class="col-12"><div class="soft-card p-4 text-center text-secondary">لا توجد تخصصات لأطباء نشطين في هذه العيادة حاليًا.</div></div><% } %>
+        </div>
+      </section>
+      
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

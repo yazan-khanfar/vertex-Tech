@@ -1,0 +1,25 @@
+<% if (navVariant === 1) { %><nav class="navbar navbar-expand-lg public-navbar sticky-top">
+      <div class="container">
+        <a class="brand<%= navActiveClass("0") %>" href="index"<%- navAriaCurrent("0") %>>
+          <span class="brand-mark"><i class="bi bi-heart-pulse"></i></span>
+          <span class="brand-copy"><strong><%= typeof platformName!=='undefined'?platformName:'Smart Dental Clinic' %></strong><small>رعاية أسنان أذكى وأسهل</small></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="فتح القائمة">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <div class="nav-collapse-box d-flex flex-column flex-lg-row align-items-lg-center w-100 gap-3">
+            <div class="navbar-nav mx-lg-auto">
+              <a class="nav-link<%= navActiveClass("1") %>" href="#features"<%- navAriaCurrent("1") %>>المميزات</a>
+              <a class="nav-link<%= navActiveClass("2") %>" href="#roles"<%- navAriaCurrent("2") %>>لمن النظام؟</a>
+              <a class="nav-link<%= navActiveClass("3") %>" href="#how"<%- navAriaCurrent("3") %>>كيف يعمل؟</a>
+            </div>
+            <div class="d-flex gap-2">
+              <a class="btn btn-light<%= navActiveClass("4") %>" href="auth/login"<%- navAriaCurrent("4") %>>تسجيل الدخول</a>
+              <a class="btn btn-primary<%= navActiveClass("5") %>" href="auth/register/index"<%- navAriaCurrent("5") %>>إنشاء حساب</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav><% } %>
+

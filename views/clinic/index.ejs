@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>لوحة تحكم العيادة | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+    <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+    
+      
+  </head>
+  <body class="bg-light"><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <!-- شريط التنقل العلوي -->
+    <%- include('../partials/clinic/header') %>
+
+    <!-- القائمة الجانبية (Offcanvas) الشاملة للأقسام -->
+    
+
+    <!-- المحتوى الرئيسي -->
+    <main class="page-shell py-4" id="main-content">
+      <section class="container">
+        
+        <!-- الترويسة الترحيبية -->
+        <div class="dashboard-hero mb-4 p-4 p-lg-5 bg-primary text-white rounded-4 shadow-sm position-relative overflow-hidden">
+          <div class="row align-items-center g-4 position-relative z-1">
+            <div class="col-lg-8">
+              <span class="badge bg-white text-primary mb-3 px-3 py-2 rounded-pill fw-bold"><%= dashboard.dateLabel %></span>
+              <h1 class="fw-bold mb-2 fs-2">أهلاً، <%= dashboard.clinic.name %></h1>
+              <p class="mb-0 opacity-90 fs-6">
+                هذه نظرة سريعة على تشغيل العيادة اليوم والطلبات التي تحتاج إجراء فورياً.
+              </p>
+            </div>
+            <div class="col-lg-4">
+              <div class="bg-white bg-opacity-10 backdrop-blur rounded-4 p-4 border border-white border-opacity-20 shadow-sm text-center text-lg-start">
+                <div class="small opacity-75 mb-1">حالة العيادة</div>
+                <div class="d-flex justify-content-between align-items-center my-2">
+                  <strong class="fs-5"><%= dashboard.open ? "مفتوحة الآن" : "مغلقة الآن" %></strong>
+                  <span class="badge bg-white text-primary px-3 py-1 rounded-pill"><%= dashboard.clinicHoursLabel %></span>
+                </div>
+                <a class="btn btn-sm btn-light text-primary fw-bold w-100 mt-2 shadow-sm" href="profile">
+                  تعديل ساعات العمل
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- بطاقات المؤشرات الإحصائية -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-xl-3">
+            <div class="stat-card card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <small class="text-secondary d-block mb-1">مواعيد اليوم</small>
+                  <div class="stat-value fw-bold fs-3 text-dark"><%= dashboard.stats.today %></div>
+                </div>
+                <div class="icon-box text-primary bg-primary-subtle rounded-3 p-2 fs-4 d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                  <i class="bi bi-calendar2-check"></i>
+                </div>
+              </div>
+              <div class="small text-muted mt-2">
+                <%= dashboard.stats.confirmed %> مؤكدة • <%= dashboard.stats.waiting %> انتظار • <%= dashboard.stats.completed %> مكتملة
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <small class="text-secondary d-block mb-1">بانتظار الموافقة</small>
+                  <div class="stat-value fw-bold fs-3 text-warning"><%= dashboard.stats.pendingApprovals %></div>
+                </div>
+                <div class="icon-box text-warning bg-warning-subtle rounded-3 p-2 fs-4 d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                  <i class="bi bi-hourglass-split"></i>
+                </div>
+              </div>
+              <a class="small text-primary fw-semibold text-decoration-none mt-2 d-inline-block" href="appointments">مراجعة الطلبات <i class="bi bi-arrow-left small"></i></a>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <small class="text-secondary d-block mb-1">أطباء متاحون اليوم</small>
+                  <div class="stat-value fw-bold fs-3 text-success"><%= dashboard.stats.doctorCount %></div>
+                </div>
+                <div class="icon-box text-success bg-success-subtle rounded-3 p-2 fs-4 d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                  <i class="bi bi-person-badge"></i>
+                </div>
+              </div>
+              <a class="small text-primary fw-semibold text-decoration-none mt-2 d-inline-block" href="doctors">عرض الأطباء <i class="bi bi-arrow-left small"></i></a>
+            </div>
+          </div>
+          <div class="col-6 col-xl-3">
+            <div class="stat-card card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <small class="text-secondary d-block mb-1">فواتير غير مكتملة</small>
+                  <div class="stat-value fw-bold fs-3 text-danger"><%= dashboard.stats.unpaidInvoices %></div>
+                </div>
+                <div class="icon-box text-danger bg-danger-subtle rounded-3 p-2 fs-4 d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                  <i class="bi bi-receipt"></i>
+                </div>
+              </div>
+              <a class="small text-primary fw-semibold text-decoration-none mt-2 d-inline-block" href="invoices">عرض الفواتير <i class="bi bi-arrow-left small"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- المواعيد والمهام العاجلة -->
+        <div class="row g-4 mb-4">
+          <!-- مواعيد اليوم -->
+          <div class="col-lg-7">
+            <div class="soft-card card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                  <h4 class="fw-bold mb-1 text-dark fs-5">مواعيد اليوم</h4>
+                  <p class="text-secondary mb-0 small">ترتيب زمني للمواعيد القادمة.</p>
+                </div>
+                <a class="btn btn-sm btn-outline-primary px-3" href="appointments">كل المواعيد</a>
+              </div>
+              <div class="d-grid gap-3">
+                <% if (!dashboard.appointments.length) { %>
+                  <div class="p-3 rounded-3 border bg-light text-secondary small">لا توجد مواعيد مسجلة لهذا اليوم.</div>
+                <% } %>
+                <% for (const booking of dashboard.appointments) { %>
+                  <a href="/clinic/appointment-details?id=<%= encodeURIComponent(booking.id) %>" class="appointment-row p-3 rounded-3 border bg-light d-flex align-items-center gap-3 text-decoration-none">
+                    <div class="timeline-time bg-primary text-white px-3 py-2 rounded-3 fw-bold small text-center" style="min-width: 70px;"><%= booking.timeLabel %></div>
+                    <div class="patient-mini bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 38px; height: 38px; min-width: 38px;"><%= booking.initials %></div>
+                    <div class="flex-grow-1"><strong class="text-dark d-block"><%= booking.patient %></strong><div class="small text-secondary"><%= booking.doctor %> • <%= booking.service %></div></div>
+                    <span class="badge <%= booking.statusClass %> px-3 py-1 rounded-pill"><%= booking.statusLabel %></span>
+                  </a>
+                <% } %>
+              </div>
+            </div>
+          </div>
+
+          <!-- تحتاج إجراء منك -->
+          <div class="col-lg-5">
+            <div class="soft-card card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+              <h4 class="fw-bold mb-3 text-dark fs-5">تحتاج إجراء منك</h4>
+              <div class="d-flex flex-column gap-3">
+                <% if (!dashboard.alerts.length) { %><div class="p-3 rounded-3 border bg-light text-secondary small">لا توجد طلبات عاجلة حاليًا.</div><% } %>
+                <% for (const alert of dashboard.alerts) { %>
+                  <div class="status-strip <%= alert.kind === 'booking' ? 'warning' : alert.kind === 'reschedule' ? 'info' : 'danger' %> p-3 rounded-3 border <%= alert.kind === 'booking' ? 'bg-warning-subtle border-warning-subtle' : alert.kind === 'reschedule' ? 'bg-info-subtle border-info-subtle' : 'bg-danger-subtle border-danger-subtle' %>">
+                    <div class="d-flex justify-content-between align-items-center gap-3"><div><strong class="text-dark d-block"><%= alert.title %></strong><div class="small text-secondary"><%= alert.detail %></div></div>
+                    <a class="btn btn-sm btn-outline-primary text-dark fw-semibold px-3 bg-white" href="<%= alert.url %>">مراجعة</a></div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- الأطباء المتاحون وإجراءات سريعة -->
+        <div class="row g-4">
+          <!-- الأطباء المتاحون -->
+          <div class="col-lg-7">
+            <div class="soft-card card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0 text-dark fs-5">الأطباء المتاحون اليوم</h4>
+                <a class="btn btn-sm btn-outline-primary px-3" href="doctors">إدارة الأطباء</a>
+              </div>
+              <div class="row g-3">
+                <% if (!dashboard.doctors.length) { %><div class="col-12"><div class="p-3 border rounded-3 bg-light text-secondary small">لا يوجد أطباء بجدول دوام متاح اليوم.</div></div><% } %>
+                <% for (const doctor of dashboard.doctors) { %>
+                  <div class="col-md-6"><a href="/clinic/doctor-details?id=<%= encodeURIComponent(doctor.id) %>" class="d-flex gap-3 align-items-center p-3 border rounded-3 bg-light text-decoration-none">
+                    <div class="patient-mini bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-person fs-5"></i></div>
+                    <div><strong class="text-dark d-block"><%= doctor.name %></strong><div class="small text-secondary"><%= doctor.specialties %> • حتى <%= doctor.untilLabel %></div></div>
+                  </a></div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+
+          <!-- إجراءات سريعة -->
+          <div class="col-lg-5">
+            <div class="soft-card card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+              <h4 class="fw-bold mb-3 text-dark fs-5">إجراءات سريعة</h4>
+              <div class="d-grid gap-2">
+                <a class="btn btn-outline-primary text-start py-2 px-3 d-flex align-items-center gap-2" href="staff"><i class="bi bi-person-gear fs-5"></i><span>إدارة الموظفين والصلاحيات</span></a>
+                <a class="btn btn-outline-primary text-start py-2 px-3 d-flex align-items-center gap-2" href="doctors"><i class="bi bi-person-plus fs-5"></i><span>إضافة طبيب</span></a>
+                <a class="btn btn-outline-primary text-start py-2 px-3 d-flex align-items-center gap-2" href="services"><i class="bi bi-plus-circle fs-5"></i><span>إضافة خدمة</span></a>
+                <a class="btn btn-outline-primary text-start py-2 px-3 d-flex align-items-center gap-2" href="invoices"><i class="bi bi-receipt fs-5"></i><span>إنشاء / متابعة الفواتير</span></a>
+                <a class="btn btn-outline-primary text-start py-2 px-3 d-flex align-items-center gap-2" href="profile"><i class="bi bi-clock fs-5"></i><span>تعديل ساعات العمل</span></a>
+                <a class="btn btn-outline-primary text-start py-2 px-3 d-flex align-items-center gap-2" href="operations"><i class="bi bi-clipboard2-pulse fs-5"></i><span>التشغيل اليومي</span></a>
+                <a class="btn btn-outline-primary text-start py-2 px-3 d-flex align-items-center gap-2" href="recalls"><i class="bi bi-arrow-repeat fs-5"></i><span>المتابعات المستحقة</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- الفوتر -->
+    <%- include('../partials/clinic/footer') %>
+
+    <!-- التوست (Toast) -->
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0 shadow" id="appToast" role="alert">
+        <div class="d-flex">
+          <div class="toast-body"></div>
+          <button class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- السكريبتات -->
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+  
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

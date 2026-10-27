@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>المختبرات | Clinic Staff</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body data-page-permission="lab_orders.view" data-staff-account-status="active" data-staff-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>" data-staff-user-id="<%= typeof currentUser !== 'undefined' && currentUser ? currentUser.userId : '' %>" data-rendered-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-active-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-staff-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : '' %>"><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/staff/header') %>
+    
+
+    
+    <main class="page-shell" id="main-content" data-staff-workspace=""><div class="container pt-3"><label class="form-label small fw-bold" for="activeClinicContext">العيادة الحالية</label><select class="form-select mb-3" id="activeClinicContext" name="active_clinic_id" data-context-switcher="" aria-describedby="staffClinicContextHelp"><% if(typeof activeClinic !== 'undefined' && activeClinic){ %><option value="<%= activeClinic.id %>" data-membership-status="active" data-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : 'موظف' %>" data-clinic-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>"><%= activeClinic.name %></option><% } %></select><div class="d-flex flex-wrap align-items-center gap-2 mb-2"><a class="btn btn-outline-primary btn-sm" href="choose-clinic" data-choose-clinic-link>اختيار أو تبديل العيادة</a><small class="text-secondary" id="staffClinicContextHelp">تظهر بيانات وصلاحيات العيادة المختارة فقط.</small></div></div><section class="container py-4 py-lg-5" data-clinic-content="">
+        <div class="mb-4"><h1 class="fw-bold fs-2 mb-2">المختبرات والحالات المخبرية</h1><p class="text-secondary mb-0">يمكنك متابعة الحالات وتسجيل الإرسال والاستلام حسب صلاحيتك. إدارة المختبرات نفسها متاحة فقط لمن يملك صلاحية خاصة.</p></div>
+        <div class="alert alert-light border rounded-4"><i class="bi bi-shield-check ms-1"></i>الحساب الحالي يملك <strong>عرض المختبرات</strong> و<strong>إدارة الحالات المخبرية</strong>، ولا يملك إضافة أو أرشفة مختبرات.</div>
+        <div class="filter-panel mb-4"><div class="row g-3"><div class="col-lg-7"><input class="form-control" id="staffLabSearch" placeholder="ابحث باسم المختبر أو المدينة" value="" data-ui-unbound-control="" name="staff_lab_search" form="backend-form-1"></div><div class="col-lg-5"><select class="form-select" id="staffLabState" name="staff_lab_state" form="backend-form-1"><option value="active" selected>المختبرات النشطة</option><option value="archived">المؤرشفة</option><option value="all">الكل</option></select></div></div></div>
+        <div class="row g-4" id="staffLabsGrid">
+          <div class="col-md-6 col-xl-4" data-staff-lab="" data-status="active" data-search="elite dental lab نابلس"><div class="soft-card p-4 h-100"><div class="d-flex justify-content-between mb-3"><div><h5 class="fw-bold mb-1">Elite Dental Lab</h5><small class="text-secondary">نابلس • 0599 123 456</small></div><span class="badge text-bg-success">نشط</span></div><div class="d-flex justify-content-between py-2 border-top"><span>حالات مفتوحة</span><strong>4</strong></div><div class="d-flex justify-content-between py-2"><span>متأخرة</span><strong class="text-danger">1</strong></div><a class="btn btn-primary w-100 mt-2" href="lab-details?lab=elite" data-requires-permission="lab_orders.view">فتح الحالات</a></div></div>
+          
+          
+          
+        </div><div class="soft-card p-5 text-center d-none mt-4" id="staffLabsEmpty">لا توجد مختبرات مطابقة.</div>
+      </section><section class="container py-4" id="staffScopeNotice" hidden><div class="soft-card p-4 text-center"><i class="bi bi-building-lock fs-1 text-primary"></i><h3 class="fw-bold mt-3" id="staffScopeTitle">اختر العيادة للمتابعة</h3><p class="text-secondary" id="staffScopeMessage">حدد عيادة لديك عضوية فعّالة فيها لعرض بياناتها وصلاحياتك.</p><a href="choose-clinic" class="btn btn-primary">اختيار العيادة</a></div></section></main>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><%- include('../partials/staff/footer') %></body></html>

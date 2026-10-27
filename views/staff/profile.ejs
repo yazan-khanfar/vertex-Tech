@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html data-style-sections="section-3" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الملف والصلاحيات | Clinic Staff</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+
+    
+  </head>
+  <body data-staff-account-status="active" data-staff-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>" data-staff-user-id="<%= typeof currentUser !== 'undefined' && currentUser ? currentUser.userId : '' %>" data-rendered-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-active-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-staff-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : '' %>"><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/staff/header') %>
+    
+    <main class="page-shell" id="main-content" data-staff-workspace="">
+      <div class="container pt-3"><label class="form-label small fw-bold" for="activeClinicContext">العيادة الحالية</label><select class="form-select mb-3" id="activeClinicContext" name="active_clinic_id" data-context-switcher="" aria-describedby="staffClinicContextHelp"><% if(typeof activeClinic !== 'undefined' && activeClinic){ %><option value="<%= activeClinic.id %>" data-membership-status="active" data-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : 'موظف' %>" data-clinic-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>"><%= activeClinic.name %></option><% } %></select><div class="d-flex flex-wrap align-items-center gap-2 mb-2"><a class="btn btn-outline-primary btn-sm" href="choose-clinic" data-choose-clinic-link>اختيار أو تبديل العيادة</a><small class="text-secondary" id="staffClinicContextHelp">تظهر بيانات وصلاحيات العيادة المختارة فقط.</small></div></div><section class="container py-4 py-lg-5" data-clinic-content="">
+        <div class="mb-4">
+          <span class="badge badge-soft mb-2">Clinic Staff</span>
+          <h1 class="fw-bold fs-2">ملفي والصلاحيات</h1>
+          <p class="text-secondary">
+            صلاحياتك يحددها مدير العيادة، ولا يمكنك منح صلاحيات لنفسك.
+          </p>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="soft-card p-4">
+              <h4 class="fw-bold mb-3">بيانات الحساب</h4>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="field-1">الاسم</label><input class="form-control" value="نور علي" id="field-1" name="full_name" form="backend-form-5">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-2">الدور</label><input class="form-control" readonly value="منسق عيادة" id="field-2" name="field_2" form="backend-form-5">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-3">البريد</label><input class="form-control" value="staff@example.test" id="field-3" name="field_3" form="backend-form-5">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-4">الهاتف</label><input class="form-control" value="0599 220 155" id="field-4" name="phone" form="backend-form-5">
+                </div>
+              </div>
+              <button class="btn btn-primary mt-3" data-ui-pending="" form="backend-form-6" type="submit">
+                حفظ
+              </button>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="soft-card p-4">
+              <h4 class="fw-bold mb-3">الصلاحيات</h4>
+              <div class="summary-row">
+                <span>عرض المواعيد</span><strong class="text-success">مسموح</strong>
+              </div>
+              <div class="summary-row">
+                <span>إدارة المواعيد</span><strong class="text-success">مسموح</strong>
+              </div>
+              <div class="summary-row">
+                <span>بيانات المرضى</span><strong class="text-success">إدارية فقط</strong>
+              </div>
+              <div class="summary-row">
+                <span>الفواتير/الدفعات</span><strong class="text-success">مسموح</strong>
+              </div>
+              <div class="summary-row"><span>عرض المختبرات</span><strong class="text-success">مسموح</strong></div>
+              <div class="summary-row"><span>تحديث إرسال/استلام الحالات</span><strong class="text-success">مسموح</strong></div>
+              <div class="summary-row"><span>إدارة قائمة المختبرات</span><strong class="text-danger">غير مسموح</strong></div>
+              <div class="summary-row">
+                <span>التشخيص/الوصفات</span><strong class="text-danger">غير مسموح</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      <%- include('../partials/shared/mfa-manager', {mfaScope:'staff'}) %>
+      <div class="container"><%- include('../partials/shared/password-editor', { passwordScope: 'staff' }) %>
+<%- include('../partials/shared/active-sessions', {sessionsScope:'staff'}) %></div>
+</section>
+    <section class="container py-4" id="staffScopeNotice" hidden><div class="soft-card p-4 text-center"><i class="bi bi-building-lock fs-1 text-primary"></i><h3 class="fw-bold mt-3" id="staffScopeTitle">اختر العيادة للمتابعة</h3><p class="text-secondary" id="staffScopeMessage">حدد عيادة لديك عضوية فعّالة فيها لعرض بياناتها وصلاحياتك.</p><a href="choose-clinic" class="btn btn-primary">اختيار العيادة</a></div></section></main>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-5" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-6" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><%- include('../partials/staff/footer') %></body></html>

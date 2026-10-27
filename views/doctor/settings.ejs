@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html data-style-sections="section-3 section-5" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>إعدادات الحساب | Smart Dental Doctor</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/doctor/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="profile">ملفي الشخصي</a>
+            </li>
+            <li class="breadcrumb-item active">الإعدادات</li>
+          </ol>
+        </nav>
+        <div class="mb-4">
+          <span class="badge badge-soft mb-2">Account Settings</span>
+          <h1 class="fw-bold">إعدادات الحساب</h1>
+          <p class="text-secondary mb-0">
+            إدارة تسجيل الدخول، الأمان، واللغة في مكان واحد.
+          </p>
+        </div>
+        <div class="settings-layout">
+          <aside class="settings-nav-card">
+            <a class="settings-nav-link active" href="#account"><i class="bi bi-person-check"></i><span>الحساب</span></a><a class="settings-nav-link" href="#security"><i class="bi bi-shield-lock"></i><span>الأمان</span></a>
+            &gt;<a class="settings-nav-link" href="#preferences"><i class="bi bi-sliders"></i><span>التفضيلات</span></a>
+          </aside>
+          <div class="settings-content">
+            <div class="settings-section" id="account">
+              <div class="settings-section-head">
+                <span class="settings-section-icon"><i class="bi bi-person-check"></i></span>
+                <div>
+                  <h4 class="fw-bold mb-1">بيانات الحساب</h4>
+                  <div class="small text-secondary">
+                    بيانات الدخول والتواصل الخاصة بحساب الطبيب.
+                  </div>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="field-1">البريد الإلكتروني</label><input class="form-control" value="doctor@example.test" id="field-1" name="email" form="backend-form-9">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-2">رقم الهاتف</label><input class="form-control" value="0599 111 222" id="field-2" name="phone" form="backend-form-9">
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-primary" data-ui-pending="" form="backend-form-9" type="submit">
+                    حفظ البيانات
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="settings-section" id="security">
+              <div class="settings-section-head">
+                <span class="settings-section-icon"><i class="bi bi-shield-lock"></i></span>
+                <div>
+                  <h4 class="fw-bold mb-1">الأمان وكلمة المرور</h4>
+                  <div class="small text-secondary">
+                    غيّر كلمة المرور وراجع إعدادات حماية الحساب.
+                  </div>
+                </div>
+              </div>
+              <div class="alert alert-light border" role="note">
+                لتغيير كلمة المرور، افتح قسم الأمان داخل <a href="profile#sdc-password" class="fw-bold">ملفي الشخصي</a>. تم توحيد عملية التغيير هناك فقط.
+              </div>
+              <hr>
+              <div class="setting-toggle" hidden="">
+                <div>
+                  <strong>التحقق بخطوتين</strong>
+                  <div class="small text-secondary">
+                    طبقة أمان إضافية عند تسجيل الدخول.
+                  </div>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="field-6" name="field_6" form="backend-form-10">
+                </div>
+              </div><div class="alert alert-light border mt-3">إدارة التحقق بخطوتين موجودة في <a href="/doctor/profile#sdc-mfa">ملفي الشخصي</a>، بدون صفحة منفصلة.</div>
+            </div>
+            
+            <div class="settings-section" id="preferences">
+              <div class="settings-section-head">
+                <span class="settings-section-icon"><i class="bi bi-sliders"></i></span>
+                <div>
+                  <h4 class="fw-bold mb-1">التفضيلات</h4>
+                  <div class="small text-secondary">
+                    لغة الواجهة وطريقة عرض البيانات.
+                  </div>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="field-7">لغة الواجهة</label><select class="form-select" id="field-7" name="field_7" form="backend-form-11">
+                    <option selected>العربية</option>
+                    <option>English</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-outline-primary" data-ui-pending="" form="backend-form-11" type="submit">
+                    حفظ التفضيلات
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="settings-section"><p class="text-secondary">تتم إدارة الأجهزة والجلسات من <a href="profile#sdc-sessions">ملفي الشخصي</a>، بدون صفحة إضافية.</p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/doctor/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="clean-dropdown notification-menu doctor-popover doctor-notification-popover" id="doctorNotifications">
+              <div class="px-3 py-2 fw-bold">الإشعارات</div>
+              <div class="dropdown-divider"></div>
+              <a class="notification-entry" href="appointments"><strong>المريض أحمد وصل</strong>
+                <div class="small text-secondary">
+                  موعد 11:30 جاهز لبدء الزيارة.
+                </div></a>
+              
+              
+            </div><div class="clean-dropdown profile-menu doctor-popover doctor-profile-popover" id="doctorProfile">
+              <a class="dropdown-item" href="profile"><i class="bi bi-person ms-2"></i>ملفي الشخصي</a>
+              <a class="dropdown-item" href="settings"><i class="bi bi-gear ms-2"></i>الإعدادات</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-primary fw-bold" href="../clinic/index"><i class="bi bi-arrow-left-right ms-2"></i>تبديل لإدارة
+                العيادة</a>
+              <div class="px-3 py-2 bg-light rounded-3 mx-2 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small">د. عمر ناصر • مالك ومدير العيادة</strong>
+              </div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right ms-2"></i>تسجيل الخروج
+              </button>
+            </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-9" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-10" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-11" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form></body></html>

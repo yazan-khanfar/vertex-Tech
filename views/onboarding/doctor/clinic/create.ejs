@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>طلب إنشاء عيادة | Smart Dental Clinic</title>
+    <link href="../../../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../../../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="../../assets/styles.css">
+  <link href="../../../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body>
+    <div class="auth-page">
+      <div class="container">
+        <div class="auth-card mx-auto" style="max-width: 900px">
+          <div class="auth-form-wrap">
+            <a class="small text-secondary" href="../choose-path"><i class="bi bi-arrow-right ms-1"></i>العودة لاختيار المسار</a>
+            <h1 class="mt-4 mb-2">طلب إنشاء عيادة</h1>
+            <p>أدخل بيانات المنشأة وموقعها وأرفق الوثائق للمراجعة من Super Admin. لا تُفعَّل العيادة قبل الاعتماد.</p>
+            <% if (formError) { %><div class="alert alert-danger" role="alert"><%= formError %></div><% } %>
+            <form class="mt-4" action="/onboarding/doctor/clinic/create" method="post" enctype="multipart/form-data" id="clinicCreateForm">
+              <input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+              <div class="row g-3">
+                <div class="col-md-6"><label class="form-label is-required">اسم العيادة *</label><input class="form-control" maxlength="150" name="clinic_name" required value="<%= clinic?.clinic_name || '' %>"></div>
+                <div class="col-md-6"><label class="form-label is-required">المدينة *</label><select class="form-select" name="city" required>
+                  <option value="">اختر المدينة</option><% for (const city of ['جنين','نابلس','رام الله','طولكرم','الخليل','القدس','بيت لحم','أريحا','قلقيلية','سلفيت','طوباس','غزة']) { %><option value="<%= city %>" <%= (clinic?.city||'')===city?'selected':'' %>><%= city %></option><% } %></select></div>
+                <div class="col-md-6"><label class="form-label is-required">المنطقة / الحي *</label><input class="form-control" name="area" maxlength="150" required value="<%= clinic?.area || '' %>"></div>
+                <div class="col-md-6"><label class="form-label is-required">رقم ترخيص المنشأة *</label><input class="form-control" name="facility_license_number" maxlength="150" required value="<%= clinic?.facility_license_number || '' %>"></div>
+                <div class="col-md-6"><label class="form-label is-required">هاتف العيادة *</label><input class="form-control" name="phone" maxlength="30" required value="<%= clinic?.phone || '' %>"></div>
+                <div class="col-md-6"><label class="form-label is-required">البريد الإلكتروني للعيادة *</label><input class="form-control" name="email" maxlength="254" type="email" required value="<%= clinic?.email || '' %>"></div>
+                <div class="col-12"><label class="form-label is-required">العنوان التفصيلي *</label><input class="form-control" name="address" maxlength="2000" required value="<%= clinic?.address || '' %>"></div>
+                <div class="col-md-6"><label class="form-label is-required">خط العرض Latitude *</label><input id="clinicLatitude" class="form-control" type="number" step="any" min="-90" max="90" name="latitude" required value="<%= clinic?.latitude || '' %>"></div>
+                <div class="col-md-6"><label class="form-label is-required">خط الطول Longitude *</label><input id="clinicLongitude" class="form-control" type="number" step="any" min="-180" max="180" name="longitude" required value="<%= clinic?.longitude || '' %>"></div>
+                <div class="col-12"><button type="button" class="btn btn-outline-primary btn-sm" data-use-clinic-location>استخدام موقعي الحالي</button><small class="text-secondary d-block mt-1">يمكنك إدخال الإحداثيات يدويًا. لا يتم الوصول لموقعك دون موافقتك في المتصفح.</small></div>
+                <div class="col-md-6"><label class="form-label is-required">ترخيص المنشأة * (PDF/JPG/PNG، 5MB)</label><input class="form-control" type="file" name="license" accept=".pdf,.jpg,.jpeg,.png" required></div>
+                <div class="col-md-6"><label class="form-label is-required">هوية / وثيقة المدير * (PDF/JPG/PNG، 5MB)</label><input class="form-control" type="file" name="manager" accept=".pdf,.jpg,.jpeg,.png" required></div>
+                <div class="col-12"><label class="form-label">ملاحظات إضافية</label><textarea class="form-control" name="notes" rows="3" maxlength="4000"><%= clinic?.notes || '' %></textarea></div>
+              </div>
+              <button class="btn btn-primary w-100 mt-4 py-2" type="submit">إرسال طلب الاعتماد</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="../../assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div>
+        <!-- زر الدعم الفني العائم -->
+        <a class="floating-chat-btn" href="/account/support" title="فتح طلب دعم فني"><i class="bi bi-chat-dots-fill"></i></a>
+
+        <!-- نافذة الشات المنبثقة -->
+        
+    </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

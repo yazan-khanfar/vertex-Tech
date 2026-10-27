@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html data-style-sections="section-8" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>إضافة موعد | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="appointments">المواعيد</a>
+            </li>
+            <li class="breadcrumb-item active">إضافة موعد</li>
+          </ol>
+        </nav>
+        <div class="row justify-content-center">
+          <div class="col-xl-9">
+            <div class="mb-4">
+              <span class="badge badge-soft mb-2">Clinic Booking</span>
+              <h1 class="fw-bold">إضافة موعد من العيادة</h1>
+              <p class="text-secondary mb-0">
+                يمكن لإدارة العيادة حجز موعد لمريض مسجل حسب الطبيب والخدمة
+                والأوقات المتاحة.
+              </p>
+            </div>
+            <form id="searchClinicSlots" method="get" action="/clinic/new-appointment"><input type="hidden" name="follow_up_visit_id" value="<%= followUpVisitId||'' %>"></form><div class="soft-card p-4 p-lg-5"><div class="alert alert-light border mb-3"><button type="submit" class="btn btn-outline-primary" form="searchClinicSlots">عرض الأوقات المتاحة</button><% if(message){ %><span class="me-2"><%= message %></span><% } %></div>
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">المريض</label>
+                  <select class="form-select" id="clinicBookingPatient" name="patient_id" form="backend-form-1" required><option value="">اختر المريض المسجل بالعيادة</option><% for(const p of patients){ %><option value="<%= p.id %>" <%=selectedPatientId===p.id?"selected":""%>><%= p.name %></option><% } %></select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">الطبيب</label>
+                  <select class="form-select" id="clinicBookingDoctor" name="doctor_id" form="searchClinicSlots" required><option value="">اختر الطبيب</option><% for(const d of [...new Map(rows.map(r=>[r.doctor_id,r])).values()]){ %><option value="<%= d.doctor_id %>" <%= selection.doctor_id===d.doctor_id?'selected':'' %>>د. <%= d.doctor_name %></option><% } %></select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">الخدمة</label>
+                  <select class="form-select" id="clinicBookingService" name="service_id" form="searchClinicSlots" required><option value="">اختر الخدمة</option><% for(const v of rows.filter(r=>!selection.doctor_id||r.doctor_id===selection.doctor_id)){ %><option value="<%= v.service_id %>" <%= selection.service_id===v.service_id?'selected':'' %>><%= v.service_name %> — <%= v.price %> ₪ — <%= v.duration %> دقيقة</option><% } %></select><div class="small text-secondary mt-2">خدمات هذه العيادة المخصصة للطبيب المختار فقط؛ السعر والمدة من كتالوج العيادة.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">التاريخ</label>
+                  <input class="form-control" id="clinicBookingDate" type="date" min="<%= now.date %>" value="<%= selection.appointment_date %>" name="appointment_date" form="searchClinicSlots" required>
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-bold">الوقت</label>
+                  <div class="slot-grid"><% if(selected&&timeSlots.length){ for(const t of timeSlots){ %><div class="slot-choice"><input class="visually-hidden" type="radio" name="appointment_time" value="<%= t %>" id="clinic-slot-<%= t.replace(':','-') %>" form="backend-form-1" required><label class="time-slot available btn btn-light w-100" for="clinic-slot-<%= t.replace(':','-') %>"><%= t %></label></div><% } }else{ %><div class="alert alert-info w-100"><%= availabilityMessage || 'حدد الطبيب والخدمة والتاريخ ثم اعرض الأوقات المتاحة.' %></div><% } %></div>
+                  <div class="small text-secondary mt-2">
+                    الأوقات المشطوبة غير متاحة.
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-bold">ملاحظات إدارية / ملاحظات المريض</label>
+                  <textarea class="form-control" id="clinicBookingNotes" placeholder="ملاحظة اختيارية..." rows="4" name="notes" form="backend-form-1"></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">حالة الموعد</label>
+                  <select class="form-select" id="clinicBookingStatus" name="clinic_booking_status" form="backend-form-1">
+                    <option selected>مؤكد</option>
+                    <option>بانتظار الموافقة</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">نوع الحجز</label>
+                  <select class="form-select" id="clinicBookingType" disabled><option>حجز يدوي في العيادة الحالية</option></select>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end gap-2 mt-4">
+                <a class="btn btn-light" href="appointments">إلغاء</a>
+                <button class="btn btn-primary" id="saveClinicAppointmentBtn" <%= !(selected&&timeSlots.length)?"disabled":"" %> form="backend-form-1" type="submit">
+                  حفظ الموعد
+                </button>
+              </div>
+              <div class="d-none alert alert-success rounded-4 mt-4 mb-0" id="clinicBookingResult"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="post" action="/clinic/new-appointment" hidden><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="follow_up_visit_id" value="<%= followUpVisitId||'' %>"><input type="hidden" name="clinic_id" value="<%= selection.clinic_id %>"><input type="hidden" name="doctor_id" value="<%= selected?.doctor_id || '' %>"><input type="hidden" name="service_id" value="<%= selected?.service_id || '' %>"><input type="hidden" name="appointment_date" value="<%= selection.appointment_date %>"></form></body></html>

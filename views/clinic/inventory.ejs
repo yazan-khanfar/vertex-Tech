@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html data-style-sections="section-2 section-5" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>إدارة المخزون | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+    
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+
+    
+  </head>
+  <body><a class="ux-skip" href="#inventoryMain">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell py-4" id="inventoryMain">
+  <div class="container pb-4">
+    <nav aria-label="مسار التنقل" class="small text-secondary mb-3"><a href="index" class="text-decoration-none">الرئيسية</a> / إدارة المخزون</nav>
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+      <div><h1 class="fw-bold fs-3 mb-1">إدارة مخزون العيادة</h1><p class="text-secondary mb-0">إضافة المستلزمات وصرفها بسرعة مع سجل كامل لكل حركة.</p></div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inventoryAddModal"><i class="bi bi-plus-circle ms-2"></i>إضافة مادة</button>
+    </div>
+    <% if(feedback){ %><div class="alert alert-success border-0 rounded-3 small mb-4"><%= feedback %></div><% } %>
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-lg-3"><div class="soft-card p-3 h-100"><div class="text-secondary small">المواد المسجلة</div><div class="fs-3 fw-bold" id="invTotal"><%= stock.stats.total %></div></div></div>
+      <div class="col-6 col-lg-3"><div class="soft-card p-3 h-100"><div class="text-secondary small">مواد منخفضة الكمية</div><div class="fs-3 fw-bold text-warning" id="invLow"><%= stock.stats.low %></div></div></div>
+      <div class="col-6 col-lg-3"><div class="soft-card p-3 h-100"><div class="text-secondary small">مواد نفدت</div><div class="fs-3 fw-bold text-danger" id="invEmpty"><%= stock.stats.empty %></div></div></div>
+      <div class="col-6 col-lg-3"><div class="soft-card p-3 h-100"><div class="text-secondary small">مواد قاربت الانتهاء / منتهية</div><div class="fs-3 fw-bold" id="invExpiry"><%= stock.stats.expiring %></div></div></div>
+    </div>
+    <section class="soft-card p-3 p-lg-4 mb-4" aria-labelledby="inventoryTitle">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"><h2 class="h5 fw-bold mb-0" id="inventoryTitle">المواد والكميات</h2><span class="small text-secondary" id="inventoryCount"><%= stock.items.length %> من أصل <%= stock.items.length %> مواد</span></div>
+      <div class="row g-2 mb-3">
+        <div class="col-md-8"><label class="form-label small" for="inventorySearch">ابحث عن مادة</label><input class="form-control" id="inventorySearch" placeholder="الاسم أو النوع أو الرمز" value="" name="inventory_search"></div>
+        <div class="col-md-4"><label class="form-label small" for="inventoryFilter">الحالة</label><select class="form-select" id="inventoryFilter" name="inventory_filter"><option value="all" selected>جميع المواد</option><option value="low">منخفض أو نافد</option><option value="expired">قرب/انتهاء الصلاحية</option><option value="available">متوفر</option></select></div>
+      </div>
+      <div class="table-responsive mobile-stack-wrapper table-ui-shell"><table class="table align-middle inventory-table mb-0 responsive-stack-table system-data-table medium-data-table"><thead class="table-light"><tr><th>المادة</th><th>المتاح</th><th>الحد الأدنى</th><th>الصلاحية</th><th>الحالة</th><th>الإجراءات</th></tr></thead><tbody id="inventoryRows"><% stock.items.forEach(function(i){ %><tr data-item-id="<%= i.id %>" data-search="<%= i.name %> <%= i.category %> <%= i.id %>" data-state="<%= i.state %>" data-unit="<%= i.unit %>" data-qty="<%= i.qty %>" data-min="<%= i.minQty %>" data-expiry="<%= i.expiry||'' %>">
+<td data-label="المادة" class="table-primary-cell"><strong><%= i.name %></strong><div class="small text-secondary"><%= i.category %></div></td>
+<td data-label="المتاح"><strong class="fs-5"><%= i.qty %></strong> <span class="small text-secondary"><%= i.unit %></span></td><td data-label="الحد الأدنى"><%= i.minQty %> <%= i.unit %></td><td data-label="الصلاحية"><%= i.expiry||'غير محددة' %></td>
+<td data-label="الحالة" class="table-status-cell"><span class="badge <%= i.state==='available'?'text-bg-success':i.state==='low'?'text-bg-warning':'text-bg-danger' %>"><%= i.state==='available'?'متوفر':i.state==='low'?'منخفض':'نافد' %></span></td>
+<td data-label="الإجراءات" class="table-actions-cell"><div class="d-flex gap-2 flex-wrap table-action-grid"><form action="/clinic/inventory/move" method="post" class="d-inline"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="item_id" value="<%= i.id %>"><input type="hidden" name="inventory_move_type" value="issue"><input type="hidden" name="inventory_move_qty" value="1"><button type="submit" class="btn btn-sm btn-outline-primary quick-issue" <%= i.qty<1?'disabled':'' %>><i class="bi bi-dash-circle ms-1"></i>صرف 1</button></form><button type="button" class="btn btn-sm btn-light border move-item" data-bs-toggle="modal" data-bs-target="#inventoryMoveModal" data-item-id="<%= i.id %>" data-item-name="<%= i.name %>" data-item-qty="<%= i.qty %>">إدارة الكمية</button></div></td></tr><% }); %></table></div>
+      <div id="inventoryEmpty" class="text-secondary small py-4 text-center <%= stock.items.length?'d-none':'' %>">لا توجد مواد مطابقة للبحث.</div>
+    </section>
+    <section class="soft-card p-3 p-lg-4" aria-labelledby="inventoryHistoryTitle">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3"><h2 class="h5 fw-bold mb-0" id="inventoryHistoryTitle">سجل حركات المخزون</h2><span class="text-secondary small">سجل الحركات • <%= stock.historyTotal %> حركة</span></div>
+      <div class="table-responsive mobile-stack-wrapper table-ui-shell"><table class="table align-middle small mb-0 responsive-stack-table system-data-table wide-data-table"><thead class="table-light"><tr><th>التاريخ</th><th>المادة</th><th>نوع الحركة</th><th>الكمية</th><th>قبل ← بعد</th><th>بواسطة</th><th>السبب</th></tr></thead><tbody id="inventoryHistory"><% stock.movements.forEach(function(m){ %><tr><td data-label="التاريخ"><%= m.at %></td><td data-label="المادة"><%= m.name %></td><td data-label="نوع الحركة"><%= ({opening_balance:'رصيد أولي',purchase:'توريد',usage:'صرف',adjustment:'تسوية'})[m.type]||m.type %></td><td data-label="الكمية" dir="ltr"><%= m.change>0?'+':'' %><%= m.change %></td><td data-label="قبل ← بعد" dir="ltr"><%= m.before %> → <%= Math.round((m.before+m.change)*100)/100 %></td><td data-label="بواسطة"><%= m.actor %></td><td data-label="السبب"><%= m.reason||'—' %></td></tr><% }); %></tbody></table></div>
+      <div id="inventoryNoHistory" class="small text-secondary text-center py-3 <%= stock.movements.length?'d-none':'' %>">لا توجد حركات مخزون مسجلة بعد.</div>
+      <% if(stock.pages>1){ %><nav class="inventory-pagination mt-3 pt-3" id="inventoryHistoryPagination" aria-label="صفحات سجل حركات المخزون"><div id="inventoryHistoryRange" class="small text-secondary" aria-live="polite">صفحة <%= stock.page %> من <%= stock.pages %></div><div class="inventory-page-buttons" id="inventoryHistoryPages" role="group" aria-label="التنقل بين صفحات الحركات"><% for(let n=Math.max(1,stock.page-2);n<=Math.min(stock.pages,stock.page+2);n++){ %><a class="btn btn-sm <%= n===stock.page?'btn-primary':'btn-outline-primary' %>" href="inventory?page=<%= n %>"><%= n %></a><% } %></div></nav><% } %>
+    </section>
+  </div>
+</main>
+<!-- Add item -->
+<div class="modal fade" id="inventoryAddModal" tabindex="-1" aria-labelledby="inventoryAddTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content rounded-4"><form id="inventoryAddForm" method="post" action="/clinic/inventory/add"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><div class="modal-header"><h5 class="modal-title fw-bold" id="inventoryAddTitle">إضافة مادة للمخزون</h5><button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="إغلاق"></button></div>
+<div class="modal-body"><div class="mb-3"><label for="invName" class="form-label is-required">اسم المادة</label><input id="invName" class="form-control" required="" maxlength="100" placeholder="مثال: كفوف طبية" value="" name="inv_name"></div>
+<div class="row g-2"><div class="col-6"><label for="invCategory" class="form-label">التصنيف</label><select id="invCategory" class="form-select" name="inv_category"><option selected>مستهلكات طبية</option><option>تعقيم</option><option>مواد علاجية</option><option>أدوات</option><option>أخرى</option></select></div><div class="col-6"><label for="invUnit" class="form-label">وحدة القياس</label><select id="invUnit" class="form-select" name="inv_unit"><option selected>حبة</option><option>علبة</option><option>عبوة</option><option>قطعة</option><option>زوج</option><option>مل</option></select></div>
+<div class="col-6"><label for="invInitial" class="form-label is-required">الكمية الحالية</label><input id="invInitial" type="number" min="0" max="1000000" step="1" required="" class="form-control" value="0" name="inv_initial"></div><div class="col-6"><label for="invMin" class="form-label is-required">حد التنبيه</label><input id="invMin" type="number" min="0" max="1000000" step="1" required="" class="form-control" value="2" name="inv_min"></div>
+<div class="col-12"><label for="invExp" class="form-label">تاريخ انتهاء الصلاحية (اختياري)</label><input id="invExp" type="date" class="form-control" value="" name="inv_exp"></div></div><p class="text-secondary small mt-3 mb-0">تضاف المادة وكميتها الابتدائية إلى قائمة المخزون.</p></div>
+<div class="modal-footer"><button type="button" class="btn btn-light" data-bs-dismiss="modal">إلغاء</button><button type="submit" class="btn btn-primary">حفظ المادة</button></div></form></div></div></div>
+<!-- Inventory transaction -->
+<div class="modal fade" id="inventoryMoveModal" tabindex="-1" aria-labelledby="inventoryMoveTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content rounded-4"><form id="inventoryMoveForm" method="post" action="/clinic/inventory/move"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="item_id" id="inventoryMoveItemId"><div class="modal-header"><h5 class="modal-title fw-bold" id="inventoryMoveTitle">حركة مخزون</h5><button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="إغلاق"></button></div>
+<div class="modal-body"><div class="small text-secondary mb-3" id="inventoryMoveAvailable"></div><label class="form-label" for="inventoryMoveType">نوع الحركة</label><select class="form-select mb-3" id="inventoryMoveType" name="inventory_move_type"><option value="issue" selected>صرف للاستخدام</option><option value="in">إضافة وارد</option><option value="damaged">تالف</option><option value="adjust">تسوية جرد (تحديد الرصيد الجديد)</option></select>
+<label class="form-label is-required" for="inventoryMoveQty" id="inventoryMoveQtyLabel">الكمية</label><input class="form-control mb-3" id="inventoryMoveQty" type="number" min="1" step="1" max="1000000" value="1" required="" name="inventory_move_qty">
+<label class="form-label" for="inventoryMoveReason">السبب أو الملاحظة</label><textarea class="form-control" id="inventoryMoveReason" rows="2" placeholder="مثال: استخدام أثناء جلسة علاج / توريد جديد" name="inventory_move_reason"></textarea>
+<div class="small text-danger mt-2" id="inventoryMoveError" role="alert" aria-live="polite"></div></div>
+<div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">إلغاء</button><button class="btn btn-primary" id="inventoryMoveSubmit" type="submit">تأكيد الحركة</button></div></form></div></div></div>
+
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form></body></html>

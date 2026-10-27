@@ -1,0 +1,32 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><base href="/<%= role==='onboarding'?'onboarding/doctor/jobs':role %>/"><meta name="viewport" content="width=device-width,initial-scale=1"><title><%= title %> | <%= platformName %></title><link rel="stylesheet" href="/assets/vendor/937abe4f713b-bootstrap.rtl.min.css"><link rel="stylesheet" href="/assets/vendor/28667e4f82c7-bootstrap-icons.css"><link rel="stylesheet" href="/<%= role %>/assets/styles.css"></head><body>
+<a class="visually-hidden-focusable" href="#main-content">تخطي إلى المحتوى</a>
+<%- include('../partials/'+layoutRole+'/header') %>
+<main id="main-content" class="page-shell"><section class="container py-4 py-lg-5"><h1 class="fw-bold mb-4"><%= title %></h1>
+<% if(saved){ %><div class="alert alert-success" role="status">تم حفظ العملية بنجاح.</div><% } %>
+<% for(const section of sections){ %><section class="soft-card bg-white border rounded-4 p-4 mb-4"><h2 class="h4 fw-bold mb-3"><%= section.title %></h2>
+<% if(section.text){ %><p class="text-secondary" style="white-space:pre-wrap"><%= section.text %></p><% } %>
+<% if(section.links){for(const link of section.links){ %><a class="btn btn-outline-primary m-1" href="<%= link.href %>"><%= link.label %></a><% }} %>
+<% if(section.rows){ %><div class="table-responsive"><table class="table align-middle"><thead><tr><% for(const col of section.columns){ %><th scope="col"><%= col.label %></th><% } %></tr></thead><tbody>
+<% if(!section.rows.length){ %><tr><td colspan="<%= section.columns.length %>" class="text-center text-secondary py-4">لا توجد سجلات.</td></tr><% } %>
+<% for(const row of section.rows){ %><tr><% for(const col of section.columns){ %><td><% if(col.href){ %><a href="<%= col.href(row) %>"><%= row[col.key] ?? 'عرض' %></a><% }else{ %><%= displayValue(row[col.key],col.key) %><% } %></td><% } %></tr><% } %>
+</tbody></table></div><% } %>
+<% if(section.form){const f=section.form; %><form method="post" action="<%= f.action %>" <% if(f.multipart){ %>enctype="multipart/form-data"<% } %>>
+<input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="request_key" value="<%= requestKey %>">
+<% for(const [name,value] of Object.entries(f.hidden||{})){ %><input type="hidden" name="<%= name %>" value="<%= value %>"><% } %>
+<div class="row g-3"><% for(const input of f.fields){ %><div class="<%= input.type==='textarea'?'col-12':'col-md-6' %>"><label class="form-label d-block"><%= input.label %>
+<% if(input.type==='textarea'){ %><textarea name="<%= input.name %>" class="form-control" rows="4" maxlength="10000" <%= input.required===false?'':'required' %>><%= input.value %></textarea>
+<% }else if(input.type==='select'){ %><select name="<%= input.name %>" class="form-select" <%= input.required===false?'':'required' %>><% for(const option of input.options||[]){ %><option value="<%= option.value %>" <%= String(option.value)===String(input.value)?'selected':'' %>><%= option.label %></option><% } %></select>
+<% }else if(input.type==='checkbox'){ %><input type="checkbox" name="<%= input.name %>" value="on" class="form-check-input ms-2" <%= input.value===true?'checked':'' %> <%= input.required===false?'':'required' %>>
+<% }else{ %><input name="<%= input.name %>" type="<%= input.type %>" class="form-control" <% if(input.type!=='file'){ %>value="<%= input.value %>"<% } %> <%= input.required===false?'':'required' %> <% if(input.type==='number'){ %>step="0.01" min="0"<% } %> maxlength="512"><% } %>
+</label></div><% } %></div><button class="btn btn-primary mt-3" type="submit"><%= f.submit %></button></form><% } %>
+</section><% } %>
+<% if(typeof security!=='undefined'&&security){ %>
+<%- include('../partials/shared/password-editor',{passwordScope:securityScope}) %>
+<%- include('../partials/shared/mfa-manager',{mfaScope:securityScope}) %>
+<%- include('../partials/shared/active-sessions',{sessionsScope:securityScope}) %>
+<% } %>
+<a class="btn btn-outline-secondary mt-3" href="/account/support">الدعم الفني</a>
+</section></main>
+<%- include('../partials/'+layoutRole+'/footer') %>
+<script src="/assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script><script src="/<%= role %>/assets/app.js"></script><script src="/assets/logout.js"></script>
+</body></html>

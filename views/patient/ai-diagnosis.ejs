@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html data-style-sections="section-5" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>التشخيص الذكي | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+    <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+    
+      
+  </head>
+  <body class="sdc-ai-page"><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <!-- شريط التنقل العلوي -->
+    <%- include('../partials/patient/header') %>
+
+    <!-- القائمة الجانبية للموبايل -->
+    
+
+    <!-- المحتوى الرئيسي -->
+    <main class="page-shell bg-light min-vh-100 py-4" id="main-content">
+      <section class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-10">
+            <div class="chat-shell card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+              
+              <!-- أداة المساعد العلوية -->
+              <div class="ai-toolbar p-4 border-bottom d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 bg-white">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="icon-box bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center fs-4" style="width: 50px; height: 50px;" aria-hidden="true">
+                    <i class="bi bi-stars"></i>
+                  </div>
+                  <div>
+                    <h5 class="fw-bold mb-1 text-dark">المساعد الذكي للأسنان</h5>
+                    <small class="text-muted">
+                      صف الأعراض، واسمح باستخدام موقعك إذا رغبت، وسنوازن بين التخصص المناسب والقرب وأولوية الموعد.
+                    </small>
+                  </div>
+                </div>
+                <button class="btn btn-outline-danger btn-sm px-3 text-nowrap" id="clearChat" data-ui-pending="">
+                  <i class="bi bi-trash3 ms-1"></i>حذف المحادثة
+                </button>
+              </div>
+
+              <!-- بطاقة الموقع الجغرافي -->
+              <div class="ai-location-card mx-4 mt-4 p-3 rounded-3 bg-light border d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3" data-demo-location="جنين — وسط المدينة">
+                <div>
+                  <div class="fw-bold text-dark d-flex align-items-center gap-2">
+                    <i class="bi bi-crosshair text-primary fs-5"></i>الموقع لتحسين الاقتراح
+                  </div>
+                  <div class="small text-muted mt-1" id="aiLocationStatus">
+                    الموقع غير مستخدم. الاقتراح سيعمل، لكن ترتيب القرب سيكون أقل دقة.
+                  </div>
+                </div>
+                <button class="btn btn-outline-primary btn-sm px-3 text-nowrap" id="useAiLocation" type="button" data-ui-pending="">
+                  <i class="bi bi-geo-alt ms-1"></i>استخدام موقعي الحالي
+                </button>
+              </div>
+
+              <!-- جسم المحادثة -->
+              <div class="chat-body p-4" id="chatBody">
+                <div class="chat-row ai mb-3 d-flex">
+                  <div class="chat-bubble bg-light border p-3 rounded-4 text-dark shadow-sm" style="max-width: 80%;">
+                    أهلاً أحمد، احكيلي شو المشكلة اللي بتعاني منها ومتى بدأت؟
+                  </div>
+                </div>
+              </div>
+
+              <!-- خانة إدخال الرسائل والأزرار السريعة -->
+              <div class="ai-results p-4 border-top" data-assessment-id="AI-ASSESS-001" data-demo-location="جنين — وسط المدينة" data-recommended-specialty="علاج الجذور" data-risk-label="متوسطة" data-risk-level="medium" data-symptom-summary="ألم متكرر أسفل اليمين مع حساسية عند المضغ." id="aiHtmlData" role="region" aria-labelledby="aiResultsTitle"><div class="ai-results-heading d-flex align-items-start justify-content-between flex-wrap gap-2 mb-3"><div><h2 id="aiResultsTitle" class="h5 fw-bold mb-1"><i class="bi bi-stars text-primary ms-1" aria-hidden="true"></i>الاقتراح المناسب لحالتك</h2><p class="small text-secondary mb-0">الطبيب حسب تخصصه، مع خدمة مخصصة له داخل العيادة وموعد متاح بعد التقييم الأولي.</p></div><span class="badge badge-soft">مثال توضيحي</span></div>
+      <div data-ai-suggestion="all" data-recommendation-id="AI-REC-001">
+        <div class="suggestion-card bg-white rounded-4 border p-3">
+          <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+            <div>
+              <strong>الاقتراح رقم 1</strong>
+              <div class="small text-secondary">التخصص الأنسب: علاج الجذور</div>
+            </div>
+            <span class="badge text-bg-warning">خطورة متوسطة</span>
+          </div>
+          <div class="alert alert-warning py-2 small">
+            <i class="bi bi-clock-history ms-1"></i>الحالة متوسطة، لذلك أعطى
+            النظام أولوية لموعد قريب مع الحفاظ على ملاءمة الطبيب والمسافة.
+          </div>
+          <div class="suggestion-grid">
+            <div>
+              <small>العيادة</small><strong>عيادة الابتسامة الحديثة</strong>
+              <span><i class="bi bi-geo-alt-fill text-primary"></i> 1.2 كم • <i class="bi bi-star-fill text-warning"></i> 4.8</span>
+            </div>
+            <div>
+              <small>الطبيب والخدمة</small><strong>د. عمر ناصر</strong>
+              <span>علاج جذور • 500 ₪ • 60 دقيقة</span>
+            </div>
+            <div>
+              <small>التاريخ</small><strong>الأحد 25 أكتوبر 2026</strong>
+            </div>
+            <div>
+              <small>الوقت</small><strong>10:00 ص</strong>
+              <span>موعد قريب مناسب للحالة</span>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-2 mt-3 ai-suggestion-actions">
+            <button class="btn btn-primary btn-sm" data-ai-book="" data-clinic="عيادة الابتسامة الحديثة" data-doctor="د. عمر ناصر" data-service="علاج جذور" data-date="2026-10-25" data-date-label="الأحد 21 أكتوبر 2026" data-time="10:00 ص" data-recommendation="AI-REC-001" data-risk="متوسطة" data-distance="1.2" type="button" data-ui-pending=""><i class="bi bi-calendar2-check ms-1"></i>احجز هذا الاقتراح</button>
+            <button class="btn btn-outline-primary btn-sm" data-ai-alt="alternateAll" type="button" data-bs-toggle="collapse" data-bs-target="#aiAlternativeSuggestion" aria-controls="aiAlternativeSuggestion" aria-expanded="false">عرض اقتراح آخر</button>
+          </div>
+        </div>
+      </div>
+      <div data-ai-suggestion="alternateAll" id="aiAlternativeSuggestion" class="collapse mt-3"><div class="alert alert-light border mb-0">لا يوجد اقتراح بديل في بيانات التجربة الحالية.</div></div>
+    </div><div class="chat-input p-4 border-top bg-light">
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                  <button class="quick-chip btn btn-sm btn-white border rounded-pill px-3 shadow-sm text-secondary bg-white" data-chat-prompt="عندي نزيف من اللثة من أسبوع تقريباً" data-ui-pending="">
+                    نزيف لثة
+                  </button>
+                  <button class="quick-chip btn btn-sm btn-white border rounded-pill px-3 shadow-sm text-secondary bg-white" data-chat-prompt="عندي ألم قوي في ضرس من يومين" data-ui-pending="">
+                    ألم ضرس
+                  </button>
+                  <button class="quick-chip btn btn-sm btn-white border rounded-pill px-3 shadow-sm text-secondary bg-white" data-chat-prompt="عندي حساسية قوية من البارد" data-ui-pending="">
+                    حساسية
+                  </button>
+                </div>
+                <div class="input-group shadow-sm ai-composer">
+                  <textarea class="form-control border-end-0 py-2" id="chatMessage" placeholder="اكتب رسالتك أو صف أعراضك هنا..." rows="2" style="resize: none;" aria-label="صف أعراضك أو اكتب رسالتك للمساعد" name="chat_message" form="backend-form-1"></textarea>
+                  <button class="btn btn-primary px-4 d-flex align-items-center justify-content-center" id="sendChat" data-ui-pending="" aria-label="إرسال الأعراض">
+                    <i class="bi bi-send fs-5"></i>
+                  </button>
+                </div>
+                <div class="ai-medical-disclaimer mt-3 small text-muted bg-white p-3 rounded-3 border">
+                  <i class="bi bi-shield-exclamation text-primary ms-1"></i>
+                  <strong>توجيه أولي فقط:</strong> نتيجة المساعد الذكي ليست تشخيص الطبيب ولا تقريراً طبياً، والتأكيد النهائي يتم حصراً بعد الفحص السريري.
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- الفوتر -->
+    <%- include('../partials/patient/footer') %>
+
+    <!-- التوست (Toast) -->
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0 shadow" id="appToast" role="alert">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية بنجاح</div>
+          <button class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- بيانات التشخيص المخفية للسكربت -->
+    
+
+
+    <!-- نتيجة الحجز المباشر من التشخيص الذكي -->
+    <div class="modal fade" id="aiBookingSuccessModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+          <div class="modal-body p-4 p-lg-5 text-center">
+            <div class="rounded-circle bg-success-subtle text-success d-inline-flex align-items-center justify-content-center mb-3" style="width:64px;height:64px"><i class="bi bi-calendar2-check fs-2"></i></div>
+            <h4 class="fw-bold">تم إنشاء الحجز مباشرة</h4>
+            <p class="text-secondary mb-3">تم إرسال الموعد إلى العيادة من الاقتراح الذكي بدون فتح صفحة الحجز. أصبح الموعد الآن بانتظار موافقة العيادة.</p>
+            <div class="alert alert-light border text-end mb-4" id="aiBookingSuccessDetails"></div>
+            <div class="small text-secondary mb-4"><i class="bi bi-journal-medical ms-1"></i>تم إرفاق ملخص الأعراض تلقائياً في ملاحظات الحجز.</div>
+            <div class="d-flex gap-2 justify-content-center flex-wrap">
+              <a class="btn btn-primary" href="appointments">عرض مواعيدي</a>
+              <button class="btn btn-light border" data-bs-dismiss="modal" type="button">متابعة المحادثة</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- السكريبتات الأساسية -->
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+  
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form></body></html>

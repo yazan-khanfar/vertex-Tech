@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>سجل التشخيصات والزيارات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/patient/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Medical Record</span>
+            <h1 class="fw-bold">السجل الطبي</h1>
+            <p class="text-secondary mb-0">
+              زياراتك الحالية، التقارير الطبية المعتمدة، والمتابعات التي أوصى
+              بها الطبيب.
+            </p>
+          </div>
+          <a class="btn btn-outline-primary" href="appointments"><i class="bi bi-calendar2-check ms-1"></i>عرض مواعيدي</a>
+        </div>
+        <div class="medical-followup-panel mb-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+            <div>
+              <h4 class="fw-bold mb-1">المتابعات المقترحة</h4>
+              <p class="text-secondary mb-0">
+                تُنشأ تلقائياً عندما يوصي الطبيب بمتابعة في التقرير.
+              </p>
+            </div>
+            <span class="badge badge-soft">متابعة واحدة</span>
+          </div>
+          <div class="row g-3">
+            
+            <div class="col-lg-6">
+              <div class="followup-patient-card waiting h-100" data-record-id="FU-001">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+                  <div>
+                    <span class="badge text-bg-warning">بانتظار الحجز</span>
+                    <h5 class="fw-bold mb-1">متابعة علاج جذور</h5>
+                    <div class="text-secondary">
+                      د. عمر ناصر • عيادة الابتسامة الحديثة
+                    </div>
+                  </div>
+                  <i class="bi bi-arrow-repeat fs-3 text-warning"></i>
+                </div>
+                <div class="followup-date-row">
+                  <span>الموعد المقترح</span><strong>28 أكتوبر 2026</strong>
+                </div>
+                <p class="small text-secondary mb-0 mt-2">
+                  يمكنك اختيار وقت متاح من جدول الطبيب، وبعد الحجز تتحول الحالة
+                  تلقائياً إلى «تم الحجز».
+                </p>
+                <a class="btn btn-primary btn-sm mt-3" href="book-appointment">حجز موعد متابعة</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="nav nav-pills mb-4" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-target="#doctorRecords" data-bs-toggle="pill" aria-current="page" aria-selected="true" role="tab" type="button">
+              الزيارات وتقارير الطبيب
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#aiRecords" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              التشخيصات الذكية الأولية
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="doctorRecords" role="tabpanel">
+            <div class="record-card p-4 mb-3 current-visit-card">
+              <div class="row align-items-center g-3">
+                <div class="col-lg-3">
+                  <span class="badge text-bg-primary mb-2">زيارة حالية</span>
+                  <h5 class="fw-bold mb-0">علاج جذور</h5>
+                  <small class="text-secondary">21 أكتوبر 2026 • 11:30 ص</small>
+                </div>
+                <div class="col-lg-3">
+                  <small class="text-secondary">الطبيب</small>
+                  <div class="fw-bold">د. عمر ناصر</div>
+                  <div class="text-secondary small">
+                    عيادة الابتسامة الحديثة
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <small class="text-secondary">الحالة</small>
+                  <div class="fw-bold">موعد مؤكد</div>
+                  <div class="text-secondary small">لم يصدر تقرير بعد</div>
+                </div>
+                <div class="col-lg-3 text-lg-end">
+                  <a class="btn btn-outline-primary btn-sm" href="appointments">عرض الموعد</a>
+                </div>
+              </div>
+            </div>
+            <div class="record-card p-4 mb-3">
+              <div class="row align-items-center g-3">
+                <div class="col-lg-3">
+                  <small class="text-secondary">21 أكتوبر 2026</small>
+                  <h5 class="fw-bold mb-0">علاج جذور</h5>
+                </div>
+                <div class="col-lg-3">
+                  <small class="text-secondary">الطبيب</small>
+                  <div class="fw-bold">د. عمر ناصر</div>
+                  <div class="text-secondary small">
+                    عيادة الابتسامة الحديثة
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <small class="text-secondary">التشخيص</small>
+                  <div class="fw-bold">التهاب لب غير قابل للعكس</div>
+                </div>
+                <div class="col-lg-3 text-lg-end">
+                  <a class="btn btn-primary btn-sm" href="appointment-details">عرض التقرير</a>
+                </div>
+              </div>
+            </div>
+            <div class="record-card p-4">
+              <div class="row align-items-center g-3">
+                <div class="col-lg-3">
+                  <small class="text-secondary">21 أكتوبر 2026</small>
+                  <h5 class="fw-bold mb-0">علاج تسوس</h5>
+                </div>
+                <div class="col-lg-3">
+                  <small class="text-secondary">الطبيب</small>
+                  <div class="fw-bold">د. عمر ناصر</div>
+                  <div class="text-secondary small">عيادة الابتسامة الحديثة</div>
+                </div>
+                <div class="col-lg-3">
+                  <small class="text-secondary">التشخيص</small>
+                  <div class="fw-bold">تسوس متوسط</div>
+                </div>
+                <div class="col-lg-3 text-lg-end">
+                  <a class="btn btn-primary btn-sm" href="appointment-details">عرض التقرير</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="aiRecords" role="tabpanel">
+            <div class="alert alert-info border-0 rounded-4 mb-3">
+              <i class="bi bi-info-circle ms-2"></i><strong>هذه ليست تقارير طبية.</strong> نتائج المساعد الذكي
+              إرشادية أولية فقط ولا تُعد تشخيصاً نهائياً أو تقرير زيارة.
+            </div>
+            <div class="soft-card overflow-hidden">
+              <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+                <table class="table table-hover mb-0 responsive-stack-table system-data-table">
+                  <thead class="table-light">
+                    <tr>
+                      <th>التاريخ</th>
+                      <th>الأعراض</th>
+                      <th>النتيجة الأولية</th>
+                      <th>الخطورة</th>
+                      <th>المقترح</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td data-label="التاريخ" class="table-primary-cell">21/10/2026</td>
+                      <td data-label="الأعراض">نزيف وحساسية</td>
+                      <td data-label="النتيجة الأولية">احتمال التهاب لثة</td>
+                      <td data-label="الخطورة" class="table-status-cell">
+                        <span class="badge text-bg-warning">متوسطة</span>
+                      </td>
+                      <td data-label="المقترح">فحص سريري لدى طبيب أسنان</td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/patient/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast" role="alert">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية بنجاح</div>
+          <button class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

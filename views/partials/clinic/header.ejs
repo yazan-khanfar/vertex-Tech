@@ -1,0 +1,454 @@
+<% const _clinicNotices=typeof clinicNotifications!=="undefined"&&Array.isArray(clinicNotifications)?clinicNotifications:[]; const _clinicUnread=typeof clinicUnreadCount!=="undefined"?clinicUnreadCount:0; const _notificationCsrf=typeof notificationCsrf!=="undefined"?notificationCsrf:""; %>
+<% if (navVariant === 1) { %><nav class="navbar clinic-navbar bg-white border-bottom sticky-top">
+      <div class="container-fluid clinic-nav-layout px-3 px-lg-4">
+        <a aria-label="الصفحة الرئيسية" class="clinic-brand clinic-brand-left<%= navActiveClass("0") %>" href="index"<%- navAriaCurrent("0") %>>
+          <span class="clinic-brand-mark"><i class="bi bi-heart-pulse-fill"></i></span>
+          <span class="clinic-brand-copy"><strong><%= typeof activeClinic !== "undefined" && activeClinic?.name ? activeClinic.name : "العيادة" %></strong><small><%= typeof platformName!=='undefined'?platformName:'Smart Dental Clinic' %></small></span>
+        </a>
+        <div class="clinic-desktop-nav d-none d-xl-flex justify-content-center">
+          <ul class="navbar-nav flex-row align-items-center">
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("1") %>" href="index"<%- navAriaCurrent("1") %>>الرئيسية</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("2") %>" href="appointments"<%- navAriaCurrent("2") %>>المواعيد</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("3") %>" href="patients"<%- navAriaCurrent("3") %>>المرضى</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("4") %>" href="treatment-plans"<%- navAriaCurrent("4") %>>خطط العلاج</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("5") %>" href="doctors"<%- navAriaCurrent("5") %>>الأطباء</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("6") %>" href="invoices"<%- navAriaCurrent("6") %>>الفواتير</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("7") %>" href="job-applicants"<%- navAriaCurrent("7") %>>المتقدمون</a>
+            </li>
+          <li class="nav-item"><a class="nav-link<%= navActiveClass("8") %>" href="inventory"<%- navAriaCurrent("8") %>>المخزون</a></li>
+</ul>
+        </div>
+        <div class="clinic-nav-actions">
+          <div class="dropdown">
+            <button aria-label="اختيار اللغة" class="top-action mobile-compact-action" data-bs-toggle="dropdown" title="اللغة" type="button">
+              <i class="bi bi-globe2"></i><span class="d-none d-xxl-inline">AR</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end clean-dropdown language-menu">
+              <li>
+                <button class="dropdown-item active" data-language="ar" data-ui-pending="">
+                  العربية <small class="float-start text-secondary">AR</small>
+                </button>
+              </li>
+              <li>
+                <button class="dropdown-item" data-language="en" data-ui-pending="">
+                  English <small class="float-start text-secondary">EN</small>
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown notification-dropdown">
+            <button aria-label="الإشعارات" class="top-action mobile-compact-action" data-bs-display="static" data-bs-toggle="dropdown" title="الإشعارات" type="button">
+              <i class="bi bi-bell"></i><% if(_clinicUnread){ %><span class="notification-dot"><%= _clinicUnread %></span><% } %>
+            </button>
+            <div class="dropdown-menu clean-dropdown notification-menu mobile-notification-menu notification-menu-safe">
+              <div class="px-3 py-2 d-flex justify-content-between align-items-center">
+                <strong>الإشعارات</strong><span class="badge text-bg-primary rounded-pill"><%= _clinicUnread %></span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <% for(const note of _clinicNotices){ %>
+<div class="notification-entry px-2 py-2 <%= note.Read_At?'':'fw-bold' %>"><form method="post" action="/clinic/notifications/<%= note.Notification_ID %>/open"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button class="btn btn-link p-0 text-start text-decoration-none" type="submit"><strong><%= note.Title %></strong><div class="small text-secondary"><%= note.Body %></div></button></form><form class="d-inline" method="post" action="/clinic/notifications/<%= note.Notification_ID %>/read"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button type="submit" class="btn btn-sm btn-light border" <%= note.Read_At?'disabled':'' %>>مقروء</button></form><form class="d-inline" method="post" action="/clinic/notifications/<%= note.Notification_ID %>/delete"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button type="submit" class="btn btn-sm btn-light text-danger border">حذف</button></form></div>
+<% } %><% if(!_clinicNotices.length){ %><div class="small text-secondary px-3 py-2">لا توجد إشعارات.</div><% } %><form method="post" action="/clinic/notifications/read-all" class="px-3 py-2"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button type="submit" class="btn btn-sm btn-outline-primary w-100" <%= _clinicUnread?'':'disabled' %>>تحديد الكل كمقروء</button></form>
+              
+              
+              
+            </div>
+          </div>
+          <div class="dropdown profile-action-dropdown">
+            <button aria-label="حساب العيادة" class="clinic-profile-trigger compact-profile-trigger" data-bs-display="static" data-bs-toggle="dropdown" title="الملف الشخصي" type="button">
+              <span class="clinic-avatar">ع</span><i class="bi bi-chevron-down small text-secondary d-none d-sm-inline"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end clean-dropdown profile-dropdown-menu">
+              <a class="dropdown-item<%= navActiveClass("10") %>" href="profile"<%- navAriaCurrent("10") %>><i class="bi bi-hospital"></i>ملف العيادة</a>
+              <a class="dropdown-item<%= navActiveClass("11") %>" href="staff"<%- navAriaCurrent("11") %>><i class="bi bi-person-gear"></i>الموظفون والصلاحيات</a><a class="dropdown-item<%= navActiveClass("12") %>" href="account-settings"<%- navAriaCurrent("12") %>><i class="bi bi-gear"></i>إعدادات الحساب</a>
+              <a class="dropdown-item<%= navActiveClass("13") %>" href="job-applicants"<%- navAriaCurrent("13") %>><i class="bi bi-person-lines-fill"></i>المتقدمون للوظائف</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-primary fw-bold<%= navActiveClass("14") %>" href="../doctor/index"<%- navAriaCurrent("14") %>><i class="bi bi-arrow-left-right"></i>تبديل لمساحة الطبيب</a>
+              <div class="px-3 py-2 bg-light rounded-3 mx-2 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small">د. <%= typeof currentUser !== "undefined" && currentUser?.fullName ? currentUser.fullName : "مدير العيادة" %> • مالك ومدير العيادة</strong>
+              </div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right"></i>تسجيل الخروج
+              </button>
+            </div>
+          </div>
+          <button aria-controls="sectionsDrawer" aria-label="كل الأقسام" class="btn btn-outline-primary sections-trigger mobile-sections-trigger" data-bs-target="#sectionsDrawer" data-bs-toggle="offcanvas" title="كل الأقسام" type="button">
+            <i class="bi bi-grid-3x3-gap"></i><span class="d-none d-xxl-inline me-1">كل الأقسام</span>
+          </button>
+        </div>
+      </div>
+    </nav><% } %>
+<% if (navVariant === 2) { %><nav class="navbar clinic-navbar bg-white border-bottom sticky-top shadow-sm">
+      <div class="container-fluid clinic-nav-layout px-3 px-lg-4 py-2">
+        <a class="clinic-brand text-decoration-none d-flex align-items-center gap-2<%= navActiveClass("0") %>" href="index"<%- navAriaCurrent("0") %>>
+          <span class="clinic-brand-mark bg-primary-subtle text-primary p-2 rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+            <i class="bi bi-heart-pulse-fill fs-5"></i>
+          </span>
+          <span class="clinic-brand-copy">
+            <strong class="d-block text-dark"><%= typeof activeClinic !== "undefined" && activeClinic?.name ? activeClinic.name : "العيادة" %></strong>
+            <small class="text-muted" style="font-size: 0.75rem;"><%= typeof platformName!=='undefined'?platformName:'Smart Dental Clinic' %> • الإدارة</small>
+          </span>
+        </a>
+
+        <!-- روابط التنقل للشاشات الكبيرة -->
+        <div class="clinic-desktop-nav d-none d-xl-flex">
+          <ul class="navbar-nav flex-row align-items-center gap-1">
+            <li class="nav-item">
+              <a class="nav-link text-primary px-3 py-2 rounded bg-primary-subtle<%= navActiveClass("1") %>" href="index"<%- navAriaCurrent("1") %>>الرئيسية</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark px-3 py-2 rounded hover-bg-light<%= navActiveClass("2") %>" href="appointments"<%- navAriaCurrent("2") %>>المواعيد</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark px-3 py-2 rounded hover-bg-light<%= navActiveClass("3") %>" href="patients"<%- navAriaCurrent("3") %>>المرضى</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("4") %>" href="treatment-plans"<%- navAriaCurrent("4") %>>خطط العلاج</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark px-3 py-2 rounded hover-bg-light<%= navActiveClass("5") %>" href="doctors"<%- navAriaCurrent("5") %>>الأطباء</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark px-3 py-2 rounded hover-bg-light<%= navActiveClass("6") %>" href="invoices"<%- navAriaCurrent("6") %>>الفواتير</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark px-3 py-2 rounded hover-bg-light<%= navActiveClass("7") %>" href="job-applicants"<%- navAriaCurrent("7") %>>المتقدمون</a>
+            </li>
+          <li class="nav-item"><a class="nav-link<%= navActiveClass("8") %>" href="inventory"<%- navAriaCurrent("8") %>>المخزون</a></li>
+</ul>
+        </div>
+
+        <!-- الإجراءات العلوية -->
+        <div class="clinic-nav-actions d-flex align-items-center gap-2">
+          <!-- قائمة اللغات -->
+          <div class="dropdown language-dropdown">
+            <button aria-label="اللغة" class="top-action btn btn-light border-0 rounded-circle p-2 text-secondary d-flex align-items-center justify-content-center" data-bs-toggle="dropdown" title="اللغة" type="button" style="width: 40px; height: 40px;">
+              <i class="bi bi-globe2 fs-5"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end clean-dropdown language-menu shadow border-0 rounded-3">
+              <li>
+                <button class="dropdown-item active py-2 d-flex align-items-center gap-2" data-language="ar" data-ui-pending="">
+                  <span>العربية</span><small class="text-muted ms-auto">AR</small>
+                </button>
+              </li>
+              <li>
+                <button class="dropdown-item py-2 d-flex align-items-center gap-2" data-language="en" data-ui-pending="">
+                  <span>English</span><small class="text-muted ms-auto">EN</small>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- قائمة الإشعارات -->
+          <div class="dropdown notification-dropdown">
+            <button aria-label="الإشعارات" class="top-action btn btn-light border-0 rounded-circle p-2 text-secondary position-relative d-flex align-items-center justify-content-center" data-bs-display="static" data-bs-toggle="dropdown" title="الإشعارات" type="button" style="width: 40px; height: 40px;">
+              <i class="bi bi-bell fs-5"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-white" style="font-size: 0.65rem;"><%= _clinicUnread %></span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end clean-dropdown notification-menu notification-menu-safe shadow border-0 rounded-4 p-2" style="min-width: 300px;">
+              <div class="px-3 py-2 fw-bold text-dark d-flex justify-content-between align-items-center border-bottom mb-2">
+                <span>الإشعارات</span>
+                <span class="badge text-bg-primary rounded-pill"><%= _clinicUnread %> جديدة</span>
+              </div>
+              <% for(const note of _clinicNotices){ %>
+<div class="notification-entry px-2 py-2 <%= note.Read_At?'':'fw-bold' %>"><form method="post" action="/clinic/notifications/<%= note.Notification_ID %>/open"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button class="btn btn-link p-0 text-start text-decoration-none" type="submit"><strong><%= note.Title %></strong><div class="small text-secondary"><%= note.Body %></div></button></form><form class="d-inline" method="post" action="/clinic/notifications/<%= note.Notification_ID %>/read"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button type="submit" class="btn btn-sm btn-light border" <%= note.Read_At?'disabled':'' %>>مقروء</button></form><form class="d-inline" method="post" action="/clinic/notifications/<%= note.Notification_ID %>/delete"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button type="submit" class="btn btn-sm btn-light text-danger border">حذف</button></form></div>
+<% } %><% if(!_clinicNotices.length){ %><div class="small text-secondary px-3 py-2">لا توجد إشعارات.</div><% } %><form method="post" action="/clinic/notifications/read-all" class="px-3 py-2"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button type="submit" class="btn btn-sm btn-outline-primary w-100" <%= _clinicUnread?'':'disabled' %>>تحديد الكل كمقروء</button></form>
+              
+              
+              
+            </div>
+          </div>
+
+          <!-- قائمة الحساب الإداري -->
+          <div class="dropdown profile-action-dropdown">
+            <button aria-label="حساب العيادة" class="profile-trigger btn btn-light border d-flex align-items-center gap-2 rounded-pill px-3 py-1" data-bs-display="static" data-bs-toggle="dropdown" title="حساب العيادة" type="button">
+              <span class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px; font-size: 0.85rem;">ع</span>
+              <i class="bi bi-chevron-down small text-muted"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end clean-dropdown profile-dropdown-menu shadow border-0 rounded-4 p-2" style="min-width: 260px;">
+              <div class="px-3 py-2 bg-light rounded-3 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small text-dark">د. <%= typeof currentUser !== "undefined" && currentUser?.fullName ? currentUser.fullName : "مدير العيادة" %></strong>
+                <div class="text-muted" style="font-size: 0.75rem;">مالك ومدير العيادة</div>
+              </div>
+              <a class="dropdown-item rounded py-2 d-flex align-items-center gap-2<%= navActiveClass("10") %>" href="profile"<%- navAriaCurrent("10") %>><i class="bi bi-hospital text-primary"></i>ملف العيادة</a>
+              <a class="dropdown-item rounded py-2 d-flex align-items-center gap-2<%= navActiveClass("11") %>" href="staff"<%- navAriaCurrent("11") %>><i class="bi bi-person-gear text-primary"></i>الموظفون والصلاحيات</a>
+              <a class="dropdown-item rounded py-2 d-flex align-items-center gap-2<%= navActiveClass("12") %>" href="account-settings"<%- navAriaCurrent("12") %>><i class="bi bi-gear text-primary"></i>إعدادات الحساب</a>
+              <a class="dropdown-item rounded py-2 d-flex align-items-center gap-2<%= navActiveClass("13") %>" href="job-applicants"<%- navAriaCurrent("13") %>><i class="bi bi-person-lines-fill text-primary"></i>المتقدمون للوظائف</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item rounded py-2 d-flex align-items-center gap-2 text-primary fw-bold bg-primary-subtle mb-1<%= navActiveClass("14") %>" href="../doctor/index"<%- navAriaCurrent("14") %>>
+                <i class="bi bi-arrow-left-right"></i>تبديل لمساحة الطبيب
+              </a>
+              <button class="dropdown-item rounded py-2 d-flex align-items-center gap-2 text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right"></i>تسجيل الخروج
+              </button>
+            </div>
+          </div>
+
+          <!-- زر القائمة الجانبية للشاشات -->
+          <button class="btn btn-outline-primary sections-trigger d-flex align-items-center gap-1 rounded-pill px-3" data-bs-target="#sectionsDrawer" data-bs-toggle="offcanvas" title="كل الأقسام" type="button">
+            <i class="bi bi-grid-3x3-gap"></i>
+            <span class="d-none d-md-inline">كل الأقسام</span>
+          </button>
+        </div>
+      </div>
+    </nav><% } %>
+<% if (navVariant === 3) { %><nav class="navbar clinic-navbar bg-white border-bottom sticky-top">
+      <div class="container-fluid clinic-nav-layout px-3 px-lg-4">
+        <a aria-label="الصفحة الرئيسية" class="clinic-brand clinic-brand-left<%= navActiveClass("0") %>" href="index"<%- navAriaCurrent("0") %>>
+          <span class="clinic-brand-mark"><i class="bi bi-heart-pulse-fill"></i></span>
+          <span class="clinic-brand-copy"><strong><%= typeof activeClinic !== "undefined" && activeClinic?.name ? activeClinic.name : "العيادة" %></strong><small><%= typeof platformName!=='undefined'?platformName:'Smart Dental Clinic' %></small></span>
+        </a>
+        <div class="clinic-desktop-nav d-none d-xl-flex justify-content-center">
+          <ul class="navbar-nav flex-row align-items-center">
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("1") %>" href="index"<%- navAriaCurrent("1") %>>الرئيسية</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("2") %>" href="appointments"<%- navAriaCurrent("2") %>>المواعيد</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("3") %>" href="patients"<%- navAriaCurrent("3") %>>المرضى</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("4") %>" href="treatment-plans"<%- navAriaCurrent("4") %>>خطط العلاج</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("5") %>" href="doctors"<%- navAriaCurrent("5") %>>الأطباء</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("6") %>" href="invoices"<%- navAriaCurrent("6") %>>الفواتير</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link<%= navActiveClass("7") %>" href="job-applicants"<%- navAriaCurrent("7") %>>المتقدمون</a>
+            </li>
+          <li class="nav-item"><a class="nav-link<%= navActiveClass("8") %>" href="inventory"<%- navAriaCurrent("8") %>>المخزون</a></li></ul>
+        </div>
+        <div class="clinic-nav-actions">
+          <div class="dropdown">
+            <button aria-label="اختيار اللغة" class="top-action mobile-compact-action" data-bs-toggle="dropdown" title="اللغة" type="button">
+              <i class="bi bi-globe2"></i><span class="d-none d-xxl-inline">AR</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end clean-dropdown language-menu">
+              <li>
+                <button class="dropdown-item active" data-language="ar" data-ui-pending="">
+                  العربية <small class="float-start text-secondary">AR</small>
+                </button>
+              </li>
+              <li>
+                <button class="dropdown-item" data-language="en" data-ui-pending="">
+                  English <small class="float-start text-secondary">EN</small>
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown notification-dropdown">
+            <button aria-label="الإشعارات" class="top-action mobile-compact-action" data-bs-display="static" data-bs-toggle="dropdown" title="الإشعارات" type="button">
+              <i class="bi bi-bell"></i><% if(_clinicUnread){ %><span class="notification-dot"><%= _clinicUnread %></span><% } %>
+            </button>
+            <div class="dropdown-menu clean-dropdown notification-menu mobile-notification-menu notification-menu-safe">
+              <div class="px-3 py-2 d-flex justify-content-between align-items-center">
+                <strong>الإشعارات</strong><span class="badge text-bg-primary rounded-pill"><%= _clinicUnread %></span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <% for(const note of _clinicNotices){ %>
+<div class="notification-entry px-2 py-2 <%= note.Read_At?'':'fw-bold' %>"><form method="post" action="/clinic/notifications/<%= note.Notification_ID %>/open"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button class="btn btn-link p-0 text-start text-decoration-none" type="submit"><strong><%= note.Title %></strong><div class="small text-secondary"><%= note.Body %></div></button></form><form class="d-inline" method="post" action="/clinic/notifications/<%= note.Notification_ID %>/read"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button type="submit" class="btn btn-sm btn-light border" <%= note.Read_At?'disabled':'' %>>مقروء</button></form><form class="d-inline" method="post" action="/clinic/notifications/<%= note.Notification_ID %>/delete"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button type="submit" class="btn btn-sm btn-light text-danger border">حذف</button></form></div>
+<% } %><% if(!_clinicNotices.length){ %><div class="small text-secondary px-3 py-2">لا توجد إشعارات.</div><% } %><form method="post" action="/clinic/notifications/read-all" class="px-3 py-2"><input type="hidden" name="csrf_token" value="<%= _notificationCsrf %>"><button type="submit" class="btn btn-sm btn-outline-primary w-100" <%= _clinicUnread?'':'disabled' %>>تحديد الكل كمقروء</button></form>
+              
+              
+              
+            </div>
+          </div>
+          <div class="dropdown profile-action-dropdown">
+            <button aria-label="حساب العيادة" class="clinic-profile-trigger compact-profile-trigger" data-bs-display="static" data-bs-toggle="dropdown" title="الملف الشخصي" type="button">
+              <span class="clinic-avatar">ع</span><i class="bi bi-chevron-down small text-secondary d-none d-sm-inline"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end clean-dropdown profile-dropdown-menu">
+              <a class="dropdown-item<%= navActiveClass("10") %>" href="profile"<%- navAriaCurrent("10") %>><i class="bi bi-hospital"></i>ملف العيادة</a>
+              <a class="dropdown-item<%= navActiveClass("11") %>" href="staff"<%- navAriaCurrent("11") %>><i class="bi bi-person-gear"></i>الموظفون والصلاحيات</a><a class="dropdown-item<%= navActiveClass("12") %>" href="account-settings"<%- navAriaCurrent("12") %>><i class="bi bi-gear"></i>إعدادات الحساب</a>
+              <a class="dropdown-item<%= navActiveClass("13") %>" href="job-applicants"<%- navAriaCurrent("13") %>><i class="bi bi-person-lines-fill"></i>المتقدمون للوظائف</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-primary fw-bold<%= navActiveClass("14") %>" href="../doctor/index"<%- navAriaCurrent("14") %>><i class="bi bi-arrow-left-right"></i>تبديل لمساحة الطبيب</a>
+              <div class="px-3 py-2 bg-light rounded-3 mx-2 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small">د. <%= typeof currentUser !== "undefined" && currentUser?.fullName ? currentUser.fullName : "مدير العيادة" %> • مالك ومدير العيادة</strong>
+              </div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right"></i>تسجيل الخروج
+              </button>
+            </div>
+          </div>
+          <button aria-controls="sectionsDrawer" aria-label="كل الأقسام" class="btn btn-outline-primary sections-trigger mobile-sections-trigger" data-bs-target="#sectionsDrawer" data-bs-toggle="offcanvas" title="كل الأقسام" type="button">
+            <i class="bi bi-grid-3x3-gap"></i><span class="d-none d-xxl-inline me-1">كل الأقسام</span>
+          </button>
+        </div>
+      </div>
+    </nav><% } %>
+
+<% if (drawerVariant === 1) { %><div class="offcanvas offcanvas-start mobile-drawer sections-drawer" id="sectionsDrawer" tabindex="-1">
+      <div class="drawer-header">
+        <div class="drawer-clinic">
+          <div class="drawer-avatar">ع</div>
+          <div>
+            <h6 class="mb-1 fw-bold"><%= typeof activeClinic !== "undefined" && activeClinic?.name ? activeClinic.name : "العيادة" %></h6>
+            <small class="opacity-75">كل الأقسام</small>
+          </div>
+        </div>
+        <button aria-label="إغلاق" class="drawer-close" data-bs-dismiss="offcanvas" type="button">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="offcanvas-body p-0">
+        <div class="drawer-content">
+          <div class="drawer-title mt-3">الأساسية</div>
+          <a class="drawer-link<%= drawerActiveClass("0") %>" href="index"<%- drawerAriaCurrent("0") %>>
+            <span class="drawer-icon"><i class="bi bi-house"></i></span>
+            <span class="flex-grow-1">الرئيسية</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("1") %>" href="appointments"<%- drawerAriaCurrent("1") %>>
+            <span class="drawer-icon"><i class="bi bi-calendar2-check"></i></span>
+            <span class="flex-grow-1">المواعيد</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("2") %>" href="new-appointment"<%- drawerAriaCurrent("2") %>>
+            <span class="drawer-icon"><i class="bi bi-calendar2-plus"></i></span>
+            <span class="flex-grow-1">إضافة موعد</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("3") %>" href="patients"<%- drawerAriaCurrent("3") %>>
+            <span class="drawer-icon"><i class="bi bi-people"></i></span>
+            <span class="flex-grow-1">المرضى</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("4") %>" href="doctors"<%- drawerAriaCurrent("4") %>>
+            <span class="drawer-icon"><i class="bi bi-person-badge"></i></span>
+            <span class="flex-grow-1">الأطباء</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("5") %>" href="inventory"<%- drawerAriaCurrent("5") %>><span class="drawer-icon"><i class="bi bi-boxes"></i></span><span class="flex-grow-1">إدارة المخزون</span><i class="bi bi-chevron-left text-secondary small"></i></a>
+          <a class="drawer-link<%= drawerActiveClass("6") %>" href="services"<%- drawerAriaCurrent("6") %>>
+            <span class="drawer-icon"><i class="bi bi-list-check"></i></span>
+            <span class="flex-grow-1">الخدمات</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("7") %>" href="specialties"<%- drawerAriaCurrent("7") %>>
+            <span class="drawer-icon"><i class="bi bi-grid"></i></span>
+            <span class="flex-grow-1">تخصصات الأطباء</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("8") %>" href="invoices"<%- drawerAriaCurrent("8") %>>
+            <span class="drawer-icon"><i class="bi bi-receipt"></i></span>
+            <span class="flex-grow-1">الفواتير</span>
+            <i class="bi bi-chevron-left text-secondary small"></i>
+          </a>
+          <a class="drawer-link<%= drawerActiveClass("9") %>" href="treatment-plans"<%- drawerAriaCurrent("9") %>>
+            <span class="drawer-icon"><i class="bi bi-diagram-3"></i></span>
+            <span class="flex-grow-1">خطط العلاج</span>
+            <i class="bi bi-chevron-left text-secondary small"></i>
+          </a>
+          <div class="drawer-title mt-3">التشغيل</div>
+          <a class="drawer-link<%= drawerActiveClass("10") %>" href="operations"<%- drawerAriaCurrent("10") %>>
+            <span class="drawer-icon"><i class="bi bi-clipboard2-pulse"></i></span>
+            <span class="flex-grow-1">التشغيل اليومي</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("11") %>" href="recalls"<%- drawerAriaCurrent("11") %>>
+            <span class="drawer-icon"><i class="bi bi-arrow-repeat"></i></span>
+            <span class="flex-grow-1">المتابعات</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("12") %>" href="lab-cases"<%- drawerAriaCurrent("12") %>>
+            <span class="drawer-icon"><i class="bi bi-box-seam"></i></span>
+            <span class="flex-grow-1">الحالات المخبرية</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("13") %>" href="reports"<%- drawerAriaCurrent("13") %>>
+            <span class="drawer-icon"><i class="bi bi-bar-chart"></i></span>
+            <span class="flex-grow-1">التقارير والتحليلات</span>
+            <i class="bi bi-chevron-left text-secondary small"></i>
+          </a>
+          <div class="drawer-title mt-3">التوظيف والإدارة</div>
+          <a class="drawer-link<%= drawerActiveClass("14") %>" href="staff"<%- drawerAriaCurrent("14") %>><span class="drawer-icon"><i class="bi bi-person-gear"></i></span><span class="flex-grow-1">الموظفون والصلاحيات</span><i class="bi bi-chevron-left text-secondary small"></i></a><a class="drawer-link<%= drawerActiveClass("15") %>" href="jobs"<%- drawerAriaCurrent("15") %>>
+            <span class="drawer-icon"><i class="bi bi-briefcase"></i></span>
+            <span class="flex-grow-1">الوظائف</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("16") %>" href="job-applicants"<%- drawerAriaCurrent("16") %>>
+            <span class="drawer-icon"><i class="bi bi-person-lines-fill"></i></span>
+            <span class="flex-grow-1">المتقدمون للوظائف</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("17") %>" href="profile"<%- drawerAriaCurrent("17") %>>
+            <span class="drawer-icon"><i class="bi bi-hospital"></i></span>
+            <span class="flex-grow-1">ملف العيادة</span>
+            <i class="bi bi-chevron-left text-secondary small"></i> </a><a class="drawer-link<%= drawerActiveClass("18") %>" href="account-settings"<%- drawerAriaCurrent("18") %>>
+            <span class="drawer-icon"><i class="bi bi-gear"></i></span>
+            <span class="flex-grow-1">إعدادات الحساب</span>
+            <i class="bi bi-chevron-left text-secondary small"></i>
+          </a>
+          <div class="drawer-title mt-4">الحساب</div>
+          <button class="drawer-link border-0 bg-transparent w-100 text-danger" data-logout="" data-ui-pending="">
+            <span class="drawer-icon"><i class="bi bi-box-arrow-right"></i></span><span class="flex-grow-1 text-end">تسجيل الخروج</span>
+          </button>
+          <div class="drawer-title mt-4">تبديل المساحة</div>
+          <a class="drawer-link<%= drawerActiveClass("19") %>" href="../doctor/index"<%- drawerAriaCurrent("19") %>><span class="drawer-icon"><i class="bi bi-arrow-left-right"></i></span><span class="flex-grow-1">الانتقال لمساحة الطبيب</span><i class="bi bi-chevron-left text-secondary small"></i></a>
+          <a class="drawer-link<%= drawerActiveClass("20") %>" href="settlements"<%- drawerAriaCurrent("20") %>><span class="drawer-icon"><i class="bi bi-wallet2"></i></span><span class="flex-grow-1">تسويات المنصة</span></a>
+        </div>
+      </div>
+    </div><% } %>
+<% if (drawerVariant === 2) { %><div class="offcanvas offcanvas-start sections-drawer" id="sectionsDrawer" tabindex="-1">
+      <div class="drawer-header border-bottom p-3 d-flex align-items-center justify-content-between bg-light">
+        <div class="drawer-clinic d-flex align-items-center gap-3">
+          <div class="drawer-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 45px; height: 45px;">ع</div>
+          <div>
+            <h6 class="mb-0 fw-bold text-dark"><%= typeof activeClinic !== "undefined" && activeClinic?.name ? activeClinic.name : "العيادة" %></h6>
+            <small class="text-muted">لوحة الإدارة والتشغيل</small>
+          </div>
+        </div>
+        <button class="drawer-close btn-close" data-bs-dismiss="offcanvas" aria-label="إغلاق" type="button"></button>
+      </div>
+      <div class="offcanvas-body p-0">
+        <div class="drawer-content p-3">
+          <div class="drawer-title text-muted fw-bold small mb-2">الأساسية</div>
+          <div class="d-flex flex-column gap-1 mb-3">
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-primary bg-primary-subtle<%= drawerActiveClass("0") %>" href="index"<%- drawerAriaCurrent("0") %>><span class="drawer-icon"><i class="bi bi-house"></i></span><span class="flex-grow-1">الرئيسية</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("1") %>" href="appointments"<%- drawerAriaCurrent("1") %>><span class="drawer-icon"><i class="bi bi-calendar2-check"></i></span><span class="flex-grow-1">المواعيد</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("2") %>" href="new-appointment"<%- drawerAriaCurrent("2") %>><span class="drawer-icon"><i class="bi bi-calendar2-plus"></i></span><span class="flex-grow-1">إضافة موعد</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("3") %>" href="patients"<%- drawerAriaCurrent("3") %>><span class="drawer-icon"><i class="bi bi-people"></i></span><span class="flex-grow-1">المرضى</span></a>
+          <a class="drawer-link<%= drawerActiveClass("4") %>" href="treatment-plans"<%- drawerAriaCurrent("4") %>>
+            <span class="drawer-icon"><i class="bi bi-diagram-3"></i></span>
+            <span class="flex-grow-1">خطط العلاج</span>
+            <i class="bi bi-chevron-left text-secondary small"></i>
+          </a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("5") %>" href="doctors"<%- drawerAriaCurrent("5") %>><span class="drawer-icon"><i class="bi bi-person-badge"></i></span><span class="flex-grow-1">الأطباء</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("6") %>" href="inventory"<%- drawerAriaCurrent("6") %>><span class="drawer-icon"><i class="bi bi-boxes"></i></span><span class="flex-grow-1">إدارة المخزون</span></a>
+<a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("7") %>" href="services"<%- drawerAriaCurrent("7") %>><span class="drawer-icon"><i class="bi bi-list-check"></i></span><span class="flex-grow-1">الخدمات</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("8") %>" href="specialties"<%- drawerAriaCurrent("8") %>><span class="drawer-icon"><i class="bi bi-grid"></i></span><span class="flex-grow-1">تخصصات الأطباء</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("9") %>" href="invoices"<%- drawerAriaCurrent("9") %>><span class="drawer-icon"><i class="bi bi-receipt"></i></span><span class="flex-grow-1">الفواتير</span></a>
+          </div>
+
+          <div class="drawer-title text-muted fw-bold small mb-2">التشغيل</div>
+          <div class="d-flex flex-column gap-1 mb-3">
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("10") %>" href="operations"<%- drawerAriaCurrent("10") %>><span class="drawer-icon"><i class="bi bi-clipboard2-pulse"></i></span><span class="flex-grow-1">التشغيل اليومي</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("11") %>" href="recalls"<%- drawerAriaCurrent("11") %>><span class="drawer-icon"><i class="bi bi-arrow-repeat"></i></span><span class="flex-grow-1">المتابعات</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("12") %>" href="lab-cases"<%- drawerAriaCurrent("12") %>><span class="drawer-icon"><i class="bi bi-box-seam"></i></span><span class="flex-grow-1">الحالات المخبرية</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("13") %>" href="reports"<%- drawerAriaCurrent("13") %>><span class="drawer-icon"><i class="bi bi-bar-chart"></i></span><span class="flex-grow-1">التقارير والتحليلات</span></a>
+          </div>
+
+          <div class="drawer-title text-muted fw-bold small mb-2">التوظيف والإدارة</div>
+          <div class="d-flex flex-column gap-1 mb-3">
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("14") %>" href="staff"<%- drawerAriaCurrent("14") %>><span class="drawer-icon"><i class="bi bi-person-gear"></i></span><span class="flex-grow-1">الموظفون والصلاحيات</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("15") %>" href="jobs"<%- drawerAriaCurrent("15") %>><span class="drawer-icon"><i class="bi bi-briefcase"></i></span><span class="flex-grow-1">الوظائف</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("16") %>" href="job-applicants"<%- drawerAriaCurrent("16") %>><span class="drawer-icon"><i class="bi bi-person-lines-fill"></i></span><span class="flex-grow-1">المتقدمون للوظائف</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("17") %>" href="profile"<%- drawerAriaCurrent("17") %>><span class="drawer-icon"><i class="bi bi-hospital"></i></span><span class="flex-grow-1">ملف العيادة</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("18") %>" href="account-settings"<%- drawerAriaCurrent("18") %>><span class="drawer-icon"><i class="bi bi-gear"></i></span><span class="flex-grow-1">إعدادات الحساب</span></a>
+          </div>
+
+          <div class="drawer-title text-muted fw-bold small mb-2">تبديل المساحة والمالية</div>
+          <div class="d-flex flex-column gap-1">
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-primary bg-light border<%= drawerActiveClass("19") %>" href="../doctor/index"<%- drawerAriaCurrent("19") %>><span class="drawer-icon"><i class="bi bi-arrow-left-right"></i></span><span class="flex-grow-1 fw-bold">الانتقال لمساحة الطبيب</span></a>
+            <a class="drawer-link d-flex align-items-center gap-3 p-2 rounded text-dark hover-bg-light<%= drawerActiveClass("20") %>" href="settlements"<%- drawerAriaCurrent("20") %>><span class="drawer-icon"><i class="bi bi-wallet2"></i></span><span class="flex-grow-1">تسويات المنصة</span></a>
+            <button class="drawer-link border-0 bg-transparent w-100 text-danger d-flex align-items-center gap-3 p-2 rounded text-end mt-2" data-logout="" data-ui-pending="">
+              <span class="drawer-icon"><i class="bi bi-box-arrow-right"></i></span>
+              <span class="flex-grow-1">تسجيل الخروج</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div><% } %>
+
+
+<% if (typeof logoutCsrf !== "undefined" && logoutCsrf) { %>
+<form id="sdcUnifiedLogoutForm" action="/auth/logout" method="post" hidden><input type="hidden" name="csrf_token" value="<%= logoutCsrf %>"></form>
+<script defer src="/assets/logout.js"></script>
+<% } %>

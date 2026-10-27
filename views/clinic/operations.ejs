@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>التشغيل اليومي | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="mb-4">
+          <span class="badge badge-soft mb-2">Daily Operations</span>
+          <h1 class="fw-bold">التشغيل اليومي</h1>
+          <p class="text-secondary mb-0">
+            تسجيل حضور المرضى، قائمة الانتظار، حالة الزيارة، وعدم الحضور.
+          </p>
+        </div>
+        <% if(message){ %><div class="alert alert-success" role="status"><%= message %></div><% } %>
+        <% if(error){ %><div class="alert alert-warning" role="alert"><%= error %></div><% } %>
+        <div class="row g-3 mb-4">
+          <div class="col-md-3">
+            <div class="stat-card">
+              <small class="text-secondary">وصلوا للعيادة</small>
+              <div class="stat-value"><%= counters.arrived %></div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <small class="text-secondary">بانتظار الطبيب</small>
+              <div class="stat-value text-warning"><%= counters.waiting %></div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <small class="text-secondary">داخل العلاج</small>
+              <div class="stat-value text-primary"><%= counters.treating %></div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <small class="text-secondary">لم يحضر</small>
+              <div class="stat-value text-danger"><%= counters.noShow %></div>
+            </div>
+          </div>
+        </div>
+        <div class="soft-card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h4 class="fw-bold mb-1">قائمة اليوم</h4>
+              <p class="small text-secondary mb-0">
+                تغيّر حالة المريض حسب سير الزيارة.
+              </p>
+            </div>
+            <span class="badge badge-soft"><%= today %></span>
+          </div>
+          <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+            <table class="table align-middle medium-data-table responsive-stack-table system-data-table">
+              <thead class="table-light">
+                <tr>
+                  <th>الوقت</th>
+                  <th>المريض</th>
+                  <th>الطبيب</th>
+                  <th>الخدمة</th>
+                  <th>الحالة</th>
+                  <th>إجراء</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (!entries.length) { %>
+                <tr><td colspan="6" class="text-center text-secondary py-4">لا توجد مواعيد في هذه العيادة اليوم.</td></tr>
+                <% } %>
+                <% for (const b of entries) { %>
+                <tr>
+                  <td data-label="الوقت" class="table-primary-cell"><%= b.time %> • <%= b.date %></td>
+                  <td data-label="المريض"><%= b.patient_name %></td>
+                  <td data-label="الطبيب"><%= b.doctor_name %></td>
+                  <td data-label="الخدمة"><%= b.service_name %></td>
+                  <td data-label="الحالة" class="table-status-cell">
+                    <% if(b.status==='confirmed' && b.arrived){ %><span class="badge text-bg-warning">وصل • بانتظار الطبيب</span>
+                    <% }else if(b.status==='in_progress'){ %><span class="badge text-bg-primary">داخل العلاج</span>
+                    <% }else if(b.status==='completed'){ %><span class="badge text-bg-success">مكتمل</span>
+                    <% }else if(b.status==='no_show'){ %><span class="badge text-bg-danger">لم يحضر</span>
+                    <% }else if(b.status==='confirmed'){ %><span class="badge text-bg-info">مؤكد • لم يصل</span>
+                    <% }else{ %><span class="badge text-bg-secondary"><%= {pending:'بانتظار الموافقة',cancelled:'ملغي',rejected:'مرفوض'}[b.status]||b.status %></span><% } %>
+                  </td>
+                  <td data-label="إجراء" class="table-actions-cell">
+                    <% if(b.status==='confirmed'&&!b.arrived){ %>
+                    <div class="d-flex flex-wrap gap-2">
+                      <form method="post" action="/clinic/operations/action">
+                        <input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+                        <input type="hidden" name="booking_id" value="<%= b.id %>">
+                        <button type="submit" class="btn btn-sm btn-primary" name="action" value="check_in">تسجيل الوصول</button>
+                      </form>
+                      <form method="post" action="/clinic/operations/action" onsubmit="return confirm('تأكيد تسجيل عدم حضور المريض؟')">
+                        <input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+                        <input type="hidden" name="booking_id" value="<%= b.id %>">
+                        <button type="submit" class="btn btn-sm btn-outline-danger" name="action" value="no_show">لم يحضر</button>
+                      </form>
+                    </div>
+                    <% }else if(b.status==='confirmed'&&b.arrived){ %>
+                    <span class="text-secondary small">وصل المريض • بانتظار الطبيب</span>
+                    <% }else if(b.status==='in_progress'){ %>
+                    <span class="text-secondary small">الطبيب داخل الزيارة</span>
+                    <% }else if(b.status==='completed'){ %>
+                    <% if(b.visit_id){ %><a class="btn btn-sm btn-outline-primary" href="/clinic/visit-checkout?visit_id=<%= b.visit_id %>">إنهاء الإجراءات</a><% }else{ %><span class="small text-secondary">مكتمل</span><% } %>
+                    <% }else{ %><span class="text-secondary small">لا إجراء متاح</span><% } %>
+                  </td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

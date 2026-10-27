@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html data-style-sections="section-3 section-5" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>إعدادات المنصة | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Platform Settings</span>
+            <h1 class="fw-bold fs-2 mb-2">إعدادات المنصة</h1>
+            <p class="text-secondary mb-0">
+              إعدادات المنصة مقسمة حسب المجال لتسهيل إدارتها ومراجعتها.
+            </p>
+          </div>
+          <div class="settings-save-note">
+            <i class="bi bi-info-circle"></i><span>راجع القيم جيدًا قبل حفظ الإعدادات.</span>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-xl-3">
+            <div class="settings-nav-card soft-card p-2 sticky-lg-top" data-settings-tabs="" role="tablist" aria-label="أقسام إعدادات المنصة" style="top: 92px">
+              <button class="settings-nav-item active" id="settings-general-tab" type="button" role="tab" aria-controls="general" aria-selected="true" data-bs-target="#general" data-bs-toggle="pill">
+                <i class="bi bi-sliders"></i><span><strong>عام</strong><small>هوية المنصة والتواصل</small></span>
+              </button>
+              <button class="settings-nav-item" id="settings-registration-tab" type="button" role="tab" aria-controls="registration" aria-selected="false" data-bs-target="#registration" data-bs-toggle="pill" tabindex="-1">
+                <i class="bi bi-calendar2-check"></i><span><strong>التسجيل والحجز</strong><small>سياسات الوصول والحجز</small></span>
+              </button>
+              <button class="settings-nav-item" id="settings-finance-tab" type="button" role="tab" aria-controls="financeSettings" aria-selected="false" data-bs-target="#financeSettings" data-bs-toggle="pill" tabindex="-1">
+                <i class="bi bi-wallet2"></i><span><strong>المالية</strong><small>العمولة والتسويات</small></span>
+              </button>
+              <button class="settings-nav-item" id="settings-notifications-tab" type="button" role="tab" aria-controls="notificationsSettings" aria-selected="false" data-bs-target="#notificationsSettings" data-bs-toggle="pill" tabindex="-1">
+                <i class="bi bi-bell"></i><span><strong>التنبيهات</strong><small>قواعد الإشعارات الإدارية</small></span>
+              </button>
+              <button class="settings-nav-item" id="settings-security-tab" type="button" role="tab" aria-controls="security" aria-selected="false" data-bs-target="#security" data-bs-toggle="pill" tabindex="-1">
+                <i class="bi bi-shield-lock"></i><span><strong>الأمان</strong><small>2FA والجلسات والتدقيق</small></span>
+              </button>
+              <button class="settings-nav-item" id="settings-account-tab" type="button" role="tab" aria-controls="account" aria-selected="false" data-bs-target="#account" data-bs-toggle="pill" tabindex="-1">
+                <i class="bi bi-person-gear"></i><span><strong>حساب Super Admin</strong><small>الحساب الوحيد للإدارة العليا</small></span>
+              </button>
+            </div>
+          </div>
+          <div class="col-xl-9">
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="settings-general-tab" tabindex="0">
+                <div class="soft-card p-4 mb-4">
+                  <div class="settings-section-head">
+                    <span class="icon-box"><i class="bi bi-building"></i></span>
+                    <div>
+                      <h4 class="fw-bold mb-1">هوية المنصة</h4>
+                      <small class="text-secondary">الاسم، اللغة والعملة.</small>
+                    </div>
+                  </div>
+                  <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-1">اسم المنصة</label><input class="form-control" value="Smart Dental Clinic" id="field-1" name="field_1" form="backend-form-26">
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label" for="field-2">اللغة الافتراضية</label><select class="form-select" id="field-2" name="field_2" form="backend-form-26">
+                        <option selected>العربية</option>
+                        <option>English</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label" for="field-3">العملة</label><select class="form-select" id="field-3" name="field_3" form="backend-form-26">
+                        <option selected>₪ شيكل</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="soft-card p-4">
+                  <div class="settings-section-head">
+                    <span class="icon-box"><i class="bi bi-headset"></i></span>
+                    <div>
+                      <h4 class="fw-bold mb-1">التواصل والدعم</h4>
+                      <small class="text-secondary">بيانات تظهر للمستخدمين عند الحاجة.</small>
+                    </div>
+                  </div>
+                  <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-4">البريد الرسمي</label><input class="form-control" value="info@smartdental.ps" id="field-4" name="field_4" form="backend-form-27">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-5">هاتف الدعم</label><input class="form-control" value="0599 000 100" id="field-5" name="field_5" form="backend-form-27">
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label" for="field-6">ساعات الدعم</label><input class="form-control" value="السبت - الخميس، 08:00 - 18:00" id="field-6" name="field_6" form="backend-form-27">
+                    </div>
+                  </div>
+                  <button class="btn btn-primary mt-4" data-temp-save="تم حفظ الإعدادات العامة مؤقتًا" data-ui-pending="" form="backend-form-27" type="submit">
+                    حفظ الإعدادات العامة
+                  </button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="registration" role="tabpanel" aria-labelledby="settings-registration-tab" tabindex="0">
+                <div class="soft-card p-4">
+                  <div class="settings-section-head">
+                    <span class="icon-box"><i class="bi bi-person-plus"></i></span>
+                    <div>
+                      <h4 class="fw-bold mb-1">التسجيل والحجز</h4>
+                      <small class="text-secondary">سياسات الدخول إلى النظام وسير اعتماد العيادات.</small>
+                    </div>
+                  </div>
+                  <div class="settings-toggle-row mt-3">
+                    <div>
+                      <strong>السماح بتسجيل المرضى</strong><small>إنشاء حساب مريض من الموقع العام.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-7" name="field_7" form="backend-form-28">
+                    </div>
+                  </div>
+                  <div class="settings-toggle-row">
+                    <div>
+                      <strong>السماح بتسجيل الأطباء</strong><small>الطبيب يدخل رقم الترخيص الطبي ثم يكمل مساره.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-8" name="field_8" form="backend-form-28">
+                    </div>
+                  </div>
+                  <div class="settings-toggle-row">
+                    <div>
+                      <strong>التحقق من ترخيص الطبيب قبل التفعيل</strong><small>لا يصبح الطبيب كامل الصلاحيات قبل التحقق.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-9" name="field_9" form="backend-form-28">
+                    </div>
+                  </div>
+                  <div class="settings-toggle-row">
+                    <div>
+                      <strong>اعتماد العيادة إلزامي</strong><small>يُحفظ سجل العيادة عند التقديم بحالة بانتظار الاعتماد، ويُفعّل بعد موافقة مدير المنصة.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-10" name="field_10" form="backend-form-28">
+                    </div>
+                  </div>
+                  <div class="settings-toggle-row">
+                    <div>
+                      <strong>الحجز الإلكتروني</strong><small>السماح للمرضى بالحجز من المنصة.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-11" name="field_11" form="backend-form-28">
+                    </div>
+                  </div>
+                  <button class="btn btn-primary mt-4" data-temp-save="تم حفظ سياسات التسجيل والحجز مؤقتًا" data-ui-pending="" form="backend-form-28" type="submit">
+                    حفظ السياسات
+                  </button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="financeSettings" role="tabpanel" aria-labelledby="settings-finance-tab" tabindex="0">
+                <div class="soft-card p-4">
+                  <div class="settings-section-head">
+                    <span class="icon-box"><i class="bi bi-percent"></i></span>
+                    <div>
+                      <h4 class="fw-bold mb-1">عمولة وتسويات المنصة</h4>
+                      <small class="text-secondary">النسبة الجديدة تطبق على التسويات المستقبلية فقط؛
+                        أما التسويات السابقة فتبقى بالقيمة التي احتُسبت وقت إنشائها.</small>
+                    </div>
+                  </div>
+                  <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                      <label class="form-label">عمولة المنصة</label>
+                      <div class="input-group">
+                        <input class="form-control" value="5" id="field-12" name="field_12" form="backend-form-29"><span class="input-group-text">%</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-13">دورية إنشاء التسوية</label><select class="form-select" id="field-13" name="field_13" form="backend-form-29">
+                        <option selected>شهريًا</option>
+                        <option>أسبوعيًا</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-14">مهلة السداد</label><select class="form-select" id="field-14" name="field_14" form="backend-form-29">
+                        <option selected>7 أيام</option>
+                        <option>14 يومًا</option>
+                        <option>30 يومًا</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-15">العملة</label><input class="form-control" readonly value="₪" id="field-15" name="field_15" form="backend-form-29">
+                    </div>
+                  </div>
+                  <button class="btn btn-primary mt-4" data-temp-save="تم حفظ إعدادات المالية مؤقتًا" data-ui-pending="" form="backend-form-29" type="submit">
+                    حفظ إعدادات المالية
+                  </button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="notificationsSettings" role="tabpanel" aria-labelledby="settings-notifications-tab" tabindex="0">
+                <div class="soft-card p-4">
+                  <div class="settings-section-head">
+                    <span class="icon-box"><i class="bi bi-bell"></i></span>
+                    <div>
+                      <h4 class="fw-bold mb-1">تنبيهات Super Admin</h4>
+                      <small class="text-secondary">ما الذي يظهر في "يحتاج انتباهك" والإشعارات.</small>
+                    </div>
+                  </div>
+                  <div class="settings-toggle-row mt-3">
+                    <div>
+                      <strong>طلب اعتماد عيادة جديد</strong><small>عند إرسال Clinic Application.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-16" name="field_16" form="backend-form-30">
+                    </div>
+                  </div>
+                  <div class="settings-toggle-row">
+                    <div>
+                      <strong>رقم ترخيص طبيب بانتظار التحقق</strong><small>عند وجود رقم ترخيص يحتاج مراجعة أو إعادة تحقق.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-17" name="field_17" form="backend-form-30">
+                    </div>
+                  </div>
+                  <div class="settings-toggle-row">
+                    <div>
+                      <strong>تسوية مالية متأخرة</strong><small>عيادة عليها مبلغ بعد المهلة.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-18" name="field_18" form="backend-form-30">
+                    </div>
+                  </div>
+
+                  <button class="btn btn-primary mt-4" data-temp-save="تم حفظ إعدادات التنبيهات مؤقتًا" data-ui-pending="" form="backend-form-30" type="submit">
+                    حفظ التنبيهات
+                  </button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="settings-security-tab" tabindex="0">
+                <div class="soft-card p-4 mb-4">
+                  <div class="settings-section-head">
+                    <span class="icon-box"><i class="bi bi-shield-check"></i></span>
+                    <div>
+                      <h4 class="fw-bold mb-1">الأمان والتدقيق</h4>
+                      <small class="text-secondary">الإجراءات الحساسة تحتاج سببًا وتسجل في Audit
+                        Log.</small>
+                    </div>
+                  </div>
+                  <div class="settings-toggle-row mt-3" hidden="">
+                    <div>
+                      <strong>التحقق بخطوتين</strong><small>مفعل لحساب Super Admin.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-19" name="field_19" form="backend-form-31">
+                    </div>
+                  </div><%- include('../partials/shared/mfa-manager', {mfaScope:'admin'}) %>
+                  <div class="settings-toggle-row">
+                    <div>
+                      <strong>سبب إلزامي للإجراءات الحساسة</strong><small>تعليق، حذف، تعديل طبي أو مالي.</small>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input checked class="form-check-input" type="checkbox" id="field-20" name="field_20" form="backend-form-31">
+                    </div>
+                  </div>
+                  <%- include('../partials/shared/active-sessions', {sessionsScope:'admin'}) %>
+                </div>
+                <div class="soft-card p-4" id="sdc-password">
+                  <h4 class="fw-bold mb-3">كلمة المرور</h4><% if (typeof passwordChangeError !== "undefined" && passwordChangeError) { %><div class="alert alert-danger mt-2" role="alert" id="sdc-password"><%= passwordChangeError %><% if (typeof passwordChangeReference !== "undefined" && passwordChangeReference) { %> <small>(رمز التشخيص: <%= passwordChangeReference %>)</small><% } %></div><% } %>
+
+                  <p class="text-secondary">لحماية حسابك، سيُنهي تغيير كلمة المرور جميع الجلسات ويطلب تسجيل الدخول من جديد.</p>
+                  <button class="btn btn-outline-primary" data-bs-target="#passwordModal" data-bs-toggle="modal" type="button">
+                    تغيير كلمة المرور
+                  </button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="settings-account-tab" tabindex="0">
+                <div class="soft-card p-4">
+                  <div class="settings-section-head">
+                    <span class="icon-box"><i class="bi bi-person-gear"></i></span>
+                    <div>
+                      <h4 class="fw-bold mb-1">حساب Super Admin</h4>
+                      <small class="text-secondary">يوجد حساب Super Admin واحد فقط في النظام.</small>
+                    </div>
+                  </div>
+                  <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-21">اسم المدير</label><input class="form-control" value="مدير النظام" id="field-21" name="field_21" form="backend-form-32">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-22">البريد</label><input class="form-control" value="admin@example.test" id="field-22" name="field_22" form="backend-form-32">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-23">الهاتف</label><input class="form-control" value="0599 000 001" id="field-23" name="phone" form="backend-form-32">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="field-24">الحالة</label><input class="form-control" readonly value="Active" id="field-24" name="status" form="backend-form-32">
+                    </div>
+                  </div>
+                  <button class="btn btn-primary mt-4" data-temp-save="تم حفظ بيانات حساب Super Admin مؤقتًا" data-ui-pending="" form="backend-form-32" type="submit">
+                    حفظ بيانات الحساب
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="passwordModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold">تغيير كلمة المرور</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <label class="form-label" for="field-25">كلمة المرور الحالية</label><input class="form-control mb-3" type="password" required value="" id="field-25" name="current_password" autocomplete="current-password" form="sdc-change-password-form"><label class="form-label">كلمة المرور الجديدة</label><input class="form-control mb-3" id="newAdminPassword" type="password" minlength="14" maxlength="128" required value="" name="new_password" autocomplete="new-password" form="sdc-change-password-form"><label class="form-label">تأكيد كلمة المرور</label><input class="form-control" id="confirmAdminPassword" type="password" minlength="14" maxlength="128" required value="" name="confirm_password" autocomplete="new-password" form="sdc-change-password-form">
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" id="savePasswordBtn" form="sdc-change-password-form" type="submit">
+                تغيير
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-34"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-34" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-35"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-35"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-35" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-26" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-27" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-28" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-29" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-30" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-31" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-32" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-33" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-34" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-35" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %><form id="sdc-change-password-form" action="/auth/change-password" method="post" hidden><input type="hidden" name="profile_scope" value="admin"><input type="hidden" name="csrf_token" value="<%= typeof passwordChangeCsrf !== 'undefined' ? passwordChangeCsrf : '' %>"></form><% if (typeof passwordChangeError !== 'undefined' && passwordChangeError) { %>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.bootstrap) {
+      const securityTab = document.getElementById('settings-security-tab');
+      if (securityTab) bootstrap.Tab.getOrCreateInstance(securityTab).show();
+    }
+  });
+</script>
+<% } %>
+</body></html>

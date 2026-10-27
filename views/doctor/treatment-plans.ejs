@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>خطط العلاج | Smart Dental Doctor</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/doctor/header') %>
+    
+    <main class="page-shell" id="main-content"><section class="container py-4 py-lg-5">
+<div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4"><div><span class="badge badge-soft mb-2">Treatment Plans</span><h1 class="fw-bold mb-1">خطط العلاج</h1><p class="text-secondary mb-0">خطط العلاج الخاصة بك في العيادة المختارة، من قاعدة البيانات الفعلية.</p></div><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTreatmentPlanModal"><i class="bi bi-plus-circle ms-1"></i>إنشاء خطة علاج</button></div>
+<% const activePlans=plans.filter(p=>p.status==='active');const completePlans=plans.filter(p=>p.status==='completed'); %>
+<div class="row g-3 mb-4"><div class="col-6 col-lg-4"><div class="soft-card p-3 h-100"><small class="text-secondary">خطط نشطة</small><div class="fs-3 fw-bold text-primary"><%= activePlans.length %></div></div></div><div class="col-6 col-lg-4"><div class="soft-card p-3 h-100"><small class="text-secondary">خطط مكتملة</small><div class="fs-3 fw-bold text-success"><%= completePlans.length %></div></div></div><div class="col-6 col-lg-4"><div class="soft-card p-3 h-100"><small class="text-secondary">إجمالي الخطط</small><div class="fs-3 fw-bold"><%= plans.length %></div></div></div></div>
+<div class="soft-card p-3 p-lg-4 mb-4"><div class="row g-3 align-items-end"><div class="col-md-8"><label class="form-label small fw-bold">بحث</label><input class="form-control" id="treatmentPlanSearch" placeholder="ابحث باسم المريض أو الخطة" autocomplete="off"></div><div class="col-md-4"><label class="form-label small fw-bold">الحالة</label><select class="form-select" id="treatmentPlanStatus"><option value="all">كل الحالات</option><option value="active">نشطة</option><option value="cancelled">ملغاة</option><option value="completed">مكتملة</option></select></div></div></div>
+<div class="d-grid gap-3" id="treatmentPlansList"><% if(!plans.length){ %><div class="soft-card p-4 text-secondary">لا توجد خطط علاج لهذا الطبيب في العيادة المحددة.</div><% } %>
+<% for(const p of plans){ %><div class="soft-card p-4 treatment-plan-filter-item" data-status="<%= p.status %>" data-progress="<%= p.progress %>" data-search="<%= p.patient_name+' '+p.title+' '+p.patient_id %>"><div class="row g-3 align-items-center"><div class="col-lg-4"><div class="d-flex align-items-center gap-3"><div class="patient-avatar"><%= p.patient_name.split(/\s+/).slice(0,2).map(n=>n[0]).join('') %></div><div><h5 class="fw-bold mb-1"><%= p.patient_name %></h5><div class="small text-secondary">P-<%= p.patient_id %> • <%= p.title %></div></div></div></div><div class="col-lg-4"><div class="d-flex justify-content-between small mb-2"><span>التقدم</span><strong><%= p.progress %>%</strong></div><div class="progress plan-progress"><div class="progress-bar" style="width:<%= p.progress %>%"></div></div><div class="small text-secondary mt-2">بدأت <%= p.start_date %></div></div><div class="col-lg-2"><span class="badge text-bg-primary"><%= p.status %></span><div class="small text-secondary mt-2"><%= p.done %> / <%= p.total %> مراحل</div></div><div class="col-lg-2 text-lg-end"><a class="btn btn-outline-primary btn-sm w-100" href="treatment-plan-details?id=<%= p.id %>">عرض الخطة</a></div></div></div><% } %></div><div class="alert alert-light border d-none mt-4" id="treatmentPlanEmpty">لا توجد نتائج مطابقة للبحث.</div>
+</section></main>
+
+    <div class="modal fade" id="createTreatmentPlanModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div><h5 class="modal-title fw-bold">إنشاء خطة علاج جديدة</h5><small class="text-secondary">اختر المريض وأدخل بيانات الخطة الأولية. تُحفظ الخطة ومراحلها مباشرة في قاعدة البيانات.</small></div>
+            <button class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق" type="button"></button>
+          </div>
+          <form id="createTreatmentPlanForm" action="/doctor/treatment-plans/create" method="post"><input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6"><label class="form-label is-required">المريض *</label><select class="form-select" id="newPlanPatient" required="" data-record-select="patient" name="new_plan_patient"><option value="" selected>اختر المريض</option><% for(const p of patients){ %><option value="<%= p.id %>"><%= p.name %> (P-<%= p.id %>)</option><% } %></select></div>
+                <div class="col-md-6"><label class="form-label is-required">اسم الخطة *</label><input class="form-control" id="newPlanName" placeholder="مثال: علاج جذور السن 46" required="" value="" name="new_plan_name"></div>
+                <div class="col-md-4"><label class="form-label">حالة الخطة</label><select class="form-select" id="newPlanStatus" name="new_plan_status"><option value="active" selected>نشطة</option></select></div>
+                <div class="col-md-4"><label class="form-label">التكلفة التقديرية</label><input class="form-control" id="newPlanCost" type="number" min="0" placeholder="0" value="" name="new_plan_cost"></div>
+                <div class="col-md-4"><label class="form-label">رقم السن</label><input class="form-control" id="newPlanTooth" placeholder="مثال: 46" value="" name="new_plan_tooth"></div>
+                <div class="col-12"><label class="form-label is-required">أول مرحلة *</label><input class="form-control" id="newPlanFirstStep" placeholder="مثال: فتح وتنظيف القنوات" required="" value="" name="new_plan_first_step"></div>
+                <div class="col-12"><label class="form-label">ملاحظات الخطة</label><textarea class="form-control" id="newPlanNotes" rows="3" placeholder="ملاحظات سريرية أو تنظيمية مرتبطة بالخطة" name="new_plan_notes"></textarea></div>
+              </div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">إلغاء</button><button class="btn btn-primary" type="submit"><i class="bi bi-check2-circle ms-1"></i>إنشاء وفتح الخطة</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/doctor/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="clean-dropdown notification-menu doctor-popover doctor-notification-popover" id="doctorNotifications">
+              <div class="px-3 py-2 fw-bold">الإشعارات</div>
+              <div class="dropdown-divider"></div>
+              <a class="notification-entry" href="appointments"><strong>المريض أحمد وصل</strong>
+                <div class="small text-secondary">
+                  موعد 11:30 جاهز لبدء الزيارة.
+                </div></a>
+              
+              
+            </div><div class="clean-dropdown profile-menu doctor-popover doctor-profile-popover" id="doctorProfile">
+              <a class="dropdown-item" href="profile"><i class="bi bi-person ms-2"></i>ملفي الشخصي</a>
+              <a class="dropdown-item" href="settings"><i class="bi bi-gear ms-2"></i>الإعدادات</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-primary fw-bold" href="../clinic/index"><i class="bi bi-arrow-left-right ms-2"></i>تبديل لإدارة
+                العيادة</a>
+              <div class="px-3 py-2 bg-light rounded-3 mx-2 mb-2">
+                <small class="text-secondary d-block">الحساب الحالي</small>
+                <strong class="small">د. عمر ناصر • مالك ومدير العيادة</strong>
+              </div>
+              <button class="dropdown-item text-danger" data-logout="" data-ui-pending="">
+                <i class="bi bi-box-arrow-right ms-2"></i>تسجيل الخروج
+              </button>
+            </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form></body></html>

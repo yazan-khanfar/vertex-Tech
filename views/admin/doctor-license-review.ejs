@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>مراجعة ترخيص الطبيب | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <nav aria-label="breadcrumb"><ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin/doctors">الأطباء والتراخيص</a></li>
+          <li class="breadcrumb-item active">مراجعة رقم الترخيص</li>
+        </ol></nav>
+        <h1 class="fw-bold fs-2 mb-2">مراجعة رقم الترخيص الطبي</h1>
+        <p class="text-secondary mb-4">تُجرى المراجعة استنادًا إلى رقم الترخيص وبيانات الطبيب. لا يُطلب رفع ملف الترخيص.</p>
+        <% if(result === 'approved') { %>
+          <div class="alert alert-success" role="status">تم اعتماد الترخيص وتفعيل حساب الطبيب بنجاح.</div>
+        <% } else if(result === 'rejected') { %>
+          <div class="alert alert-info" role="status">تم رفض الترخيص وبقي دخول الطبيب معطّلًا.</div>
+        <% } %>
+        <% if(formError) { %><div class="alert alert-danger" role="alert"><%= formError %></div><% } %>
+        <div class="row g-4">
+          <div class="col-lg-8"><div class="soft-card p-4">
+            <h4 class="fw-bold mb-3">بيانات الطبيب</h4>
+            <div class="row g-3">
+              <div class="col-md-6"><label class="form-label">الطبيب</label>
+                <input class="form-control" readonly value="<%= doctor.First_Name %> <%= doctor.Last_Name %>"></div>
+              <div class="col-md-6"><label class="form-label">رقم الترخيص الطبي</label>
+                <input class="form-control" readonly value="<%= doctor.License_Number %>"></div>
+              <div class="col-md-6"><label class="form-label">البريد الإلكتروني</label>
+                <input class="form-control" readonly value="<%= doctor.Email %>"></div>
+              <div class="col-md-6"><label class="form-label">التخصصات</label>
+                <input class="form-control" readonly value="<%= doctor.specialties || 'غير محدد' %>"></div>
+            </div>
+            <div class="alert alert-light border mt-4 mb-0">
+              الحالة الحالية:
+              <strong><%= doctor.License_Status === 'pending' ? 'بانتظار المراجعة' : doctor.License_Status === 'verified' ? 'معتمد' : 'مرفوض' %></strong>
+            </div>
+            <% if(doctor.License_Review_Notes) { %>
+              <div class="mt-3"><strong>آخر ملاحظات مراجعة:</strong>
+                <p class="mb-0"><%= doctor.License_Review_Notes %></p></div>
+            <% } %>
+          </div></div>
+          <div class="col-lg-4"><div class="soft-card p-4">
+            <h4 class="fw-bold mb-3">قرار التحقق</h4>
+            <% if(doctor.License_Status === 'pending' && doctor.Account_Status === 'pending') { %>
+            <form method="post" action="/admin/doctor-license-review" id="licenseDecisionForm">
+              <input type="hidden" name="csrf_token" value="<%= adminCsrfToken %>">
+              <input type="hidden" name="doctor_id" value="<%= doctor.Doctor_ID %>">
+              <label class="admin-check-row" for="licenseCheckNumber"><span>تحققت من صحة رقم الترخيص</span>
+                <input type="checkbox" name="number_valid" id="licenseCheckNumber"></label>
+              <label class="admin-check-row" for="licenseCheckIdentity"><span>الرقم يطابق هوية الطبيب</span>
+                <input type="checkbox" name="identity_matches" id="licenseCheckIdentity"></label>
+              <label class="admin-check-row" for="licenseCheckSpecialty"><span>التخصصات متوافقة</span>
+                <input type="checkbox" name="specialty_matches" id="licenseCheckSpecialty"></label>
+              <label class="form-label mt-3" for="licenseReviewReason">سبب القرار *</label>
+              <textarea class="form-control" rows="4" name="reason" id="licenseReviewReason"
+                 minlength="8" maxlength="1000" required placeholder="دوّن سبب الاعتماد أو الرفض"></textarea>
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success" type="submit" name="decision" value="approve"
+                  onclick="return confirm('هل تأكدت من بيانات الترخيص وتريد تفعيل حساب الطبيب؟')">اعتماد الرقم وتفعيل الحساب</button>
+                <button class="btn btn-outline-danger" type="submit" name="decision" value="reject"
+                  onclick="return confirm('هل تريد رفض الترخيص وتعطيل دخول الطبيب؟')">رفض الترخيص</button>
+              </div>
+            </form>
+            <% } else { %>
+              <p class="text-secondary">تم اتخاذ قرار بشأن هذا الترخيص. لا يمكن اعتماده أو رفضه مرة ثانية من هذه الشاشة.</p>
+              <a href="/admin/doctors" class="btn btn-outline-primary">العودة إلى الأطباء</a>
+            <% } %>
+          </div></div>
+        </div>
+      </section>
+    </main>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><%- include('../partials/admin/footer') %></body></html>

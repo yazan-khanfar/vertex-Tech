@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>تفاصيل الفاتورة | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="finance#invoices">الفواتير</a>
+            </li>
+            <li class="breadcrumb-item active">IN-118</li>
+          </ol>
+        </nav>
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+          <div>
+            <div class="d-flex gap-2 flex-wrap mb-2">
+              <span class="badge text-bg-success" id="invoiceStatusBadge">مدفوعة</span><span class="badge text-bg-light border" id="detailInvoiceCode">الكود العام: IN-118</span>
+            </div>
+            <h1 class="fw-bold fs-2 mb-2" id="detailInvoiceTitle">
+              الفاتورة IN-118
+            </h1>
+            <p class="text-secondary mb-0">
+              Invoice → Payments. بعد اعتماد الفاتورة لا نحذفها؛ يمكن
+              إلغاؤها/void مع الاحتفاظ بالسجل.
+            </p>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-outline-secondary" data-bs-target="#invoiceAdminEditModal" data-bs-toggle="modal" type="button">
+              تعديل إداري</button><button class="btn btn-outline-danger" data-current-detail-action="" data-sensitive-action="void" data-sensitive-entity="IN-118" data-sensitive-title="Void / إلغاء الفاتورة" type="button" disabled title="لا يمكن إلغاء فاتورة عليها دفعات">
+              Void / إلغاء الفاتورة
+            </button>
+          </div>
+        </div>
+        <div class="row g-4 mb-4">
+          <div class="col-lg-8">
+            <div class="soft-card p-4">
+              <h4 class="fw-bold mb-3">البيانات</h4>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">المريض</label><a class="form-control text-decoration-none" href="user-details?id=P-2048" id="detailInvoicePatient">أحمد خالد • P-2048</a>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">العيادة</label><a class="form-control text-decoration-none" href="clinic-details?id=C-008" id="detailInvoiceClinic">عيادة الابتسامة الحديثة • C-008</a>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-1">تاريخ الإنشاء</label><input class="form-control" readonly value="28/09/2026" id="field-1" name="field_1" form="backend-form-8">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-2">أنشأها</label><input class="form-control" readonly value="مدير العيادة" id="field-2" name="field_2" form="backend-form-8">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="soft-card p-4 h-100">
+              <h4 class="fw-bold mb-3">الملخص</h4>
+              <div class="summary-row">
+                <span>الإجمالي</span><strong id="detailInvoiceTotal">500 ₪</strong>
+              </div>
+              <div class="summary-row">
+                <span>المدفوع</span><strong class="text-success" id="detailInvoicePaid">500 ₪</strong>
+              </div>
+              <div class="summary-row">
+                <span>المتبقي</span><strong class="text-danger" id="detailInvoiceRemaining">0 ₪</strong>
+              </div>
+              <div class="summary-row">
+                <span>الحالة</span><strong id="detailInvoiceStatus">مدفوعة</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="soft-card p-4 mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold mb-0">سجل الدفعات</h4>
+            <button class="btn btn-sm btn-primary" data-bs-target="#invoicePaymentModal" data-bs-toggle="modal" type="button" disabled title="الفاتورة مسددة بالكامل">
+              تسجيل دفعة
+            </button>
+          </div>
+          <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+            <table class="table admin-master-table mb-0 responsive-stack-table system-data-table">
+              <thead>
+                <tr>
+                  <th>التاريخ</th>
+                  <th>المبلغ</th>
+                  <th>الطريقة</th>
+                  <th>المرجع</th>
+                  <th>سجّلها</th>
+                </tr>
+              </thead>
+              <tbody id="detailInvoicePaymentsBody">
+                <tr>
+                  <td data-label="التاريخ" class="table-primary-cell">21/10/2026</td>
+                  <td data-label="المبلغ">500 ₪</td>
+                  <td data-label="الطريقة">بطاقة</td>
+                  <td data-label="المرجع">PAY-001</td>
+                  <td data-label="سجّلها">سارة أحمد</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="soft-card p-4" id="detailInvoiceItems">
+          <h4 class="fw-bold mb-3">بنود الفاتورة</h4>
+          <div class="summary-row">
+            <span>علاج جذور</span><strong>500 ₪</strong>
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="invoiceAdminEditModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold">تعديل إداري للفاتورة</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body"><p class="text-secondary mb-0">هذه الفاتورة صادرة ومدفوعة؛ بنودها وإجماليها ثابتان. الإلغاء متاح للفواتير التي لم تُسجل عليها أي دفعة فقط.</p></div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="invoicePaymentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold">تسجيل دفعة</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <label class="form-label" for="field-5">المبلغ</label><input class="form-control mb-3" max="0" type="number" value="" id="field-5" name="field_5" form="backend-form-10" min="0.01" step="0.01"><label class="form-label" for="field-6">طريقة الدفع</label><select class="form-select mb-3" id="field-6" name="field_6" form="backend-form-10">
+                <option selected>نقدي</option>
+                <option>بطاقة</option>
+                <option>تحويل</option></select><label class="form-label" for="field-7">المرجع</label><input class="form-control" value="" id="field-7" name="field_7" form="backend-form-10">
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-success" data-temp-action="تم تسجيل الدفعة مؤقتًا." data-ui-pending="" form="backend-form-10" type="submit">
+                تسجيل
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-11"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-11" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    Resource. --&gt;
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-12"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-12"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-12" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-8" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-9" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-10" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-11" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-12" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

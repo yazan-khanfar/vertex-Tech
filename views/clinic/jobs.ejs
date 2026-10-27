@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الوظائف | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <% if(feedback){ %><div class="alert alert-success container mt-3"><%= feedback %></div><% } %><main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5" data-new-job-prefix="J-DEMO-">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Jobs</span>
+            <h1 class="fw-bold">الوظائف</h1>
+            <p class="text-secondary mb-0">
+              نشر الوظائف، تعديلها، أرشفتها، وعرض المتقدمين عليها.
+            </p>
+          </div>
+          <button class="btn btn-primary" data-bs-target="#jobModal" data-bs-toggle="modal" data-job-new="" data-ui-open="#jobModal" type="button">
+            <i class="bi bi-plus-lg ms-1"></i>نشر وظيفة
+          </button>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="jobSearch" placeholder="ابحث بعنوان الوظيفة أو التخصص" value="" data-ui-unbound-control="" name="job_search" form="backend-form-1">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <select class="form-select" id="jobStatus" name="job_status" form="backend-form-1">
+                <option value="all" selected>كل الحالات</option>
+                <option value="open">منشورة</option>
+                <option value="closed">مغلقة</option>
+                <option value="draft">مسودة</option>
+                <option value="archived">مؤرشفة</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4">
+          <% for(const j of jobs){ %>
+          <div class="col-md-6 job-item" data-job-code="<%= j.Job_ID %>" data-job-deadline="<%= new Date(j.Application_Deadline).toISOString().slice(0,10) %>" data-job-experience="<%= j.Minimum_Experience_Years %>" data-job-hours="<%= j.Work_Schedule_Description %>" data-job-salary="<%= j.Salary_Description %>" data-job-specialty="<%= j.Specialty_ID %>" data-job-status="<%= j.Job_Status %>" data-job-title="<%= j.Job_Title %>" data-job-type="<%= j.Employment_Type %>" data-status="<%= j.Job_Status %>" data-record-id="<%= j.Job_ID %>">
+            <div class="job-card h-100">
+              <div class="d-flex justify-content-between gap-2"><div class="d-flex gap-2"><span class="badge <%= j.Job_Status==='open'?'text-bg-success':'text-bg-secondary' %>"><%= label(j.Job_Status) %></span><span class="badge text-bg-light border">J-<%= j.Job_ID %></span></div><span class="small text-secondary">آخر موعد: <%= new Date(j.Application_Deadline).toLocaleDateString('ar-PS') %></span></div>
+              <h4 class="fw-bold mt-3"><%= j.Job_Title %></h4><div class="job-meta mb-3"><span><i class="bi bi-clock ms-1"></i><%= j.Employment_Type==='full_time'?'دوام كامل':j.Employment_Type==='part_time'?'دوام جزئي':'عقد' %></span><span><i class="bi bi-briefcase ms-1"></i><%= j.Minimum_Experience_Years %> سنوات+</span><span><i class="bi bi-people ms-1"></i><%= j.applicant_count %> متقدمين</span></div><p class="text-secondary"><%= j.Summary %></p>
+              <div class="d-flex flex-wrap gap-2 mt-auto"><a class="btn btn-outline-primary btn-sm" href="/clinic/job-applicants?job=<%= j.Job_ID %>">عرض المتقدمين</a><button class="btn btn-light btn-sm" data-bs-target="#jobModal" data-bs-toggle="modal" data-job-edit="<%= j.Job_ID %>" data-ui-open="#jobModal" type="button">تعديل</button><button class="btn btn-outline-secondary btn-sm" data-job-archive="<%= j.Job_ID %>" data-ui-open="#archiveJobModal" type="button">أرشفة</button></div>
+            </div><div class="d-none" data-job-html-record="<%= j.Job_ID %>"><p data-job-description><%= j.Summary %></p><p data-job-responsibilities><%= j.Responsibilities %></p><p data-job-requirements><%= j.Requirements %></p></div>
+          </div>
+          <% } %>
+        </div>
+      </section>
+      <div class="modal fade" id="jobModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="fw-bold mb-0" id="clinicJobModalTitle">
+                إضافة / تعديل وظيفة
+              </h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-light border rounded-3 small mb-3">
+                <i class="bi bi-info-circle ms-1"></i>
+                هذه هي نفس بيانات الإعلان التي تظهر للطبيب المتقدم في صفحة
+                تفاصيل الوظيفة.
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">عنوان الوظيفة *</label><input class="form-control" id="clinicJobTitle" value="" name="clinic_job_title" form="backend-form-2" required="">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">التخصص المطلوب *</label><select class="form-select" id="clinicJobSpecialty" name="clinic_job_specialty" form="backend-form-2" required=""><option value="" selected>اختر التخصص</option><% for(const s of specialties){ %><option value="<%= s.Specialty_ID %>"><%= s.Specialty_Name %></option><% } %></select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">نوع الدوام *</label><select class="form-select" id="clinicJobType" name="clinic_job_type" form="backend-form-2" required=""><option value="full_time">دوام كامل</option><option value="part_time" selected>دوام جزئي</option></select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">سنوات الخبرة *</label><input class="form-control" id="clinicJobExperience" min="0" type="number" value="" name="clinic_job_experience" form="backend-form-2">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">آخر موعد للتقديم *</label><input class="form-control" id="clinicJobDeadline" type="date" value="" name="clinic_job_deadline" form="backend-form-2" required="">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">ساعات / أيام العمل *</label><input class="form-control" id="clinicJobHours" placeholder="مثال: 9:00 ص – 5:00 م" value="" name="clinic_job_hours" form="backend-form-2">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">الراتب / نظام الأجر *</label><input class="form-control" id="clinicJobSalary" placeholder="مثال: حسب الخبرة أو راتب + نسبة" value="" name="clinic_job_salary" form="backend-form-2">
+                </div>
+                <div class="col-12">
+                  <label class="form-label">نبذة عن الوظيفة *</label><textarea class="form-control" id="clinicJobDescription" rows="3" name="clinic_job_description" form="backend-form-2"></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">المهام والمسؤوليات *</label><textarea class="form-control" id="clinicJobResponsibilities" placeholder="اكتب كل بند في سطر مستقل" rows="5" name="clinic_job_responsibilities" form="backend-form-2"></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">المتطلبات *</label><textarea class="form-control" id="clinicJobRequirements" placeholder="اكتب كل شرط في سطر مستقل" rows="5" name="clinic_job_requirements" form="backend-form-2"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" id="saveClinicJobDraft" name="publish" value="0" form="backend-form-2" type="submit">
+                حفظ كمسودة</button><button class="btn btn-primary" id="saveClinicJobPublish" name="publish" value="1" form="backend-form-2" type="submit">
+                حفظ ونشر
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="archiveJobModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body p-4">
+              <h5 class="fw-bold">أرشفة الوظيفة؟</h5>
+              <p class="text-secondary">
+                سيتم إيقاف ظهور الوظيفة ضمن الوظائف النشطة مع الاحتفاظ بالإعلان والمتقدمين كسجل يمكن الرجوع إليه.
+              </p>
+              <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                  إلغاء
+                </button>
+                <button class="btn btn-secondary" id="confirmClinicJobArchive" type="submit" form="archiveJobForm">
+                  أرشفة
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script><script src="/clinic/assets/batch4.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-2" method="post" action="/clinic/jobs/save" hidden=""><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="job_id" value=""></form><form id="archiveJobForm" method="post" action="/clinic/jobs/0/archive" hidden=""><input type="hidden" name="csrf_token" value="<%= csrfToken %>"></form></body></html>

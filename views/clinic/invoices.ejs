@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html data-style-sections="section-7" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الفواتير والمدفوعات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Invoices</span>
+            <h1 class="fw-bold">الفواتير والمدفوعات</h1>
+            <p class="text-secondary mb-0">
+              عرض الفواتير الناتجة عن الزيارات، تسجيل الدفعات المسموح بها،
+              ومتابعة المبالغ المدفوعة والمتبقية. إصدار الفاتورة من إدارة العيادة بعد مراجعة مسودة الزيارة.
+            </p>
+          </div>
+        </div>
+        <a class="btn btn-primary mb-3" href="/clinic/billing">إعداد وإصدار الفواتير</a><% if(feedback){ %><div class="alert alert-success mb-3"><%= feedback %></div><% } %><div class="row g-3 mb-4">
+          <div class="col-md-3">
+            <div class="stat-card">
+              <small class="text-secondary">إجمالي الفواتير</small>
+              <div class="stat-value"><%= finance.stats.count %></div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <small class="text-secondary">تم تحصيله</small>
+              <div class="stat-value text-success"><%= finance.stats.paid.toFixed(2) %> ₪</div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <small class="text-secondary">رصيد مدفوع جزئياً</small>
+              <div class="stat-value text-primary"><%= finance.stats.partial.toFixed(2) %> ₪</div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <small class="text-secondary">غير مدفوع</small>
+              <div class="stat-value text-danger"><%= finance.stats.unpaid %></div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-panel mb-4">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label small fw-bold">بحث عن فاتورة</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="invoiceSearch" placeholder="رقم الفاتورة، اسم المريض أو الخدمة" value="" name="invoice_search">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">الحالة</label><select class="form-select" id="invoiceStatusFilter" name="invoice_status_filter">
+                <option value="all" selected>كل الحالات</option>
+                <option value="unpaid">غير مدفوعة</option>
+                <option value="partial">مدفوعة جزئياً</option>
+                <option value="paid">مدفوعة</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="small text-secondary mb-3" id="invoiceResultCount"><%= finance.items.length %> فاتورة</div>
+        <div class="empty-state d-none mb-3" id="invoiceEmptyState">
+          <i class="bi bi-receipt-cutoff fs-1"></i>
+          <h5 class="fw-bold mt-3">لا توجد فاتورة مطابقة</h5>
+        </div>
+        <div class="accordion invoice-accordion" id="invoiceAccordion">
+<% finance.items.forEach(function(i,idx){ const state=i.financialState; const badge=state==='paid'?'text-bg-success':state==='partial'?'text-bg-primary':state==='unpaid'?'text-bg-warning':'text-bg-secondary'; const label=state==='paid'?'مدفوعة':state==='partial'?'مدفوعة جزئياً':state==='unpaid'?'غير مدفوعة':state==='draft'?'مسودة':'ملغاة'; %>
+ <div class="accordion-item invoice-filter-item" data-search="IN-<%= i.id %> <%= i.patient %> <%= i.service %>" data-status="<%= state %>">
+  <h2 class="accordion-header"><button class="accordion-button <%= idx?'collapsed':'' %>" data-bs-target="#invoice<%= i.id %>" data-bs-toggle="collapse" type="button"><div class="w-100 d-flex flex-column flex-md-row justify-content-between gap-2 align-items-md-center"><div><strong>IN-<%= i.id %></strong> — <%= i.patient %></div><div class="small text-secondary"><%= i.service %> • <%= i.total.toFixed(2) %> ₪ • <span class="badge <%= badge %>"><%= label %></span></div></div></button></h2>
+  <div class="accordion-collapse collapse <%= idx===0?'show':'' %>" data-bs-parent="#invoiceAccordion" id="invoice<%= i.id %>"><div class="accordion-body"><a class="btn btn-outline-primary mb-3" href="/clinic/invoice?id=<%= i.id %>">تفاصيل وإدارة الفاتورة</a>
+   <div class="table-responsive mb-4 mobile-stack-wrapper table-ui-shell"><table class="table invoice-items-table mb-0 responsive-stack-table system-data-table"><thead class="table-light"><tr><th>الخدمة</th><th>الطبيب</th><th>القيمة</th></tr></thead><tbody>
+   <% i.lines.forEach(function(l){ %><tr><td data-label="الخدمة" class="table-primary-cell"><%= l.description %></td><td data-label="الطبيب"><%= i.doctor %></td><td data-label="القيمة"><%= (Number(l.qty)*Number(l.unit_price)-Number(l.discount)).toFixed(2) %> ₪</td></tr><% }); %></tbody></table></div>
+   <div class="row g-4"><div class="col-lg-4"><div class="invoice-summary"><div class="d-flex justify-content-between py-2"><span>الإجمالي</span><strong><%= i.total.toFixed(2) %> ₪</strong></div><div class="d-flex justify-content-between py-2"><span>المدفوع</span><strong><%= i.paid.toFixed(2) %> ₪</strong></div><hr><div class="d-flex justify-content-between py-2 text-danger fs-5 fw-bold"><span>المتبقي</span><span><%= i.remaining.toFixed(2) %> ₪</span></div></div></div>
+   <div class="col-lg-8"><h6 class="fw-bold mb-3">الدفعات المسجلة</h6><div class="empty-state py-4 mb-3"><% if(!i.payments.length){ %><div class="small">لا توجد دفعات بعد</div><% }else{i.payments.forEach(function(pay){ %><div class="small mb-1"><%= pay.at %> — <%= pay.amount %> ₪ — <%= ({cash:'نقداً',card:'بطاقة',bank_transfer:'تحويل'})[pay.method]||pay.method %> — <%= pay.actor %></div><% });} %></div><div class="d-flex flex-wrap gap-2"><button class="btn btn-primary btn-sm" data-bs-target="#paymentModal" data-bs-toggle="modal" type="button" data-invoice-id="<%= i.id %>" data-invoice-remaining="<%= i.remaining.toFixed(2) %>" <%= state==='draft'||state==='void'||i.remaining<=0?'disabled':'' %>>إضافة دفعة</button><button class="btn btn-outline-primary btn-sm" data-ui-print="">طباعة الفاتورة</button></div></div></div>
+  </div></div>
+ </div><% }); %><% if(!finance.items.length){ %><div class="empty-state py-4 text-center">لا توجد فواتير مسجلة لهذه العيادة.</div><% } %>
+</div>
+      </section>
+      <div class="modal fade" id="paymentModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><form class="modal-content" method="post" action="/clinic/invoices/payment"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" id="paymentInvoiceId" name="invoice_id"><input type="hidden" name="request_key" value="<%= typeof paymentRequestKey!=='undefined'?paymentRequestKey:'' %>"><div class="modal-header"><h5 class="fw-bold mb-0">إضافة دفعة</h5><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label" for="paymentAmount">المبلغ</label><input class="form-control mb-3" id="paymentAmount" name="amount" inputmode="decimal" type="number" step="0.01" min="0.01" required><label class="form-label" for="paymentMethod">طريقة الدفع</label><select class="form-select" id="paymentMethod" name="method"><option value="cash">نقداً</option><option value="card">بطاقة</option><option value="bank_transfer">تحويل</option></select></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" type="submit">حفظ الدفعة</button></div></form></div></div>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-3" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-4" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form></body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html data-style-sections="section-7" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الخدمات والأسعار | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+    
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content"><section class="container py-4 py-lg-5">
+ <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4"><div><span class="badge badge-soft mb-2">Services &amp; Pricing</span><h1 class="fw-bold">الخدمات والأسعار</h1><p class="text-secondary">أسعار ومدد خدمات العيادة وإسنادها لأطبائها. تخصص الطبيب مستقل عن الخدمة.</p></div><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service-new type="button"><i class="bi bi-plus-lg ms-1"></i>إضافة خدمة</button></div>
+ <% if(typeof saveMessage!=='undefined'&&saveMessage){ %><div class="alert alert-success"><%= saveMessage %></div><% } %>
+ <% if(typeof formError!=='undefined'&&formError){ %><div class="alert alert-danger"><%= formError %></div><% } %>
+ <div class="filter-panel mb-4"><div class="row g-3"><div class="col-md-7"><input class="form-control" id="serviceSearch" placeholder="ابحث باسم الخدمة"></div><div class="col-md-5"><select class="form-select" id="serviceStatus"><option value="all">كل الحالات</option><option value="active">متاحة</option><option value="inactive">معطلة</option></select></div></div></div>
+ <div class="row g-4" id="clinicServicesList"><% for(const o of offers){ %><div class="col-md-6 col-xl-4 service-item" data-name="<%= o.Service_Name %>" data-status="<%= o.Is_Available?'active':'inactive' %>" data-service-id="<%= o.Service_ID %>" data-price="<%= o.Price %>" data-duration="<%= o.Duration_Minutes %>" data-installments="<%= o.Allows_Installments %>" data-available="<%= o.Is_Available %>" data-doctors="<%= JSON.stringify(o.doctor_ids||[]) %>"><div class="service-card h-100"><div class="d-flex justify-content-between"><span class="badge badge-soft">خدمة العيادة</span><span class="badge <%= o.Is_Available?'text-bg-success':'text-bg-secondary' %>"><%= o.Is_Available?'متاحة':'معطلة' %></span></div><h5 class="fw-bold mt-3"><%= o.Service_Name %></h5><div class="service-price"><%= o.Price %> ₪</div><div class="small text-secondary mb-3"><%= o.Duration_Minutes %> دقيقة</div><div class="mb-3"><small class="text-secondary d-block mb-2">الأطباء الذين يقدمونها</small><% for(const d of doctors.filter(d=>(o.doctor_ids||[]).map(String).includes(String(d.Doctor_ID)))){ %><span class="doctor-chip">د. <%= d.First_Name %> <%= d.Last_Name %></span><% } %></div><div class="d-flex gap-2"><button class="btn btn-outline-primary btn-sm flex-fill" data-bs-toggle="modal" data-bs-target="#serviceModal" data-edit-service type="button">تعديل</button><button class="btn btn-light btn-sm flex-fill" data-bs-toggle="modal" data-bs-target="#serviceModal" data-toggle-service type="button"><%= o.Is_Available?'تعطيل':'تفعيل' %></button></div></div></div><% } %>
+ <% if(!offers.length){ %><div class="col-12"><div class="alert alert-light border">لا توجد خدمات مسجلة لهذه العيادة. يمكنك إضافة خدمة من الأعلى.</div></div><% } %></div>
+ </section></main>
+ <div class="modal fade" id="serviceModal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="fw-bold mb-0" id="serviceModalTitle">بيانات الخدمة</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><form method="post" action="/clinic/services" id="clinicServiceForm"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><div class="modal-body"><div class="row g-3">
+ <div class="col-md-6"><label class="form-label" for="catalogServiceId">الخدمة من الكتالوج *</label><select class="form-select" name="service_id" id="catalogServiceId" required><option value="">اختر خدمة</option><% for(const s of catalog){ %><option value="<%= s.Service_ID %>"><%= s.Service_Name %></option><% } %><option value="__new__">إضافة خدمة جديدة للكتالوج</option></select><div class="mt-2" data-new-service hidden><label class="form-label" for="newCatalogServiceName">اسم الخدمة الجديدة</label><input class="form-control" id="newCatalogServiceName" name="new_service_name" maxlength="150" disabled></div></div>
+ <div class="col-md-6"><label class="form-label">العيادة الحالية</label><input class="form-control" value="<%= activeClinic?.name||'' %>" disabled></div>
+ <div class="col-md-4"><label class="form-label" for="clinicServicePrice">السعر ₪</label><input class="form-control" id="clinicServicePrice" name="price" type="number" min="0" step="0.01" required></div><div class="col-md-4"><label class="form-label" for="clinicServiceDuration">المدة بالدقائق</label><input class="form-control" id="clinicServiceDuration" name="duration" type="number" min="1" max="1440" required></div><div class="col-md-4"><label class="form-label" for="clinicServiceInstallments">التقسيط</label><select class="form-select" id="clinicServiceInstallments" name="installments"><option value="false">لا</option><option value="true">نعم</option></select></div><div class="col-md-6"><label class="form-label" for="clinicServiceAvailable">الحالة</label><select class="form-select" id="clinicServiceAvailable" name="available"><option value="true">متاحة</option><option value="false">معطلة</option></select></div>
+ <div class="col-12"><label class="form-label fw-bold">الأطباء الذين يقدمون الخدمة</label><div class="multi-doctor-box"><% for(const d of doctors){ %><div class="form-check service-doctor-option"><input class="form-check-input" id="clinic-doctor-<%= d.Doctor_ID %>" type="checkbox" name="doctor_ids" value="<%= d.Doctor_ID %>"><label class="form-check-label w-100" for="clinic-doctor-<%= d.Doctor_ID %>">د. <%= d.First_Name %> <%= d.Last_Name %></label></div><% } %></div><div class="small text-secondary mt-2">تظهر فقط عضويات أطباء العيادة النشطة. لا تُربط الخدمات بتخصصات الأطباء.</div></div>
+ </div></div><div class="modal-footer"><button type="button" class="btn btn-light" data-bs-dismiss="modal">إلغاء</button><button class="btn btn-primary" type="submit">حفظ الخدمة</button></div></form></div></div></div>
+<%- include('../partials/clinic/footer') %>
+<script src="/assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+<script src="/clinic/assets/app.js"></script>
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button>
+</body></html>

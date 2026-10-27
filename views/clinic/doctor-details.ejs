@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>ملف الطبيب والدوام | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+
+    
+    <main class="page-shell" data-clinic-doctor-details="" id="main-content">
+      <section class="container py-4 py-lg-5"><% if(message){ %><div class="alert alert-success"><%= message %></div><% } %><% if(error){ %><div class="alert alert-danger" role="alert"><%= error %></div><% } %>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="doctors">الأطباء</a></li>
+            <li class="breadcrumb-item active" id="clinicDoctorBreadcrumb">د. <%= profile.person.name %></li>
+          </ol>
+        </nav>
+        <div class="soft-card p-4 mb-4">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-8">
+              <div class="d-flex flex-column flex-md-row align-items-md-center gap-4">
+                <img id="clinicDoctorImage" src="../assets/vendor/2fb6f2c869b1-photo-1612349317150-e413f6a5b16d.jpg" style="
+                    width: 120px;
+                    height: 120px;
+                    object-fit: cover;
+                    border-radius: 20px;
+                  " alt="د. <%= profile.person.name %>">
+                <div>
+                  <span class="badge badge-soft mb-2" id="clinicDoctorSpecialty"><%= profile.person.specialties %></span>
+                  <h2 class="fw-bold" id="clinicDoctorName">د. <%= profile.person.name %></h2>
+                  <div class="text-secondary" id="clinicDoctorMeta">جدول الطبيب في العيادة الحالية • بدء العضوية: <%= profile.person.start_date %></div>
+                  <div class="mt-2">
+                    <span class="badge text-bg-success">الحساب معتمد ونشط</span>
+                    <span class="badge <%= profile.person.start_date>now.date?'text-bg-warning':'text-bg-success' %>"><%= profile.person.start_date>now.date?'العضوية تبدأ لاحقًا':'العضوية فعالة' %></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a class="btn btn-outline-primary" href="/clinic/doctors" title="إدارة العضوية من صفحة أطباء العيادة">
+                إدارة العضوية
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="soft-card p-4 mb-4">
+          <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-3">
+            <div>
+              <h4 class="fw-bold mb-1">الدوام وإعدادات المواعيد</h4>
+              <div class="schedule-version-note alert alert-light border rounded-3 small mb-3" data-schedule-version="7">
+                <i class="bi bi-shield-check ms-1"></i>آخر تحديث للدوام: <strong>حسب بيانات PostgreSQL</strong> بواسطة <strong id="clinicDoctorScheduleOwner">إدارة العيادة</strong>.
+              </div>
+              <p class="text-secondary small mb-0">
+                إدارة العيادة هي المسؤولة عن تعديل جدول الطبيب وتسجيل غياباته.
+                مساحة الطبيب تعرض الجدول والغيابات للقراءة فقط.
+              </p>
+            </div>
+            <button class="btn btn-primary" data-bs-target="#absenceModal" data-bs-toggle="modal" type="button">
+              <i class="bi bi-calendar-x ms-1"></i>إضافة غياب / إجازة
+            </button>
+          </div>
+          <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+            <table class="table align-middle doctor-schedule-table responsive-stack-table system-data-table medium-data-table">
+              <thead class="table-light">
+                <tr>
+                  <th>اليوم</th>
+                  <th>الفترة</th>
+                  <th>من</th>
+                  <th>إلى</th>
+                  <th>الحالة</th>
+                  <th>إجراء</th>
+                </tr>
+              </thead>
+              <tbody><% const WEEK=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت']; %><% if(!profile.periods.length){ %><tr><td colspan="6" class="text-center py-4">لا يوجد دوام محدد لهذا الطبيب.</td></tr><% } %><% for(const p of profile.periods){ %><tr data-doctor-day><td data-label="اليوم" class="table-primary-cell"><%= WEEK[Number(p.day)] %></td><td data-label="الفترة">دوام</td><td data-label="من"><%= p.start %></td><td data-label="إلى"><%= p.end %></td><td data-label="الحالة"><span class="badge <%= p.active?'text-bg-success':'text-bg-secondary' %>"><%= p.active?'نشطة':'غير نشطة' %></span></td><td data-label="إجراء"><div class="d-flex flex-wrap gap-2"><button type="button" class="btn btn-sm btn-outline-primary" data-schedule-edit data-day="<%= p.day %>" data-start="<%= p.start %>" data-end="<%= p.end %>" data-active="<%= p.active ? 'true' : 'false' %>" data-bs-toggle="modal" data-bs-target="#schedulePeriodModal"><i class="bi bi-pencil-square ms-1"></i>تعديل</button><form method="post" action="/clinic/doctor-details"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="doctor_id" value="<%= profile.person.id %>"><input type="hidden" name="action" value="remove_period"><input type="hidden" name="day" value="<%= p.day %>"><input type="hidden" name="start" value="<%= p.start %>"><input type="hidden" name="end" value="<%= p.end %>"><button type="submit" class="btn btn-sm btn-outline-danger">حذف</button></form></div></td></tr><% } %></tbody>
+            </table>
+          </div>
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-2 align-items-md-center mt-3">
+            <div class="small text-secondary">
+              يمكن إضافة أكثر من فترة دوام في اليوم نفسه. مدة
+              الموعد تأتي من <code>services.default_duration_minutes</code>، وأي
+              استراحة تمثل بفترتي دوام منفصلتين.
+            </div>
+            <button class="btn btn-outline-primary btn-sm" id="addSchedulePeriodBtn" data-bs-toggle="modal" data-bs-target="#schedulePeriodModal" type="button">
+              <i class="bi bi-plus-lg ms-1"></i>إضافة فترة دوام
+            </button>
+          </div>
+          <div class="small text-secondary">
+            عند تعطيل يوم معين لا تظهر أوقاته للحجز. الغياب المؤقت يلغي توفر
+            الطبيب في التاريخ المحدد.
+          </div>
+        </div>
+        <div class="soft-card p-4 mb-4"><div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3"><h4 class="fw-bold mb-0">الغيابات المسجلة</h4></div><% if(!profile.absences.length){ %><p class="text-secondary">لا توجد غيابات مسجلة.</p><% } %><div class="row g-2"><% for(const a of profile.absences){ %><div class="col-md-6"><div class="detail-stat"><strong><%= a.start %> — <%= a.end %></strong><p class="text-secondary small mb-1"><%= a.reason %></p><form method="post" action="/clinic/doctor-details"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="doctor_id" value="<%= profile.person.id %>"><input type="hidden" name="action" value="remove_absence"><input type="hidden" name="absence_id" value="<%= a.id %>"><button class="btn btn-outline-danger btn-sm">حذف الغياب</button></form></div></div><% } %></div></div>
+<div class="soft-card p-4"><div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3"><h4 class="fw-bold mb-0">الخدمات المخصصة للطبيب داخل العيادة</h4><a class="btn btn-outline-primary btn-sm" href="/clinic/services">تخصيص الخدمات</a></div><p class="small text-secondary">الخدمات المعروضة هنا مُسندة إلى الطبيب داخل هذه العيادة فقط.</p><div class="row g-3"><% if(!profile.services?.length){ %><div class="col-12 text-secondary">لا توجد خدمات مُسندة لهذا الطبيب بعد.</div><% } %><% for(const service of profile.services||[]){ %><div class="col-md-6"><div class="service-card"><strong><%= service.name %></strong><div class="small text-secondary"><%= service.duration %> دقيقة • <%= service.price %> ₪</div></div></div><% } %></div></div>
+      </section>
+      <div class="modal fade" id="absenceModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="fw-bold mb-0">إضافة غياب / إجازة</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body"><form method="post" action="/clinic/doctor-details" class="p-2"><input type="hidden" name="csrf_token" value="<%= csrfToken %>"><input type="hidden" name="doctor_id" value="<%= profile.person.id %>"><input type="hidden" name="action" value="add_absence"><div class="row g-3"><div class="col-md-6"><label class="form-label">من تاريخ</label><input class="form-control" name="from_date" type="date" required></div><div class="col-md-6"><label class="form-label">إلى تاريخ</label><input class="form-control" name="to_date" type="date" required></div><div class="col-12"><label class="form-label">السبب</label><textarea class="form-control" name="reason" maxlength="2000" required></textarea></div></div><button class="btn btn-primary mt-3">حفظ الغياب</button></form></div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="schedulePeriodModal" tabindex="-1" aria-labelledby="schedulePeriodModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+    <div class="modal-header"><h5 class="fw-bold mb-0" id="schedulePeriodModalLabel">إضافة فترة دوام</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button></div>
+    <div class="modal-body">
+      <form method="post" action="/clinic/doctor-details" class="p-2" id="realScheduleForm">
+        <input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+        <input type="hidden" name="doctor_id" value="<%= profile.person.id %>">
+        <input type="hidden" name="action" value="add_period">
+        <input type="hidden" name="original_day" value="">
+        <input type="hidden" name="original_start" value="">
+        <input type="hidden" name="original_end" value="">
+        <div class="row g-3">
+          <div class="col-md-4"><label class="form-label" for="scheduleDay">اليوم</label>
+            <select name="day" id="scheduleDay" class="form-select" required><% for(let day=0;day<7;day++){ %><option value="<%= day %>"><%= WEEKDAYS[day] %></option><% } %></select></div>
+          <div class="col-md-4"><label class="form-label" for="scheduleStart">من</label>
+            <input name="start" id="scheduleStart" type="time" class="form-control" required></div>
+          <div class="col-md-4"><label class="form-label" for="scheduleEnd">إلى</label>
+            <input name="end" id="scheduleEnd" type="time" class="form-control" required></div>
+          <div class="col-md-6"><label class="form-label" for="scheduleActive">الحالة</label>
+            <select class="form-select" name="active" id="scheduleActive"><option value="true">نشطة</option><option value="false">غير نشطة</option></select></div>
+          <div class="col-md-6 d-flex align-items-end"><label class="form-check mb-2" for="scheduleEndOfDay">
+            <input class="form-check-input" type="checkbox" id="scheduleEndOfDay" name="end_of_day" value="on">
+            <span class="form-check-label">حتى نهاية اليوم (24:00)</span></label></div>
+        </div>
+        <p class="small text-secondary mt-3 mb-0">تعديل الدوام لا يغيّر أو يلغي المواعيد القائمة. إذا كان هناك حجز سيتأثر بالتعديل، سيرفض النظام الحفظ.</p>
+        <button type="submit" class="btn btn-primary mt-3" id="scheduleSaveBtn">حفظ فترة الدوام</button>
+      </form>
+    </div>
+    <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">إلغاء</button></div>
+  </div></div>
+</div>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-12" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-13" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-14" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form></body></html>

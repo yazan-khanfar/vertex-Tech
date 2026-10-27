@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الرئيسية | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="admin-dashboard-head mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Super Admin</span>
+            <h1 class="fw-bold fs-2 mb-2">لوحة إدارة المنصة</h1>
+            <p class="text-secondary mb-0">
+              ملخص واضح لما يحتاج قرارًا الآن، مع وصول مباشر للإضافة والإدارة
+              بدون المرور بصفحات التفاصيل.
+            </p>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-outline-primary" href="approvals"><i class="bi bi-patch-check"></i>طلبات الاعتماد</a>
+            <a class="btn btn-primary" href="management-center"><i class="bi bi-grid-1x2"></i>مركز الإدارة والإضافات</a>
+          </div>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-xl-3">
+            <a class="stat-card d-block text-dark" href="users"><div class="d-flex justify-content-between">
+                <div>
+                  <small class="text-secondary">الحسابات النشطة</small>
+                  <div class="stat-value">1</div>
+                  <small class="text-success">+84 هذا الشهر</small>
+                </div>
+                <span class="icon-box"><i class="bi bi-people"></i></span></div></a>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <a class="stat-card d-block text-dark" href="approvals"><div class="d-flex justify-content-between">
+                <div>
+                  <small class="text-secondary">العيادات المعتمدة</small>
+                  <div class="stat-value">1</div>
+                  <small class="text-warning">3 طلبات جديدة</small>
+                </div>
+                <span class="icon-box"><i class="bi bi-hospital"></i></span></div></a>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <a class="stat-card d-block text-dark" href="doctors"><div class="d-flex justify-content-between">
+                <div>
+                  <small class="text-secondary">الأطباء</small>
+                  <div class="stat-value">1</div>
+                  <small class="text-warning">1 رقم ترخيص بانتظار التحقق</small>
+                </div>
+                <span class="icon-box"><i class="bi bi-person-badge"></i></span></div></a>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <a class="stat-card d-block text-dark" href="finance"><div class="d-flex justify-content-between">
+                <div>
+                  <small class="text-secondary">المتبقي للمنصة</small>
+                  <div class="stat-value">25 ₪</div>
+                  <small class="text-danger">من عيادة واحدة</small>
+                </div>
+                <span class="icon-box"><i class="bi bi-wallet2"></i></span></div></a>
+          </div>
+        </div>
+        <div class="row g-4 mb-4">
+          <div class="col-xl-7">
+            <div class="soft-card p-4 h-100">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <h3 class="section-title mb-1">يحتاج قرارًا أو متابعة</h3>
+                  <small class="text-secondary">مرتبة حسب الأولوية.</small>
+                </div>
+                <span class="badge text-bg-danger rounded-pill">7</span>
+              </div>
+              <div class="admin-attention-list">
+                <div class="action-row">
+                  <span class="icon-box"><i class="bi bi-hospital-add"></i></span>
+                  <div class="flex-grow-1">
+                    <strong>3 طلبات إنشاء عيادة جديدة</strong>
+                    <div class="small text-secondary">
+                      بيانات ووثائق بانتظار مراجعة Super Admin.
+                    </div>
+                  </div>
+                  <a class="btn btn-sm btn-primary" href="approvals">مراجعة</a>
+                </div>
+                <div class="action-row">
+                  <span class="icon-box"><i class="bi bi-person-exclamation"></i></span>
+                  <div class="flex-grow-1">
+                    <strong>رقم ترخيص طبيب بانتظار التحقق</strong>
+                    <div class="small text-secondary">د. عمر ناصر • D-108.</div>
+                  </div>
+                  <a class="btn btn-sm btn-outline-primary" href="doctors?filter=pending">فتح</a>
+                </div>
+                <div class="action-row">
+                  <span class="icon-box"><i class="bi bi-wallet2"></i></span>
+                  <div class="flex-grow-1">
+                    <strong>عيادة واحدة عليها رصيد متبقٍ</strong>
+                    <div class="small text-secondary">
+                      إجمالي 25 ₪ يحتاج متابعة.
+                    </div>
+                  </div>
+                  <a class="btn btn-sm btn-outline-primary" href="finance?status=remaining">المالية</a>
+                </div>
+                <div class="action-row">
+                  <span class="icon-box"><i class="bi bi-wallet2"></i></span>
+                  <div class="flex-grow-1">
+                    <strong>تسوية تحتاج متابعة</strong>
+                    <div class="small text-secondary">
+                      SET-001 • متبقي 25 ₪.
+                    </div>
+                  </div>
+                  <a class="btn btn-sm btn-outline-primary" href="finance">عرض</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-5">
+            <div class="soft-card p-4 h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <h3 class="section-title mb-1">إضافة مباشرة</h3>
+                  <small class="text-secondary">لا تحتاج فتح ملف مستخدم أولًا.</small>
+                </div>
+                <a class="btn btn-sm btn-light" href="management-center">كل الخيارات</a>
+              </div>
+              <div class="admin-quick-grid">
+                <a href="management-center?action=patient"><span class="icon-box"><i class="bi bi-person-plus"></i></span><span>مريض جديد</span></a>
+                <a href="management-center?action=doctor"><span class="icon-box"><i class="bi bi-person-badge"></i></span><span>طبيب جديد</span></a>
+                <a href="management-center?action=appointment"><span class="icon-box"><i class="bi bi-calendar2-plus"></i></span><span>موعد</span></a>
+                <a href="finance"><span class="icon-box"><i class="bi bi-receipt"></i></span><span>فاتورة</span></a>
+                <a href="users"><span class="icon-box"><i class="bi bi-person-gear"></i></span><span>موظف عيادة</span></a>
+                <a href="services">كتالوج الخدمات</a>
+                <a href="labs"><span class="icon-box"><i class="bi bi-buildings"></i></span><span>المختبرات</span></a>
+                <a href="specialties"><span class="icon-box"><i class="bi bi-grid"></i></span><span>تخصص</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="soft-card p-4 h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="section-title mb-0">تشغيل اليوم</h3>
+                <a class="btn btn-sm btn-light" href="reports">التقارير</a>
+              </div>
+              <div class="summary-row">
+                <span>الحجوزات</span><strong>326</strong>
+              </div>
+              <div class="summary-row">
+                <span>مكتملة</span><strong class="text-success">214</strong>
+              </div>
+              <div class="summary-row">
+                <span>ملغاة</span><strong class="text-danger">13</strong>
+              </div>
+              <div class="summary-row">
+                <span>No-show</span><strong class="text-warning">11</strong>
+              </div>
+              <div class="summary-row">
+                <span>طلبات تغيير</span><strong>9</strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="soft-card p-4 h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="section-title mb-0">المالية</h3>
+                <a class="btn btn-sm btn-light" href="finance">فتح</a>
+              </div>
+              <div class="summary-row">
+                <span>المطلوب</span><strong>25 ₪</strong>
+              </div>
+              <div class="summary-row">
+                <span>المحصل</span><strong class="text-success">0 ₪</strong>
+              </div>
+              <div class="summary-row">
+                <span>المتبقي</span><strong class="text-danger">25 ₪</strong>
+              </div>
+              <div class="summary-row">
+                <span>نسبة التحصيل</span><strong>0%</strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="soft-card p-4 h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="section-title mb-0">الوصول والصلاحيات</h3>
+                <a class="btn btn-sm btn-light" href="management-center">إدارة</a>
+              </div>
+              <div class="summary-row">
+                <span>موظفو العيادات</span><strong>126</strong>
+              </div>
+              <div class="summary-row">
+                <span>حسابات معلقة</span><strong class="text-warning">4</strong>
+              </div>
+              <div class="summary-row">
+                <span>قوالب صلاحيات تشغيلية</span><strong>3</strong>
+              </div>
+              <div class="summary-row">
+                <span>Super Admin</span><strong>حساب واحد</strong>
+              </div>
+              <a class="btn btn-sm btn-outline-primary mt-3" href="staff-permissions">مراجعة صلاحيات عيادة</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-1"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-1" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-2"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-2"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-2" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-2" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

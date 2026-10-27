@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>العيادات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+    <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+    
+      
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <!-- شريط التنقل العلوي -->
+    <%- include('../partials/patient/header') %>
+
+    <!-- القائمة الجانبية للموبايل -->
+    
+
+    <!-- المحتوى الرئيسي -->
+    <main class="page-shell bg-light min-vh-100 py-4" id="main-content">
+      <section class="container">
+        
+        <!-- عنوان الصفحة والبحث -->
+        <div class="row align-items-center g-3 mb-4">
+          <div class="col-lg-6">
+            <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-1 rounded-pill fw-bold">العيادات الطبية</span>
+            <h1 class="fw-bold text-dark mb-1">استعراض العيادات</h1>
+            <p class="text-muted mb-0 small">
+              تظهر العيادات المعتمدة والنشطة من قاعدة البيانات. يمكن ترتيب النتائج حسب المسافة بعد السماح باستخدام موقعك.
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <div class="input-group shadow-sm">
+              <span class="input-group-text bg-white border-end-0 text-primary"><i class="bi bi-search"></i></span>
+              <input class="form-control border-start-0 ps-0 py-2" id="clinicSearch" placeholder="ابحث باسم العيادة، الموقع أو الخدمة..." value="" >
+            </div>
+          </div>
+        </div>
+
+        <!-- بطاقة استخدام الموقع -->
+        <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-white d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3"  id="clinicLocationCard">
+          <div>
+            <div class="fw-bold text-dark d-flex align-items-center gap-2">
+              <i class="bi bi-crosshair text-primary fs-5"></i>استخدم موقعك لترتيب العيادات حسب القرب
+            </div>
+            <div class="small text-muted mt-1" id="clinicLocationStatus">
+              لم يتم استخدام موقعك بعد. يمكنك الاستمرار بدون مشاركة الموقع.
+            </div>
+          </div>
+          <button class="btn btn-outline-primary btn-sm px-3 text-nowrap py-2" id="useClinicLocation" type="button" >
+            <i class="bi bi-geo-alt ms-1"></i>استخدام موقعي الحالي
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center gap-2 flex-wrap mb-3">
+          <label for="manualCityLocation" class="small fw-semibold mb-0">أو اختر موقعاً تقريبياً:</label>
+          <select id="manualCityLocation" class="form-select form-select-sm" style="max-width:220px" aria-label="اختيار المدينة"><option value="">كل المدن</option><% for(const name of [...new Set(clinics.map(c=>c.city))].sort()){ %><option value="<%= name %>"><%= name %></option><% } %></select>
+          <span class="text-muted small">المواقع مأخوذة من إحداثيات العيادات المحفوظة في قاعدة البيانات.</span>
+        </div>
+        <!-- لوحة الفلاتر -->
+        <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-white">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark">خدمة العيادة</label>
+              <select class="form-select form-select-sm py-2" id="clinicServiceFilter"><option value="all">كل الخدمات</option><% for(const item of clinicServices){ %><option value="<%= item.id %>"><%= item.name %></option><% } %></select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark">حالة العيادة</label>
+              <select class="form-select form-select-sm py-2" id="clinicStatusFilter"  name="clinic_status_filter">
+                <option value="all" selected>كل الحالات</option>
+                <option value="open">تقبل الحجز الإلكتروني</option>
+                <option value="closed">الحجز الإلكتروني متوقف</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-dark">طريقة الترتيب</label>
+              <select class="form-select form-select-sm py-2" id="clinicSort" aria-label="طريقة الترتيب"><option value="name">الاسم</option><option value="distance">الأقرب بعد استخدام موقعي</option></select>
+            </div>
+            <div class="col-12 d-flex justify-content-end mt-2">
+              <button class="btn btn-light btn-sm text-secondary border px-3" id="clearClinicFilters" >
+                <i class="bi bi-arrow-counterclockwise ms-1"></i>إعادة ضبط الفلاتر
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- عداد النتائج -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="text-muted small fw-bold" id="clinicResultCount">
+            عرض <%= clinics.length %> عيادة معتمدة
+          </div>
+        </div>
+
+        <!-- شبكة العيادات -->
+        <div class="row g-4" id="clinicsGrid">
+          <% if(!clinics.length){ %><div class="col-12"><div class="alert alert-info rounded-4">لا توجد عيادات معتمدة ونشطة حاليًا.</div></div><% } %>
+          <% for(const c of clinics){ %>
+          <div class="col-md-6 col-xl-4 clinic-filter-item" data-lat="<%= c.latitude %>" data-lng="<%= c.longitude %>" data-name="<%= c.name %>" data-location="<%= c.city %> <%= c.area %>" data-service-ids="<%= c.service_ids||'' %>" data-status="<%= c.online_booking?'open':'closed' %>" data-record-id="<%= c.id %>">
+            <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden d-flex flex-column">
+              <img class="object-fit-cover" src="../assets/vendor/1a7676da86a2-photo-1629909613654-28e377c37b09.jpg" style="height:180px" alt="صورة توضيحية للعيادة">
+              <div class="p-4 d-flex flex-column justify-content-between flex-grow-1">
+                <div><div class="d-flex justify-content-between gap-2 align-items-start mb-2"><div><h5 class="fw-bold mb-1 text-dark fs-6"><%= c.name %></h5><div class="text-muted small"><i class="bi bi-geo-alt ms-1 text-primary"></i><%= c.city %> — <%= c.area %></div></div><span class="badge <%= c.online_booking?'bg-success':'bg-secondary' %>"><%= c.online_booking?'يقبل الحجز الإلكتروني':'الحجز الإلكتروني متوقف' %></span></div>
+                <div class="d-flex flex-wrap gap-3 small my-2"><span class="text-primary fw-bold"><i class="bi bi-geo-alt-fill ms-1"></i><span class="location-demo-distance" data-real-distance>المسافة غير محسوبة</span></span></div>
+                <div class="d-flex flex-wrap gap-1 my-3"><span class="badge bg-light text-secondary border"><%= c.service_count %> خدمة بالعيادة</span></div></div>
+                <div><div class="d-flex justify-content-between text-muted small mb-3 pt-2 border-top"><span><i class="bi bi-person-badge text-primary ms-1"></i><%= c.doctor_count %> طبيب</span><span><i class="bi bi-geo-alt text-primary ms-1"></i><%= c.city %></span></div>
+                <a class="btn btn-primary btn-sm w-100 py-2" href="/patient/clinic-details?clinic_id=<%= c.id %>">عرض العيادة والأطباء</a></div>
+              </div>
+            </div>
+          </div><% } %>
+        </div>
+
+        <!-- حالة عدم وجود نتائج -->
+        <div class="empty-state d-none text-center py-5 card border-0 shadow-sm rounded-4 mt-3" id="clinicEmptyState">
+          <i class="bi bi-search fs-1 text-muted"></i>
+          <h5 class="fw-bold mt-3 text-dark">لا توجد عيادات مطابقة</h5>
+          <p class="text-muted small mb-0">
+            يرجى تغيير كلمات البحث أو إعادة ضبط الفلاتر والمحاولة مرة أخرى.
+          </p>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- الفوتر -->
+    <%- include('../partials/patient/footer') %>
+
+    <!-- التوست (Toast) -->
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0 shadow" id="appToast" role="alert">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية بنجاح</div>
+          <button class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- السكريبتات -->
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+  
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form></body></html>

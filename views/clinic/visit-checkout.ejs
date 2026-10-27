@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>إنهاء الزيارة | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="alert alert-info border-0 rounded-4">
+          <i class="bi bi-info-circle ms-1"></i>إنهاء الزيارة من العيادة لا ينشئ
+          فاتورة. النظام يجهز مسودة من إجراءات الزيارة، ويصدرها مسؤول العيادة أو الموظف المخوّل.
+        </div>
+        <nav aria-label="breadcrumb" class="no-print">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="operations">التشغيل اليومي</a>
+            </li>
+            <li class="breadcrumb-item active">إنهاء الزيارة</li>
+          </ol>
+        </nav>
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-start gap-3 mb-4">
+          <div>
+            <span class="badge text-bg-success mb-2">زيارة مكتملة</span>
+            <h1 class="fw-bold">إنهاء زيارة <%= visit.patient_name %></h1>
+            <p class="text-secondary mb-0">
+              الزيارة المكتملة محفوظة في قاعدة البيانات. تابع الإجراءات الإدارية المتعلقة
+              بالزيارة.
+            </p>
+          </div>
+          <a class="btn btn-light" href="operations">
+            <i class="bi bi-arrow-right ms-1"></i>العودة لقائمة اليوم
+          </a>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="soft-card p-4 mb-4">
+              <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                <div>
+                  <h4 class="fw-bold mb-1">ملخص الزيارة</h4>
+                  <div class="text-secondary small">Visit #<%= visit.id %></div>
+                </div>
+                <span class="badge text-bg-success">مكتملة</span>
+              </div>
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <small class="text-secondary">المريض</small>
+                  <div class="fw-bold"><%= visit.patient_name %></div>
+                  <div class="small text-secondary">Patient #<%= visit.patient_id %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">الطبيب</small>
+                  <div class="fw-bold">د. <%= visit.doctor_name %></div>
+                  <div class="small text-secondary"><%= visit.service_name %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">الخدمة</small>
+                  <div class="fw-bold"><%= visit.service_name %></div>
+                  <div class="small text-secondary">
+                    المدة المسجلة: <%= visit.duration %> دقيقة
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">الموعد</small>
+                  <div class="fw-bold"><%= visit.date %> • <%= visit.time %></div>
+                </div>
+              </div>
+            </div>
+            <div class="soft-card p-4 mb-4">
+              <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+                <div>
+                  <h4 class="fw-bold mb-1">التقرير الطبي</h4>
+                  <p class="text-secondary small mb-0">
+                    التقرير الطبي من صلاحيات الطبيب فقط.
+                  </p>
+                </div>
+                <span class="badge <%= visit.approved?'text-bg-success':'text-bg-warning' %>"><%= visit.approved?'معتمد':'بانتظار اعتماد الطبيب' %></span>
+              </div>
+              <% if(visit.approved){ %><a class="btn btn-outline-primary btn-sm mb-3" href="/clinic/doctor-report?visit_id=<%= visit.id %>">عرض التقرير المعتمد</a><% } %>
+              <div class="privacy-box">
+                <div class="d-flex gap-3">
+                  <i class="bi bi-shield-lock fs-3 text-primary"></i>
+                  <div>
+                    <strong>لا يمكن للعيادة إنشاء أو تعديل التقرير الطبي</strong>
+                    <p class="text-secondary small mb-0 mt-1">
+                      بعد اعتماد الطبيب للتقرير، يمكن للعيادة عرضه للقراءة فقط.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="soft-card p-4 mb-4">
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+                <div>
+                  <h4 class="fw-bold mb-1">الفاتورة</h4>
+                  <p class="text-secondary small mb-0">
+                    إصدار الفاتورة من مسؤولية إدارة العيادة بعد مراجعة مسودة إجراءات الزيارة.
+                    العيادة تستطيع بعد إنشائها عرض الفاتورة وتسجيل الدفعات
+                    المسموح بها ومتابعة الدفعات الجزئية.
+                  </p>
+                </div>
+                <section class="mt-3" id="invoiceDraftEditor"><h5 class="fw-bold mb-2">سعر الحجز المسجل</h5>
+                  <div class="alert alert-light border">سعر الخدمة المثبت وقت الحجز: <strong><%= visit.price %> ₪</strong>. تُدار الفواتير والدفعات من صفحة الفواتير الأصلية.</div>
+                </section></div>
+              <div class="privacy-box">
+                <i class="bi bi-receipt ms-2 text-primary"></i><strong>يتم إنشاء وإصدار الفواتير من صفحة الفواتير الأصلية.</strong>
+                <div class="small text-secondary mt-2">
+                  عند تسجيل الفواتير ستظهر في صفحة الفواتير
+                  للعرض والتحصيل.
+                </div>
+              </div>
+              <a class="btn btn-outline-primary btn-sm mt-3" href="/clinic/invoices">فتح صفحة الفواتير</a>
+            </div>
+            <div class="soft-card p-4">
+              <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                <div>
+                  <h4 class="fw-bold mb-1">المتابعة</h4>
+                  <p class="text-secondary small mb-0">
+                    إذا أوصى الطبيب بمتابعة، تُضاف المتابعة تلقائياً إلى قائمة
+                    المتابعات وتستطيع العيادة حجز الموعد مباشرة.
+                  </p>
+                </div>
+                <span class="badge badge-soft"><%= visit.follow_type&&visit.follow_date?'متابعة مقترحة':'لا توجد متابعة مقترحة' %></span>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <small class="text-secondary">نوع المتابعة</small>
+                  <div class="fw-bold"><%= visit.follow_type||'لا توجد' %></div>
+                </div>
+                <div class="col-md-6">
+                  <small class="text-secondary">الفترة المقترحة</small>
+                  <div class="fw-bold"><%= visit.follow_date||'غير محدد' %></div>
+                </div>
+              </div>
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <% if(visit.follow_type&&visit.follow_date&&!visit.follow_booking_id){ %><a class="btn btn-outline-primary" href="/clinic/new-appointment?patient=<%= visit.patient_id %>&amp;follow_up_visit_id=<%= visit.id %>">حجز موعد متابعة</a><% }else if(visit.follow_booking_id){ %><a class="btn btn-outline-primary" href="/clinic/appointment-details?id=<%= visit.follow_booking_id %>">عرض موعد المتابعة</a><% } %>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="soft-card p-4 mb-4">
+              <h5 class="fw-bold mb-3">حالة إجراءات الزيارة</h5>
+              <div class="checkout-step complete">
+                <span class="checkout-step-icon"><i class="bi bi-check-lg"></i></span>
+                <div>
+                  <strong>الزيارة</strong>
+                  <div class="small text-secondary">تم إنهاؤها</div>
+                </div>
+              </div>
+              <div class="checkout-step pending">
+                <span class="checkout-step-icon"><i class="bi bi-hourglass-split"></i></span>
+                <div>
+                  <strong>تقرير الطبيب</strong>
+                  <div class="small text-secondary"><%= visit.approved?'معتمد':'بانتظار اعتماد الطبيب' %></div>
+                </div>
+              </div>
+              <div class="checkout-step pending">
+                <span class="checkout-step-icon"><i class="bi bi-receipt"></i></span>
+                <div>
+                  <strong>الفاتورة</strong>
+                  <div class="small text-secondary">
+                    تراجعها وتصدرها إدارة العيادة
+                  </div>
+                </div>
+              </div>
+              <div class="checkout-step">
+                <span class="checkout-step-icon"><i class="bi bi-arrow-repeat"></i></span>
+                <div>
+                  <strong>المتابعة</strong>
+                  <div class="small text-secondary">
+                    اختيارية حسب توصية الطبيب
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="soft-card p-4">
+              <h5 class="fw-bold mb-3">إنهاء الإجراءات</h5>
+              <p class="text-secondary small">
+                بعد مراجعة حالة التقرير والمتابعة يمكنك العودة لقائمة اليوم
+                ومتابعة المرضى الآخرين.
+              </p>
+              <a class="btn btn-success w-100" href="operations">
+                <i class="bi bi-check2-circle ms-1"></i>إغلاق والعودة لقائمة
+                اليوم
+              </a>
+              <a class="btn btn-light w-100 mt-2" href="/clinic/patient-details?id=<%= visit.patient_id %>">فتح ملف المريض</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

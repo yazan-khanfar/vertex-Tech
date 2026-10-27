@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>الوظائف المتاحة للأطباء | Smart Dental Clinic</title>
+    <link href="../../../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../../../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="../../assets/styles.css">
+  <link href="../../../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body>
+    <div class="auth-page jobs-public-page">
+      <div class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-start gap-3 mb-4">
+          <div>
+            <a class="small text-secondary" href="../choose-path"><i class="bi bi-arrow-right ms-1"></i>العودة لاختيار المسار</a>
+            <h1 class="mt-3 mb-2 fw-bold">الوظائف المتاحة للأطباء</h1>
+            <p class="text-secondary mb-0">
+              ابحث عن الوظيفة المناسبة، راجع كل التفاصيل، ثم أرسل طلبك مع
+              معلوماتك المهنية والمرفقات المطلوبة.
+            </p>
+          </div>
+          <div class="jobs-account-note">
+            <i class="bi bi-patch-check-fill"></i>
+            <div>
+              <strong>حساب الطبيب موثق</strong><small>بيانات الترخيص الأساسية تُقرأ من ملفك ولا تحتاج لإعادة
+                إدخالها.</small>
+            </div>
+          </div>
+        </div>
+        <div class="jobs-filter-panel mb-4">
+          <div class="row g-3">
+            <div class="col-lg-4">
+              <label class="form-label">بحث</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="availableJobSearch" placeholder="المسمى، العيادة، التخصص..." value="" data-ui-unbound-control="" name="available_job_search">
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+              <label class="form-label">المدينة</label><select class="form-select" id="availableJobCity" name="available_job_city">
+                <option value="all">كل المدن</option>
+                <option value="nablus">نابلس</option>
+                <option value="jenin" selected>جنين</option>
+                <option value="tulkarm">طولكرم</option>
+              </select>
+            </div>
+            <div class="col-md-4 col-lg-2">
+              <label class="form-label">التخصص</label><select class="form-select" id="availableJobSpecialty" name="available_job_specialty">
+                <option value="all" selected>كل التخصصات</option>
+                <option value="general">تقويم الأسنان</option>
+                <option value="endo">علاج جذور</option>
+                <option value="ortho">تقويم الأسنان</option>
+              </select>
+            </div>
+            <div class="col-md-4 col-lg-2">
+              <label class="form-label">نوع الدوام</label><select class="form-select" id="availableJobType" name="available_job_type">
+                <option value="all" selected>الكل</option>
+                <option value="full">دوام كامل</option>
+                <option value="part">دوام جزئي</option>
+              </select>
+            </div>
+            <div class="col-lg-2 d-flex align-items-end">
+              <button class="btn btn-light border w-100" id="clearAvailableJobFilters" data-ui-pending="">
+                <i class="bi bi-arrow-counterclockwise ms-1"></i>مسح
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <strong id="availableJobCount">5 وظائف</strong><span class="small text-secondary">الوظائف المنشورة فقط</span>
+        </div>
+        <div class="row g-4" id="availableJobsGrid">
+          <div class="col-lg-6 available-job-item" data-city="nablus" data-search="طبيب/ة تقويم أسنان عيادة الابتسامة الحديثة نابلس general" data-specialty="general" data-type="full">
+            <div class="public-job-card h-100">
+              <div class="d-flex justify-content-between gap-2">
+                <span class="badge text-bg-success">متاحة</span><span class="job-code">J-101</span>
+              </div>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <span class="job-clinic-icon"><i class="bi bi-hospital"></i></span>
+                <div>
+                  <h3 class="job-title mb-1">طبيب/ة تقويم أسنان</h3>
+                  <div class="text-secondary small">
+                    عيادة الابتسامة الحديثة • نابلس
+                  </div>
+                </div>
+              </div>
+              <div class="job-facts">
+                <span><i class="bi bi-clock"></i>دوام كامل</span><span><i class="bi bi-briefcase"></i>خبرة ثلاث سنوات+</span><span><i class="bi bi-cash-stack"></i>راتب حسب الخبرة</span>
+              </div>
+              <p class="text-secondary">
+                نبحث عن طبيب/ة تقويم أسنان للانضمام إلى فريق العيادة والعمل ضمن بيئة
+                متعددة التخصصات.
+              </p>
+              <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mt-auto">
+                <small class="text-secondary"><i class="bi bi-calendar-event ms-1"></i>آخر تقديم: 31 أكتوبر 2026</small>
+                <div class="d-flex gap-2">
+                  <a class="btn btn-outline-primary btn-sm" href="details?id=J-101">عرض التفاصيل</a><a class="btn btn-primary btn-sm" href="details?id=J-101#apply">تقديم</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 available-job-item" data-city="jenin" data-search="طبيب علاج جذور عيادة الابتسامة الحديثة جنين endo" data-specialty="endo" data-type="part">
+            <div class="public-job-card h-100">
+              <div class="d-flex justify-content-between gap-2">
+                <span class="badge text-bg-success">متاحة</span><span class="job-code">J-101</span>
+              </div>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <span class="job-clinic-icon"><i class="bi bi-hospital"></i></span>
+                <div>
+                  <h3 class="job-title mb-1">طبيب/ة علاج جذور</h3>
+                  <div class="text-secondary small">عيادة الابتسامة الحديثة • جنين</div>
+                </div>
+              </div>
+              <div class="job-facts">
+                <span><i class="bi bi-clock"></i>دوام جزئي</span><span><i class="bi bi-briefcase"></i>خبرة ثلاث سنوات+</span><span><i class="bi bi-calendar-week"></i>3 أيام أسبوعيًا</span>
+              </div>
+              <p class="text-secondary">
+                مطلوب طبيب علاج جذور لاستلام الحالات المتقدمة والعمل ضمن جدول
+                مرن مع توفر أجهزة حديثة.
+              </p>
+              <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mt-auto">
+                <small class="text-secondary"><i class="bi bi-calendar-event ms-1"></i>آخر تقديم: 31 أكتوبر 2026</small>
+                <div class="d-flex gap-2">
+                  <a class="btn btn-outline-primary btn-sm" href="details?id=J-103">عرض التفاصيل</a><a class="btn btn-primary btn-sm" href="details?id=J-103#apply">تقديم</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 available-job-item" data-city="tulkarm" data-search="طبيب تقويم عيادة الابتسامة الحديثة طولكرم ortho" data-specialty="ortho" data-type="part">
+            <div class="public-job-card h-100">
+              <div class="d-flex justify-content-between gap-2">
+                <span class="badge text-bg-success">متاحة</span><span class="job-code">J-101</span>
+              </div>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <span class="job-clinic-icon"><i class="bi bi-hospital"></i></span>
+                <div>
+                  <h3 class="job-title mb-1">طبيب/ة تقويم أسنان</h3>
+                  <div class="text-secondary small">
+                    عيادة الابتسامة الحديثة • طولكرم
+                  </div>
+                </div>
+              </div>
+              <div class="job-facts">
+                <span><i class="bi bi-clock"></i>دوام جزئي</span><span><i class="bi bi-briefcase"></i>خبرة 3 سنوات+</span><span><i class="bi bi-cash-stack"></i>نسبة + راتب</span>
+              </div>
+              <p class="text-secondary">
+                إدارة ومتابعة حالات علاج جذور وشفاف ضمن عيادة حديثة مع مساعد
+                سريري مخصص.
+              </p>
+              <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mt-auto">
+                <small class="text-secondary"><i class="bi bi-calendar-event ms-1"></i>آخر تقديم: 31 أكتوبر 2026</small>
+                <div class="d-flex gap-2">
+                  <a class="btn btn-outline-primary btn-sm" href="details?id=J-104">عرض التفاصيل</a><a class="btn btn-primary btn-sm" href="details?id=J-104#apply">تقديم</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 available-job-item" data-city="nablus" data-search="طبيب/ة تقويم أسنان عيادة الابتسامة الحديثة نابلس general" data-specialty="general" data-type="part">
+            <div class="public-job-card h-100">
+              <div class="d-flex justify-content-between gap-2">
+                <span class="badge text-bg-success">متاحة</span><span class="job-code">J-101</span>
+              </div>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <span class="job-clinic-icon"><i class="bi bi-hospital"></i></span>
+                <div>
+                  <h3 class="job-title mb-1">طبيب/ة تقويم أسنان — دوام مسائي</h3>
+                  <div class="text-secondary small">عيادة الابتسامة الحديثة • نابلس</div>
+                </div>
+              </div>
+              <div class="job-facts">
+                <span><i class="bi bi-clock"></i>دوام جزئي</span><span><i class="bi bi-briefcase"></i>خبرة سنة+</span><span><i class="bi bi-moon-stars"></i>4:00–9:00 م</span>
+              </div>
+              <p class="text-secondary">
+                مطلوب طبيب/ة تقويم أسنان للفترة المسائية، مع قدرة على التعامل مع
+                الحالات الطارئة والمراجعات العامة.
+              </p>
+              <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mt-auto">
+                <small class="text-secondary"><i class="bi bi-calendar-event ms-1"></i>آخر تقديم: 31 أكتوبر 2026</small>
+                <div class="d-flex gap-2">
+                  <a class="btn btn-outline-primary btn-sm" href="details?id=J-105">عرض التفاصيل</a><a class="btn btn-primary btn-sm" href="details?id=J-105#apply">تقديم</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 available-job-item" data-city="nablus" data-search="طبيب/ة تقويم أسنان عيادة الابتسامة الحديثة نابلس ortho J-101" data-specialty="ortho" data-type="part">
+            <div class="public-job-card h-100">
+              <div class="d-flex justify-content-between gap-2">
+                <span class="badge text-bg-success">متاحة</span><span class="job-code">J-101</span>
+              </div>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <span class="job-clinic-icon"><i class="bi bi-hospital"></i></span>
+                <div>
+                  <h3 class="job-title mb-1">طبيب/ة تقويم أسنان</h3>
+                  <div class="text-secondary small">
+                    عيادة الابتسامة الحديثة • نابلس
+                  </div>
+                </div>
+              </div>
+              <div class="job-facts">
+                <span><i class="bi bi-clock"></i>دوام جزئي</span><span><i class="bi bi-briefcase"></i>خبرة 3 سنوات+</span><span><i class="bi bi-cash-stack"></i>راتب + نسبة</span>
+              </div>
+              <p class="text-secondary">
+                مطلوب طبيب/ة تقويم أسنان للعمل ضمن فريق عيادة الابتسامة الحديثة
+                يومين إلى ثلاثة أيام أسبوعيًا.
+              </p>
+              <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mt-auto">
+                <small class="text-secondary"><i class="bi bi-calendar-event ms-1"></i>آخر تقديم: 31 أكتوبر 2026</small>
+                <div class="d-flex gap-2">
+                  <a class="btn btn-outline-primary btn-sm" href="details?id=J-106">عرض التفاصيل</a><a class="btn btn-primary btn-sm" href="details?id=J-106#apply">تقديم</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="empty-state d-none mt-4" id="availableJobsEmpty">
+          <i class="bi bi-search fs-2 d-block mb-2"></i>لا توجد وظائف مطابقة
+          للفلاتر الحالية.
+        </div>
+      </div>
+    </div>
+    <script src="../../../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="../../assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div>
+        <!-- زر الدعم الفني العائم -->
+        <a class="floating-chat-btn" href="/account/support" title="فتح طلب دعم فني"><i class="bi bi-chat-dots-fill"></i></a>
+
+        <!-- نافذة الشات المنبثقة -->
+        
+    </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

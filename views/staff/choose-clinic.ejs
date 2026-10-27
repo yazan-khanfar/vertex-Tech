@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>اختر العيادة | موظف العيادة</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body data-staff-account-status="active" data-staff-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>" data-staff-user-id="<%= typeof currentUser !== 'undefined' && currentUser ? currentUser.userId : '' %>" data-rendered-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-active-clinic-id="<%= typeof activeClinic !== 'undefined' && activeClinic ? activeClinic.id : '' %>" data-staff-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : '' %>" data-staff-clinic-chooser=""><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/staff/header') %>
+    
+    <main class="page-shell" id="main-content" data-staff-workspace="">
+      <section class="container py-4 py-lg-5"><div class="soft-card p-4 p-lg-5 mx-auto" style="max-width:760px"><span class="badge badge-soft mb-3">مساحة موظف العيادة</span><h1 class="fw-bold mb-3">اختر العيادة</h1><p class="text-secondary mb-4">حسابك مرتبط بالعيادات التالية. اختر العيادة التي تريد العمل فيها؛ دورك وصلاحياتك قد يختلفان من عيادة لأخرى.</p><form id="staffClinicChoiceForm" method="post" data-staff-clinic-choice-form><label class="form-label fw-bold" for="staffClinicSelect">العيادة *</label><select id="staffClinicSelect" name="clinic_id" class="form-select mb-3" required aria-describedby="staffClinicSelectedRole"><option value="" selected>اختر العيادة</option><% if(typeof activeClinic !== 'undefined' && activeClinic){ %><option value="<%= activeClinic.id %>" data-membership-status="active" data-clinic-role="<%= typeof staffClinicRole !== 'undefined' ? staffClinicRole : 'موظف' %>" data-clinic-permissions="<%= typeof staffPermissions !== 'undefined' ? staffPermissions : '' %>"><%= activeClinic.name %></option><% } %></select><div class="alert alert-light border" id="staffClinicSelectedRole" aria-live="polite">اختر عيادة لعرض دورك فيها.</div><div id="staffClinicChoiceError" class="alert alert-danger" role="alert" hidden></div><button type="submit" class="btn btn-primary" id="enterStaffClinic">الدخول إلى العيادة</button></form><div id="staffNoMemberships" class="alert alert-warning" role="status" hidden><h5 class="fw-bold">لا توجد عضوية فعّالة</h5><p class="mb-0">حسابك غير مرتبط حاليًا بعيادة فعّالة. تواصل مع مسؤول العيادة لإضافتك أو إعادة تفعيل عضويتك.</p></div><div id="staffClinicUnavailable" class="alert alert-danger" hidden>الحساب غير فعّال. تواصل مع مسؤول العيادة.</div><p class="small text-secondary mt-4 mb-0">يمكنك العودة إلى هذه الشاشة من «اختيار أو تبديل العيادة» داخل حسابك.</p></div></section></main>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><%- include('../partials/staff/footer') %></body></html>

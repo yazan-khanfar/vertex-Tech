@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>لوحة الطبيب | Smart Dental Doctor</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+    <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+    
+      
+  </head>
+  <body class="bg-light"><div class="container mt-3"><div class="alert alert-info small mb-0" role="status"><i class="bi bi-info-circle ms-1"></i> تم ربط الدخول والصلاحيات؛ محتوى لوحة التحكم التفصيلي ما زال نموذج عرض وسيُربط ببيانات حسابك في مرحلة القسم نفسه.</div></div><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <!-- شريط التنقل العلوي -->
+    <%- include('../partials/doctor/header') %>
+
+    <!-- القائمة الجانبية (Offcanvas) للأقسام -->
+    
+
+    <!-- المحتوى الرئيسي -->
+    <main class="page-shell py-4" id="main-content">
+<section class="container">
+<div class="hero-doctor mb-4 p-4 p-lg-5 bg-primary text-white rounded-4 shadow-sm position-relative overflow-hidden">
+<div class="row align-items-center g-4 position-relative z-1"><div class="col-lg-8">
+<span class="badge bg-white text-primary mb-3 px-3 py-2 rounded-pill fw-bold">Doctor Dashboard</span>
+<h1 class="fw-bold mb-2 fs-2">أهلاً د. <%= overview.identity.name %></h1>
+<p class="mb-4 opacity-90 fs-6">مواعيدك ومهامك الفعلية في <%= overview.identity.clinic %> ليوم <%= overview.date %>.</p>
+<div class="d-flex flex-wrap gap-2"><a class="btn btn-light text-primary fw-bold px-4 py-2 shadow-sm" href="appointments"><i class="bi bi-calendar2-check ms-1"></i>عرض مواعيدي</a><a class="btn btn-outline-light px-4 py-2" href="patients">مرضاي</a></div>
+</div><div class="col-lg-4"><div class="bg-white bg-opacity-10 backdrop-blur rounded-4 p-4 border border-white border-opacity-20 shadow-sm">
+<div class="small opacity-75 mb-1">موعد اليوم</div><h4 class="fw-bold mb-1"><%= overview.today[0]?.name || 'لا توجد مواعيد اليوم' %></h4>
+<div class="text-white-55 small mb-3"><%= overview.today[0] ? overview.today[0].service+' • '+overview.today[0].time : 'سيظهر الموعد القادم هنا عند حجزه' %></div>
+<% if(overview.today[0]){ %><span class="badge bg-success-subtle text-success rounded-pill"><%= overview.today[0].status %></span><% } %>
+</div></div></div></div>
+<div class="row g-3 mb-4">
+<% const metricCards=[['bi-calendar2-check','primary','مواعيد اليوم',overview.stats.today],['bi-check2-circle','success','زيارات مكتملة',overview.stats.completed],['bi-file-earmark-medical','warning','تقارير تحتاج اعتماد',overview.stats.pending_reports],['bi-arrow-repeat','info','متابعات مقترحة',overview.stats.followups]]; %>
+<% for(const item of metricCards){ %><div class="col-6 col-lg-3"><div class="metric-card card border-0 shadow-sm rounded-4 p-3 bg-white h-100"><div class="metric-icon text-<%= item[1] %> bg-<%= item[1] %>-subtle rounded-3 p-2 d-inline-flex mb-3 fs-4" style="width:45px;height:45px;align-items:center;justify-content:center"><i class="bi <%= item[0] %>"></i></div><div class="metric-value fw-bold fs-3 text-dark"><%= item[3] %></div><div class="text-secondary small"><%= item[2] %></div></div></div><% } %>
+</div>
+<div class="row g-4"><div class="col-xl-8"><div class="soft-card card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+<div class="d-flex justify-content-between align-items-center mb-4"><div><h4 class="fw-bold mb-1 text-dark fs-5">مواعيدي اليوم</h4><div class="small text-secondary"><%= overview.date %></div></div><a class="btn btn-sm btn-outline-primary px-3" href="appointments">كل المواعيد</a></div>
+<div class="d-grid gap-3"><% if(!overview.today.length){ %><p class="text-secondary mb-0">لا توجد مواعيد اليوم.</p><% } %>
+<% for(const b of overview.today){ %><div class="appointment-row p-3 rounded-3 border bg-light d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center"><div class="d-flex gap-3 align-items-center"><div class="timeline-time bg-primary text-white px-3 py-2 rounded-3 fw-bold small text-center"><%= b.time %></div><div><strong class="text-dark d-block"><%= b.name %></strong><div class="small text-secondary"><%= b.service %></div></div></div><div class="d-flex gap-2 align-items-center"><span class="badge bg-success-subtle text-success px-3 py-1 rounded-pill"><%= b.status %></span><% if(['confirmed','in_progress','completed'].includes(b.status)){ %><a class="btn btn-primary btn-sm px-3" href="visit?booking_id=<%= b.id %>">فتح الزيارة</a><% } %></div></div><% } %></div>
+</div></div><div class="col-xl-4"><div class="soft-card card border-0 shadow-sm rounded-4 p-4 h-100 bg-white"><div class="d-flex justify-content-between align-items-center mb-3"><h4 class="fw-bold mb-1 text-dark fs-5">يحتاج انتباهك</h4></div><div class="attention-list d-flex flex-column gap-2 mb-3">
+<a class="attention-item text-decoration-none p-3 rounded-3 border bg-light d-flex align-items-center gap-3 text-dark" href="reports"><span class="attention-icon text-warning bg-warning-subtle p-2 rounded-circle"><i class="bi bi-file-earmark-check"></i></span><strong class="small flex-grow-1">تقارير بانتظار الاعتماد</strong><span class="badge text-bg-warning"><%= overview.stats.pending_reports %></span></a>
+<a class="attention-item text-decoration-none p-3 rounded-3 border bg-light d-flex align-items-center gap-3 text-dark" href="lab-cases"><span class="attention-icon text-primary bg-primary-subtle p-2 rounded-circle"><i class="bi bi-box-seam"></i></span><strong class="small flex-grow-1">حالات مخبرية قيد العمل</strong><span class="badge text-bg-primary"><%= overview.stats.labs %></span></a>
+<a class="attention-item text-decoration-none p-3 rounded-3 border bg-light d-flex align-items-center gap-3 text-dark" href="followups"><span class="attention-icon text-info bg-info-subtle p-2 rounded-circle"><i class="bi bi-arrow-repeat"></i></span><strong class="small flex-grow-1">متابعات مقترحة غير محجوزة</strong><span class="badge text-bg-info"><%= overview.stats.followups %></span></a></div>
+<div class="attention-note small bg-light p-3 rounded-3 text-muted border text-center">الأرقام من سجلات العيادة المحددة، وليست بيانات تجريبية.</div></div></div></div>
+</section></main>
+
+    <!-- الفوتر -->
+    <%- include('../partials/doctor/footer') %>
+
+    <!-- التوست (Toast) -->
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0 shadow" id="appToast" role="alert">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية بنجاح</div>
+          <button class="btn-close btn-close-white ms-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- السكريبتات -->
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+  
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

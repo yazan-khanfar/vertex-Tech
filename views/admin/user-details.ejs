@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>تفاصيل المستخدم | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="users">المستخدمون</a></li>
+            <li class="breadcrumb-item active">أحمد خالد</li>
+          </ol>
+        </nav>
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-start mb-4">
+          <div>
+            <div class="d-flex gap-2 flex-wrap mb-2">
+              <span class="badge text-bg-success" id="adminPrimaryEntityStatus">فعال</span><span class="badge text-bg-light border" id="detailUserCode">الكود العام: P-2048</span>
+            </div>
+            <h1 class="fw-bold fs-2 mb-2" id="detailUserName">أحمد خالد</h1>
+            <p class="text-secondary mb-0">
+              حساب مريض • الكود العام هو المرجع الظاهر لإدارة الحساب. P-2048.
+            </p>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-outline-warning" data-active-status-text="فعال" data-current-detail-action="" data-inactive-status-text="معلق" data-reactivate-label="إلغاء التعليق" data-sensitive-action="suspend" data-sensitive-entity="P-2048" data-sensitive-target="#adminPrimaryEntityStatus" data-sensitive-title="تعليق حساب المريض" data-suspend-label="تعليق" data-ui-open="#sensitiveActionModal" type="button">
+              تعليق الحساب
+            </button>
+            <button class="btn btn-outline-danger" data-current-detail-action="" data-sensitive-action="delete" data-sensitive-entity="P-2048" data-sensitive-redirect="users" data-sensitive-target="#adminPrimaryEntityStatus" data-sensitive-title="حذف حساب المريض نهائيًا" data-ui-open="#sensitiveActionModal" type="button">
+              حذف نهائي
+            </button>
+            <button class="btn btn-primary" data-bs-target="#editUserDetailsModal" data-bs-toggle="modal" type="button">
+              تعديل البيانات الإدارية
+            </button>
+          </div>
+        </div>
+        <div class="alert alert-primary rounded-4 border-0">
+          <i class="bi bi-diagram-3 ms-2"></i>
+          <strong>العلاقة الواقعية:</strong> User Account → Patient Profile →
+          Appointments / Medical Records / Invoices.
+        </div>
+        <div class="soft-card p-4 mb-4 admin-full-control-panel">
+          <div class="d-flex flex-column flex-lg-row justify-content-between gap-3">
+            <div>
+              <h4 class="fw-bold mb-1">
+                <i class="bi bi-sliders ms-2 text-primary"></i>تحكم Super Admin
+                الكامل
+              </h4>
+              <p class="text-secondary small mb-0">
+                إضافة وإدارة العناصر المرتبطة مباشرة، مع تسجيل سبب العمليات
+                الإدارية الحساسة.
+              </p>
+            </div>
+            <div class="d-flex gap-2 flex-wrap" data-admin-control-buttons="">
+              <a class="btn btn-outline-primary btn-sm" href="management-center?action=appointment"><i class="bi bi-calendar2-plus ms-1"></i>إضافة موعد</a><a class="btn btn-outline-primary btn-sm" href="finance"><i class="bi bi-receipt ms-1"></i>إضافة فاتورة</a><a class="btn btn-outline-primary btn-sm" href="management-center?action=medical_note"><i class="bi bi-file-medical ms-1"></i>إضافة ملاحظة طبية
+                إدارية</a>
+            </div>
+          </div>
+          <div class="mt-3 d-grid gap-2" id="adminTemporaryChanges"></div>
+        </div>
+        <ul class="nav admin-tabs mb-4" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-target="#patientOverview" data-bs-toggle="pill" aria-current="page" aria-selected="true" role="tab" type="button">
+              نظرة عامة
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#patientAppointments" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              المواعيد
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#patientMedical" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              السجل الطبي
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#patientInvoices" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              الفواتير
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-target="#patientActivity" data-bs-toggle="pill" aria-selected="false" tabindex="-1" role="tab" type="button">
+              نشاط الحساب
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="patientOverview" role="tabpanel">
+            <div class="row g-4">
+              <div class="col-lg-8">
+                <div class="soft-card p-4">
+                  <h4 class="fw-bold mb-3">بيانات الحساب</h4>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label">الاسم</label><input class="form-control" id="detailUserNameInput" readonly value="أحمد خالد" name="detail_user_name_input" form="backend-form-5">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">البريد</label><input class="form-control" id="detailUserEmail" readonly value="patient@example.test" name="detail_user_email" form="backend-form-5">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">الهاتف</label><input class="form-control" id="detailUserPhone" readonly value="0599 000 001" name="detail_user_phone" form="backend-form-5">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">تاريخ الميلاد</label><input class="form-control" id="detailUserBirthdate" readonly value="1998-12-03" name="detail_user_birthdate" form="backend-form-5">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="soft-card p-4">
+                  <h4 class="fw-bold mb-3">المعلومات الصحية</h4>
+                  <div class="summary-row">
+                    <span>الحساسية</span><strong>حساسية من Penicillin</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>مرض مزمن</span><strong>ارتفاع ضغط الدم</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>دواء حالي</span><strong>Amlodipine</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>فصيلة الدم</span><strong>O+</strong>
+                  </div>
+                  <div class="summary-row">
+                    <span>ملاحظات صحية</span><strong>تُراجع الحالة الصحية قبل بدء العلاج.</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" data-dynamic-patientappointments="" id="patientAppointments" role="tabpanel" data-status="completed" data-appointment-id="A-9021">
+            <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+              <table class="table mb-0 admin-master-table wide-data-table responsive-stack-table system-data-table">
+                <thead>
+                  <tr>
+                    <th>الحجز</th>
+                    <th>العيادة</th>
+                    <th>الطبيب</th>
+                    <th>الخدمة</th>
+                    <th>التاريخ</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-label="الحجز" class="table-primary-cell"><strong>A-9021</strong></td>
+                    <td data-label="العيادة">عيادة الابتسامة الحديثة</td>
+                    <td data-label="الطبيب">د. عمر ناصر</td>
+                    <td data-label="الخدمة">علاج جذور</td>
+                    <td data-label="التاريخ">21/10/2026</td>
+                    <td data-label="الحالة" class="table-status-cell">
+                      <span class="badge text-bg-success">مكتمل</span>
+                    </td>
+                    <td data-label="الإجراءات" class="table-actions-cell">
+                      <div class="d-flex gap-1 flex-wrap table-action-grid">
+                        <a class="btn btn-sm btn-outline-primary" href="appointment-details?id=A-9012">فتح</a><button class="btn btn-sm btn-outline-primary" data-admin-edit-name="A-9021" data-admin-edit-related="موعد" type="button" data-ui-open="#relatedEntityEditModal">
+                          تعديل</button><button class="btn btn-sm btn-outline-danger" data-sensitive-action="delete" data-sensitive-entity="A-9021" data-sensitive-title="حذف الموعد نهائيًا" type="button" data-ui-open="#sensitiveActionModal">
+                          حذف نهائي
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" data-dynamic-patientmedical="" id="patientMedical" role="tabpanel">
+            <div class="soft-card p-4">
+              <div class="d-flex justify-content-between gap-3 flex-wrap">
+                <div>
+                  <h4 class="fw-bold mb-1">RPT-001</h4>
+                  <small class="text-secondary">تقرير طبي معتمد</small>
+                </div>
+                <a class="btn btn-sm btn-outline-primary" href="medical-record-details">فتح التقرير</a>
+              </div>
+              <div class="summary-row mt-3">
+                <span>التشخيص</span><strong>التهاب لب غير قابل للعكس — السن 46</strong>
+              </div>
+              <div class="summary-row">
+                <span>خطة العلاج</span><strong>علاج جذور • 3 جلسات</strong>
+              </div>
+              <div class="summary-row">
+                <span>المتابعة</span><strong>21 أكتوبر 2026</strong>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" data-dynamic-patientinvoices="" id="patientInvoices" role="tabpanel">
+            <div class="soft-card table-responsive mobile-stack-wrapper table-ui-shell">
+              <table class="table mb-0 admin-master-table wide-data-table responsive-stack-table system-data-table">
+                <thead>
+                  <tr>
+                    <th>الفاتورة</th>
+                    <th>العيادة</th>
+                    <th>الإجمالي</th>
+                    <th>المدفوع</th>
+                    <th>المتبقي</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-label="الفاتورة" class="table-primary-cell">IN-118</td>
+                    <td data-label="العيادة">عيادة الابتسامة الحديثة</td>
+                    <td data-label="الإجمالي">500 ₪</td>
+                    <td data-label="المدفوع">500 ₪</td>
+                    <td data-label="المتبقي">0 ₪</td>
+                    <td data-label="الحالة" class="table-status-cell">
+                      <span class="badge text-bg-success">مدفوعة</span>
+                    </td>
+                    <td data-label="الإجراءات" class="table-actions-cell">
+                      <a class="btn btn-sm btn-outline-primary" href="invoice-details?id=IN-118">فتح</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="patientActivity" role="tabpanel">
+            <div class="soft-card p-4">
+              <div class="timeline">
+                <div class="timeline-item current">
+                  <strong>آخر دخول</strong><small>21 أكتوبر 2026 • 10:15</small>
+                </div>
+                <div class="timeline-item">
+                  <strong>طلب تغيير موعد</strong><small>21 أكتوبر 2026 • A-9021</small>
+                </div>
+                <div class="timeline-item">
+                  <strong>تم إنشاء الحساب</strong><small>14 مايو 2026</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="editUserDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content border-0 rounded-4">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold">تعديل البيانات الإدارية</h5>
+              <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="field-1">الاسم</label><input class="form-control" value="أحمد خالد" id="field-1" name="full_name" form="backend-form-6">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-2">الهاتف</label><input class="form-control" value="0599 000 001" id="field-2" name="phone" form="backend-form-6">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-3">البريد</label><input class="form-control" value="patient@example.test" id="field-3" name="field_3" form="backend-form-6">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="field-4">حالة الحساب</label><select class="form-select" id="field-4" name="field_4" form="backend-form-6">
+                    <option selected>فعال</option>
+                    <option>معلق</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-bs-dismiss="modal" type="button">
+                إلغاء</button><button class="btn btn-primary" data-temp-action="تم حفظ البيانات مؤقتًا." data-ui-pending="" form="backend-form-6" type="submit">
+                حفظ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-7"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-7" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    Resource. --&gt;
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-8"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-8"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-8" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-5" method="post" data-ui-unbound="" data-backend-binding="section" hidden=""></form><form id="backend-form-6" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-7" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-8" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

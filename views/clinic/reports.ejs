@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>التقارير والتحليلات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/clinic/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-xl-row justify-content-between align-items-xl-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Clinic Analytics</span>
+            <h1 class="fw-bold">التقارير والتحليلات التشغيلية</h1>
+            <p class="text-secondary mb-0">
+              صورة شاملة عن أداء العيادة: المالية، المواعيد، المرضى، الأطباء،
+              الخدمات والتشغيل.
+            </p>
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <select class="form-select" id="clinicReportPeriod" style="width: auto" name="clinic_report_period" form="backend-form-1">
+              <option value="month" <%= analytics.period.kind==='month'?'selected':'' %>>هذا الشهر</option>
+              <option value="quarter" <%= analytics.period.kind==='quarter'?'selected':'' %>>آخر 3 أشهر</option>
+              <option value="year" <%= analytics.period.kind==='year'?'selected':'' %>>هذه السنة</option>
+              <option value="custom" <%= analytics.period.kind==='custom'?'selected':'' %>>فترة مخصصة</option>
+            </select>
+            <div class="d-none align-items-end gap-2 flex-wrap" id="clinicCustomReportDates">
+              <div>
+                <label class="form-label small text-secondary mb-1">من تاريخ</label>
+                <input class="form-control" id="clinicReportFrom" type="date" value="<%= analytics.period.from %>" name="clinic_report_from" form="backend-form-1">
+              </div>
+              <div>
+                <label class="form-label small text-secondary mb-1">إلى تاريخ</label>
+                <input class="form-control" id="clinicReportTo" type="date" value="<%= analytics.period.displayTo %>" name="clinic_report_to" form="backend-form-1">
+              </div>
+              <button class="btn btn-primary" id="applyClinicCustomReport" type="button">
+                تطبيق
+              </button>
+            </div>
+            <button class="btn btn-outline-primary" data-ui-print="">
+              <i class="bi bi-printer ms-1"></i>طباعة التقرير
+            </button>
+          </div>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-6 col-xl-3">
+            <div class="analytics-kpi">
+              <div class="analytics-icon"><i class="bi bi-cash-stack"></i></div>
+              <small>إجمالي قيمة الفواتير</small>
+              <div class="analytics-value" data-clinic-report-kpi="0"><%= analytics.money(analytics.finance.billed) %> ₪</div>
+              <span class="text-success small">ضمن الفترة المحددة</span>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-3">
+            <div class="analytics-kpi">
+              <div class="analytics-icon"><i class="bi bi-wallet2"></i></div>
+              <small>المبالغ المحصلة</small>
+              <div class="analytics-value" data-clinic-report-kpi="1"><%= analytics.money(analytics.finance.collected) %> ₪</div>
+              <span class="small text-secondary"><%= analytics.finance.pct.toFixed(1) %>% من قيمة الفواتير</span>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-3">
+            <div class="analytics-kpi">
+              <div class="analytics-icon">
+                <i class="bi bi-hourglass-split"></i>
+              </div>
+              <small>المبالغ المتبقية</small>
+              <div class="analytics-value" data-clinic-report-kpi="2"><%= analytics.money(analytics.finance.remaining) %> ₪</div>
+              <span class="small text-primary">للفواتير في الفترة المحددة</span>
+            </div>
+          </div>
+          <div class="col-md-6 col-xl-3">
+            <div class="analytics-kpi">
+              <div class="analytics-icon">
+                <i class="bi bi-calendar2-check"></i>
+              </div>
+              <small>المواعيد</small>
+              <div class="analytics-value" data-clinic-report-kpi="3"><%= analytics.booking.total %></div>
+              <span class="text-success small">ضمن الفترة المحددة</span>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4 mb-4">
+          <div class="col-xl-8">
+            <div class="soft-card p-4 h-100">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                  <h4 class="fw-bold mb-1">الإيرادات والتحصيل</h4>
+                  <div class="small text-secondary">آخر 6 أشهر</div>
+                </div>
+                <span class="badge badge-soft">بالشيكل</span>
+              </div>
+              <div class="analytics-bars"><% const maxMonth=Math.max(1,...analytics.months.map(x=>Number(x.total)));for(const m of analytics.months){ %><div class="analytics-bar-row"><span><%= m.month %></span><div class="analytics-track"><div class="analytics-fill" style="width:<%= Math.min(100,Number(m.total)/maxMonth*100) %>%"></div></div><strong><%= analytics.money(m.total) %></strong></div><% } %></div>
+            </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="soft-card p-4 h-100">
+              <h4 class="fw-bold mb-4">حالة الفواتير</h4>
+              <div class="analytics-donut-placeholder">
+                <div class="donut-number"><%= analytics.finance.pct.toFixed(1) %>%</div>
+                <small>محصل</small>
+              </div>
+              <div class="mt-4">
+                <div class="d-flex justify-content-between py-2">
+                  <span>مدفوعة</span><strong><%= analytics.finance.paid_count %> فاتورة</strong>
+                </div>
+                <div class="d-flex justify-content-between py-2">
+                  <span>مدفوعة جزئيًا</span><strong><%= analytics.finance.partial_count %> فاتورة</strong>
+                </div>
+                <div class="d-flex justify-content-between py-2">
+                  <span>غير مدفوعة</span><strong><%= analytics.finance.unpaid_count %> فواتير</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4 mb-4">
+          <div class="col-lg-6">
+            <div class="soft-card p-4 h-100">
+              <h4 class="fw-bold mb-3">المواعيد والتشغيل</h4>
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="mini-analytics">
+                    <small>مكتملة</small><strong data-clinic-report-mini="0"><%= analytics.booking.completed %></strong><span class="text-success">من المواعيد</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mini-analytics">
+                    <small>ملغاة</small><strong data-clinic-report-mini="1"><%= analytics.booking.cancelled %></strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mini-analytics">
+                    <small>No-show</small><strong data-clinic-report-mini="2"><%= analytics.booking.no_show %></strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mini-analytics">
+                    <small>بانتظار الموافقة</small><strong data-clinic-report-mini="3"><%= analytics.booking.pending %></strong>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="d-flex justify-content-between py-2">
+                <span>متوسط مواعيد اليوم</span><strong><%= analytics.quality.average %></strong>
+              </div>
+              <div class="d-flex justify-content-between py-2">
+                <span>أكثر يوم ازدحاماً</span><strong><%= analytics.quality.busiest %></strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="soft-card p-4 h-100">
+              <h4 class="fw-bold mb-3">المرضى</h4>
+              <div class="row g-3">
+                <div class="col-6">
+                  <div class="mini-analytics">
+                    <small>مرضى نشطون</small><strong data-clinic-report-mini="4"><%= analytics.patient.active %></strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mini-analytics">
+                    <small>مرضى جدد</small><strong data-clinic-report-mini="5"><%= analytics.patient.new %></strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mini-analytics">
+                    <small>متابعات بانتظار الحجز</small><strong data-clinic-report-mini="6"><%= analytics.followup.waiting %></strong>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mini-analytics">
+                    <small>متابعات متأخرة</small><strong data-clinic-report-mini="7"><%= analytics.followup.overdue %></strong><span class="text-danger">تحتاج إجراء</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4 mb-4">
+          <div class="col-xl-6">
+            <div class="soft-card p-4 h-100">
+              <h4 class="fw-bold mb-3">أداء الأطباء</h4>
+              <div class="table-responsive mobile-stack-wrapper table-ui-shell">
+                <table class="table align-middle mb-0 responsive-stack-table system-data-table">
+                  <thead class="table-light">
+                    <tr>
+                      <th>الطبيب</th>
+                      <th>المواعيد</th>
+                      <th>المكتملة</th>
+                      <th>قيمة الخدمات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="clinicReportDoctorsBody"><% for(const d of analytics.doctors){ %><tr><td data-label="الطبيب" class="table-primary-cell">د. <%= d.First_Name %> <%= d.Last_Name %></td><td data-label="المواعيد"><%= d.appointments %></td><td data-label="المكتملة"><%= d.completed %></td><td data-label="قيمة الخدمات"><%= analytics.money(d.price) %> ₪</td></tr><% } %><% if(!analytics.doctors.length){ %><tr><td colspan="4" class="text-center">لا توجد بيانات في الفترة.</td></tr><% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="soft-card p-4 h-100">
+              <h4 class="fw-bold mb-3">أكثر الخدمات طلباً</h4>
+              <% const maxService=Math.max(1,...analytics.services.map(x=>Number(x.uses)));for(const item of analytics.services){ %><div class="service-rank"><div><strong><%= item.Service_Name %></strong><small><%= item.uses %> حجز</small></div><div class="progress flex-grow-1"><div class="progress-bar" style="width:<%= Number(item.uses)/maxService*100 %>%"></div></div><strong><%= analytics.booking.total?Math.round(Number(item.uses)/analytics.booking.total*100):0 %>%</strong></div><% } %><% if(!analytics.services.length){ %><p class="text-secondary">لا توجد حجوزات.</p><% } %>
+            </div>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="soft-card p-4 h-100">
+              <h5 class="fw-bold">جودة الحجوزات</h5>
+              <div class="d-flex justify-content-between py-2">
+                <span>مواعيد مكتملة</span><strong class="text-success"><%= analytics.booking.completed %></strong>
+              </div>
+              <div class="d-flex justify-content-between py-2">
+                <span>طلبات تغيير معلقة</span><strong class="text-warning"><%= analytics.booking.reschedule %></strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="soft-card p-4 h-100">
+              <h5 class="fw-bold">المختبرات والحالات المخبرية</h5>
+              <div class="d-flex justify-content-between py-2"><span>مختبرات نشطة</span><strong><%= analytics.lab.labs %></strong></div>
+              <div class="d-flex justify-content-between py-2"><span>حالات مفتوحة</span><strong><%= analytics.lab.opened %></strong></div>
+              <div class="d-flex justify-content-between py-2"><span>حالات متأخرة</span><strong class="text-danger"><%= analytics.lab.overdue %></strong></div>
+              <a class="btn btn-outline-primary w-100 mt-3" href="lab-cases">إدارة المختبرات</a>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="soft-card p-4 h-100">
+              <h5 class="fw-bold">التوظيف</h5>
+              <div class="d-flex justify-content-between py-2">
+                <span>وظائف منشورة</span><strong><%= analytics.jobs.jobs %></strong>
+              </div>
+              <div class="d-flex justify-content-between py-2">
+                <span>طلبات قيد المراجعة</span><strong><%= analytics.jobs.applicants %></strong>
+              </div>
+              <a class="btn btn-outline-primary w-100 mt-3" href="job-applicants">عرض المتقدمين</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('../partials/clinic/footer') %>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+    
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script><script src="/clinic/assets/batch4.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" action="/clinic/reports" hidden=""></form></body></html>

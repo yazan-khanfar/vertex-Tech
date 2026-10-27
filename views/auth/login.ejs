@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html data-style-sections="section-3" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>تسجيل الدخول | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+    <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+    
+    
+    <!-- تنسيق الزر العائم ونافذة الشات -->
+    
+  
+    
+  </head>
+  <body data-project-root="../">
+    <div class="auth-page">
+      <div class="container">
+        <div class="auth-card">
+          <div class="row g-0">
+            <div class="col-lg-5">
+              <div class="auth-side h-100">
+                <a class="brand text-white mb-5" href="../index"><span class="brand-mark bg-white text-primary"><i class="bi bi-heart-pulse"></i></span><span class="brand-copy"><strong>Smart Dental Clinic</strong><small class="text-white-50">رعاية أسنان أذكى وأسهل</small></span></a>
+                <h2 class="mt-5">مرحبًا بعودتك</h2>
+                <p class="mt-3">سجّل دخولك مرة واحدة، والنظام يحدد واجهتك حسب حسابك. موظف العيادة يختار عيادته إذا كان مرتبطًا بأكثر من عيادة فعّالة.</p>
+                <div class="auth-benefit">
+                  <i class="bi bi-calendar2-check"></i>
+                  <div>
+                    <strong>مواعيد منظمة</strong><small>حجز ومتابعة وتغيير بسهولة.</small>
+                  </div>
+                </div>
+                <div class="auth-benefit">
+                  <i class="bi bi-file-medical"></i>
+                  <div>
+                    <strong>بياناتك في مكان واحد</strong><small>تقارير وخطط علاج وفواتير.</small>
+                  </div>
+                </div>
+                <div class="auth-benefit">
+                  <i class="bi bi-shield-check"></i>
+                  <div>
+                    <strong>صلاحيات حسب الدور</strong><small>كل حساب يصل فقط لما يناسب مسؤوليته.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="auth-form-wrap">
+                <a class="small text-secondary" href="../index"><i class="bi bi-arrow-right ms-1"></i>العودة للرئيسية</a>
+                <h1 class="mt-4 mb-2">تسجيل الدخول</h1>
+                
+                <p>أدخل بريدك وكلمة المرور للوصول إلى حسابك.</p>
+                <% if(loginError) { %><div class="alert alert-danger mt-3" role="alert"><%= loginError %></div><% } %>
+                <% if(typeof loginSuccess !== 'undefined' && loginSuccess){ %><div class="alert alert-success mt-3" role="status">تم تغيير كلمة المرور. سجّل الدخول بكلمة المرور الجديدة، وسيظل التحقق الثنائي مطلوبًا إذا كان مفعّلًا.</div><% } %>
+                <form class="mt-4" id="loginForm" data-server-auth="true" method="post" action="/auth/login">
+                  <input type="hidden" name="csrf_token" value="<%= loginCsrf %>">
+                  <label class="form-label is-required">البريد الإلكتروني</label>
+                  <input class="form-control mb-3" id="loginEmail" placeholder="name@example.com" required="" type="email" value="<%= loginEmail %>" name="email" autocomplete="email">
+                  <label class="form-label">كلمة المرور</label>
+                  <div class="password-wrap mb-2">
+                    <input class="form-control" id="loginPassword" placeholder="••••••••" required="" type="password" value="" name="password" autocomplete="current-password">
+                    <button class="toggle-password" data-toggle-password="#loginPassword" type="button">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-4">
+                    <label class="small text-secondary">
+                      تسجيل دخول آمن
+                    </label>
+                    <a class="small fw-bold" href="password/forgot">نسيت كلمة المرور؟</a>
+                  </div>
+                  <button class="btn btn-primary w-100 py-2" type="submit">
+                    تسجيل الدخول
+                  </button>
+                </form>
+                <div class="auth-divider">أو</div>
+                <div class="text-center small">
+                  ليس لديك حساب؟
+                  <a class="fw-bold" href="register/index">إنشاء حساب جديد</a>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+      
+    </div>
+    <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+  
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button></body></html>

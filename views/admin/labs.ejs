@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>المختبرات | Smart Dental Clinic</title>
+    <link href="../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="assets/styles.css">
+  <link href="../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body><a class="ux-skip" href="#main-content">تخطي إلى المحتوى</a>
+    <%- include('../partials/admin/header') %>
+    
+    <main class="page-shell" id="main-content">
+      <section class="container py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+          <div>
+            <span class="badge badge-soft mb-2">Labs Administration</span>
+            <h1 class="fw-bold fs-2 mb-2">كتالوج المختبرات الموحّد</h1>
+            <p class="text-secondary mb-0">إضافة وتعديل المختبرات العامة من مدير المنصة فقط؛ العيادات تختار من الكتالوج وتدير ارتباطها الخاص.</p>
+          </div>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminAddLabModal" type="button">
+            <i class="bi bi-plus-lg ms-1"></i>إضافة مختبر
+          </button>
+        </div>
+
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3"><div class="stat-card h-100"><small class="text-secondary">إجمالي المختبرات</small><div class="stat-value" id="adminLabsTotal">1</div></div></div>
+          <div class="col-6 col-lg-3"><div class="stat-card h-100"><small class="text-secondary">مختبرات نشطة</small><div class="stat-value text-success" id="adminLabsActive">1</div></div></div>
+          <div class="col-6 col-lg-3"><div class="stat-card h-100"><small class="text-secondary">مختبرات مؤرشفة</small><div class="stat-value text-secondary" id="adminLabsArchived">1</div></div></div>
+          <div class="col-6 col-lg-3"><div class="stat-card h-100"><small class="text-secondary">حالات مفتوحة</small><div class="stat-value text-primary" id="adminLabsOpenCases">1</div></div></div>
+        </div>
+
+        <div class="filter-panel mb-4">
+          <div class="row g-3 align-items-end">
+            <div class="col-lg-5">
+              <label class="form-label">بحث</label>
+              <div class="input-group"><span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input class="form-control" id="adminLabSearch" placeholder="اسم المختبر، العيادة، الهاتف أو المدينة" value="" data-ui-unbound-control="" name="admin_lab_search" form="backend-form-1"></div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <label class="form-label">العيادة</label>
+              <select class="form-select" id="adminLabClinicFilter" name="admin_lab_clinic_filter" form="backend-form-1"><option value="" selected>كل العيادات</option><option value="C-008">عيادة الابتسامة الحديثة</option></select>
+            </div>
+            <div class="col-md-4 col-lg-3">
+              <label class="form-label">الحالة</label>
+              <select class="form-select" id="adminLabStatusFilter" data-ui-unbound-control="" name="admin_lab_status_filter" form="backend-form-1"><option value="all" selected>الكل</option><option value="active">نشط</option><option value="archived">مؤرشف</option></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4" id="adminLabsGrid">
+          <div class="col-md-6 col-xl-4" data-admin-lab-card="" data-id="elite" data-clinic="C-008" data-clinic-name="عيادة الابتسامة الحديثة" data-name="Elite Dental Lab" data-phone="0599 123 456" data-address="نابلس - رفيديا" data-contact="elite.lab@example.com" data-notes="متخصص بأعمال الزيركون والتيجان." data-status="active" data-cases-total="4" data-open-cases="2" data-received-cases="1" data-overdue-cases="1" data-search="elite dental lab c-008 عيادة الابتسامة الحديثة 0599 123 456 نابلس - رفيديا">
+            <div class="soft-card p-4 h-100 d-flex flex-column "><div class="d-flex justify-content-between gap-3 mb-3"><div><h5 class="fw-bold mb-1" data-lab-card-name="">Elite Dental Lab</h5><div class="small text-secondary" data-lab-card-clinic="">C-008 — عيادة الابتسامة الحديثة</div></div><span class="badge text-bg-success" data-lab-card-status="">نشط</span></div><div class="small text-secondary mb-3"><i class="bi bi-geo-alt ms-1"></i><span data-lab-card-address="">نابلس - رفيديا</span><br><i class="bi bi-telephone ms-1"></i><span data-lab-card-phone="">0599 123 456</span></div><div class="row g-2 text-center mb-3"><div class="col-4"><div class="border rounded-3 p-2"><small class="text-secondary d-block">الحالات</small><strong>4</strong></div></div><div class="col-4"><div class="border rounded-3 p-2"><small class="text-secondary d-block">مفتوحة</small><strong>2</strong></div></div><div class="col-4"><div class="border rounded-3 p-2"><small class="text-secondary d-block">متأخرة</small><strong class="text-danger">1</strong></div></div></div><div class="mt-auto d-flex gap-2 flex-wrap"><a class="btn btn-primary flex-grow-1" href="lab-details?lab=elite">فتح المختبر</a><button class="btn btn-outline-primary" data-admin-lab-edit="" title="تعديل" data-ui-pending=""><i class="bi bi-pencil"></i></button><button class="btn btn-outline-secondary" data-admin-lab-toggle="" title="أرشفة" data-ui-pending=""><i class="bi bi-archive"></i></button><button class="btn btn-outline-danger" data-admin-lab-delete="" title="حذف" data-ui-pending=""><i class="bi bi-trash"></i></button></div></div>
+          </div>
+          
+          
+          
+          
+        </div>
+        <div class="soft-card p-5 text-center d-none" id="adminLabsEmpty">
+          <i class="bi bi-building-x fs-1 text-secondary"></i><h5 class="fw-bold mt-3">لا توجد مختبرات مطابقة</h5><p class="text-secondary mb-0">غيّر البحث أو الفلاتر الحالية.</p>
+        </div>
+
+        <div class="alert alert-light border rounded-4 mt-4 mb-0">
+          <i class="bi bi-shield-check ms-1"></i><strong>الحذف الآمن:</strong> يمكن للـSuper Admin حذف المختبر نهائيًا فقط إذا لم يرتبط بأي حالة مخبرية. إذا كان له تاريخ حالات، يجب أرشفته بدلًا من حذفه حتى لا تضيع السجلات الطبية.
+        </div>
+      </section>
+    </main>
+
+    <div class="modal fade" id="adminAddLabModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header"><div><h5 class="modal-title fw-bold">إضافة مختبر بواسطة Super Admin</h5><small class="text-secondary">سيظهر المختبر مباشرة ضمن مختبرات العيادة المختارة.</small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div>
+          <div class="modal-body"><div class="row g-3">
+            <div class="col-md-6"><label class="form-label">اسم المختبر *</label><input class="form-control" id="adminAddLabName" placeholder="مثال: Prime Dental Lab" value="" name="admin_add_lab_name" form="backend-form-2" required=""></div>
+            <div class="col-md-6"><label class="form-label">الهاتف *</label><input class="form-control" id="adminAddLabPhone" placeholder="0599 000 000" value="" name="admin_add_lab_phone" form="backend-form-2" required=""></div>
+            <div class="col-md-6"><label class="form-label">العنوان *</label><input class="form-control" id="adminAddLabAddress" placeholder="المدينة - المنطقة" value="" name="admin_add_lab_address" form="backend-form-2" required=""></div>
+            <div class="col-md-6"><label class="form-label">واتساب / بريد</label><input class="form-control" id="adminAddLabContact" value="" name="admin_add_lab_contact" form="backend-form-2"></div>
+            <div class="col-12"><label class="form-label">سبب الإضافة الإدارية *</label><textarea class="form-control" id="adminAddLabReason" rows="2" placeholder="لتوثيق سبب الإجراء" name="admin_add_lab_reason" form="backend-form-2" required=""></textarea></div>
+          </div></div>
+          <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveAdminNewLab" data-ui-pending="" form="backend-form-2" type="submit">حفظ المختبر</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="viewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="viewTitle"></h5>
+              <small class="text-secondary" id="viewSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body" id="viewBody"></div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إغلاق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="sensitiveActionModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title fw-bold" id="sensitiveActionTitle">
+                تأكيد إجراء إداري
+              </h5>
+              <small class="text-secondary" id="sensitiveActionSubtitle"></small>
+            </div>
+            <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning rounded-4">
+              <i class="bi bi-shield-exclamation ms-1"></i>هذا إجراء حساس،
+              وسبب الإجراء مطلوب لتوضيح سبب التغيير في العرض الإداري.
+            </div>
+            <label class="form-label">سبب الإجراء الإداري *</label><textarea class="form-control" id="sensitiveActionReason" placeholder="اكتب سببًا واضحًا..." rows="4" name="sensitive_action_reason" form="backend-form-3"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="confirmSensitiveAction" data-ui-pending="" form="backend-form-3" type="submit">
+              تأكيد
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+      <div class="toast align-items-center text-bg-primary border-0" id="appToast">
+        <div class="d-flex">
+          <div class="toast-body">تمت العملية</div>
+          <button class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+    
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="assets/app.js"></script>
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div class="modal fade" id="relatedEntityEditModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 rounded-4"><div class="modal-header"><div><h5 class="modal-title fw-bold" id="relatedEntityEditTitle">تعديل عنصر</h5><small class="text-secondary" id="relatedEntityEditCode"></small></div><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div><div class="modal-body"><label class="form-label">القيمة / الاسم</label><input class="form-control" id="relatedEntityEditValue" value="" name="related_entity_edit_value" form="backend-form-4"><label class="form-label mt-3">سبب التعديل الإداري *</label><textarea class="form-control" id="relatedEntityEditReason" rows="3" name="related_entity_edit_reason" form="backend-form-4"></textarea></div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">إلغاء</button><button class="btn btn-primary" id="saveRelatedEntityEdit" data-ui-pending="" form="backend-form-4" type="submit">حفظ</button></div></div></div></div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div><form id="backend-form-1" method="get" data-ui-unbound="" data-backend-binding="filter" hidden=""></form><form id="backend-form-2" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-3" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><form id="backend-form-4" method="post" data-ui-unbound="" data-backend-binding="modal" hidden=""></form><%- include('../partials/admin/footer') %></body></html>

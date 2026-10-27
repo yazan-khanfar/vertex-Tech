@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html data-style-sections="section-6" dir="rtl" lang="ar"><head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>إنشاء حساب مريض | Smart Dental Clinic</title>
+    <link href="../../assets/vendor/937abe4f713b-bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/28667e4f82c7-bootstrap-icons.css" rel="stylesheet">
+    <!-- ملف CSS الوحيد الخاص بهذه المجموعة -->
+<link rel="stylesheet" href="../assets/styles.css">
+  <link href="../../assets/vendor/8c34d74036e9-css2-fonts.css" rel="stylesheet">
+
+    
+  </head>
+  <body>
+    <div class="auth-page">
+      <div class="container">
+        <div class="auth-card">
+          <div class="row g-0">
+            <div class="col-lg-5">
+              <div class="auth-side h-100">
+                <a class="brand text-white mb-5" href="../../index"><span class="brand-mark bg-white text-primary"><i class="bi bi-heart-pulse"></i></span><span class="brand-copy"><strong>Smart Dental Clinic</strong><small class="text-white-50">رعاية أسنان أذكى وأسهل</small></span></a>
+                <h2 class="mt-5">حساب المريض</h2>
+                <p class="mt-3">
+                  بعد إنشاء الحساب يمكنك البحث عن العيادات والأطباء، حجز
+                  المواعيد، متابعة التقارير والفواتير واستخدام التشخيص الأولي
+                  الذكي.
+                </p>
+                <div class="auth-benefit">
+                  <i class="bi bi-calendar2-check"></i>
+                  <div>
+                    <strong>مواعيد منظمة</strong><small>حجز ومتابعة وتغيير بسهولة.</small>
+                  </div>
+                </div>
+                <div class="auth-benefit">
+                  <i class="bi bi-file-medical"></i>
+                  <div>
+                    <strong>بياناتك في مكان واحد</strong><small>تقارير وخطط علاج وفواتير.</small>
+                  </div>
+                </div>
+                <div class="auth-benefit">
+                  <i class="bi bi-shield-check"></i>
+                  <div>
+                    <strong>صلاحيات حسب الدور</strong><small>كل حساب يصل فقط لما يناسب مسؤوليته.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="auth-form-wrap">
+                <a class="small text-secondary" href="index"><i class="bi bi-arrow-right ms-1"></i>تغيير نوع الحساب</a>
+                <h1 class="mt-4 mb-2">إنشاء حساب مريض</h1>
+                <p>
+                  أدخل بياناتك الأساسية. المعلومات الطبية يمكن استكمالها لاحقًا
+                  من الحساب.
+                </p>
+                <form class="mt-4" action="/auth/register/patient" id="backend-form-9" method="post">
+                  <input type="hidden" name="csrf_token" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                  <% if (typeof registerError !== 'undefined' && registerError) { %>
+                  <div class="alert alert-danger" role="alert"><%= registerError %></div>
+                  <% } %>
+                  <p class="small text-secondary">إذا كان لديك ملف سابق لدى عيادة، يُربط بعد التحقق من هويتك للحفاظ على سجلك.</p><div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label is-required" for="field-1">الاسم الأول *</label><input class="form-control" placeholder="أحمد" required="" value="<%= typeof formValues !== 'undefined' && formValues.first_name ? formValues.first_name : '' %>" id="field-1" name="first_name">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label is-required" for="field-2">اسم العائلة *</label><input class="form-control" placeholder="خالد" required="" value="<%= typeof formValues !== 'undefined' && formValues.last_name ? formValues.last_name : '' %>" id="field-2" name="last_name">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label is-required" for="field-3">تاريخ الميلاد *</label><input class="form-control" required="" type="date" value="<%= typeof formValues !== 'undefined' && formValues.date_of_birth ? formValues.date_of_birth : '' %>" id="field-3" name="date_of_birth">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label is-required" for="field-4">الجنس *</label><select class="form-select" required="" id="field-4" name="gender">
+                        <option value="" <%= typeof formValues !== 'undefined' && formValues.gender ? '' : 'selected' %>>اختر</option>
+                        <option value="male" <%= typeof formValues !== 'undefined' && ['male','ذكر'].includes(formValues.gender) ? 'selected' : '' %>>ذكر</option>
+                        <option value="female" <%= typeof formValues !== 'undefined' && ['female','أنثى','انثى'].includes(formValues.gender) ? 'selected' : '' %>>أنثى</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label is-required" for="field-5">رقم الهاتف *</label><input class="form-control" placeholder="0599 000 000" required="" value="<%= typeof formValues !== 'undefined' && formValues.phone ? formValues.phone : '' %>" id="field-5" name="phone">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label is-required" for="field-6">البريد الإلكتروني *</label><input class="form-control" placeholder="name@example.com" required="" type="email" value="<%= typeof formValues !== 'undefined' && formValues.email ? formValues.email : '' %>" id="field-6" name="email" autocomplete="email">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label is-required">كلمة المرور *</label>
+                      <div class="password-wrap">
+                        <input class="form-control" id="patientPassword" required="" type="password" value="" name="password" autocomplete="new-password"><button class="toggle-password" data-toggle-password="#patientPassword" type="button">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label is-required">تأكيد كلمة المرور *</label>
+                      <div class="password-wrap">
+                        <input class="form-control" id="confirmPassword" required="" type="password" value="" name="confirm_password" autocomplete="new-password"><button class="toggle-password" data-toggle-password="#confirmPassword" type="button">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="password-rules">
+                    <span class="password-rule" data-rule="length"><i class="bi bi-circle"></i> 8 أحرف على الأقل</span>
+                    <span class="password-rule" data-rule="upper"><i class="bi bi-circle"></i> حرف إنجليزي كبير</span>
+                    <span class="password-rule" data-rule="lower"><i class="bi bi-circle"></i> حرف إنجليزي صغير</span>
+                    <span class="password-rule" data-rule="number"><i class="bi bi-circle"></i> رقم واحد على الأقل</span>
+                  </div>
+                  <label class="d-flex gap-2 align-items-start small text-secondary mt-4"><input class="form-check-input mt-1" required="" type="checkbox" id="field-7" name="accept_policies"><span>أوافق على شروط الاستخدام وسياسة الخصوصية.</span></label><p class="small text-secondary mt-2">بالموافقة، يتم تسجيل إصدار الشروط وسياسة الخصوصية وتاريخ الموافقة في حسابك.</p>
+                  <button class="btn btn-primary w-100 py-2 mt-3" type="submit" >
+                    إنشاء الحساب
+                  </button>
+                </form>
+                <div class="text-center small mt-4">
+                  لديك حساب؟
+                  <a class="fw-bold" href="../login">تسجيل الدخول</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="../../assets/vendor/8d95173bee2e-bootstrap.bundle.min.js"></script>
+      
+    </div>
+  <!-- تفاعلات هذا الدور فقط؛ Bootstrap محمّل قبله. -->
+<script src="../assets/app.js"></script>
+
+
+
+
+<button type="button" class="ux-top" aria-label="العودة للأعلى"><i class="bi bi-arrow-up"></i></button><div>
+        <!-- زر الدعم الفني العائم -->
+        <a class="floating-chat-btn" href="/account/support" title="فتح طلب دعم فني"><i class="bi bi-chat-dots-fill"></i></a>
+
+        <!-- نافذة الشات المنبثقة -->
+        
+    </div><div class="toast-container position-fixed bottom-0 start-0 p-3"><div id="backendPendingNotice" class="toast align-items-center text-bg-secondary border-0" role="status" aria-live="polite"><div class="d-flex"><div class="toast-body">هذه العملية بانتظار ربط الباك إند. لم تُحفظ أو تتغيّر أي بيانات.</div><button type="button" class="btn-close btn-close-white m-auto ms-2" data-bs-dismiss="toast" aria-label="إغلاق"></button></div></div></div></body></html>

@@ -1,0 +1,955 @@
+/* الصفحة العامة — ملف CSS الوحيد.
+ * أقسامه: التنسيقات الأصلية، الهوية، بطاقة المعاينة، التجاوب والدعم.
+ */
+
+/* =========================================================
+ * التنسيقات الأساسية الأصلية: الهيدر والهوية والهيرو والبطاقات والأقسام والفوتر.
+ * هذه القواعد تخص الصفحة العامة داخل ملفها الوحيد.
+ * ========================================================= */
+:root {
+  /* Brand */
+  --primary: #0e7490;
+  --primary-dark: #0f5f76;
+  --primary-light: #1a95b3;
+  --primary-deep: #0f5f76;
+  --primary-lighter: #7fd0e1;
+  --primary-soft: #ecf8fb;
+  --primary-border: #d0e3e8;
+  --primary-border-hover: #c0d9df;
+  --gradient-main: linear-gradient(135deg, var(--primary-deep), var(--primary-light));
+
+  /* Text */
+  --text: #1b252a;
+  --text-strong: #2f3c43;
+  --text-body: #556066;
+  --muted: #6b7d75;
+  --text-faint: #7a8c84;
+  --text-subtle: #9aa5ab;
+  --on-primary: #fff;
+  --on-primary-muted: #d9ebef;
+
+  /* Surfaces */
+  --bg: #f4f8fa;
+  --surface: #fff;
+  --surface-soft: #fafcfd;
+  --surface-tint: #f5fafb;
+
+  /* Borders */
+  --border: #e1e8eb;
+  --border-soft: #e6ebee;
+  --border-faint: #edf1f3;
+
+  /* Status */
+  --success: #2589a2;
+  --danger: #dc2626;
+
+  /* Footer */
+  --footer-bg: #142226;
+  --footer-text: #9babb3;
+
+  /* Radius */
+  --radius-xs: 11px;
+  --radius-sm: 14px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 6px 20px rgba(16, 35, 39, 0.04);
+  --shadow-md: 0 14px 38px rgba(16, 35, 39, 0.07);
+  --shadow-lg: 0 20px 60px rgba(16, 35, 39, 0.08);
+  --shadow-brand: 0 24px 70px rgba(50, 134, 155, 0.12);
+  --focus-ring: 0 0 0 0.2rem rgba(50, 134, 155, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* =========================================================
+   2. NAVBAR + BRAND + BUTTONS
+   ========================================================= */
+.public-navbar {
+  height: 74px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--primary), var(--primary-lighter));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--on-primary);
+  font-size: 18px;
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-copy strong {
+  font-size: 15px;
+}
+
+.brand-copy small {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.nav-link {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-body) !important;
+}
+
+.nav-link:hover {
+  color: var(--primary) !important;
+}
+
+.btn {
+  border-radius: var(--radius-xs);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+/* =========================================================
+   3. LANDING — hero / sections / cards / CTA / footer
+   ========================================================= */
+.hero {
+  padding: 68px 0 52px;
+  background:
+    radial-gradient(circle at 10% 0%, #e3f0f4 0, transparent 35%),
+    linear-gradient(180deg, var(--surface), var(--bg));
+}
+
+.hero h1 {
+  font-size: 47px;
+  line-height: 1.3;
+  font-weight: 900;
+  letter-spacing: -0.8px;
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.9;
+  max-width: 680px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  border: 1px solid var(--primary-border);
+  border-radius: var(--radius-pill);
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hero-actions .btn {
+  padding: 0.8rem 1.2rem;
+  font-size: 13px;
+}
+
+.trust-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.trust-row span {
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trust-row i {
+  color: var(--success);
+}
+
+.section {
+  padding: 64px 0;
+}
+
+.section-title {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 36px;
+}
+
+.section-title span {
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.section-title h2 {
+  font-size: 31px;
+  font-weight: 900;
+  margin: 8px 0;
+}
+
+.section-title p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.feature-card,
+.role-card,
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 19px;
+  padding: 20px;
+  height: 100%;
+  transition: 0.18s;
+}
+
+.feature-card:hover,
+.role-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-border-hover);
+}
+
+.feature-icon,
+.role-icon,
+.step-num {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-soft);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+}
+
+.feature-card h3,
+.role-card h3 {
+  font-size: 15px;
+  font-weight: 900;
+  margin: 16px 0 7px;
+}
+
+.feature-card p,
+.role-card p,
+.step-card p {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.role-card ul {
+  padding: 0;
+  margin: 14px 0 0;
+  list-style: none;
+}
+
+.role-card li {
+  font-size: 10px;
+  color: var(--text-body);
+  padding: 5px 0;
+}
+
+.role-card li i {
+  color: var(--success);
+  margin-left: 6px;
+}
+
+.step-card {
+  position: relative;
+  padding-top: 27px;
+}
+
+.step-num {
+  position: absolute;
+  top: -24px;
+  right: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 900;
+}
+
+.cta {
+  background: var(--gradient-main);
+  border-radius: 25px;
+  padding: 36px;
+  color: var(--on-primary);
+}
+
+.cta p {
+  color: var(--on-primary-muted);
+  font-size: 12px;
+}
+
+.cta .btn-light {
+  color: var(--primary-dark);
+  font-weight: 900;
+}
+
+.footer {
+  background: var(--footer-bg);
+  color: var(--on-primary);
+  padding: 40px 0 24px;
+}
+
+.footer p,
+.footer a,
+.footer small {
+  color: var(--footer-text);
+  font-size: 11px;
+}
+
+.footer a:hover {
+  color: var(--on-primary);
+}
+
+.footer-title {
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.form-control {
+  border-radius: var(--radius-xs);
+  border-color: var(--border);
+  padding: 0.68rem 0.8rem;
+  font-size: 12px;
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: var(--focus-ring);
+}
+
+@media (max-width: 991.98px) {.hero {
+    padding-top: 42px;
+  }
+
+.hero h1 {
+    font-size: 37px;
+  }
+}
+
+@media (max-width: 767.98px) {.public-navbar {
+    height: 66px;
+  }
+
+.brand-copy small {
+    display: none;
+  }
+
+.hero {
+    padding: 34px 0;
+  }
+
+.hero h1 {
+    font-size: 31px;
+  }
+
+.hero p {
+    font-size: 13px;
+  }
+
+.section {
+    padding: 48px 0;
+  }
+
+.section-title h2 {
+    font-size: 25px;
+  }
+
+.cta {
+    padding: 25px;
+  }
+}
+
+/* =========================================================
+   V6 Global content/action alignment
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+/* =========================================================
+ * الهوية الأصلية للمشروع: الألوان والخطوط والأزرار والتفاعلات البصرية.
+ * هذه القواعد تخص الصفحة العامة داخل ملفها الوحيد.
+ * ========================================================= */
+/* ---------- 1. Tokens ---------- */
+:root {
+  /* Brand — تيل طبي هادئ */
+  --brand-50: #ecf8fb;
+  --brand-100: #d6f0f6;
+  --brand-200: #b0e1ec;
+  --brand-300: #7fd0e1;
+  --brand-400: #3fb4cf;
+  --brand-500: #1a95b3;
+  --brand-600: #0e7490;
+  --brand-700: #0f5f76;
+  --brand-800: #134d61;
+  --brand-900: #123f50;
+
+  /* Legacy tokens used by old stylesheets */
+  --primary: var(--brand-600);
+  --primary-dark: var(--brand-700);
+  --primary-deep: var(--brand-700);
+  --primary-light: var(--brand-500);
+  --primary-lighter: var(--brand-300);
+  --primary-soft: var(--brand-50);
+  --primary-border: var(--brand-200);
+  --primary-border-hover: var(--brand-300);
+  --soft: var(--brand-50);
+  --navy: #0f2a35;
+  --gradient-main: linear-gradient(135deg, var(--brand-700), var(--brand-500));
+  --info: #2563eb;
+
+  /* Neutrals */
+  --text: #12212b;
+  --text-strong: #1c3340;
+  --text-body: #3f5563;
+  --muted: #5b6e7a;
+  --text-faint: #72848f;
+  --text-subtle: #9aaab3;
+  --on-primary: #fff;
+  --on-primary-muted: #d6f0f6;
+  --bg: #f4f8fa;
+  --surface: #fff;
+  --surface-soft: #f9fcfd;
+  --surface-tint: #f1f8fa;
+  --border: #dde7ec;
+  --border-soft: #e5edf1;
+  --border-faint: #eef3f6;
+
+  /* Status */
+  --success: #15803d;
+  --success-bg: #e8f7ee;
+  --success-border: #b7e4c6;
+  --success-text: #166534;
+  --warning: #b45309;
+  --warning-bg: #fff4e0;
+  --warning-border: #fcd9a0;
+  --warning-text: #92400e;
+  --danger: #c62828;
+  --danger-bg: #fdecec;
+  --danger-border: #f6c3c3;
+  --danger-text: #991b1b;
+  --info-bg: #e8f0fe;
+  --info-border: #bcd0fb;
+  --info-text: #1d4ed8;
+
+  /* Footer */
+  --footer-bg: #0f2a35;
+  --footer-text: #9db6c0;
+
+  /* Shape & depth */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(15, 42, 53, 0.05), 0 4px 14px rgba(15, 42, 53, 0.04);
+  --shadow-md: 0 2px 4px rgba(15, 42, 53, 0.05), 0 12px 32px rgba(15, 42, 53, 0.08);
+  --shadow-lg: 0 24px 60px rgba(15, 42, 53, 0.14);
+  --shadow-brand: 0 10px 28px rgba(14, 116, 144, 0.22);
+  --focus-ring: 0 0 0 3px rgba(14, 116, 144, 0.25);
+
+  --font-ar: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+  --nav-h: 68px;
+
+  /* Bootstrap bridge */
+  --bs-primary: #0e7490;
+  --bs-primary-rgb: 14, 116, 144;
+  --bs-success: #15803d;
+  --bs-success-rgb: 21, 128, 61;
+  --bs-warning: #b45309;
+  --bs-warning-rgb: 180, 83, 9;
+  --bs-danger: #c62828;
+  --bs-danger-rgb: 198, 40, 40;
+  --bs-info: #2563eb;
+  --bs-info-rgb: 37, 99, 235;
+  --bs-link-color: #0e7490;
+  --bs-link-color-rgb: 14, 116, 144;
+  --bs-link-hover-color: #0f5f76;
+  --bs-link-hover-color-rgb: 15, 95, 118;
+  --bs-body-font-family: var(--font-ar);
+  --bs-body-color: var(--text);
+  --bs-body-bg: var(--bg);
+  --bs-border-color: var(--border);
+  --bs-secondary-color: var(--muted);
+  --bs-border-radius: 12px;
+  --bs-border-radius-lg: 16px;
+}
+
+/* ---------- 2. Base ---------- */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-ar);
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.section-title { color: var(--text-strong); font-weight: 700; line-height: 1.4; letter-spacing: 0; }
+
+h1 { font-size: clamp(1.55rem, 1.2rem + 1.4vw, 2.05rem); }
+
+h2 { font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.6rem); }
+
+h3 { font-size: 1.2rem; }
+
+h4 { font-size: 1.08rem; }
+
+h5 { font-size: 1rem; }
+
+a { color: var(--brand-600); text-decoration: none; }
+
+a:hover { color: var(--brand-700); }
+
+.bg-primary { background-color: var(--brand-600) !important; }
+
+.text-success { color: var(--success) !important; }
+
+::selection { background: var(--brand-200); color: var(--brand-900); }
+
+:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; border-radius: 6px; }
+
+.form-control:focus-visible,
+.btn:focus-visible { outline: none; }
+
+/* ---------- 3. Navbar ---------- */
+.navbar.sticky-top {
+  min-height: var(--nav-h);
+  background: rgba(255, 255, 255, 0.92) !important;
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: 0 1px 0 rgba(15, 42, 53, 0.02), 0 6px 18px rgba(15, 42, 53, 0.04);
+  z-index: 1030;
+}
+
+.brand-mark {
+  width: 38px; height: 38px; border-radius: 11px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gradient-main); color: #fff !important; font-size: 1.1rem;
+  box-shadow: var(--shadow-brand);
+}
+
+.navbar .nav-link {
+  position: relative;
+  min-height: 42px;
+  display: inline-flex; align-items: center;
+  padding: 0.45rem 0.85rem !important;
+  border-radius: 10px;
+  color: var(--text-body) !important;
+  font-weight: 500;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.navbar .nav-link:hover { background: var(--brand-50); color: var(--brand-700) !important; }
+
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"] {
+  background: var(--brand-50);
+  color: var(--brand-700) !important;
+  font-weight: 700 !important;
+}
+
+.navbar .nav-link.active::after {
+  content: ""; position: absolute; inset-inline: 0.85rem; bottom: 2px;
+  height: 3px; border-radius: 3px; background: var(--brand-600);
+}
+
+/* ---------- 3b. Fixes: عناوين داخل خلفيات ملوّنة + اتجاه الشعار ---------- */
+div.hero :is(h1,h2,h3,h4,h5,h6),
+.cta :is(h1,h2,h3,h4,h5,h6),
+footer :is(h1,h2,h3,h4,h5,h6) { color: inherit; }
+
+.brand-mark i {
+  color: #fff !important;
+  background: none !important;
+  line-height: 1;
+}
+
+/* ---------- 5. Buttons ---------- */
+.btn {
+  --bs-btn-border-radius: 12px;
+  border-radius: 12px; font-weight: 600; min-height: 42px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s, transform 0.05s;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-sm { min-height: 34px; border-radius: 10px; font-size: 0.86rem; }
+
+.btn-lg { min-height: 50px; border-radius: 14px; }
+
+.btn-primary {
+  --bs-btn-bg: var(--brand-600); --bs-btn-border-color: var(--brand-600);
+  --bs-btn-hover-bg: var(--brand-700); --bs-btn-hover-border-color: var(--brand-700);
+  --bs-btn-active-bg: var(--brand-800); --bs-btn-active-border-color: var(--brand-800);
+  --bs-btn-disabled-bg: var(--brand-300); --bs-btn-disabled-border-color: var(--brand-300);
+  background: var(--brand-600); border-color: var(--brand-600); color: #fff;
+  box-shadow: 0 1px 2px rgba(15, 42, 53, 0.12);
+}
+
+.btn-primary:hover { background: var(--brand-700); border-color: var(--brand-700); color: #fff; box-shadow: var(--shadow-brand); }
+
+.btn-primary:focus-visible { box-shadow: var(--focus-ring); }
+
+.btn-light { background: #fff; border: 1px solid var(--border); color: var(--text-body); }
+
+.btn-light:hover { background: var(--brand-50); border-color: var(--brand-200); color: var(--brand-700); }
+
+.btn:disabled,
+.btn.disabled { opacity: 0.55; cursor: not-allowed; }
+
+div.hero {
+  background: linear-gradient(135deg, var(--brand-800), var(--brand-600) 55%, var(--brand-500)) !important;
+  color: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+}
+
+.form-control {
+  min-height: 44px; border-radius: 12px; border: 1px solid var(--border);
+  background-color: #fff; color: var(--text); padding: 0.55rem 0.9rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+textarea.form-control { min-height: 96px; }
+
+.form-control::placeholder { color: var(--text-subtle); }
+
+.form-control:hover { border-color: var(--brand-300); }
+
+.form-control:focus { border-color: var(--brand-600); box-shadow: var(--focus-ring); }
+
+.form-control:disabled,
+.form-control[readonly] { background: var(--surface-tint); color: var(--muted); }
+
+hr { border-color: var(--border); opacity: 1; }
+
+.modal-backdrop.show { opacity: 0.45; }
+
+.toast { border: 0; border-radius: 14px; box-shadow: var(--shadow-md); }
+
+/* ---------- 12. Footer ---------- */
+footer { background: var(--footer-bg); color: var(--footer-text); }
+
+footer a { color: #cfe6ee; }
+
+footer a:hover { color: #fff; }
+
+.ux-top {
+  position: fixed; inset-inline-start: 1.25rem; bottom: 1.25rem; z-index: 1020;
+  width: 46px; height: 46px; border-radius: 14px; border: 0;
+  background: var(--brand-600); color: #fff; box-shadow: var(--shadow-brand);
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+  opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+}
+
+.ux-top.show { opacity: 1; visibility: visible; transform: none; }
+
+.ux-top:hover { background: var(--brand-700); }
+
+/* ---------- 14. Responsive ---------- */
+@media (max-width: 991.98px) {:root { --nav-h: 60px; }
+
+.container { padding-inline: 1rem; }
+}
+
+@media (max-width: 575.98px) {body { font-size: 0.95rem; }
+
+.btn { min-height: 44px; }
+
+.ux-top { bottom: 0.9rem; inset-inline-start: 0.9rem; }
+}
+
+@media print {.navbar,
+.ux-top,
+.toast-container,
+footer { display: none !important; }
+
+body { background: #fff; }
+}
+
+@media (prefers-reduced-motion: reduce) {*,
+*::before,
+*::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+@media (max-width: 575.98px) {.navbar > .container { gap: 0.5rem; flex-wrap: nowrap; }
+}
+
+/* روابط الفوتر: مسافات ثابتة */
+footer .row > div > a { display: inline-block; margin-block: 0.15rem; }
+
+footer .row > div > a + a { margin-inline-start: 1.1rem !important; }
+
+/* بطاقة معاينة الحجز الموجودة أصلًا في HTML؛ تستخدم ألوان ومقاسات مكونات المشروع. */
+.preview { background: var(--surface); border: 1px solid var(--border); border-radius: 26px; padding: 18px; box-shadow: var(--shadow-brand); }
+.preview-head { display: flex; align-items: center; gap: 10px; padding-bottom: 18px; border-bottom: 1px solid var(--border-soft); }
+.preview-head .avatar { width: 42px; height: 42px; border-radius: var(--radius-sm); display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); font-size: 20px; flex-shrink: 0; }
+.preview-head strong, .preview-head small { display: block; }
+.preview-head small { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding-block: 18px; }
+.slot { text-align: center; padding: 10px 6px; border: 1px solid var(--border); border-radius: var(--radius-xs); color: var(--text-body); background: var(--surface); }
+.slot.active { color: var(--on-primary); background: var(--primary); border-color: var(--primary); }
+.preview-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--border-soft); padding-top: 16px; font-size: 13px; }
+.preview-row .status { background: var(--primary-soft); color: var(--primary-dark); border-radius: var(--radius-pill); padding: 5px 10px; }
+/* المسافة بين أقسام الصفحة وخلفية القسم البديل، دون تعديل بنية HTML. */
+.section.alt { background: var(--surface); }
+.cta-wrap { padding: 0 0 64px; }
+.step-card h3 { font-size: 18px; font-weight: 700; }
+.footer .brand-copy strong { color: var(--on-primary); }
+@media (max-width: 575.98px) {
+  .hero h1 { font-size: 30px; line-height: 1.45; }
+  .preview-row { flex-wrap: wrap; }
+  .cta-wrap { padding-bottom: 40px; }
+}
+
+/* الصفحة العامة — ملف التنسيق الوحيد لهذا الدور.
+ * جميع الأقسام والتجاوب وتنسيقات الصفحات في هذا الملف.
+ * ترتيب الأقسام يحافظ على أولوية النسخة السابقة.
+ */
+
+/* =========================================================
+ * القسم 1: responsive.css
+ * يطبق على كل صفحات هذا الدور.
+ * ابحث باسم القسم أو class للوصول إلى التنسيق المطلوب.
+ * ========================================================= */
+
+
+/* Smart Dental Clinic | v1.9.2 responsive-only refinements.
+   No workflow, state, permissions, or business logic changes. */
+/* Shared intrinsic sizing: do not let long labels expand a page viewport. */
+html { max-width: 100%; }
+
+/* المظهر الأساسي لمحتوى الصفحة والخلفية والخط. */
+body { min-width: 0; max-width: 100%; }
+
+img,
+video,
+canvas,
+svg { max-width: 100%; }
+
+.container,
+.row > *,
+/* الأزرار وحقول النماذج وحالات التركيز. */
+.form-control,
+.input-group,
+[class*="col-"] {
+  min-width: 0;
+}
+
+/* التجاوب: القواعد التالية تتبع شرط عرض الشاشة المكتوب في @media. توجد شروط أخرى لاحقًا في الملف. */
+@media (max-width: 991.98px) {.row > * { min-width: 0; }
+
+.input-group > .form-control { min-width: 0; }
+
+/* Topbar controls stay inside the screen even on narrow tablets. */
+/* شريط التنقل والهوية وأزرار القوائم. */
+.navbar .container {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 767.98px) {input[type="file"] { max-width: 100%; }
+}
+
+@media (max-width: 359.98px) {.container { padding-inline: 12px; }
+
+main > .container { padding-inline: 12px; }
+
+/* القسم العلوي وعناوين الصفحة. */
+.hero .row { margin-inline: 0 !important; width: 100%; }
+
+.hero .row > * { padding-inline: 0 !important; }
+}
+
+/* Tiny phones: avoid flex rows that push a third action outside a medical report. */
+@media (max-width: 575.98px) {.d-flex:has(> .badge.badge-soft) { flex-wrap: wrap; }
+
+.hero > .container > .row { margin-inline: 0 !important; width: 100%; }
+
+.hero > .container > .row > * { padding-inline: 0 !important; }
+}
+
+/* =========================================================
+ * القسم 2: pages/support-chat.css
+ * يطبق على كل صفحات هذا الدور.
+ * ابحث باسم القسم أو class للوصول إلى التنسيق المطلوب.
+ * ========================================================= */
+/* الصفحة العامة — صندوق المساعدة العائم.
+ * نُقلت من style داخل HTML في موضع التحميل نفسه للمحافظة على أولوية CSS.
+ */
+.floating-chat-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--g-600, #0e7490);
+            color: white;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 1.6rem;
+            box-shadow: 0 10px 25px rgba(14, 116, 144, 0.4);
+            border: none;
+            cursor: pointer;
+            z-index: 1050;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .floating-chat-btn:hover {
+            background-color: var(--g-700, #0f5f76);
+            transform: scale(1.08);
+        }
+        .chat-window {
+            position: fixed;
+            bottom: 95px;
+            left: 25px;
+            width: 350px;
+            max-width: calc(100vw - 50px);
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border: 1px solid var(--line, #d9e2e7);
+            z-index: 1050;
+            display: none;
+            overflow: hidden;
+            animation: fadeInUp 0.25s ease;
+            text-align: right;
+            direction: rtl;
+        }
+        .chat-window.active {
+            display: block;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+/* الهيدر العام على الجوال: صف للشعار والزر، وصف مستقل للقائمة عند فتحها.
+ * الارتفاع التلقائي يمنع القائمة من التداخل مع محتوى الصفحة.
+ * هذه القواعد لا تغيّر عرض الكمبيوتر عند 992px فما فوق.
+ */
+@media (max-width: 991.98px) {
+  .public-navbar {
+    height: auto;
+  }
+  .public-navbar > .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .public-navbar .brand {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+  .public-navbar .brand-mark,
+  .public-navbar .navbar-toggler {
+    flex-shrink: 0;
+  }
+  .public-navbar .brand-copy strong {
+    white-space: nowrap;
+  }
+  .public-navbar .navbar-collapse {
+    flex-basis: 100%;
+    width: 100%;
+    min-width: 0;
+  }
+  .public-navbar .nav-collapse-box {
+    padding-block: 0.5rem 0.75rem;
+  }
+  .public-navbar .navbar-nav {
+    width: 100%;
+  }
+  .public-navbar .navbar-nav .nav-link {
+    display: flex;
+    width: 100%;
+  }
+  .public-navbar .nav-collapse-box > .d-flex {
+    flex-wrap: wrap;
+  }
+  .public-navbar .nav-collapse-box > .d-flex > .btn {
+    flex: 1 1 auto;
+  }
+  /* عند قصر الشاشة تبقى القائمة المفتوحة قابلة للتمرير. */
+  .public-navbar .navbar-collapse.show {
+    max-height: calc(100vh - 74px);
+    max-height: calc(100dvh - 74px);
+    overflow-y: auto;
+  }
+}
